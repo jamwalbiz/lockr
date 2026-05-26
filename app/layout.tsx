@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { ActivityTicker } from "@/components/ActivityTicker";
 import { Nav } from "@/components/Nav";
@@ -90,6 +91,8 @@ export default function RootLayout({
         <MobileCta />
         <LanguageToggle />
         <SocialProofPopups />
+        {/* Cookie-less pageview analytics — no-ops on localhost. */}
+        <Analytics />
       </body>
     </html>
   );
