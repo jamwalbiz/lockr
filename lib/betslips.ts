@@ -1,0 +1,80 @@
+export type BetSlip = {
+  book: "prizepicks" | "underdog" | "kalshi" | "polymarket" | "sleeper" | "draftkings";
+  bookLabel: string;
+  line: string;
+  meta: string;
+  result: string;
+  payout: string;
+  stake: string;
+  handle: string;
+  date: string;
+};
+
+export const BET_SLIPS: BetSlip[] = [
+  {
+    book: "prizepicks",
+    bookLabel: "PrizePicks",
+    line: "Shai Gilgeous-Alexander · OVER 31.5 pts",
+    meta: "NBA · OKC vs DAL",
+    result: "FINAL 33",
+    payout: "+$36.40",
+    stake: "$20 → $56.40 · +1.82u",
+    handle: "@jordan_k",
+    date: "05/24 · 9:42 PM",
+  },
+  {
+    book: "underdog",
+    bookLabel: "Underdog",
+    line: "Topuria · KO/TKO Rd 1–3",
+    meta: "UFC · vs Holloway",
+    result: "Rd 2 KO",
+    payout: "+$72.50",
+    stake: "$50 → $122.50 · +1.07u",
+    handle: "@ethan_k",
+    date: "05/23 · 11:18 PM",
+  },
+  {
+    book: "kalshi",
+    bookLabel: "Kalshi",
+    line: "Fed funds rate held at next FOMC · YES",
+    meta: "PREDICTION · Entry $0.88",
+    result: "$1.00",
+    payout: "+$41.00",
+    stake: "300 YES @ $0.88 · +0.41u",
+    handle: "@devonm",
+    date: "05/23 · 2:14 PM",
+  },
+  {
+    book: "sleeper",
+    bookLabel: "Sleeper",
+    line: "3-pick parlay · NBA player props",
+    meta: "SGA pts · Doncic ast · BOS spread",
+    result: "3/3 ✓",
+    payout: "+$144.50",
+    stake: "$25 → $169.50 · 5x",
+    handle: "@nia_w",
+    date: "05/22 · 10:08 PM",
+  },
+  {
+    book: "polymarket",
+    bookLabel: "Polymarket",
+    line: "OpenAI GPT-5 by Q3 2026 · NO",
+    meta: "PREDICTION · Entry $0.42",
+    result: "$0.31",
+    payout: "+$55.20",
+    stake: "200 NO @ $0.58 · +2.76u",
+    handle: "@amir_m",
+    date: "05/21 · 4:33 PM",
+  },
+  {
+    book: "draftkings",
+    bookLabel: "DraftKings",
+    line: "Verstappen · Top 3 Monaco GP",
+    meta: "F1 · Backed -180",
+    result: "P2 ✓",
+    payout: "+$41.70",
+    stake: "$75 → $116.70 · +0.83u",
+    handle: "@sam_h",
+    date: "05/20 · 11:47 AM",
+  },
+];

@@ -1,65 +1,891 @@
-import Image from "next/image";
+import Link from "next/link";
+import { PricingCards } from "@/components/PricingCards";
+import { Faq } from "@/components/Faq";
+import { TESTIMONIALS_ROW_1, TESTIMONIALS_ROW_2 } from "@/lib/testimonials";
+import { BET_SLIPS } from "@/lib/betslips";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <>
+      {/* Hero */}
+      <section className="hero">
+        <div className="hero-grid"></div>
+        <div className="shell hero-inner">
+          <div className="verified-badge">
+            <span className="dot"></span>
+            <span>Picks dropping daily · sports + prediction markets</span>
+          </div>
+          <h1 className="hero-title">
+            Stop guessing.
+            <br />
+            <span className="underline">Start winning.</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="hero-sub">
+            Daily picks across every sport, plus prediction-market plays on Kalshi and
+            Polymarket. Whether you bet for fun on Sundays or grind seven days a week — JT
+            and the team post every pick live before the event starts, win or loss.
           </p>
+          <div className="hero-cta-row">
+            <Link href="/checkout" className="btn btn-primary btn-lg">
+              Get today&apos;s picks · $29/wk
+            </Link>
+            <a href="#intro" className="btn btn-secondary btn-lg">
+              See how it works
+            </a>
+          </div>
+          <div className="stats-strip">
+            <div className="stat-cell">
+              <div className="stat-num positive mono">+147u</div>
+              <div className="stat-label">12-mo units won</div>
+            </div>
+            <div className="stat-cell">
+              <div className="stat-num mono">60%+</div>
+              <div className="stat-label">Win rate</div>
+            </div>
+            <div className="stat-cell">
+              <div className="stat-num positive mono">4.9★</div>
+              <div className="stat-label">Member rating</div>
+            </div>
+            <div className="stat-cell">
+              <div className="stat-num mono">10+</div>
+              <div className="stat-label">Sports + markets</div>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* VSL */}
+      <section id="intro">
+        <div className="shell">
+          <div className="section-head">
+            <div className="section-label">Watch the breakdown</div>
+            <h2 className="section-title">How Lockr finds edges your book is missing.</h2>
+          </div>
+          <div className="vsl-wrap">
+            <div className="vsl-player">
+              <div className="vsl-thumb"></div>
+              <button className="vsl-play" aria-label="Play founder intro video" type="button">
+                <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </button>
+              <div className="vsl-overlay">
+                <div className="vsl-meta">
+                  <span>03:42</span>
+                  <span>·</span>
+                  <span>HD</span>
+                </div>
+                <div className="vsl-meta">JT · INTRO</div>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* Pillars */}
+      <section>
+        <div className="shell">
+          <div className="section-head">
+            <div className="section-label">Why Lockr</div>
+            <h2 className="section-title">Built for bettors who actually want to win.</h2>
+          </div>
+          <div className="pillars">
+            <div className="pillar">
+              <div className="pillar-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M3 12l3 3 4-4 5 5 4-4 2 2" />
+                </svg>
+              </div>
+              <h3>Public track record</h3>
+              <p>
+                Every pick published live before the event starts. No screenshot edits. No
+                &quot;I told you so&quot; posted after the fact. Public unit count,
+                updated daily for anyone to audit.
+              </p>
+            </div>
+            <div className="pillar">
+              <div className="pillar-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4.5L6 21l1.5-7.5L2 9h7z" />
+                </svg>
+              </div>
+              <h3>Prediction-market plays</h3>
+              <p>
+                The first picks community that uses Kalshi and Polymarket alongside
+                sportsbooks. Bigger menu, better prices on the markets your book either
+                won&apos;t offer or prices badly.
+              </p>
+            </div>
+            <div className="pillar">
+              <div className="pillar-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 7v5l3 3" />
+                </svg>
+              </div>
+              <h3>A system, not just picks</h3>
+              <p>
+                We&apos;ll teach you how much to bet, when to walk away, and how to grow
+                your bankroll the smart way. New to betting or doing it for years —
+                there&apos;s a playbook here for you.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3-Step Process */}
+      <section id="how-it-works">
+        <div className="shell">
+          <div className="section-head">
+            <div className="section-label">How it works</div>
+            <h2 className="section-title">
+              From signup to first cashed ticket
+              <br />
+              in under 10 minutes.
+            </h2>
+          </div>
+          <div className="steps-grid">
+            <div className="step">
+              <div className="step-num">
+                01<span className="step-num-divider"></span>JOIN
+              </div>
+              <div className="step-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="8.5" cy="7" r="4" />
+                  <line x1="20" y1="8" x2="20" y2="14" />
+                  <line x1="23" y1="11" x2="17" y2="11" />
+                </svg>
+              </div>
+              <h3>Pick a tier &amp; join</h3>
+              <p>
+                Checkout in 60 seconds with a card, ACH, or crypto. Your private Discord
+                invite hits your inbox immediately — no manual approval, no waiting.
+              </p>
+            </div>
+            <div className="step">
+              <div className="step-num">
+                02<span className="step-num-divider"></span>GET PICKS
+              </div>
+              <div className="step-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+              </div>
+              <h3>Picks drop daily</h3>
+              <p>
+                Our team posts 6–10 plays per day in Discord — every sport, plus
+                prediction markets. Each pick has the reasoning, the recommended bet size,
+                and the line we entered.
+              </p>
+            </div>
+            <div className="step">
+              <div className="step-num">
+                03<span className="step-num-divider"></span>PLACE &amp; TRACK
+              </div>
+              <div className="step-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polyline points="3 17 9 11 13 15 21 7" />
+                  <polyline points="14 7 21 7 21 14" />
+                </svg>
+              </div>
+              <h3>Place &amp; watch the bag grow</h3>
+              <p>
+                Tail the picks on your sportsbook, PrizePicks, Underdog, Kalshi, or
+                Polymarket. Track your P/L against the team&apos;s running unit count,
+                updated in real time.
+              </p>
+            </div>
+          </div>
+          <div className="inline-cta">
+            <div className="inline-cta-text">
+              3 steps. 10 minutes. Then you&apos;re tailing today&apos;s picks.
+            </div>
+            <Link href="/checkout" className="btn btn-primary btn-lg">
+              Get today&apos;s picks · from $29/wk
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Sportsbook logo wall */}
+      <section style={{ paddingTop: 0 }}>
+        <div className="shell">
+          <div className="books-label">
+            Tail picks on every platform members already use
+          </div>
+          <div className="books-wall">
+            <SportsbookMark name="PrizePicks">
+              <path d="M8 6h12l-2 4h-6v8h-4z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+              <circle cx="22" cy="22" r="4" stroke="currentColor" strokeWidth="1.5" />
+            </SportsbookMark>
+            <SportsbookMark name="Underdog">
+              <path d="M8 8v9a8 8 0 0 0 16 0V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <circle cx="13" cy="13" r="1.2" fill="currentColor" />
+              <circle cx="19" cy="13" r="1.2" fill="currentColor" />
+            </SportsbookMark>
+            <SportsbookMark name="Sleeper">
+              <path d="M22 7a9 9 0 1 0 3 13 7 7 0 0 1-3-13z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            </SportsbookMark>
+            <SportsbookMark name="Dabble">
+              <circle cx="11" cy="16" r="4" stroke="currentColor" strokeWidth="1.5" />
+              <circle cx="21" cy="16" r="4" stroke="currentColor" strokeWidth="1.5" />
+              <circle cx="11" cy="16" r="1.5" fill="currentColor" />
+              <circle cx="21" cy="16" r="1.5" fill="currentColor" />
+            </SportsbookMark>
+            <SportsbookMark name="DraftKings">
+              <path d="M6 22V10l5 6 5-6 5 6 5-6v12" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            </SportsbookMark>
+            <SportsbookMark name="FanDuel">
+              <circle cx="16" cy="16" r="9" stroke="currentColor" strokeWidth="1.5" />
+              <path d="M11 13h9M11 17h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </SportsbookMark>
+            <SportsbookMark name="BetMGM">
+              <path
+                d="M6 22V10h3l3 6 3-6h3v12M20 10h6M23 10v12"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinejoin="round"
+                strokeLinecap="round"
+              />
+            </SportsbookMark>
+            <SportsbookMark name="Kalshi">
+              <line x1="9" y1="7" x2="9" y2="25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <line x1="9" y1="16" x2="22" y2="7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <line x1="9" y1="16" x2="22" y2="25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </SportsbookMark>
+            <SportsbookMark name="Polymarket">
+              <polygon points="16,5 27,11 24,25 8,25 5,11" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+              <line x1="5" y1="11" x2="27" y2="11" stroke="currentColor" strokeWidth="1.5" />
+            </SportsbookMark>
+          </div>
+          <div className="books-note">
+            Free promo codes &amp; sign-up bonuses for every platform above are included
+            with every paid tier.
+          </div>
+        </div>
+      </section>
+
+      {/* By the numbers (static, no live tracker per handoff decision) */}
+      <section>
+        <div className="shell">
+          <div className="section-head">
+            <div className="section-label">Receipts</div>
+            <h2 className="section-title">
+              Real picks.
+              <br />
+              Real numbers.
+            </h2>
+          </div>
+          <div className="tracker-card">
+            <div className="tracker-grid">
+              <div className="tracker-big">
+                <div className="tracker-big-num">+147u</div>
+                <div className="tracker-big-label">Units · trailing 12 months</div>
+              </div>
+              <div className="tracker-stats">
+                <div className="tracker-stat">
+                  <div className="tracker-stat-num">60%+</div>
+                  <div className="tracker-stat-label">Win rate</div>
+                </div>
+                <div className="tracker-stat">
+                  <div className="tracker-stat-num" style={{ color: "var(--accent)" }}>
+                    4.9★
+                  </div>
+                  <div className="tracker-stat-label">Member rating</div>
+                </div>
+                <div className="tracker-stat">
+                  <div className="tracker-stat-num" style={{ color: "var(--accent)" }}>
+                    +24.7u
+                  </div>
+                  <div className="tracker-stat-label">Last 30 days</div>
+                </div>
+                <div className="tracker-stat">
+                  <div className="tracker-stat-num">10+</div>
+                  <div className="tracker-stat-label">Sports + markets</div>
+                </div>
+              </div>
+            </div>
+            <div className="tracker-chart">
+              <svg width="100%" height="100" viewBox="0 0 600 100" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="grad" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stopColor="#00FF85" stopOpacity="0.25" />
+                    <stop offset="100%" stopColor="#00FF85" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                <polyline
+                  fill="none"
+                  stroke="#00FF85"
+                  strokeWidth="1.5"
+                  points="0,80 50,72 100,75 150,68 200,55 250,58 300,45 350,42 400,30 450,35 500,22 550,18 600,12"
+                />
+                <polygon
+                  fill="url(#grad)"
+                  points="0,80 50,72 100,75 150,68 200,55 250,58 300,45 350,42 400,30 450,35 500,22 550,18 600,12 600,100 0,100"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Sports coverage grid */}
+      <section>
+        <div className="shell">
+          <div className="section-head">
+            <div className="section-label">Coverage</div>
+            <h2 className="section-title">
+              Year-round, every sport.
+              <br />
+              Plus prediction markets.
+            </h2>
+            <p className="section-sub">
+              10+ sports and two prediction-market platforms — under one subscription. No
+              summer drought.
+            </p>
+          </div>
+          <div className="sports-grid">
+            <SportCard tag="NFL" name="Football" desc="Sundays, Mondays, Thursdays. Spreads, totals, player props, playoffs.">
+              <ellipse cx="12" cy="12" rx="9" ry="5" transform="rotate(-15 12 12)" />
+              <line x1="8" y1="12" x2="16" y2="12" transform="rotate(-15 12 12)" />
+              <line x1="10" y1="11" x2="10" y2="13" transform="rotate(-15 12 12)" />
+              <line x1="12" y1="11" x2="12" y2="13" transform="rotate(-15 12 12)" />
+              <line x1="14" y1="11" x2="14" y2="13" transform="rotate(-15 12 12)" />
+            </SportCard>
+            <SportCard tag="NBA" name="Basketball" desc="Nightly props, spreads, totals. Deep dives on usage, pace, matchups.">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M3 12h18" />
+              <path d="M5.5 6.5c2.5 3 2.5 8 0 11" />
+              <path d="M18.5 6.5c-2.5 3-2.5 8 0 11" />
+            </SportCard>
+            <SportCard tag="MLB" name="Baseball" desc="Daily slates, F5, NRFI/YRFI. Carries you through summer.">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M5 7c3 0 6 2 7 5" />
+              <path d="M19 7c-3 0-6 2-7 5" />
+              <path d="M5 17c3 0 6-2 7-5" />
+            </SportCard>
+            <SportCard tag="NHL" name="Hockey" desc="Puck lines, totals, goalie props. Smart money lives in this market.">
+              <ellipse cx="12" cy="13" rx="9" ry="3" />
+              <ellipse cx="12" cy="10" rx="9" ry="3" />
+              <line x1="3" y1="10" x2="3" y2="13" />
+              <line x1="21" y1="10" x2="21" y2="13" />
+            </SportCard>
+            <SportCard tag="UFC" name="UFC & Boxing" desc="Method-of-victory, round props, fight breakdowns. Soft books, big edges.">
+              <path d="M8 6c0-2 1.5-3 4-3s4 1 4 3v3c2 0 4 1 4 4v5c0 2-2 3-4 3H8c-2 0-4-1-4-3v-7c0-2 1-3 3-3" />
+              <line x1="10" y1="14" x2="14" y2="14" />
+            </SportCard>
+            <SportCard tag="F1" name="Formula 1" desc="Qualifying, podium, head-to-head. One of the softest markets in sports.">
+              <circle cx="12" cy="12" r="9" />
+              <circle cx="12" cy="12" r="3" />
+              <line x1="3" y1="12" x2="9" y2="12" />
+              <line x1="15" y1="12" x2="21" y2="12" />
+              <line x1="12" y1="3" x2="12" y2="9" />
+              <line x1="12" y1="15" x2="12" y2="21" />
+            </SportCard>
+            <SportCard tag="NCAA" name="College Football & Hoops" desc="Saturdays, March Madness, bowl season. Where the books get it wrong most.">
+              <path d="M2 9l10-5 10 5-10 5z" />
+              <path d="M6 11v5c0 1.5 3 2.5 6 2.5s6-1 6-2.5v-5" />
+              <line x1="22" y1="9" x2="22" y2="14" />
+            </SportCard>
+            <SportCard tag="SOCCER" name="Soccer" desc="Premier League, Champions League, World Cup years. ML, totals, BTTS.">
+              <circle cx="12" cy="12" r="9" />
+              <polygon points="12,7 15,9.5 14,13 10,13 9,9.5" />
+              <line x1="12" y1="7" x2="12" y2="3.5" />
+              <line x1="15" y1="9.5" x2="18.5" y2="8" />
+              <line x1="14" y1="13" x2="16" y2="16.5" />
+              <line x1="10" y1="13" x2="8" y2="16.5" />
+              <line x1="9" y1="9.5" x2="5.5" y2="8" />
+            </SportCard>
+            <SportCard tag="TENNIS" name="Tennis" desc="Grand Slams + ATP/WTA majors. Set spreads, total games, H2Hs.">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M3 9c3 2 7 2 9 0c2-2 6-2 9 0" />
+              <path d="M3 15c3-2 7-2 9 0c2 2 6 2 9 0" />
+            </SportCard>
+            <SportCard tag="ESPORTS" name="Esports" desc="CS, Valorant, League. Money lines, map handicaps, total maps.">
+              <path d="M5 9h14a3 3 0 013 3v3a3 3 0 01-3 3h-2.5l-2-3h-5l-2 3H5a3 3 0 01-3-3v-3a3 3 0 013-3z" />
+              <circle cx="8" cy="13.5" r="1.2" />
+              <circle cx="16" cy="13.5" r="1.2" />
+            </SportCard>
+            <SportCard tag="KALSHI" name="Kalshi" desc="CFTC-regulated event contracts. Sports, politics, economics, tech." featured>
+              <line x1="6" y1="4" x2="6" y2="20" />
+              <line x1="6" y1="12" x2="18" y2="4" />
+              <line x1="6" y1="12" x2="18" y2="20" />
+            </SportCard>
+            <SportCard tag="POLYMARKET" name="Polymarket" desc="Crypto-native prediction markets. The biggest pool of edges nobody is touching." featured>
+              <polygon points="12,3 21,9 18,20 6,20 3,9" />
+              <line x1="3" y1="9" x2="21" y2="9" />
+            </SportCard>
+          </div>
+          <div className="inline-cta">
+            <div className="inline-cta-text">
+              One subscription. Every sport. Every prediction market.
+            </div>
+            <Link href="/checkout" className="btn btn-primary btn-lg">
+              Join Lockr →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials + bet slips + Discord embeds */}
+      <section>
+        <div className="shell">
+          <div className="section-head">
+            <div className="section-label">1,247 active members</div>
+            <h2 className="section-title">
+              Real members.
+              <br />
+              Real receipts.
+            </h2>
+            <p className="section-sub">
+              No actor photos. No fake screenshots. The cohort below is hovering — and
+              they&apos;ll talk to you in the Discord.
+            </p>
+          </div>
+
+          {/* Marquee row 1 */}
+          <div className="marquee" style={{ marginBottom: 16 }}>
+            <div className="marquee-track">
+              {[...TESTIMONIALS_ROW_1, ...TESTIMONIALS_ROW_1].map((t, i) => (
+                <TestimonialCard key={i} t={t} />
+              ))}
+            </div>
+          </div>
+
+          {/* Marquee row 2 (reverse) */}
+          <div className="marquee" style={{ marginBottom: 48 }}>
+            <div className="marquee-track reverse">
+              {[...TESTIMONIALS_ROW_2, ...TESTIMONIALS_ROW_2].map((t, i) => (
+                <TestimonialCard key={i} t={t} />
+              ))}
+            </div>
+          </div>
+
+          {/* Bet slips */}
+          <div style={{ textAlign: "center", margin: "64px 0 32px" }}>
+            <div className="section-label" style={{ color: "var(--text-mute)" }}>
+              Real wins · last 7 days
+            </div>
+            <h3 style={{ fontSize: 26, fontWeight: 700, letterSpacing: "-0.02em" }}>
+              Member bet slips from this week.
+            </h3>
+          </div>
+          <div className="slips-grid">
+            {BET_SLIPS.map((slip) => (
+              <div key={slip.handle + slip.date} className={`slip ${slip.book}`}>
+                <div className="slip-head">
+                  <div className="slip-book">{slip.bookLabel}</div>
+                  <div className="slip-status">WIN</div>
+                </div>
+                <div className="slip-leg">
+                  <div className="slip-leg-line">{slip.line}</div>
+                  <div className="slip-leg-meta">
+                    {slip.meta} <span className="slip-leg-result">{slip.result}</span>
+                  </div>
+                </div>
+                <hr className="slip-divider" />
+                <div className="slip-foot">
+                  <div className="slip-payout">
+                    <div className="slip-payout-label">Payout</div>
+                    <div className="slip-payout-amount">{slip.payout}</div>
+                    <div className="slip-payout-stake">{slip.stake}</div>
+                  </div>
+                  <div className="slip-member">
+                    <div className="slip-member-handle">{slip.handle}</div>
+                    <div className="slip-member-date">{slip.date}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Discord embeds */}
+          <div style={{ textAlign: "center", margin: "64px 0 32px" }}>
+            <div className="section-label" style={{ color: "var(--text-mute)" }}>
+              Inside the Discord
+            </div>
+            <h3 style={{ fontSize: 26, fontWeight: 700, letterSpacing: "-0.02em" }}>
+              Live from #wins-and-losses
+            </h3>
+          </div>
+          <div className="discord-wrap">
+            <div className="discord">
+              <div className="discord-channel-bar">
+                <span className="discord-hash">#</span> wins-and-losses
+              </div>
+              <div className="discord-msgs">
+                <div className="discord-msg">
+                  <div className="discord-avatar a2">JK</div>
+                  <div className="discord-body">
+                    <div className="discord-name-row">
+                      <span className="discord-name">jordan_k</span>
+                      <span className="discord-time">Today at 11:42 AM</span>
+                    </div>
+                    <div className="discord-text">
+                      SGA over 31.5 hit at the buzzer 😤 JT called this one before line
+                      moved to -130
+                    </div>
+                    <div className="discord-img-embed">
+                      [ image: bet slip · SGA 33 PTS · +1.82u ]
+                    </div>
+                    <div className="discord-reactions">
+                      <span className="discord-react">🔥 14</span>
+                      <span className="discord-react">💰 9</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="discord-msg">
+                  <div className="discord-avatar a3">DM</div>
+                  <div className="discord-body">
+                    <div className="discord-name-row">
+                      <span className="discord-name">devonm</span>
+                      <span className="discord-time">Today at 1:15 PM</span>
+                    </div>
+                    <div className="discord-text">
+                      that Kalshi Fed hold position from yesterday — closed at 0.94 from
+                      our 0.88 entry. that&apos;s{" "}
+                      <span className="green">+6.8% in 18 hours</span>
+                    </div>
+                    <div className="discord-reactions">
+                      <span className="discord-react">🧠 22</span>
+                      <span className="discord-react">📈 11</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="discord-msg">
+                  <div className="discord-avatar a6">MR</div>
+                  <div className="discord-body">
+                    <div className="discord-name-row">
+                      <span className="discord-name" style={{ color: "var(--accent)" }}>
+                        jt
+                      </span>
+                      <span className="discord-creator-tag">CREATOR</span>
+                      <span className="discord-time">Today at 2:01 PM</span>
+                    </div>
+                    <div className="discord-text">
+                      posted the F1 Monaco breakdown in #long-form — explains why
+                      Verstappen top-3 is still live for tomorrow even at -220
+                    </div>
+                    <div className="discord-reactions">
+                      <span className="discord-react">🏎️ 31</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="discord">
+              <div className="discord-channel-bar">
+                <span className="discord-hash">#</span> inner-circle
+              </div>
+              <div className="discord-msgs">
+                <div className="discord-msg">
+                  <div className="discord-avatar a4">EK</div>
+                  <div className="discord-body">
+                    <div className="discord-name-row">
+                      <span className="discord-name">ethan</span>
+                      <span className="discord-ic-tag">★ INNER CIRCLE</span>
+                      <span className="discord-time">Yesterday at 8:47 PM</span>
+                    </div>
+                    <div className="discord-text">
+                      jt the prop model output on Topuria pre-fight was unreal.{" "}
+                      <span className="gold">+1.07u</span> at +145 closing. saved me 3
+                      hours of tape review
+                    </div>
+                    <div className="discord-reactions">
+                      <span className="discord-react">⚡ 8</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="discord-msg">
+                  <div className="discord-avatar a1">AM</div>
+                  <div className="discord-body">
+                    <div className="discord-name-row">
+                      <span className="discord-name">amir</span>
+                      <span className="discord-ic-tag">★ INNER CIRCLE</span>
+                      <span className="discord-time">Yesterday at 10:13 PM</span>
+                    </div>
+                    <div className="discord-text">
+                      the Polymarket GPT-5 NO position printed today. closed -11% from our
+                      entry. <span className="green">+2.76u</span> sized at 2u
+                    </div>
+                    <div className="discord-reactions">
+                      <span className="discord-react">🎯 12</span>
+                      <span className="discord-react">🤖 5</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="discord-msg">
+                  <div className="discord-avatar a6">MR</div>
+                  <div className="discord-body">
+                    <div className="discord-name-row">
+                      <span className="discord-name" style={{ color: "var(--accent)" }}>
+                        jt
+                      </span>
+                      <span className="discord-creator-tag">CREATOR</span>
+                      <span className="discord-time">Today at 9:30 AM</span>
+                    </div>
+                    <div className="discord-text">
+                      weekly call moved to Thursday 8pm ET. agenda in the pinned message.
+                      bring questions on the NBA Finals series price
+                    </div>
+                    <div className="discord-reactions">
+                      <span className="discord-react">📅 18</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section id="pricing-section">
+        <div className="shell">
+          <div className="section-head">
+            <div className="section-label">Pricing</div>
+            <h2 className="section-title">
+              Pick a tier.
+              <br />
+              Cancel any time.
+            </h2>
+          </div>
+          <PricingCards />
+          <div className="guarantee">
+            <div className="guarantee-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M3 12a9 9 0 1 0 9-9" />
+                <polyline points="3 4 3 12 11 12" />
+              </svg>
+            </div>
+            <div>
+              <div className="guarantee-title">Cancel any time. No retention call.</div>
+              <div className="guarantee-sub">
+                One-click cancel from your account. No &quot;are you sure&quot; friction,
+                no retention department, no email gauntlet. You keep access through the
+                end of your billing period — then you&apos;re done.
+              </div>
+            </div>
+            <div className="guarantee-stat">No hidden fees →</div>
+          </div>
+        </div>
+      </section>
+
+      {/* VS comparison */}
+      <section>
+        <div className="shell">
+          <div className="section-head">
+            <div className="section-label">Still skeptical?</div>
+            <h2 className="section-title">Two ways to buy picks online.</h2>
+            <p className="section-sub">
+              You&apos;ve seen the other side. Here&apos;s the difference.
+            </p>
+          </div>
+          <div className="vs-section">
+            <div className="vs-col them">
+              <div className="vs-label">Tacky cappers</div>
+              <div className="vs-title">The picks Discord you&apos;ve already tried.</div>
+              <ul className="vs-list">
+                <li>Screenshots edited after the fact</li>
+                <li>Lambo emojis. &quot;BANGER 🚨🚨🚨&quot; energy</li>
+                <li>Lifetime $9.99 every week for &quot;first 5 spots&quot;</li>
+                <li>Blocks you in the DMs after a losing week</li>
+                <li>Owner is anonymous behind a Bitmoji</li>
+                <li>Nobody mentions CLV or unit sizing</li>
+                <li>Discord goes dark in the summer</li>
+                <li>Sells your email to 14 other touts</li>
+              </ul>
+            </div>
+            <div className="vs-divider">VS</div>
+            <div className="vs-col us">
+              <div className="vs-label">★ Lockr</div>
+              <div className="vs-title">
+                The picks service serious bettors stay subscribed to.
+              </div>
+              <ul className="vs-list">
+                <li>Every pick posted live before the event starts</li>
+                <li>Strategy + education. No emojis. No costume jewelry</li>
+                <li>Cancel in 60 seconds — no retention call, no friction</li>
+                <li>We post the losses too, then explain what went wrong</li>
+                <li>Real face, real name, real accountability</li>
+                <li>Picks plus a system: how much to bet, when to walk away</li>
+                <li>Year-round across 10+ sports + prediction markets</li>
+                <li>Your email never leaves Lockr&apos;s database</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Disqualifier */}
+      <section>
+        <div className="shell">
+          <div className="section-head">
+            <div className="section-label">Be honest</div>
+            <h2 className="section-title">Is Lockr actually for you?</h2>
+            <p className="section-sub">
+              We&apos;d rather not have your money than have you cancel angry in 3 weeks.
+              Read this before you join.
+            </p>
+          </div>
+          <div className="qual-grid">
+            <div className="qual-card yes">
+              <div className="qual-label">★ Lockr is for you if</div>
+              <div className="qual-title">
+                You bet, you take it seriously, and you want to compound.
+              </div>
+              <ul className="qual-list">
+                <li>You bet at least once a week and want to win more than you lose</li>
+                <li>You&apos;re open to learning a system, not just copying picks blindly</li>
+                <li>You understand losing weeks happen and you don&apos;t blame the messenger</li>
+                <li>You want a method you can keep using even after you cancel</li>
+                <li>You want one place for picks across every sport plus Kalshi and Polymarket</li>
+              </ul>
+            </div>
+            <div className="qual-card no">
+              <div className="qual-label">— Lockr is NOT for you if</div>
+              <div className="qual-title">
+                You want guaranteed wins or a get-rich-quick play.
+              </div>
+              <ul className="qual-list">
+                <li>You think &quot;picks&quot; means &quot;every bet wins&quot;</li>
+                <li>You&apos;ll cancel and chargeback after one losing week</li>
+                <li>You can&apos;t risk what you wager — bet only what you can afford to lose</li>
+                <li>You want a Discord full of Lambo emojis and group chants</li>
+                <li>You expect the team to think for you instead of teaching you to think</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section id="faq">
+        <div className="shell">
+          <div className="section-head">
+            <div className="section-label">FAQ</div>
+            <h2 className="section-title">The questions everyone asks.</h2>
+          </div>
+          <Faq />
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section>
+        <div className="shell">
+          <div className="final-cta">
+            <div className="final-cta-content">
+              <h2
+                style={{
+                  fontSize: "clamp(36px, 5vw, 56px)",
+                  fontWeight: 700,
+                  letterSpacing: "-0.03em",
+                  marginBottom: 16,
+                }}
+              >
+                Stop scrolling.
+                <br />
+                Start tailing.
+              </h2>
+              <p
+                style={{
+                  color: "var(--text-mute)",
+                  fontSize: 17,
+                  maxWidth: 520,
+                  margin: "0 auto 32px",
+                }}
+              >
+                Your Discord invite hits your inbox the moment you join. The next pick
+                drops soon after.
+              </p>
+              <Link href="/checkout" className="btn btn-primary btn-lg">
+                Join Lockr · from $29/wk
+              </Link>
+              <div
+                style={{
+                  marginTop: 16,
+                  fontSize: 12,
+                  color: "var(--text-dim)",
+                }}
+              >
+                No contract. Cancel any time. Every pick logged in Discord.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
+/* ------------------------------------------------------------------
+   Small inline helpers — keep them next to the page that uses them
+   so the porting fidelity is easy to audit against the mockup.
+   ------------------------------------------------------------------ */
+function SportsbookMark({
+  name,
+  children,
+}: {
+  name: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="book-mark" title={name}>
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+        {children}
+      </svg>
+      <div className="book-mark-name">{name}</div>
+    </div>
+  );
+}
+
+function SportCard({
+  tag,
+  name,
+  desc,
+  featured,
+  children,
+}: {
+  tag: string;
+  name: string;
+  desc: string;
+  featured?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className={`sport-card${featured ? " featured" : ""}`}>
+      <div className="sport-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          {children}
+        </svg>
+      </div>
+      <div className="sport-tag">
+        <span className="sport-tag-dot"></span>
+        {tag}
+      </div>
+      <div className="sport-name">{name}</div>
+      <div className="sport-desc">{desc}</div>
+    </div>
+  );
+}
+
+function TestimonialCard({ t }: { t: import("@/lib/testimonials").Testimonial }) {
+  return (
+    <div className="marquee-card">
+      <div className="marquee-head">
+        <div className="marquee-avatar">{t.initials}</div>
+        <div>
+          <div className="marquee-name">{t.name}</div>
+          <div className="marquee-handle">{t.handle}</div>
+        </div>
+      </div>
+      <p className="marquee-body">&ldquo;{t.body}&rdquo;</p>
+      <div className="marquee-result">
+        <span>P/L</span>
+        <span>{t.pl}</span>
+      </div>
     </div>
   );
 }
