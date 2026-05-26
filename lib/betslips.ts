@@ -8,6 +8,8 @@ export type BetSlip = {
   stake: string;
   handle: string;
   date: string;
+  /** Closing-line value vs entry. Persona-B sharp signal. Plausible range ~ +1..+12%. */
+  clv: string;
 };
 
 export const BET_SLIPS: BetSlip[] = [
@@ -21,6 +23,7 @@ export const BET_SLIPS: BetSlip[] = [
     stake: "$20 → $56.40 · +1.82u",
     handle: "@jordan_k",
     date: "05/24 · 9:42 PM",
+    clv: "+6.5%",
   },
   {
     book: "underdog",
@@ -32,6 +35,7 @@ export const BET_SLIPS: BetSlip[] = [
     stake: "$50 → $122.50 · +1.07u",
     handle: "@ethan_k",
     date: "05/23 · 11:18 PM",
+    clv: "+2.7%",
   },
   {
     book: "kalshi",
@@ -43,6 +47,7 @@ export const BET_SLIPS: BetSlip[] = [
     stake: "300 YES @ $0.88 · +0.41u",
     handle: "@devonm",
     date: "05/23 · 2:14 PM",
+    clv: "+6.8%",
   },
   {
     book: "sleeper",
@@ -54,6 +59,7 @@ export const BET_SLIPS: BetSlip[] = [
     stake: "$25 → $169.50 · 5x",
     handle: "@nia_w",
     date: "05/22 · 10:08 PM",
+    clv: "+4.2%",
   },
   {
     book: "polymarket",
@@ -65,6 +71,7 @@ export const BET_SLIPS: BetSlip[] = [
     stake: "200 NO @ $0.58 · +2.76u",
     handle: "@amir_m",
     date: "05/21 · 4:33 PM",
+    clv: "+10.4%",
   },
   {
     book: "draftkings",
@@ -76,5 +83,6 @@ export const BET_SLIPS: BetSlip[] = [
     stake: "$75 → $116.70 · +0.83u",
     handle: "@sam_h",
     date: "05/20 · 11:47 AM",
+    clv: "+6.4%",
   },
 ];

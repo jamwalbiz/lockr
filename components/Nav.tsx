@@ -2,37 +2,137 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export function Nav() {
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Translucent → opaque past 12px scroll
+  useEffect(() => {
+    function onScroll() {
+      setScrolled(window.scrollY > 12);
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Close mobile menu on Escape, route change, or click outside.
+  useEffect(() => {
+    if (!menuOpen) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setMenuOpen(false);
+    }
+    document.addEventListener("keydown", onKey);
+    // Lock body scroll while menu is open
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
-    <nav className="nav" aria-label="Primary">
-      <div className="nav-inner">
-        <Link href="/" className="logo" aria-label="Lockr — Home">
-          <span className="logo-dot" aria-hidden="true"></span>LOCKR
-        </Link>
-        <div className="nav-links">
-          <Link href="/" className={isHome ? "active" : ""}>
+    <>
+      <nav className={`nav ${scrolled ? "scrolled" : ""}`} aria-label="Primary">
+        <div className="nav-inner">
+          <Link href="/" className="logo" aria-label="Lockr — Home">
+            <span className="logo-dot" aria-hidden="true"></span>LOCKR
+          </Link>
+          <div className="nav-links">
+            <Link href="/" className={isHome ? "active" : ""}>
+              Picks
+            </Link>
+            <Link href="/pricing" className={pathname === "/pricing" ? "active" : ""}>
+              Pricing
+            </Link>
+            <Link href="/about" className={pathname === "/about" ? "active" : ""}>
+              About
+            </Link>
+            <Link href={isHome ? "#faq" : "/#faq"}>FAQ</Link>
+          </div>
+          <div className="nav-cta">
+            <button className="btn btn-ghost nav-login" type="button">
+              Log in
+            </button>
+            <Link href="/checkout" className="btn btn-primary nav-join">
+              Join Lockr
+            </Link>
+            <button
+              type="button"
+              className="nav-hamburger"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+              onClick={() => setMenuOpen((o) => !o)}
+            >
+              <span aria-hidden="true" className={`burger ${menuOpen ? "open" : ""}`}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile slide-down menu — display:none on desktop via CSS */}
+      <div
+        id="mobile-menu"
+        className={`mobile-menu ${menuOpen ? "open" : ""}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobile navigation"
+        hidden={!menuOpen}
+      >
+        <div className="mobile-menu-inner">
+          <Link href="/" className="mobile-link" onClick={closeMenu}>
             Picks
           </Link>
-          <Link href="/pricing" className={pathname === "/pricing" ? "active" : ""}>
+          <Link href="/pricing" className="mobile-link" onClick={closeMenu}>
             Pricing
           </Link>
-          <Link href="/about" className={pathname === "/about" ? "active" : ""}>
+          <Link href="/about" className="mobile-link" onClick={closeMenu}>
             About
           </Link>
-          <Link href={isHome ? "#faq" : "/#faq"}>FAQ</Link>
-        </div>
-        <div className="nav-cta">
-          <button className="btn btn-ghost" type="button">
-            Log in
-          </button>
-          <Link href="/checkout" className="btn btn-primary">
-            Join Lockr
+          <Link
+            href={isHome ? "#faq" : "/#faq"}
+            className="mobile-link"
+            onClick={closeMenu}
+          >
+            FAQ
           </Link>
+          <Link href="/apply" className="mobile-link" onClick={closeMenu}>
+            Apply for Inner Circle
+          </Link>
+          <div className="mobile-menu-cta">
+            <button
+              type="button"
+              className="btn btn-secondary btn-lg"
+              style={{ width: "100%", justifyContent: "center" }}
+              onClick={closeMenu}
+            >
+              Log in
+            </button>
+            <Link
+              href="/checkout"
+              className="btn btn-primary btn-lg"
+              style={{ width: "100%", justifyContent: "center" }}
+              onClick={closeMenu}
+            >
+              Join Lockr →
+            </Link>
+          </div>
         </div>
       </div>
-    </nav>
+      {menuOpen && (
+        <div className="mobile-menu-backdrop" onClick={() => setMenuOpen(false)} />
+      )}
+    </>
   );
 }

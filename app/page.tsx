@@ -3,6 +3,18 @@ import { PricingCards } from "@/components/PricingCards";
 import { Faq } from "@/components/Faq";
 import { TESTIMONIALS_ROW_1, TESTIMONIALS_ROW_2 } from "@/lib/testimonials";
 import { BET_SLIPS } from "@/lib/betslips";
+import { FAQ_ITEMS } from "@/lib/faq";
+
+// FAQPage structured data — rich-snippet eligible.
+const FAQ_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.text },
+  })),
+};
 
 export default function Home() {
   return (
@@ -18,7 +30,7 @@ export default function Home() {
           <h1 className="hero-title">
             Stop guessing.
             <br />
-            <span className="underline">Start winning.</span>
+            Start winning<span className="hero-period">.</span>
           </h1>
           <p className="hero-sub">
             Daily picks across every sport, plus prediction-market plays on Kalshi and
@@ -40,7 +52,7 @@ export default function Home() {
             </div>
             <div className="stat-cell">
               <div className="stat-num mono">60%+</div>
-              <div className="stat-label">Win rate</div>
+              <div className="stat-label">Win rate · 1,847 picks</div>
             </div>
             <div className="stat-cell">
               <div className="stat-num positive mono">4.9★</div>
@@ -477,7 +489,12 @@ export default function Home() {
               <div key={slip.handle + slip.date} className={`slip ${slip.book}`}>
                 <div className="slip-head">
                   <div className="slip-book">{slip.bookLabel}</div>
-                  <div className="slip-status">WIN</div>
+                  <div className="slip-badges">
+                    <div className="slip-clv" title="Closing-line value">
+                      CLV {slip.clv}
+                    </div>
+                    <div className="slip-status">WIN</div>
+                  </div>
                 </div>
                 <div className="slip-leg">
                   <div className="slip-leg-line">{slip.line}</div>
@@ -769,6 +786,11 @@ export default function Home() {
             <h2 className="section-title">The questions everyone asks.</h2>
           </div>
           <Faq />
+          {/* FAQPage JSON-LD for rich snippets in Google */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_JSONLD) }}
+          />
         </div>
       </section>
 

@@ -72,6 +72,20 @@ export const SUBSCRIPTION_FEATURES = [
   "Free promo codes for every recommended platform",
 ];
 
+// TODO: wire to live count from billing (Recurly/Chargebee) once Phase 0 underwriting
+// completes. Until then this is the single source of truth — never hardcode the numbers
+// in two places.
+export const IC_STATUS = {
+  active: 167,
+  cap: 200,
+  get open() {
+    return this.cap - this.active;
+  },
+  get label() {
+    return `${this.active} / ${this.cap} ACTIVE · ${this.open} SPOTS OPEN`;
+  },
+};
+
 export const INNERCIRCLE_FEATURES = [
   "Everything in the Lockr Subscription",
   "Private IC-only Discord channels",

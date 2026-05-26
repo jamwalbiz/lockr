@@ -2,13 +2,20 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { PRICING, SUBSCRIPTION_FEATURES, INNERCIRCLE_FEATURES } from "@/lib/copy";
+import {
+  PRICING,
+  SUBSCRIPTION_FEATURES,
+  INNERCIRCLE_FEATURES,
+  IC_STATUS,
+} from "@/lib/copy";
 
 type SubKey = "weekly" | "monthly" | "annual";
 type IcKey = "monthly" | "annual";
 
 export function PricingCards() {
-  const [subCadence, setSubCadence] = useState<SubKey>("annual");
+  // Default to Monthly per JT's call — anchors lower for TikTok-impulse traffic;
+  // "SAVE 50%" badge still pulls people to Annual.
+  const [subCadence, setSubCadence] = useState<SubKey>("monthly");
   const [icCadence, setIcCadence] = useState<IcKey>("annual");
 
   const sub = PRICING.subscription[subCadence];
@@ -81,7 +88,8 @@ export function PricingCards() {
         </ul>
         <div className="ic-mini">
           <div className="ic-mini-line1">
-            <span className="ic-mini-dot"></span>167 / 200 ACTIVE · 33 SPOTS OPEN
+            <span className="ic-mini-dot"></span>
+            {IC_STATUS.label}
           </div>
           <div className="ic-mini-line2">JT personally reviews every application</div>
         </div>
