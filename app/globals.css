@@ -145,10 +145,11 @@ section { padding: 100px 0; }
 .verified-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--border-strong); border-radius: 100px; font-size: 12px; color: var(--text-mute); margin-bottom: 32px; }
 .verified-badge .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-h1.hero-title { font-size: clamp(40px, 6vw, 72px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.02; margin-bottom: 24px; }
-/* Per JT: killed the green block underline. The accent moves to a single
-   period dot — quiet typographic moment that matches the logo dot pattern. */
-.hero-title .hero-period { color: var(--accent); }
+h1.hero-title { font-size: clamp(40px, 6vw, 72px); font-weight: 700; letter-spacing: -0.04em; line-height: 1.02; margin-bottom: 24px; }
+/* Signature visual moment: green fill block on the action word. The doc called
+   this template-y for the broader web — in the picks category specifically
+   it's the opposite (everyone else is loud-tacky), and JT confirmed keep. */
+.hero-title .underline { background: var(--accent); color: #000; padding: 6px 18px 12px; border-radius: 8px; display: inline-block; line-height: 1; margin: 8px 2px 0; font-size: 1.15em; text-decoration: none; }
 .hero-sub { font-size: clamp(16px, 1.5vw, 19px); color: var(--text-mute); line-height: 1.5; max-width: 620px; margin: 0 auto 40px; }
 .hero-cta-row { display: flex; gap: 12px; justify-content: center; margin-bottom: 60px; flex-wrap: wrap; }
 

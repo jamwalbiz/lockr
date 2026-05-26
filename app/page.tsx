@@ -30,7 +30,7 @@ export default function Home() {
           <h1 className="hero-title">
             Stop guessing.
             <br />
-            Start winning<span className="hero-period">.</span>
+            <span className="underline">Start winning.</span>
           </h1>
           <p className="hero-sub">
             Daily picks across every sport, plus prediction-market plays on Kalshi and
