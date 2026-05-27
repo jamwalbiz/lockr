@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { PricingCards } from "@/components/PricingCards";
 import { Faq } from "@/components/Faq";
@@ -228,49 +229,15 @@ export default function Home() {
             Tail picks on every platform members already use
           </div>
           <div className="books-wall">
-            <SportsbookMark name="PrizePicks">
-              <path d="M8 6h12l-2 4h-6v8h-4z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-              <circle cx="22" cy="22" r="4" stroke="currentColor" strokeWidth="1.5" />
-            </SportsbookMark>
-            <SportsbookMark name="Underdog">
-              <path d="M8 8v9a8 8 0 0 0 16 0V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              <circle cx="13" cy="13" r="1.2" fill="currentColor" />
-              <circle cx="19" cy="13" r="1.2" fill="currentColor" />
-            </SportsbookMark>
-            <SportsbookMark name="Sleeper">
-              <path d="M22 7a9 9 0 1 0 3 13 7 7 0 0 1-3-13z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-            </SportsbookMark>
-            <SportsbookMark name="Dabble">
-              <circle cx="11" cy="16" r="4" stroke="currentColor" strokeWidth="1.5" />
-              <circle cx="21" cy="16" r="4" stroke="currentColor" strokeWidth="1.5" />
-              <circle cx="11" cy="16" r="1.5" fill="currentColor" />
-              <circle cx="21" cy="16" r="1.5" fill="currentColor" />
-            </SportsbookMark>
-            <SportsbookMark name="DraftKings">
-              <path d="M6 22V10l5 6 5-6 5 6 5-6v12" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-            </SportsbookMark>
-            <SportsbookMark name="FanDuel">
-              <circle cx="16" cy="16" r="9" stroke="currentColor" strokeWidth="1.5" />
-              <path d="M11 13h9M11 17h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </SportsbookMark>
-            <SportsbookMark name="BetMGM">
-              <path
-                d="M6 22V10h3l3 6 3-6h3v12M20 10h6M23 10v12"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinejoin="round"
-                strokeLinecap="round"
-              />
-            </SportsbookMark>
-            <SportsbookMark name="Kalshi">
-              <line x1="9" y1="7" x2="9" y2="25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              <line x1="9" y1="16" x2="22" y2="7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              <line x1="9" y1="16" x2="22" y2="25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </SportsbookMark>
-            <SportsbookMark name="Polymarket">
-              <polygon points="16,5 27,11 24,25 8,25 5,11" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-              <line x1="5" y1="11" x2="27" y2="11" stroke="currentColor" strokeWidth="1.5" />
-            </SportsbookMark>
+            <SportsbookMark name="PrizePicks" color="#6F4FF2" initials="PP" src="/logos/prizepicks.png" />
+            <SportsbookMark name="Underdog" color="#E03A3E" initials="UD" src="/logos/underdog.svg" />
+            <SportsbookMark name="Sleeper" color="#15A4D5" initials="S" />
+            <SportsbookMark name="Dabble" color="#1FBC74" initials="D" src="/logos/dabble.webp" />
+            <SportsbookMark name="DraftKings" color="#1B9D62" initials="DK" src="/logos/draftkings.png" />
+            <SportsbookMark name="FanDuel" color="#0094E3" initials="FD" src="/logos/fanduel.png" />
+            <SportsbookMark name="BetMGM" color="#C49845" initials="M" />
+            <SportsbookMark name="Kalshi" color="#00C2A8" initials="K" />
+            <SportsbookMark name="Polymarket" color="#1A66F0" initials="P" src="/logos/polymarket.png" />
           </div>
           <div className="books-note">
             Free promo codes &amp; sign-up bonuses for every platform above are included
@@ -843,21 +810,53 @@ export default function Home() {
 }
 
 /* ------------------------------------------------------------------
-   Small inline helpers — keep them next to the page that uses them
-   so the porting fidelity is easy to audit against the mockup.
+   Small inline helpers — keep them next to the page that uses them.
    ------------------------------------------------------------------ */
+// Sportsbook wall mark — two modes:
+//   1. `src` provided → render real logo file from /public/logos/
+//   2. otherwise → brand-colored initial badge placeholder
+// Mixed mode is intentional: drop real assets in as you collect them
+// from each affiliate program's media kit; remaining brands keep the
+// placeholder badge until their file lands.
 function SportsbookMark({
   name,
-  children,
+  color,
+  initials,
+  src,
 }: {
   name: string;
-  children: React.ReactNode;
+  color: string;
+  initials: string;
+  src?: string;
 }) {
   return (
     <div className="book-mark" title={name}>
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-        {children}
-      </svg>
+      {src ? (
+        <Image
+          src={src}
+          alt={`${name} logo`}
+          width={32}
+          height={32}
+          className="book-mark-img"
+        />
+      ) : (
+        <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
+          <rect x="2" y="2" width="28" height="28" rx="7" fill={color} />
+          <text
+            x="16"
+            y="16"
+            textAnchor="middle"
+            dominantBaseline="central"
+            fill="#fff"
+            fontFamily="var(--font-inter), 'Inter', system-ui, sans-serif"
+            fontWeight="800"
+            fontSize={initials.length > 1 ? "11" : "16"}
+            letterSpacing="-0.04em"
+          >
+            {initials}
+          </text>
+        </svg>
+      )}
       <div className="book-mark-name">{name}</div>
     </div>
   );

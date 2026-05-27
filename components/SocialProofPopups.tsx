@@ -9,27 +9,41 @@ type Active = {
   visible: boolean;
 };
 
+// Fisher–Yates shuffle in place, returning the shuffled copy.
+function shuffle<T>(input: ReadonlyArray<T>): T[] {
+  const arr = [...input];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 export function SocialProofPopups() {
   const [active, setActive] = useState<Active[]>([]);
 
   useEffect(() => {
+    // Shuffle the pool once per visit so back-to-back loads aren't identical.
+    const pool = shuffle(SOCIAL_PROOF);
     let index = 0;
     let nextId = 0;
 
     function push() {
-      const msg = SOCIAL_PROOF[index];
-      index = (index + 1) % SOCIAL_PROOF.length;
+      const msg = pool[index];
+      index = (index + 1) % pool.length;
       const id = ++nextId;
       setActive((curr) => [...curr, { id, msg, visible: false }]);
-      // animate in
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          setActive((curr) => curr.map((a) => (a.id === id ? { ...a, visible: true } : a)));
+          setActive((curr) =>
+            curr.map((a) => (a.id === id ? { ...a, visible: true } : a)),
+          );
         });
       });
-      // animate out at 6.5s, remove at 7s
       window.setTimeout(() => {
-        setActive((curr) => curr.map((a) => (a.id === id ? { ...a, visible: false } : a)));
+        setActive((curr) =>
+          curr.map((a) => (a.id === id ? { ...a, visible: false } : a)),
+        );
       }, 6500);
       window.setTimeout(() => {
         setActive((curr) => curr.filter((a) => a.id !== id));
