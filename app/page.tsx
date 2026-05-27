@@ -229,15 +229,17 @@ export default function Home() {
             Tail picks on every platform members already use
           </div>
           <div className="books-wall">
-            <SportsbookMark name="PrizePicks" color="#6F4FF2" initials="PP" src="/logos/prizepicks.png" />
-            <SportsbookMark name="Underdog" color="#E03A3E" initials="UD" src="/logos/underdog.svg" />
+            {/* All logos uniformly sourced from iTunes App Store icon CDN
+                (512x512 .jpg) for visual consistency on the wall. */}
+            <SportsbookMark name="PrizePicks" color="#6F4FF2" initials="PP" src="/logos/prizepicks.jpg" />
+            <SportsbookMark name="Underdog" color="#E03A3E" initials="UD" src="/logos/underdog.jpg" />
             <SportsbookMark name="Sleeper" color="#15A4D5" initials="S" src="/logos/sleeper.jpg" />
-            <SportsbookMark name="Dabble" color="#1FBC74" initials="D" src="/logos/dabble.webp" />
-            <SportsbookMark name="DraftKings" color="#1B9D62" initials="DK" src="/logos/draftkings.png" />
-            <SportsbookMark name="FanDuel" color="#0094E3" initials="FD" src="/logos/fanduel.png" />
+            <SportsbookMark name="Dabble" color="#1FBC74" initials="D" src="/logos/dabble.jpg" />
+            <SportsbookMark name="DraftKings" color="#1B9D62" initials="DK" src="/logos/draftkings.jpg" />
+            <SportsbookMark name="FanDuel" color="#0094E3" initials="FD" src="/logos/fanduel.jpg" />
             <SportsbookMark name="BetMGM" color="#C49845" initials="M" src="/logos/betmgm.jpg" />
             <SportsbookMark name="Kalshi" color="#00C2A8" initials="K" src="/logos/kalshi.jpg" />
-            <SportsbookMark name="Polymarket" color="#1A66F0" initials="P" src="/logos/polymarket.png" />
+            <SportsbookMark name="Polymarket" color="#1A66F0" initials="P" src="/logos/polymarket.jpg" />
           </div>
           <div className="books-note">
             Free promo codes &amp; sign-up bonuses for every platform above are included
