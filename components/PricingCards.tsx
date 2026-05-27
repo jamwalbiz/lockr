@@ -55,7 +55,10 @@ export function PricingCards() {
             <li key={f}>{f}</li>
           ))}
         </ul>
-        <Link href="/checkout" className="price-cta primary text-center">
+        <Link
+          href={`/checkout?tier=subscription&cadence=${subCadence}`}
+          className="price-cta primary text-center"
+        >
           Subscribe →
         </Link>
       </div>

@@ -9,6 +9,9 @@ export const metadata: Metadata = {
 
 type SearchParams = Promise<{ tier?: string; cadence?: string }>;
 
+const VALID_TIERS = ["subscription", "innercircle"] as const;
+const VALID_CADENCES = ["weekly", "monthly", "annual"] as const;
+
 export default async function CheckoutPage({
   searchParams,
 }: {
@@ -16,16 +19,17 @@ export default async function CheckoutPage({
 }) {
   // Next 16: searchParams is async and must be awaited
   const params = await searchParams;
+  const tier = VALID_TIERS.includes(params.tier as (typeof VALID_TIERS)[number])
+    ? (params.tier as "subscription" | "innercircle")
+    : undefined;
+  const cadence = VALID_CADENCES.includes(
+    params.cadence as (typeof VALID_CADENCES)[number],
+  )
+    ? (params.cadence as "weekly" | "monthly" | "annual")
+    : undefined;
   return (
     <div className="shell">
-      <CheckoutFlow
-        initialTier={params.tier === "innercircle" ? "innercircle" : "subscription"}
-        initialCadence={
-          params.cadence === "weekly" || params.cadence === "monthly"
-            ? params.cadence
-            : "annual"
-        }
-      />
+      <CheckoutFlow initialTier={tier} initialCadence={cadence} />
     </div>
   );
 }

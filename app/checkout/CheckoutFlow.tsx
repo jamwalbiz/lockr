@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { PRICING } from "@/lib/copy";
 
@@ -18,16 +19,19 @@ export function CheckoutFlow({
   initialTier,
   initialCadence,
 }: {
-  initialTier: Tier;
-  initialCadence: Cadence;
+  initialTier: Tier | undefined;
+  initialCadence: Cadence | undefined;
 }) {
-  const [step, setStep] = useState<Step>(2);
-  const [tier] = useState<Tier>(initialTier);
-  const [cadence] = useState<Cadence>(
-    // Inner Circle has no weekly cadence
+  // If they came from the pricing card (params present), they've already
+  // picked — skip to step 2. Otherwise start at step 1 (tier picker).
+  const cameInPrePicked = !!(initialTier && initialCadence);
+  const [step, setStep] = useState<Step>(cameInPrePicked ? 2 : 1);
+  const [tier, setTier] = useState<Tier>(initialTier ?? "subscription");
+  const [cadence, setCadence] = useState<Cadence>(
+    // Inner Circle has no weekly cadence.
     initialTier === "innercircle" && initialCadence === "weekly"
       ? "monthly"
-      : initialCadence,
+      : (initialCadence ?? "monthly"),
   );
   const [payMethod, setPayMethod] = useState<"card" | "crypto">("card");
   const [email, setEmail] = useState("");
@@ -35,7 +39,7 @@ export function CheckoutFlow({
   const [lastName, setLastName] = useState("");
   const [discordUsername, setDiscordUsername] = useState("");
 
-  // Cadence is constrained by tier; pull the matching price entry.
+  // Resolve the price entry for the current tier+cadence combo.
   const priceEntry =
     tier === "subscription"
       ? PRICING.subscription[cadence as keyof typeof PRICING.subscription]
@@ -49,13 +53,19 @@ export function CheckoutFlow({
   function next() {
     if (step < 4) setStep((step + 1) as Step);
   }
+  function back() {
+    if (step > 1) setStep((step - 1) as Step);
+  }
+
+  // Sub cadence valid: weekly, monthly, annual. IC: monthly, annual.
+  const validSubCadences: Cadence[] = ["weekly", "monthly", "annual"];
 
   return (
     <div className="checkout-page">
       <div className="checkout-progress">
         <div className="checkout-progress-meta">
           <span className="checkout-progress-label">
-            Step {step} of 4 · {step === 4 ? "All set" : "Almost there"}
+            Step {step} of 4 · {step === 4 ? "All set" : step === 1 ? "Pick your plan" : "Almost there"}
           </span>
           <span className="checkout-progress-pct">{progressPct}% complete</span>
         </div>
@@ -74,26 +84,68 @@ export function CheckoutFlow({
             className={`checkout-step ${
               s === step ? "active" : s < step ? "done" : ""
             }`}
-            style={{ flex: idx < 3 ? "0 0 auto" : "0 0 auto" }}
           >
             <div className="checkout-step-num">{s < step ? "✓" : s}</div>
             <span>{STEP_LABELS[s]}</span>
-            {idx < 3 && (
-              <div className="checkout-step-line" style={{ flex: "1 1 auto", minWidth: 16 }}></div>
-            )}
+            {idx < 3 && <div className="checkout-step-line" style={{ minWidth: 16 }}></div>}
           </div>
         ))}
       </div>
 
       <div className="checkout-card">
+        {/* Step 1 — Tier + cadence picker */}
         {step === 1 && (
           <>
-            <h2>Confirm your tier</h2>
-            <div style={{ color: "var(--text-mute)", fontSize: 14, marginBottom: 24 }}>
-              You selected <strong style={{ color: "var(--text)" }}>{tierLabel}</strong>{" "}
-              · <span className="mono">{cadenceLabel}</span>. Change anything below if you
-              need to.
+            <h2>Pick your plan</h2>
+            <p style={{ color: "var(--text-mute)", fontSize: 14, marginBottom: 24 }}>
+              Same features at every cadence. Pay weekly to try it. Pay annually to save
+              ~50%.
+            </p>
+
+            <div className="cadence-toggle" style={{ marginBottom: 24 }}>
+              {validSubCadences.map((c) => {
+                return (
+                  <button
+                    key={c}
+                    type="button"
+                    className={`cadence-btn ${cadence === c ? "active" : ""}`}
+                    onClick={() => {
+                      setTier("subscription");
+                      setCadence(c);
+                    }}
+                  >
+                    {c === "weekly" ? "Weekly" : c === "monthly" ? "Monthly" : "Annual"}
+                    {c === "annual" && <span className="cadence-save">SAVE 50%</span>}
+                  </button>
+                );
+              })}
             </div>
+
+            <div
+              style={{
+                background: "var(--bg)",
+                border: "1px solid var(--border)",
+                borderRadius: 12,
+                padding: 20,
+                marginBottom: 24,
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                <div>
+                  <div className="price-tier" style={{ marginBottom: 4 }}>
+                    Lockr Subscription
+                  </div>
+                  <div className="price-period">{priceEntry.period}</div>
+                  {priceEntry.equiv && (
+                    <div className="price-period-equiv">{priceEntry.equiv}</div>
+                  )}
+                </div>
+                <div className="price-amount" style={{ fontSize: 32 }}>
+                  {priceEntry.price}
+                </div>
+              </div>
+            </div>
+
             <button
               type="button"
               className="btn btn-primary btn-lg"
@@ -102,9 +154,25 @@ export function CheckoutFlow({
             >
               Continue →
             </button>
+
+            <div
+              style={{
+                marginTop: 16,
+                fontSize: 12,
+                color: "var(--text-mute)",
+                textAlign: "center",
+              }}
+            >
+              Looking for Inner Circle?{" "}
+              <Link href="/apply" style={{ color: "var(--accent)" }}>
+                Apply here →
+              </Link>{" "}
+              · application only, 200-member cap
+            </div>
           </>
         )}
 
+        {/* Step 2 — Account + payment method */}
         {step === 2 && (
           <>
             <h2>Your details</h2>
@@ -230,6 +298,7 @@ export function CheckoutFlow({
           </>
         )}
 
+        {/* Step 3 — Payment processing handoff */}
         {step === 3 && (
           <>
             <h2>Processing payment</h2>
@@ -248,6 +317,7 @@ export function CheckoutFlow({
           </>
         )}
 
+        {/* Step 4 — Confirmation */}
         {step === 4 && (
           <>
             <h2>You&apos;re in.</h2>
@@ -284,11 +354,7 @@ export function CheckoutFlow({
 
       {step > 1 && step < 4 && (
         <div style={{ marginTop: 16, textAlign: "center" }}>
-          <button
-            type="button"
-            className="btn btn-ghost"
-            onClick={() => setStep((step - 1) as Step)}
-          >
+          <button type="button" className="btn btn-ghost" onClick={back}>
             ← Back
           </button>
         </div>
