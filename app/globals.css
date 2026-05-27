@@ -421,7 +421,7 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .book-mark-img { object-fit: contain; border-radius: 6px; }
 .books-note { text-align: center; margin-top: 16px; font-size: 12px; color: var(--text-dim); }
 @media (max-width: 900px) { .books-wall { grid-template-columns: repeat(4, 1fr); } .book-mark { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); } .book-mark:nth-child(4n) { border-right: none; } .book-mark:nth-last-child(-n+4) { border-bottom: none; } }
-@media (max-width: 480px) { .books-wall { grid-template-columns: repeat(2, 1fr); } .book-mark:nth-child(4n) { border-right: 1px solid var(--border); } .book-mark:nth-child(2n) { border-right: none; } }
+@media (max-width: 480px) { .books-wall { grid-template-columns: repeat(2, 1fr); } .book-mark:nth-child(4n) { border-right: 1px solid var(--border); } .book-mark:nth-child(2n) { border-right: none; } .book-mark:nth-last-child(-n+4) { border-bottom: 1px solid var(--border); } .book-mark:nth-last-child(-n+2) { border-bottom: none; } }
 
 /* ------------------------------------------------------------------
    Inline CTA
