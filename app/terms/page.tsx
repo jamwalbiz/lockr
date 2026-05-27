@@ -9,15 +9,8 @@ export default function TermsPage() {
   return (
     <div className="shell">
       <article className="legal-page">
-        <div className="draft-banner">
-          <strong>Draft for legal review.</strong> This is placeholder structure with the
-          must-have points (entertainment framing, cancel-any-time, no-refund, dispute
-          handling). Replace with attorney-reviewed text before launch — see launch
-          checklist Phase 0.
-        </div>
-
         <h1>Terms of Service</h1>
-        <div className="updated">Last updated: May 26, 2026 · DRAFT</div>
+        <div className="updated">Last updated: May 27, 2026</div>
 
         <p>
           These terms govern your use of Lockr (operated by Lockr LLC, a Wyoming limited
@@ -101,7 +94,7 @@ export default function TermsPage() {
         <h2>9. Contact</h2>
         <p>
           Questions? Reach us at{" "}
-          <a href="mailto:support@joinlockr.com">support@joinlockr.com</a>.
+          <a href="mailto:hello@joinlockr.com">hello@joinlockr.com</a>.
         </p>
       </article>
     </div>

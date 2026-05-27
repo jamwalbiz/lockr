@@ -9,14 +9,8 @@ export default function PrivacyPage() {
   return (
     <div className="shell">
       <article className="legal-page">
-        <div className="draft-banner">
-          <strong>Draft for legal review.</strong> Replace with attorney-reviewed text
-          before launch. Update the list of data processors below as the production stack
-          is finalized.
-        </div>
-
         <h1>Privacy Policy</h1>
-        <div className="updated">Last updated: May 26, 2026 · DRAFT</div>
+        <div className="updated">Last updated: May 27, 2026</div>
 
         <p>
           Lockr LLC respects your privacy. This policy explains what we collect, how we
@@ -91,7 +85,7 @@ export default function PrivacyPage() {
           </li>
           <li>
             Request export or deletion of your data by emailing{" "}
-            <a href="mailto:privacy@joinlockr.com">privacy@joinlockr.com</a>. We respond
+            <a href="mailto:hello@joinlockr.com">hello@joinlockr.com</a>. We respond
             within 30 days.
           </li>
         </ul>
@@ -106,7 +100,7 @@ export default function PrivacyPage() {
         <h2>Contact</h2>
         <p>
           Questions or requests:{" "}
-          <a href="mailto:privacy@joinlockr.com">privacy@joinlockr.com</a>.
+          <a href="mailto:hello@joinlockr.com">hello@joinlockr.com</a>.
         </p>
       </article>
     </div>

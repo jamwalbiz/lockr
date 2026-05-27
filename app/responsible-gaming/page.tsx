@@ -11,7 +11,7 @@ export default function ResponsibleGamingPage() {
     <div className="shell">
       <article className="legal-page">
         <h1>Responsible gaming</h1>
-        <div className="updated">Last updated: May 26, 2026</div>
+        <div className="updated">Last updated: May 27, 2026</div>
 
         <p>
           We believe sports wagering and prediction-market trading work best as

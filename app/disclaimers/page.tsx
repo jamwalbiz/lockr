@@ -10,14 +10,8 @@ export default function DisclaimersPage() {
   return (
     <div className="shell">
       <article className="legal-page">
-        <div className="draft-banner">
-          <strong>Draft for legal review.</strong> This page is the public version of the
-          disclaimer language already in the footer. Confirm wording with counsel before
-          launch.
-        </div>
-
         <h1>Disclaimers</h1>
-        <div className="updated">Last updated: May 26, 2026 · DRAFT</div>
+        <div className="updated">Last updated: May 27, 2026</div>
 
         <h2>Entertainment & education only</h2>
         <p>

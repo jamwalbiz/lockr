@@ -37,7 +37,7 @@ export function Footer() {
             <Link href="/about">About</Link>
             <Link href="/about#methodology">Methodology</Link>
             <Link href="#">Press</Link>
-            <a href="mailto:support@joinlockr.com">Contact</a>
+            <a href="mailto:hello@joinlockr.com">Contact</a>
           </div>
           <div className="footer-col">
             <h4>Legal</h4>
