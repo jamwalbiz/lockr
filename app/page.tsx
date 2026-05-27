@@ -237,7 +237,6 @@ export default function Home() {
             <SportsbookMark name="Dabble" color="#1FBC74" initials="D" src="/logos/dabble.jpg" />
             <SportsbookMark name="DraftKings" color="#1B9D62" initials="DK" src="/logos/draftkings.jpg" />
             <SportsbookMark name="FanDuel" color="#0094E3" initials="FD" src="/logos/fanduel.jpg" />
-            <SportsbookMark name="BetMGM" color="#C49845" initials="M" src="/logos/betmgm.jpg" />
             <SportsbookMark name="Kalshi" color="#00C2A8" initials="K" src="/logos/kalshi.jpg" />
             <SportsbookMark name="Polymarket" color="#1A66F0" initials="P" src="/logos/polymarket.jpg" />
           </div>

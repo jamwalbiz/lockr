@@ -48,7 +48,7 @@ export default function DisclaimersPage() {
         <p>
           Lockr is not affiliated with any sportsbook, daily-fantasy operator, or
           prediction market unless explicitly stated. Mentions of PrizePicks, Underdog,
-          Sleeper, Dabble, DraftKings, FanDuel, BetMGM, Kalshi, Polymarket, and others are
+          Sleeper, Dabble, DraftKings, FanDuel, Kalshi, Polymarket, and others are
           for informational and tailing purposes only. Always read each platform&apos;s
           own terms.
         </p>
