@@ -231,12 +231,12 @@ export default function Home() {
           <div className="books-wall">
             <SportsbookMark name="PrizePicks" color="#6F4FF2" initials="PP" src="/logos/prizepicks.png" />
             <SportsbookMark name="Underdog" color="#E03A3E" initials="UD" src="/logos/underdog.svg" />
-            <SportsbookMark name="Sleeper" color="#15A4D5" initials="S" />
+            <SportsbookMark name="Sleeper" color="#15A4D5" initials="S" src="/logos/sleeper.jpg" />
             <SportsbookMark name="Dabble" color="#1FBC74" initials="D" src="/logos/dabble.webp" />
             <SportsbookMark name="DraftKings" color="#1B9D62" initials="DK" src="/logos/draftkings.png" />
             <SportsbookMark name="FanDuel" color="#0094E3" initials="FD" src="/logos/fanduel.png" />
-            <SportsbookMark name="BetMGM" color="#C49845" initials="M" />
-            <SportsbookMark name="Kalshi" color="#00C2A8" initials="K" />
+            <SportsbookMark name="BetMGM" color="#C49845" initials="M" src="/logos/betmgm.jpg" />
+            <SportsbookMark name="Kalshi" color="#00C2A8" initials="K" src="/logos/kalshi.jpg" />
             <SportsbookMark name="Polymarket" color="#1A66F0" initials="P" src="/logos/polymarket.png" />
           </div>
           <div className="books-note">
