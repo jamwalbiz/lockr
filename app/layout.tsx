@@ -6,8 +6,9 @@ import { ActivityTicker } from "@/components/ActivityTicker";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { MobileCta } from "@/components/MobileCta";
-import { LanguageToggle } from "@/components/LanguageToggle";
 import { SocialProofPopups } from "@/components/SocialProofPopups";
+// LanguageToggle now lives inline in the Footer (moved out of the bottom-right
+// fixed slot to unclog the mobile corner with sticky CTA + social-proof popups).
 
 const inter = Inter({
   variable: "--font-inter",
@@ -104,7 +105,6 @@ export default function RootLayout({
         </main>
         <Footer />
         <MobileCta />
-        <LanguageToggle />
         <SocialProofPopups />
         {/* Cookie-less pageview analytics — no-ops on localhost. */}
         <Analytics />

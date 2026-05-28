@@ -71,6 +71,14 @@ export default function AboutPage() {
         </h2>
         <div className="method-grid">
           <div className="method-card">
+            <div className="method-icon" aria-hidden="true">
+              {/* Model: two diverging lines — our projection vs the book's */}
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M4 24l6-6 5 3 8-10 5 3" />
+                <path d="M4 28l6-2 5 2 8-4 5 2" strokeDasharray="2 2" opacity="0.5" />
+                <circle cx="22" cy="11" r="1.5" fill="currentColor" />
+              </svg>
+            </div>
             <div className="num">01 · MODEL</div>
             <h3>Build the line yourself</h3>
             <p>
@@ -79,6 +87,15 @@ export default function AboutPage() {
             </p>
           </div>
           <div className="method-card">
+            <div className="method-icon" aria-hidden="true">
+              {/* Price: line dropping (line moves toward our entry) */}
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M4 8l8 6 6-3 10 4" />
+                <circle cx="4" cy="8" r="1.5" fill="currentColor" />
+                <path d="M4 8v18M4 26h22" />
+                <text x="14" y="22" fontSize="6" fill="currentColor" stroke="none" fontFamily="var(--font-jetbrains), monospace" fontWeight="700">+CLV</text>
+              </svg>
+            </div>
             <div className="num">02 · PRICE</div>
             <h3>Beat the book to the line</h3>
             <p>
@@ -88,6 +105,15 @@ export default function AboutPage() {
             </p>
           </div>
           <div className="method-card">
+            <div className="method-icon" aria-hidden="true">
+              {/* Size: target with center dot */}
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <circle cx="16" cy="16" r="12" />
+                <circle cx="16" cy="16" r="7" />
+                <circle cx="16" cy="16" r="2.5" fill="currentColor" />
+                <path d="M16 2v4M16 26v4M2 16h4M26 16h4" />
+              </svg>
+            </div>
             <div className="num">03 · SIZE</div>
             <h3>Bet the right amount</h3>
             <p>

@@ -328,65 +328,81 @@ export default function Home() {
           </div>
           <div className="sports-grid">
             <SportCard tag="NFL" name="Football" desc="Sundays, Mondays, Thursdays. Spreads, totals, player props, playoffs.">
-              <ellipse cx="12" cy="12" rx="9" ry="5" transform="rotate(-15 12 12)" />
-              <line x1="8" y1="12" x2="16" y2="12" transform="rotate(-15 12 12)" />
-              <line x1="10" y1="11" x2="10" y2="13" transform="rotate(-15 12 12)" />
-              <line x1="12" y1="11" x2="12" y2="13" transform="rotate(-15 12 12)" />
-              <line x1="14" y1="11" x2="14" y2="13" transform="rotate(-15 12 12)" />
+              {/* American football: oblong horizontal with laces */}
+              <ellipse cx="12" cy="12" rx="9" ry="5" />
+              <line x1="9" y1="12" x2="15" y2="12" />
+              <line x1="10" y1="11" x2="10" y2="13" />
+              <line x1="12" y1="11" x2="12" y2="13" />
+              <line x1="14" y1="11" x2="14" y2="13" />
+              <path d="M3 12c1.5-1 3-1.5 4-1.5" />
+              <path d="M21 12c-1.5-1-3-1.5-4-1.5" />
             </SportCard>
             <SportCard tag="NBA" name="Basketball" desc="Nightly props, spreads, totals. Deep dives on usage, pace, matchups.">
+              {/* Basketball: circle with classic 4-arc seam pattern */}
               <circle cx="12" cy="12" r="9" />
               <path d="M3 12h18" />
-              <path d="M5.5 6.5c2.5 3 2.5 8 0 11" />
-              <path d="M18.5 6.5c-2.5 3-2.5 8 0 11" />
+              <path d="M12 3v18" />
+              <path d="M4.5 7c2 1.5 3 3 3 5s-1 3.5-3 5" />
+              <path d="M19.5 7c-2 1.5-3 3-3 5s1 3.5 3 5" />
             </SportCard>
             <SportCard tag="MLB" name="Baseball" desc="Daily slates, F5, NRFI/YRFI. Carries you through summer.">
+              {/* Baseball: circle with dashed stitching curves */}
               <circle cx="12" cy="12" r="9" />
-              <path d="M5 7c3 0 6 2 7 5" />
-              <path d="M19 7c-3 0-6 2-7 5" />
-              <path d="M5 17c3 0 6-2 7-5" />
+              <path d="M6 8c2 0.5 4 2 5 4" strokeDasharray="1.5 1.5" />
+              <path d="M18 8c-2 0.5-4 2-5 4" strokeDasharray="1.5 1.5" />
+              <path d="M6 16c2-0.5 4-2 5-4" strokeDasharray="1.5 1.5" />
+              <path d="M18 16c-2-0.5-4-2-5-4" strokeDasharray="1.5 1.5" />
             </SportCard>
             <SportCard tag="NHL" name="Hockey" desc="Puck lines, totals, goalie props. Smart money lives in this market.">
-              <ellipse cx="12" cy="13" rx="9" ry="3" />
-              <ellipse cx="12" cy="10" rx="9" ry="3" />
-              <line x1="3" y1="10" x2="3" y2="13" />
-              <line x1="21" y1="10" x2="21" y2="13" />
+              {/* Hockey: stick + puck */}
+              <path d="M5 4l13 13" />
+              <path d="M17 17l3 3" />
+              <ellipse cx="7" cy="19" rx="4" ry="1.5" />
             </SportCard>
             <SportCard tag="UFC" name="UFC & Boxing" desc="Method-of-victory, round props, fight breakdowns. Soft books, big edges.">
-              <path d="M8 6c0-2 1.5-3 4-3s4 1 4 3v3c2 0 4 1 4 4v5c0 2-2 3-4 3H8c-2 0-4-1-4-3v-7c0-2 1-3 3-3" />
-              <line x1="10" y1="14" x2="14" y2="14" />
+              {/* Boxing glove: rounded fist shape with thumb */}
+              <path d="M6 14c0-3 1-5 4-5h6c2 0 3 1.5 3 3.5v4c0 2.5-2 4.5-4.5 4.5h-5C7 21 6 19 6 17z" />
+              <path d="M6 14V9c0-1.5 1-2.5 2.5-2.5S11 7.5 11 9v1" />
+              <path d="M14 13.5h2" />
             </SportCard>
             <SportCard tag="F1" name="Formula 1" desc="Qualifying, podium, head-to-head. One of the softest markets in sports.">
-              <circle cx="12" cy="12" r="9" />
-              <circle cx="12" cy="12" r="3" />
-              <line x1="3" y1="12" x2="9" y2="12" />
-              <line x1="15" y1="12" x2="21" y2="12" />
-              <line x1="12" y1="3" x2="12" y2="9" />
-              <line x1="12" y1="15" x2="12" y2="21" />
+              {/* F1 race car: low silhouette with wheels and spoiler */}
+              <path d="M3 14h4l2-3h6l2 3h4" />
+              <path d="M3 14v2c0 0.5 0.5 1 1 1h1" />
+              <path d="M21 14v2c0 0.5-0.5 1-1 1h-1" />
+              <circle cx="7" cy="17" r="2" />
+              <circle cx="17" cy="17" r="2" />
+              <path d="M9 11l1-2h4l1 2" />
             </SportCard>
             <SportCard tag="NCAA" name="College Football & Hoops" desc="Saturdays, March Madness, bowl season. Where the books get it wrong most.">
+              {/* Graduation cap */}
               <path d="M2 9l10-5 10 5-10 5z" />
               <path d="M6 11v5c0 1.5 3 2.5 6 2.5s6-1 6-2.5v-5" />
               <line x1="22" y1="9" x2="22" y2="14" />
+              <circle cx="22" cy="14.5" r="0.5" fill="currentColor" />
             </SportCard>
             <SportCard tag="SOCCER" name="Soccer" desc="Premier League, Champions League, World Cup years. ML, totals, BTTS.">
+              {/* Soccer ball: classic pentagon + hex pattern */}
               <circle cx="12" cy="12" r="9" />
-              <polygon points="12,7 15,9.5 14,13 10,13 9,9.5" />
-              <line x1="12" y1="7" x2="12" y2="3.5" />
-              <line x1="15" y1="9.5" x2="18.5" y2="8" />
-              <line x1="14" y1="13" x2="16" y2="16.5" />
-              <line x1="10" y1="13" x2="8" y2="16.5" />
-              <line x1="9" y1="9.5" x2="5.5" y2="8" />
+              <polygon points="12,7.5 15,9.7 13.8,13.3 10.2,13.3 9,9.7" />
+              <line x1="12" y1="7.5" x2="12" y2="3" />
+              <line x1="15" y1="9.7" x2="19" y2="7" />
+              <line x1="13.8" y1="13.3" x2="16.5" y2="17.5" />
+              <line x1="10.2" y1="13.3" x2="7.5" y2="17.5" />
+              <line x1="9" y1="9.7" x2="5" y2="7" />
             </SportCard>
             <SportCard tag="TENNIS" name="Tennis" desc="Grand Slams + ATP/WTA majors. Set spreads, total games, H2Hs.">
-              <circle cx="12" cy="12" r="9" />
-              <path d="M3 9c3 2 7 2 9 0c2-2 6-2 9 0" />
-              <path d="M3 15c3-2 7-2 9 0c2 2 6 2 9 0" />
+              {/* Tennis racket: round head with handle */}
+              <circle cx="10" cy="10" r="6" />
+              <path d="M10 4v12M4 10h12" strokeWidth="0.8" />
+              <path d="M14.5 14.5L20 20" strokeLinecap="round" strokeWidth="2" />
             </SportCard>
             <SportCard tag="ESPORTS" name="Esports" desc="CS, Valorant, League. Money lines, map handicaps, total maps.">
+              {/* Gamepad with directional pad + buttons */}
               <path d="M5 9h14a3 3 0 013 3v3a3 3 0 01-3 3h-2.5l-2-3h-5l-2 3H5a3 3 0 01-3-3v-3a3 3 0 013-3z" />
-              <circle cx="8" cy="13.5" r="1.2" />
-              <circle cx="16" cy="13.5" r="1.2" />
+              <path d="M6.5 12.5v2M5.5 13.5h2" strokeLinecap="round" />
+              <circle cx="16.5" cy="12.5" r="0.7" fill="currentColor" />
+              <circle cx="17.5" cy="14.5" r="0.7" fill="currentColor" />
             </SportCard>
             <SportCard tag="KALSHI" name="Kalshi" desc="CFTC-regulated event contracts. Sports, politics, economics, tech." featured>
               <line x1="6" y1="4" x2="6" y2="20" />
@@ -717,6 +733,7 @@ export default function Home() {
           </div>
           <div className="qual-grid">
             <div className="qual-card yes">
+              <div className="qual-icon" aria-hidden="true">✓</div>
               <div className="qual-label">★ Lockr is for you if</div>
               <div className="qual-title">
                 You bet, you take it seriously, and you want to compound.
@@ -730,6 +747,7 @@ export default function Home() {
               </ul>
             </div>
             <div className="qual-card no">
+              <div className="qual-icon" aria-hidden="true">✕</div>
               <div className="qual-label">— Lockr is NOT for you if</div>
               <div className="qual-title">
                 You want guaranteed wins or a get-rich-quick play.
@@ -836,22 +854,22 @@ function SportsbookMark({
         <Image
           src={src}
           alt={`${name} logo`}
-          width={32}
-          height={32}
+          width={48}
+          height={48}
           className="book-mark-img"
         />
       ) : (
-        <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
-          <rect x="2" y="2" width="28" height="28" rx="7" fill={color} />
+        <svg width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="2" y="2" width="44" height="44" rx="11" fill={color} />
           <text
-            x="16"
-            y="16"
+            x="24"
+            y="24"
             textAnchor="middle"
             dominantBaseline="central"
             fill="#fff"
             fontFamily="var(--font-inter), 'Inter', system-ui, sans-serif"
             fontWeight="800"
-            fontSize={initials.length > 1 ? "11" : "16"}
+            fontSize={initials.length > 1 ? "16" : "22"}
             letterSpacing="-0.04em"
           >
             {initials}

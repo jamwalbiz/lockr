@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LanguageToggle } from "./LanguageToggle";
 import { NewsletterForm } from "./NewsletterForm";
 
 export function Footer() {
@@ -49,11 +50,12 @@ export function Footer() {
         </div>
         <div className="footer-bottom">
           <div>© 2026 Lockr. All rights reserved.</div>
-          <div style={{ display: "flex", gap: 16 }}>
+          <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
             <a href="#">X</a>
             <a href="#">TikTok</a>
             <a href="#">Instagram</a>
             <a href="#">YouTube</a>
+            <LanguageToggle />
           </div>
         </div>
         <div className="footer-disclaimer" style={{ marginTop: 24 }}>

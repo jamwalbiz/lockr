@@ -52,6 +52,59 @@ export default function NotFound() {
           See pricing
         </Link>
       </div>
+
+      {/* Popular links — quick recovery for mistyped URLs */}
+      <div
+        style={{
+          marginTop: 64,
+          padding: 32,
+          background: "var(--bg-elevated)",
+          border: "1px solid var(--border)",
+          borderRadius: 12,
+          maxWidth: 520,
+          margin: "64px auto 0",
+        }}
+      >
+        <div
+          className="mono"
+          style={{
+            color: "var(--text-mute)",
+            fontSize: 11,
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            marginBottom: 16,
+          }}
+        >
+          Popular links
+        </div>
+        <div style={{ display: "grid", gap: 4 }}>
+          {[
+            { href: "/", label: "Home", desc: "Daily picks + the rest" },
+            { href: "/pricing", label: "Pricing", desc: "$29/wk, $99/mo, $599/yr" },
+            { href: "/about", label: "About JT", desc: "Founder, methodology" },
+            { href: "/apply", label: "Inner Circle", desc: "Application only · 33 spots open" },
+            { href: "/#faq", label: "FAQ", desc: "The questions everyone asks" },
+          ].map((it) => (
+            <Link
+              key={it.href}
+              href={it.href}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "12px 14px",
+                borderRadius: 8,
+                fontSize: 14,
+                color: "var(--text)",
+                transition: "background 0.15s",
+              }}
+            >
+              <span style={{ fontWeight: 600 }}>{it.label}</span>
+              <span style={{ fontSize: 12, color: "var(--text-mute)" }}>{it.desc}</span>
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

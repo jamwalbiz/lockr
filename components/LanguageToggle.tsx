@@ -4,6 +4,8 @@ import { track } from "@vercel/analytics";
 import { useEffect, useRef, useState } from "react";
 import { LANGUAGES } from "@/lib/copy";
 
+// Footer-inline language toggle. Replaced the previous bottom-right fixed
+// position which crowded the mobile sticky CTA.
 export function LanguageToggle() {
   const [current, setCurrent] = useState("EN");
   const [open, setOpen] = useState(false);
