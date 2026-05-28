@@ -3,6 +3,7 @@
 import { track } from "@vercel/analytics";
 import Link from "next/link";
 import { useState } from "react";
+import { useCadence } from "@/components/CadenceContext";
 import {
   PRICING,
   SUBSCRIPTION_FEATURES,
@@ -10,13 +11,12 @@ import {
   IC_STATUS,
 } from "@/lib/copy";
 
-type SubKey = "weekly" | "monthly" | "annual";
 type IcKey = "monthly" | "annual";
 
 export function PricingCards() {
-  // Default to Monthly per JT's call — anchors lower for TikTok-impulse traffic;
-  // "SAVE 50%" badge still pulls people to Annual.
-  const [subCadence, setSubCadence] = useState<SubKey>("monthly");
+  // Subscription cadence lives in shared context — MobileCta reads from it
+  // to show the matching price in the sticky bar.
+  const { subscription: subCadence, setSubscription: setSubCadence } = useCadence();
   const [icCadence, setIcCadence] = useState<IcKey>("annual");
 
   const sub = PRICING.subscription[subCadence];
@@ -57,9 +57,11 @@ export function PricingCards() {
             <span className="cadence-save">SAVE 50%</span>
           </CadenceButton>
         </div>
-        <div className="price-amount">{sub.price}</div>
-        <div className="price-period">{sub.period}</div>
-        {sub.equiv && <div className="price-period-equiv">{sub.equiv}</div>}
+        <div key={subCadence} className="price-block">
+          <div className="price-amount">{sub.price}</div>
+          <div className="price-period">{sub.period}</div>
+          {sub.equiv && <div className="price-period-equiv">{sub.equiv}</div>}
+        </div>
         <ul className="price-features">
           {SUBSCRIPTION_FEATURES.map((f) => (
             <li key={f}>{f}</li>
@@ -105,9 +107,11 @@ export function PricingCards() {
             <span className="cadence-save">SAVE 17%</span>
           </CadenceButton>
         </div>
-        <div className="price-amount">{ic.price}</div>
-        <div className="price-period">{ic.period}</div>
-        {ic.equiv && <div className="price-period-equiv">{ic.equiv}</div>}
+        <div key={icCadence} className="price-block">
+          <div className="price-amount">{ic.price}</div>
+          <div className="price-period">{ic.period}</div>
+          {ic.equiv && <div className="price-period-equiv">{ic.equiv}</div>}
+        </div>
         <ul className="price-features">
           {INNERCIRCLE_FEATURES.map((f) => (
             <li key={f}>{f}</li>

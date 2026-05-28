@@ -487,6 +487,12 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .pricing-card.gold .cadence-btn.active .cadence-save { color: rgba(0,0,0,0.7); }
 
 .price-tier { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-mute); margin-bottom: 12px; font-weight: 600; }
+.price-block { animation: priceFadeIn 0.22s ease-out; }
+@keyframes priceFadeIn {
+  from { opacity: 0.5; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) { .price-block { animation: none; } }
 .price-amount { font-family: var(--font-jetbrains), monospace; font-size: 40px; font-weight: 600; letter-spacing: -0.02em; line-height: 1; }
 .price-period { font-size: 13px; color: var(--text-mute); margin-top: 4px; }
 .price-period-equiv { font-size: 12px; color: var(--text-dim); margin-top: 2px; font-family: var(--font-jetbrains), monospace; }

@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { ActivityTicker } from "@/components/ActivityTicker";
+import { CadenceProvider } from "@/components/CadenceContext";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { MobileCta } from "@/components/MobileCta";
@@ -98,14 +99,16 @@ export default function RootLayout({
         <a href="#main" className="skip-link">
           Skip to content
         </a>
-        <ActivityTicker />
-        <Nav />
-        <main id="main" className="page">
-          {children}
-        </main>
-        <Footer />
-        <MobileCta />
-        <SocialProofPopups />
+        <CadenceProvider>
+          <ActivityTicker />
+          <Nav />
+          <main id="main" className="page">
+            {children}
+          </main>
+          <Footer />
+          <MobileCta />
+          <SocialProofPopups />
+        </CadenceProvider>
         {/* Cookie-less pageview analytics — no-ops on localhost. */}
         <Analytics />
       </body>

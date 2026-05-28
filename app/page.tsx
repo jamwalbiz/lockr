@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CountUp } from "@/components/CountUp";
 import {
   IconBallAmericanFootball,
   IconBallBasketball,
@@ -59,19 +60,27 @@ export default function Home() {
           </div>
           <div className="stats-strip">
             <div className="stat-cell">
-              <div className="stat-num positive mono">+147u</div>
+              <div className="stat-num positive mono">
+                <CountUp to={147} prefix="+" suffix="u" />
+              </div>
               <div className="stat-label">12-mo units won</div>
             </div>
             <div className="stat-cell">
-              <div className="stat-num mono">60%+</div>
+              <div className="stat-num mono">
+                <CountUp to={60} suffix="%+" />
+              </div>
               <div className="stat-label">Win rate · 1,847 picks</div>
             </div>
             <div className="stat-cell">
-              <div className="stat-num positive mono">4.9★</div>
+              <div className="stat-num positive mono">
+                <CountUp to={4.9} decimals={1} suffix="★" />
+              </div>
               <div className="stat-label">Member rating</div>
             </div>
             <div className="stat-cell">
-              <div className="stat-num mono">10+</div>
+              <div className="stat-num mono">
+                <CountUp to={10} suffix="+" />
+              </div>
               <div className="stat-label">Sports + markets</div>
             </div>
           </div>
@@ -272,28 +281,34 @@ export default function Home() {
           <div className="tracker-card">
             <div className="tracker-grid">
               <div className="tracker-big">
-                <div className="tracker-big-num">+147u</div>
+                <div className="tracker-big-num">
+                  <CountUp to={147} prefix="+" suffix="u" />
+                </div>
                 <div className="tracker-big-label">Units · trailing 12 months</div>
               </div>
               <div className="tracker-stats">
                 <div className="tracker-stat">
-                  <div className="tracker-stat-num">60%+</div>
+                  <div className="tracker-stat-num">
+                    <CountUp to={60} suffix="%+" />
+                  </div>
                   <div className="tracker-stat-label">Win rate</div>
                 </div>
                 <div className="tracker-stat">
                   <div className="tracker-stat-num" style={{ color: "var(--accent)" }}>
-                    4.9★
+                    <CountUp to={4.9} decimals={1} suffix="★" />
                   </div>
                   <div className="tracker-stat-label">Member rating</div>
                 </div>
                 <div className="tracker-stat">
                   <div className="tracker-stat-num" style={{ color: "var(--accent)" }}>
-                    +24.7u
+                    <CountUp to={24.7} decimals={1} prefix="+" suffix="u" />
                   </div>
                   <div className="tracker-stat-label">Last 30 days</div>
                 </div>
                 <div className="tracker-stat">
-                  <div className="tracker-stat-num">10+</div>
+                  <div className="tracker-stat-num">
+                    <CountUp to={10} suffix="+" />
+                  </div>
                   <div className="tracker-stat-label">Sports + markets</div>
                 </div>
               </div>
@@ -510,7 +525,7 @@ export default function Home() {
                   <div className="discord-body">
                     <div className="discord-name-row">
                       <span className="discord-name">jordan_k</span>
-                      <span className="discord-time">Today at 11:42 AM</span>
+                      <span className="discord-time">Earlier today</span>
                     </div>
                     <div className="discord-text">
                       SGA over 31.5 hit at the buzzer 😤 JT called this one before line
@@ -530,7 +545,7 @@ export default function Home() {
                   <div className="discord-body">
                     <div className="discord-name-row">
                       <span className="discord-name">devonm</span>
-                      <span className="discord-time">Today at 1:15 PM</span>
+                      <span className="discord-time">A few hours ago</span>
                     </div>
                     <div className="discord-text">
                       that Kalshi Fed hold position from yesterday — closed at 0.94 from
@@ -551,7 +566,7 @@ export default function Home() {
                         jt
                       </span>
                       <span className="discord-creator-tag">CREATOR</span>
-                      <span className="discord-time">Today at 2:01 PM</span>
+                      <span className="discord-time">Just now</span>
                     </div>
                     <div className="discord-text">
                       posted the F1 Monaco breakdown in #long-form — explains why
@@ -575,7 +590,7 @@ export default function Home() {
                     <div className="discord-name-row">
                       <span className="discord-name">ethan</span>
                       <span className="discord-ic-tag">★ INNER CIRCLE</span>
-                      <span className="discord-time">Yesterday at 8:47 PM</span>
+                      <span className="discord-time">Yesterday</span>
                     </div>
                     <div className="discord-text">
                       jt the prop model output on Topuria pre-fight was unreal.{" "}
@@ -593,7 +608,7 @@ export default function Home() {
                     <div className="discord-name-row">
                       <span className="discord-name">amir</span>
                       <span className="discord-ic-tag">★ INNER CIRCLE</span>
-                      <span className="discord-time">Yesterday at 10:13 PM</span>
+                      <span className="discord-time">Yesterday</span>
                     </div>
                     <div className="discord-text">
                       the Polymarket GPT-5 NO position printed today. closed -11% from our
@@ -613,7 +628,7 @@ export default function Home() {
                         jt
                       </span>
                       <span className="discord-creator-tag">CREATOR</span>
-                      <span className="discord-time">Today at 9:30 AM</span>
+                      <span className="discord-time">This morning</span>
                     </div>
                     <div className="discord-text">
                       weekly call moved to Thursday 8pm ET. agenda in the pinned message.
