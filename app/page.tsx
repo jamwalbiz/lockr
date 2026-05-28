@@ -6,6 +6,7 @@ import {
   IconBallBaseball,
   IconBallFootball,
   IconBallTennis,
+  IconCar,
   IconKarate,
   IconDeviceGamepad2,
   IconChartLine,
@@ -359,15 +360,7 @@ export default function Home() {
               <IconKarate size={28} stroke={1.5} />
             </SportCard>
             <SportCard tag="F1" name="Formula 1" desc="Qualifying, podium, head-to-head. One of the softest markets in sports.">
-              <CustomSportIcon>
-                {/* F1 race car silhouette — Tabler's IconCar* are all road cars */}
-                <path d="M3 14h4l2-3h6l2 3h4" />
-                <path d="M3 14v2c0 0.5 0.5 1 1 1h1" />
-                <path d="M21 14v2c0 0.5-0.5 1-1 1h-1" />
-                <circle cx="7" cy="17" r="2" />
-                <circle cx="17" cy="17" r="2" />
-                <path d="M9 11l1-2h4l1 2" />
-              </CustomSportIcon>
+              <IconCar size={28} stroke={1.5} />
             </SportCard>
             <SportCard tag="NCAA" name="College Football & Hoops" desc="Saturdays, March Madness, bowl season. Where the books get it wrong most.">
               <CustomSportIcon>
