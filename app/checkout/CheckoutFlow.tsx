@@ -3,17 +3,17 @@
 import Link from "next/link";
 import { useState } from "react";
 import { feedbackClick, feedbackSuccess } from "@/lib/sound";
-import { PRICING, whopCheckoutUrl } from "@/lib/copy";
+import { PRICING, whopCheckoutUrl, isValidEmail } from "@/lib/copy";
 
 type Tier = "subscription" | "innercircle";
 type Cadence = "weekly" | "monthly" | "annual";
-type Step = 1 | 2 | 3 | 4;
+// Two-step wizard: Tier → Account → (redirect to Whop). Whop runs the
+// payment + post-purchase community access; we don't render either step.
+type Step = 1 | 2;
 
 const STEP_LABELS: Record<Step, string> = {
   1: "Tier",
   2: "Account",
-  3: "Payment",
-  4: "Discord",
 };
 
 export function CheckoutFlow({
@@ -34,7 +34,6 @@ export function CheckoutFlow({
       ? "monthly"
       : (initialCadence ?? "monthly"),
   );
-  const [payMethod, setPayMethod] = useState<"card" | "crypto">("card");
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -49,18 +48,12 @@ export function CheckoutFlow({
   const tierLabel = tier === "subscription" ? "Lockr Subscription" : "Inner Circle";
   const cadenceLabel =
     cadence === "weekly" ? "Weekly" : cadence === "monthly" ? "Monthly" : "Annual";
-  const progressPct = (step / 4) * 100;
+  const progressPct = (step / 2) * 100;
 
   function next() {
-    if (step < 4) {
-      const nextStep = (step + 1) as Step;
-      setStep(nextStep);
-      // Step 4 is "you're in" — celebrate. All other transitions get the click tick.
-      if (nextStep === 4) {
-        feedbackSuccess();
-      } else {
-        feedbackClick();
-      }
+    if (step < 2) {
+      setStep(2);
+      feedbackClick();
     }
   }
   function back() {
@@ -81,7 +74,10 @@ export function CheckoutFlow({
    */
   function proceedToWhop() {
     feedbackSuccess();
-    const url = whopCheckoutUrl(tier, cadence);
+    // Pass the email so Whop's hosted checkout pre-fills it for buyers
+    // who don't already have a Whop account. Logged-in Whop users keep
+    // their own account email — Whop ignores the param in that case.
+    const url = whopCheckoutUrl(tier, cadence, email);
     window.location.href = url ?? "/apply";
   }
 
@@ -93,7 +89,7 @@ export function CheckoutFlow({
       <div className="checkout-progress">
         <div className="checkout-progress-meta">
           <span className="checkout-progress-label">
-            Step {step} of 4 · {step === 4 ? "All set" : step === 1 ? "Pick your plan" : "Almost there"}
+            Step {step} of 2 · {step === 1 ? "Pick your plan" : "Almost there"}
           </span>
           <span className="checkout-progress-pct">{progressPct}% complete</span>
         </div>
@@ -106,7 +102,7 @@ export function CheckoutFlow({
       </div>
 
       <div className="checkout-steps">
-        {([1, 2, 3, 4] as const).map((s, idx) => (
+        {([1, 2] as const).map((s, idx) => (
           <div
             key={s}
             className={`checkout-step ${
@@ -115,7 +111,7 @@ export function CheckoutFlow({
           >
             <div className="checkout-step-num">{s < step ? "✓" : s}</div>
             <span>{STEP_LABELS[s]}</span>
-            {idx < 3 && <div className="checkout-step-line" style={{ minWidth: 16 }}></div>}
+            {idx < 1 && <div className="checkout-step-line" style={{ minWidth: 16 }}></div>}
           </div>
         ))}
       </div>
@@ -248,37 +244,9 @@ export function CheckoutFlow({
               />
             </div>
 
-            <h2 style={{ marginTop: 40 }}>Payment method</h2>
-            <div className="pay-options">
-              <button
-                type="button"
-                className={`pay-option ${payMethod === "card" ? "selected" : ""}`}
-                onClick={() => setPayMethod("card")}
-              >
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <rect x="3" y="6" width="18" height="12" rx="2" />
-                  <line x1="3" y1="11" x2="21" y2="11" />
-                </svg>
-                <div>
-                  <div className="pay-option-name">Card / ACH</div>
-                  <div className="pay-option-sub">Visa, MC, Amex, ACH</div>
-                </div>
-              </button>
-              <button
-                type="button"
-                className={`pay-option ${payMethod === "crypto" ? "selected" : ""}`}
-                onClick={() => setPayMethod("crypto")}
-              >
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M8 12h8M12 8v8" />
-                </svg>
-                <div>
-                  <div className="pay-option-name">Crypto</div>
-                  <div className="pay-option-sub">BTC, ETH, USDC</div>
-                </div>
-              </button>
-            </div>
+            {/* Whop's hosted checkout owns the payment-method picker
+                (Card / Cash App / Bank transfer). No point in collecting
+                preference here and then asking again. */}
 
             <div className="checkout-summary">
               <div className="checkout-summary-row">
@@ -307,7 +275,7 @@ export function CheckoutFlow({
               className="btn btn-primary btn-lg"
               style={{ width: "100%", marginTop: 24, justifyContent: "center" }}
               onClick={proceedToWhop}
-              disabled={!email}
+              disabled={!isValidEmail(email)}
             >
               Continue to secure checkout →
             </button>
@@ -320,67 +288,14 @@ export function CheckoutFlow({
                 textAlign: "center",
               }}
             >
-              Secured by PaymentCloud + Coinbase Commerce. Bank-level encryption. Cancel
-              any time.
+              Secured by Whop. Bank-level encryption. Cancel any time.
             </div>
           </>
         )}
 
-        {/* Step 3 — Payment processing handoff */}
-        {step === 3 && (
-          <>
-            <h2>Processing payment</h2>
-            <p style={{ color: "var(--text-mute)", marginBottom: 24 }}>
-              In production this hands off to PaymentCloud&apos;s hosted checkout (cards/ACH)
-              or Coinbase Commerce (crypto). For now, advancing to the Discord step.
-            </p>
-            <button
-              type="button"
-              className="btn btn-primary btn-lg"
-              style={{ width: "100%", justifyContent: "center" }}
-              onClick={next}
-            >
-              Continue →
-            </button>
-          </>
-        )}
-
-        {/* Step 4 — Confirmation */}
-        {step === 4 && (
-          <>
-            <h2>You&apos;re in.</h2>
-            <p style={{ color: "var(--text-mute)", marginBottom: 16 }}>
-              We&apos;ve sent a Discord invite to{" "}
-              <strong style={{ color: "var(--text)" }}>{email || "your email"}</strong>.
-              Your <span className="mono">{tierLabel}</span> badge will be assigned
-              automatically when you join.
-            </p>
-            <div className="checkout-summary">
-              <div className="checkout-summary-row">
-                <span>Welcome email</span>
-                <span className="mono" style={{ color: "var(--accent)" }}>SENT</span>
-              </div>
-              <div className="checkout-summary-row">
-                <span>Discord invite</span>
-                <span className="mono" style={{ color: "var(--accent)" }}>SENT</span>
-              </div>
-              <div className="checkout-summary-row">
-                <span>Tier badge</span>
-                <span className="mono">{tierLabel}</span>
-              </div>
-            </div>
-            <a
-              href="https://discord.gg/joinlockr"
-              className="btn btn-primary btn-lg"
-              style={{ width: "100%", marginTop: 24, justifyContent: "center" }}
-            >
-              Open Discord →
-            </a>
-          </>
-        )}
       </div>
 
-      {step > 1 && step < 4 && (
+      {step > 1 && (
         <div style={{ marginTop: 16, textAlign: "center" }}>
           <button type="button" className="btn btn-ghost" onClick={back}>
             ← Back

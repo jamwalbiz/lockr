@@ -292,17 +292,30 @@ export const PRICING = {
  * Build the Whop hosted-checkout URL for a given tier+cadence. Returns null
  * if no plan exists (e.g. IC annual until the $2,500 cap lifts). Callers
  * should fall back to /apply when null.
+ *
+ * If `email` is supplied, it's passed via `?email=` so Whop pre-fills the
+ * email field for anonymous buyers. Whop ignores the param if the user is
+ * already logged in to a Whop account (uses their own email instead).
  */
 export function whopCheckoutUrl(
   tier: "subscription" | "innercircle",
   cadence: CadenceKey,
+  email?: string,
 ): string | null {
   const entry =
     tier === "subscription"
       ? PRICING.subscription[cadence as keyof typeof PRICING.subscription]
       : PRICING.innercircle[cadence as keyof typeof PRICING.innercircle];
   const planId = (entry as { whopPlanId?: string }).whopPlanId;
-  return planId ? `https://whop.com/checkout/${planId}` : null;
+  if (!planId) return null;
+  const base = `https://whop.com/checkout/${planId}`;
+  const trimmed = email?.trim();
+  return trimmed ? `${base}?email=${encodeURIComponent(trimmed)}` : base;
+}
+
+/** Lightweight email validity check: one `@`, one `.` after it, no spaces. */
+export function isValidEmail(s: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.trim());
 }
 
 export const SUBSCRIPTION_FEATURES = [
