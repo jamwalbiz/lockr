@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import { CountUp } from "@/components/CountUp";
+import { JoinCta } from "@/components/JoinCta";
 import {
   IconBallAmericanFootball,
   IconBallBasketball,
@@ -57,9 +57,9 @@ export default function Home() {
             and the team post every pick live before the event starts, win or loss.
           </p>
           <div className="hero-cta-row">
-            <Link href="/checkout" className="btn btn-primary btn-lg">
+            <JoinCta href="/checkout" location="hero">
               Get today&apos;s picks · $29/wk
-            </Link>
+            </JoinCta>
             <a href="#intro" className="btn btn-secondary btn-lg">
               See how it works
             </a>
@@ -241,9 +241,9 @@ export default function Home() {
             <div className="inline-cta-text">
               3 steps. 10 minutes. Then you&apos;re tailing today&apos;s picks.
             </div>
-            <Link href="/checkout" className="btn btn-primary btn-lg">
+            <JoinCta href="/checkout" location="step3-inline">
               Get today&apos;s picks · from $29/wk
-            </Link>
+            </JoinCta>
           </div>
         </div>
       </section>
@@ -427,9 +427,9 @@ export default function Home() {
             <div className="inline-cta-text">
               One subscription. Every sport. Every prediction market.
             </div>
-            <Link href="/checkout" className="btn btn-primary btn-lg">
+            <JoinCta href="/checkout" location="sports-inline">
               Join Lockr →
-            </Link>
+            </JoinCta>
           </div>
         </div>
       </section>
@@ -822,9 +822,9 @@ export default function Home() {
                 Your Discord invite hits your inbox the moment you join. The next pick
                 drops soon after.
               </p>
-              <Link href="/checkout" className="btn btn-primary btn-lg">
+              <JoinCta href="/checkout" location="final-cta">
                 Join Lockr · from $29/wk
-              </Link>
+              </JoinCta>
               <div
                 style={{
                   marginTop: 16,

@@ -64,9 +64,10 @@ export function CheckoutFlow({
     }
   }
   function back() {
+    // Back is a retreat, not a commit — intentionally silent. Going forward
+    // (next()) keeps the chime as a positive-progress signal.
     if (step > 1) {
       setStep((step - 1) as Step);
-      feedbackClick();
     }
   }
 
