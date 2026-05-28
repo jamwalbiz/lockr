@@ -99,7 +99,7 @@ export type CadenceKey = "weekly" | "monthly" | "annual";
 export const PRICING = {
   subscription: {
     weekly: { price: "$29", period: "per week · cancel any time", equiv: "$116/mo equivalent" },
-    monthly: { price: "$99", period: "per month · cancel any time", equiv: "★ MOST POPULAR" },
+    monthly: { price: "$99", period: "per month · cancel any time", equiv: "billed monthly · most popular" },
     annual: {
       price: "$599",
       period: "per year · save ~50%",

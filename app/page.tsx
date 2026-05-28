@@ -360,15 +360,21 @@ export default function Home() {
             </SportCard>
             <SportCard tag="F1" name="Formula 1" desc="Qualifying, podium, head-to-head. One of the softest markets in sports.">
               <CustomSportIcon>
-                {/* F1 race car: open-wheel low-body silhouette
-                    — prominent wheels at axle line, low chassis,
-                    cockpit hump in middle, rear wing on the right.
-                    Tabler has no F1 / racing icon, so hand-drawn. */}
-                <circle cx="6" cy="17" r="3" />
-                <circle cx="18" cy="17" r="3" />
-                <path d="M3 17 L3.5 14 L9 14 L11 11 L13 11 L15 14 L20.5 14 L21 17" />
-                <path d="M11.5 11 L12 9.5 L12.5 9.5 L13 11" />
-                <path d="M20 14 L22 11 L20.5 11" />
+                {/* F1 race car silhouette — Tabler has no racing-specific icon.
+                    Smaller wheels (r=2) so the body reads as the dominant element
+                    instead of two circles ("binoculars" effect at small sizes).
+                    Long horizontal chassis with cockpit bump, rear wing on right. */}
+                {/* Underbody / chassis floor */}
+                <path d="M2 17h20" />
+                {/* Top profile: front nose → side pod → cockpit → rear */}
+                <path d="M2 17l1-3h6l1.5-3h3l1.5 3h6l1 3" />
+                {/* Cockpit halo bump */}
+                <path d="M11 11l.3-1.5h1.4l.3 1.5" />
+                {/* Rear wing pillar with top wing element */}
+                <path d="M20 14v-3h2" />
+                {/* Wheels — smaller, sit at the floor level */}
+                <circle cx="6" cy="17" r="2" />
+                <circle cx="18" cy="17" r="2" />
               </CustomSportIcon>
             </SportCard>
             <SportCard tag="NCAA" name="College Football & Hoops" desc="Saturdays, March Madness, bowl season. Where the books get it wrong most.">
