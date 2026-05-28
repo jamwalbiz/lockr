@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { feedbackClick, feedbackSuccess } from "@/lib/sound";
-import { PRICING } from "@/lib/copy";
+import { PRICING, whopCheckoutUrl } from "@/lib/copy";
 
 type Tier = "subscription" | "innercircle";
 type Cadence = "weekly" | "monthly" | "annual";
@@ -69,6 +69,20 @@ export function CheckoutFlow({
     if (step > 1) {
       setStep((step - 1) as Step);
     }
+  }
+
+  /**
+   * Step 2 commit — hand off to Whop's hosted checkout. We fire the success
+   * chime (this is the conversion moment) and then redirect. Whop handles
+   * payment, confirmation, and granting community access; we don't need our
+   * old stub Step 3 / Step 4 for that. If no plan exists for the chosen
+   * tier+cadence (currently only IC annual, deferred until Whop's $2,500
+   * cap lifts), fall back to /apply so the user can still get to JT.
+   */
+  function proceedToWhop() {
+    feedbackSuccess();
+    const url = whopCheckoutUrl(tier, cadence);
+    window.location.href = url ?? "/apply";
   }
 
   // Sub cadence valid: weekly, monthly, annual. IC: monthly, annual.
@@ -292,10 +306,10 @@ export function CheckoutFlow({
               type="button"
               className="btn btn-primary btn-lg"
               style={{ width: "100%", marginTop: 24, justifyContent: "center" }}
-              onClick={next}
+              onClick={proceedToWhop}
               disabled={!email}
             >
-              Complete payment →
+              Continue to secure checkout →
             </button>
 
             <div

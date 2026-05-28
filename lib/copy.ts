@@ -244,27 +244,66 @@ export const LANGUAGES = [
 export type CadenceTier = "subscription" | "innercircle";
 export type CadenceKey = "weekly" | "monthly" | "annual";
 
+// Whop plan IDs — public-facing checkout URL is `https://whop.com/checkout/<id>`.
+// IC annual ($4,999) is intentionally absent: Whop's new-merchant cap is $2,500
+// per transaction, so the annual plan wasn't created. Re-add once the cap lifts
+// (see task #50). Until then, IC stays application-only via /apply and JT sends
+// the monthly checkout link to approved applicants.
 export const PRICING = {
   subscription: {
-    weekly: { price: "$29", period: "per week · cancel any time", equiv: "$116/mo equivalent" },
-    monthly: { price: "$99", period: "per month · cancel any time", equiv: "billed monthly · most popular" },
+    weekly: {
+      price: "$29",
+      period: "per week · cancel any time",
+      equiv: "$116/mo equivalent",
+      whopPlanId: "plan_FxpXFFIMF9AUt",
+    },
+    monthly: {
+      price: "$99",
+      period: "per month · cancel any time",
+      equiv: "billed monthly · most popular",
+      whopPlanId: "plan_cgxZPV8SBtB3g",
+    },
     annual: {
       price: "$599",
       period: "per year · save ~50%",
       equiv: "$50/mo equivalent · 2 free months",
       save: "SAVE 50%",
+      whopPlanId: "plan_FIsZ66cmEugcN",
     },
   },
   innercircle: {
-    monthly: { price: "$499", period: "per month · cancel any time", equiv: "" },
+    monthly: {
+      price: "$499",
+      period: "per month · cancel any time",
+      equiv: "",
+      whopPlanId: "plan_yKV7hpPHd8pt0",
+    },
     annual: {
       price: "$4,999",
       period: "per year · save ~17%",
       equiv: "$416/mo equivalent",
       save: "SAVE 17%",
+      // whopPlanId omitted — see header comment.
     },
   },
 } as const;
+
+/**
+ * Build the Whop hosted-checkout URL for a given tier+cadence. Returns null
+ * if no plan exists (e.g. IC annual until the $2,500 cap lifts). Callers
+ * should fall back to /apply when null.
+ */
+export function whopCheckoutUrl(
+  tier: "subscription" | "innercircle",
+  cadence: CadenceKey,
+): string | null {
+  const entry =
+    tier === "subscription"
+      ? PRICING.subscription[cadence as keyof typeof PRICING.subscription]
+      : PRICING.innercircle[cadence as keyof typeof PRICING.innercircle];
+  const planId = (entry as { whopPlanId?: string }).whopPlanId;
+  return planId ? `https://whop.com/checkout/${planId}` : null;
+}
 
 export const SUBSCRIPTION_FEATURES = [
   "Daily picks across every sport + prediction markets",
