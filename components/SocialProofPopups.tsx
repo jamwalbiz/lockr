@@ -1,30 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { SOCIAL_PROOF } from "@/lib/copy";
+import { generateSocialProofItems, type SocialProofItem } from "@/lib/copy";
 
 type Active = {
   id: number;
-  msg: (typeof SOCIAL_PROOF)[number];
+  msg: SocialProofItem;
   visible: boolean;
 };
-
-// Fisher–Yates shuffle in place, returning the shuffled copy.
-function shuffle<T>(input: ReadonlyArray<T>): T[] {
-  const arr = [...input];
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
 
 export function SocialProofPopups() {
   const [active, setActive] = useState<Active[]>([]);
 
   useEffect(() => {
-    // Shuffle the pool once per visit so back-to-back loads aren't identical.
-    const pool = shuffle(SOCIAL_PROOF);
+    // Generate a fresh pool per visit so back-to-back loads show different names.
+    const pool = generateSocialProofItems(30);
     let index = 0;
     let nextId = 0;
 

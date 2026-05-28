@@ -1,86 +1,196 @@
 // Static placeholder data — wire to real Discord webhook events post-launch.
-// Until then: bigger pools + evergreen content (no specific player/event refs,
-// no specific timestamps) so the feed doesn't read stale.
+// Until then: combinatorial generation so each page visit produces a fresh
+// mix of names + actions (refresh ≠ refresh).
+//
+// Name pool tuned to JT's demographic call:
+//   - Drop K last-initials (was a too-obvious repeating pattern)
+//   - More Latino, Black, and broader American male names that match active
+//     US sports bettor demographics
+//   - Include JT's explicit picks (Josh A., Brandon, Luis R., Nathan C.,
+//     Max G., Caesar A., Anthony J., Jack B.)
+//   - Pull out the globally-spread ones that read as filler
 
 type Tone = "green" | "gold" | "blue";
 
-export const ACTIVITY_ITEMS: ReadonlyArray<{ tone: Tone; text: string }> = [
-  // Wins — most common in a real feed
-  { tone: "green", text: "JORDAN K. CASHED +1.82u · NBA PROP" },
-  { tone: "green", text: "DEVON M. CASHED +0.41u · KALSHI HEDGE" },
-  { tone: "green", text: "SAM H. CASHED +0.83u · F1 PODIUM" },
-  { tone: "green", text: "NIA W. CASHED +1.74u · NBA PROP" },
-  { tone: "green", text: "PRIYA G. CASHED +2.41u · UFC METHOD" },
-  { tone: "green", text: "MARCUS T. CASHED +0.91u · NFL SPREAD" },
-  { tone: "green", text: "SOFIA R. CASHED +1.20u · POLYMARKET POSITION" },
-  { tone: "green", text: "AALIYAH J. CASHED +0.74u · MLB OVER" },
-  { tone: "green", text: "WEI L. CASHED +1.55u · KALSHI YES" },
-  { tone: "green", text: "YUSUF A. CASHED +0.82u · NHL PUCK LINE" },
-  { tone: "green", text: "MAYA P. CASHED +3.10u · UFC ROUND PROP" },
-  { tone: "green", text: "DIEGO H. CASHED +0.92u · NCAA SPREAD" },
-  { tone: "green", text: "JAMAL R. CASHED +1.42u · NBA PARLAY" },
-  { tone: "green", text: "LILA K. CASHED +0.51u · TENNIS H2H" },
-  { tone: "green", text: "HIROTO K. CASHED +2.18u · SOCCER ML" },
-  { tone: "green", text: "ZOE B. CASHED +0.66u · ESPORTS MAP" },
-  { tone: "green", text: "OLU W. CASHED +1.04u · MLB F5" },
-  { tone: "green", text: "KAI N. CASHED +0.88u · POLYMARKET NO" },
-  // Joins / upgrades
-  { tone: "gold", text: "ETHAN K. JOINED ★ INNER CIRCLE" },
-  { tone: "gold", text: "AMIR M. JOINED ★ INNER CIRCLE" },
-  { tone: "gold", text: "RENATA M. JOINED ★ INNER CIRCLE" },
-  { tone: "blue", text: "RYAN P. UPGRADED WEEKLY → MONTHLY" },
-  { tone: "blue", text: "TONY C. UPGRADED MONTHLY → ANNUAL" },
-  { tone: "blue", text: "CARMEN O. UPGRADED MONTHLY → ANNUAL" },
-  { tone: "blue", text: "LAUREN F. JOINED LOCKR · MONTHLY" },
-  { tone: "blue", text: "ELI M. JOINED LOCKR · WEEKLY" },
-  { tone: "blue", text: "VIKRAM S. JOINED LOCKR · ANNUAL" },
-  { tone: "blue", text: "IMANI K. JOINED LOCKR · WEEKLY" },
-  { tone: "blue", text: "OWEN D. UPGRADED WEEKLY → ANNUAL" },
-  // JT activity
-  { tone: "green", text: "JT POSTED NEW PICK · NBA PROP" },
-  { tone: "green", text: "JT POSTED NEW PICK · UFC METHOD" },
-  { tone: "green", text: "JT POSTED NEW PICK · F1 PODIUM" },
-  { tone: "green", text: "JT POSTED NEW PICK · KALSHI HEDGE" },
-  { tone: "green", text: "JT POSTED NEW PICK · NFL TOTAL" },
-  { tone: "gold", text: "JT POSTED LONG-FORM · NBA BREAKDOWN" },
-  { tone: "gold", text: "JT POSTED LONG-FORM · BANKROLL PLAYBOOK" },
-  { tone: "gold", text: "JT POSTED LONG-FORM · CLV PRIMER" },
-  { tone: "gold", text: "JT POSTED LONG-FORM · KALSHI 101" },
-];
-
-// Social-proof popup pool — randomized in-component on mount so visit ≠ visit.
-export const SOCIAL_PROOF: ReadonlyArray<{
+export type TickerItem = { tone: Tone; text: string };
+export type SocialProofItem = {
   name: string;
   detail: string;
   avatar: string;
   tone: Tone;
-}> = [
-  { name: "Jordan K.", detail: "CASHED +1.82u · NBA PROP", avatar: "JK", tone: "green" },
-  { name: "Ethan K.", detail: "APPLIED FOR ★ INNER CIRCLE", avatar: "EK", tone: "gold" },
-  { name: "Devon M.", detail: "CASHED +0.41u · KALSHI HEDGE", avatar: "DM", tone: "green" },
-  { name: "Ryan P.", detail: "UPGRADED WEEKLY → MONTHLY", avatar: "RP", tone: "blue" },
-  { name: "Sam H.", detail: "JOINED ANNUAL · $599", avatar: "SH", tone: "blue" },
-  { name: "Nia W.", detail: "CASHED +1.74u · NBA PROP", avatar: "NW", tone: "green" },
-  { name: "Amir M.", detail: "CASHED +2.76u · POLYMARKET HEDGE", avatar: "AM", tone: "green" },
-  { name: "Tony C.", detail: "UPGRADED MONTHLY → ANNUAL", avatar: "TC", tone: "blue" },
-  { name: "Priya G.", detail: "CASHED +0.83u · F1 PODIUM", avatar: "PG", tone: "green" },
-  { name: "Lauren F.", detail: "JOINED MONTHLY · $99", avatar: "LF", tone: "blue" },
-  { name: "Marcus T.", detail: "CASHED +0.91u · NFL SPREAD", avatar: "MT", tone: "green" },
-  { name: "Sofia R.", detail: "JOINED MONTHLY · $99", avatar: "SR", tone: "blue" },
-  { name: "Aaliyah J.", detail: "CASHED +0.74u · MLB OVER", avatar: "AJ", tone: "green" },
-  { name: "Wei L.", detail: "CASHED +1.55u · KALSHI YES", avatar: "WL", tone: "green" },
-  { name: "Yusuf A.", detail: "APPLIED FOR ★ INNER CIRCLE", avatar: "YA", tone: "gold" },
-  { name: "Maya P.", detail: "CASHED +3.10u · UFC ROUND PROP", avatar: "MP", tone: "green" },
-  { name: "Diego H.", detail: "JOINED WEEKLY · $29", avatar: "DH", tone: "blue" },
-  { name: "Jamal R.", detail: "CASHED +1.42u · NBA PARLAY", avatar: "JR", tone: "green" },
-  { name: "Lila K.", detail: "UPGRADED MONTHLY → ANNUAL", avatar: "LK", tone: "blue" },
-  { name: "Hiroto K.", detail: "CASHED +2.18u · SOCCER ML", avatar: "HK", tone: "green" },
-  { name: "Renata M.", detail: "APPLIED FOR ★ INNER CIRCLE", avatar: "RM", tone: "gold" },
-  { name: "Kai N.", detail: "CASHED +0.88u · POLYMARKET NO", avatar: "KN", tone: "green" },
-  { name: "Imani K.", detail: "JOINED WEEKLY · $29", avatar: "IK", tone: "blue" },
-  { name: "Olu W.", detail: "CASHED +1.04u · MLB F5", avatar: "OW", tone: "green" },
-  { name: "Carmen O.", detail: "UPGRADED MONTHLY → ANNUAL", avatar: "CO", tone: "blue" },
+};
+
+const FIRST_NAMES = [
+  // JT's explicit picks
+  "Josh", "Brandon", "Luis", "Nathan", "Max", "Caesar", "Anthony", "Jack",
+  // Carryover from the original pool
+  "Jordan", "Devon", "Sam", "Ryan", "Tony", "Lauren", "Eli", "Owen",
+  "Marcus", "Sofia", "Diego", "Jamal", "Zoe", "Mike",
+  // Latino / Mexican
+  "Carlos", "Miguel", "Hector", "Pedro", "Antonio", "Rafael", "Alejandro",
+  "Cesar", "Manuel", "Eduardo", "Roberto", "Javier", "Mateo", "Sergio",
+  "Emilio", "Juan", "Ricardo",
+  // Black
+  "DeShaun", "Andre", "Malik", "Trey", "Khalil", "Jaylen", "Kameron",
+  "Terrence", "Maurice", "Tyrone", "Darrius", "Quincy", "Reggie",
+  "Damon", "Isaiah",
+  // Broader US bettor demographic
+  "Tyler", "Connor", "Hunter", "Cole", "Logan", "Brett", "Chase",
+  "Bryce", "Dalton", "Garrett", "Trevor", "Wyatt", "Brody", "Drew",
+  "Blake", "Cody",
+] as const;
+
+// No K (JT flagged the K-ending pattern). No I/Q/U/W/X/Y/Z (uncommon → reads odd).
+const LAST_INITIALS = [
+  "A", "B", "C", "D", "F", "G", "H", "J", "L", "M", "N", "P", "R", "S", "T", "V",
+] as const;
+
+const BET_CATEGORIES = [
+  "NBA PROP", "NBA PARLAY", "NBA SPREAD", "NBA TOTAL",
+  "NFL SPREAD", "NFL TOTAL", "NFL TD PROP",
+  "MLB OVER", "MLB F5", "MLB ML", "MLB NRFI",
+  "NHL PUCK LINE", "NHL GOAL PROP",
+  "UFC METHOD", "UFC ROUND PROP", "UFC ML",
+  "F1 PODIUM", "F1 H2H",
+  "TENNIS SET", "TENNIS H2H",
+  "SOCCER ML", "SOCCER OVER",
+  "ESPORTS MAP",
+  "KALSHI YES", "KALSHI HEDGE",
+  "POLYMARKET NO", "POLYMARKET POSITION",
+  "COLLEGE FB", "COLLEGE HOOPS",
+] as const;
+
+const UNIT_WINS = [
+  "+0.41u", "+0.45u", "+0.51u", "+0.66u", "+0.70u", "+0.74u",
+  "+0.82u", "+0.83u", "+0.88u", "+0.91u", "+0.95u", "+1.04u",
+  "+1.20u", "+1.30u", "+1.42u", "+1.55u", "+1.60u", "+1.74u",
+  "+1.82u", "+2.05u", "+2.18u", "+2.41u", "+2.76u", "+3.10u",
+] as const;
+
+// JT activity — heavily weighted in the ticker. Per JT: "the more we flood
+// my name the more it becomes common."
+const JT_PICK_CATEGORIES = [
+  "NBA PROP", "UFC METHOD", "F1 PODIUM", "KALSHI HEDGE",
+  "NFL TOTAL", "MLB OVER", "POLYMARKET POSITION", "NHL PUCK LINE",
+  "SOCCER ML", "TENNIS H2H", "NBA PARLAY", "UFC ROUND PROP",
+] as const;
+
+const JT_LONGFORMS = [
+  "NBA BREAKDOWN", "BANKROLL PLAYBOOK", "CLV PRIMER", "KALSHI 101",
+  "UFC METHOD GUIDE", "F1 QUALIFYING GUIDE", "POLYMARKET HEDGE GUIDE",
+  "MLB MODEL UPDATE", "WEEKLY RECAP", "MONTHLY UNIT REVIEW",
+] as const;
+
+const JT_OTHER = [
+  "JT REPLIED · IC DM",
+  "JT DROPPED · STRATEGY THREAD",
+  "JT ANSWERED · WEEKLY Q&A",
+  "JT POSTED · MEMBER SHOUTOUT",
+] as const;
+
+const JOIN_UPGRADE_ACTIONS: ReadonlyArray<{ tone: Tone; action: string }> = [
+  { tone: "blue", action: "JOINED LOCKR · WEEKLY" },
+  { tone: "blue", action: "JOINED LOCKR · MONTHLY" },
+  { tone: "blue", action: "JOINED LOCKR · ANNUAL" },
+  { tone: "blue", action: "JOINED ANNUAL · $599" },
+  { tone: "blue", action: "JOINED MONTHLY · $99" },
+  { tone: "blue", action: "JOINED WEEKLY · $29" },
+  { tone: "blue", action: "UPGRADED WEEKLY → MONTHLY" },
+  { tone: "blue", action: "UPGRADED MONTHLY → ANNUAL" },
+  { tone: "blue", action: "UPGRADED WEEKLY → ANNUAL" },
+  { tone: "gold", action: "JOINED ★ INNER CIRCLE" },
+  { tone: "gold", action: "APPLIED FOR ★ INNER CIRCLE" },
 ];
+
+function pick<T>(arr: ReadonlyArray<T>): T {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function randomName(): { display: string; avatar: string } {
+  const first = pick(FIRST_NAMES);
+  const last = pick(LAST_INITIALS);
+  return {
+    display: `${first} ${last}.`,
+    avatar: `${first[0]}${last}`,
+  };
+}
+
+// Ticker mix:
+//   • 30% JT picks
+//   • 12% JT long-form
+//   • 5%  JT other
+//   • 35% member wins
+//   • 18% joins / upgrades
+// Means ~47% of items mention JT — heavy personal-brand surface.
+export function generateTickerItems(count: number = 40): TickerItem[] {
+  const items: TickerItem[] = [];
+  for (let i = 0; i < count; i++) {
+    const r = Math.random();
+    if (r < 0.3) {
+      items.push({
+        tone: "green",
+        text: `JT POSTED NEW PICK · ${pick(JT_PICK_CATEGORIES)}`,
+      });
+    } else if (r < 0.42) {
+      items.push({
+        tone: "gold",
+        text: `JT POSTED LONG-FORM · ${pick(JT_LONGFORMS)}`,
+      });
+    } else if (r < 0.47) {
+      items.push({ tone: "gold", text: pick(JT_OTHER) });
+    } else if (r < 0.82) {
+      const name = randomName();
+      items.push({
+        tone: "green",
+        text: `${name.display.toUpperCase()} CASHED ${pick(UNIT_WINS)} · ${pick(BET_CATEGORIES)}`,
+      });
+    } else {
+      const name = randomName();
+      const join = pick(JOIN_UPGRADE_ACTIONS);
+      items.push({
+        tone: join.tone,
+        text: `${name.display.toUpperCase()} ${join.action}`,
+      });
+    }
+  }
+  return items;
+}
+
+// Social-proof popups are member-focused (JT activity goes in the ticker).
+//   • 65% wins
+//   • 25% joins / upgrades
+//   • 10% IC applications
+export function generateSocialProofItems(count: number = 30): SocialProofItem[] {
+  const items: SocialProofItem[] = [];
+  for (let i = 0; i < count; i++) {
+    const name = randomName();
+    const r = Math.random();
+    if (r < 0.65) {
+      items.push({
+        name: name.display,
+        detail: `CASHED ${pick(UNIT_WINS)} · ${pick(BET_CATEGORIES)}`,
+        avatar: name.avatar,
+        tone: "green",
+      });
+    } else if (r < 0.9) {
+      const join = pick(JOIN_UPGRADE_ACTIONS);
+      items.push({
+        name: name.display,
+        detail: join.action,
+        avatar: name.avatar,
+        tone: join.tone,
+      });
+    } else {
+      items.push({
+        name: name.display,
+        detail: "APPLIED FOR ★ INNER CIRCLE",
+        avatar: name.avatar,
+        tone: "gold",
+      });
+    }
+  }
+  return items;
+}
 
 export const LANGUAGES = [
   { code: "EN", name: "English" },
