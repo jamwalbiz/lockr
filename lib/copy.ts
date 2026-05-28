@@ -122,36 +122,74 @@ function randomName(): { display: string; avatar: string } {
 //   • 35% member wins
 //   • 18% joins / upgrades
 // Means ~47% of items mention JT — heavy personal-brand surface.
-export function generateTickerItems(count: number = 40): TickerItem[] {
-  const items: TickerItem[] = [];
-  for (let i = 0; i < count; i++) {
-    const r = Math.random();
-    if (r < 0.3) {
-      items.push({
-        tone: "green",
-        text: `JT POSTED NEW PICK · ${pick(JT_PICK_CATEGORIES)}`,
-      });
-    } else if (r < 0.42) {
-      items.push({
-        tone: "gold",
-        text: `JT POSTED LONG-FORM · ${pick(JT_LONGFORMS)}`,
-      });
-    } else if (r < 0.47) {
-      items.push({ tone: "gold", text: pick(JT_OTHER) });
-    } else if (r < 0.82) {
-      const name = randomName();
-      items.push({
+//
+// Anti-clustering: pure per-slot random gave streaks (e.g., 4× "JT POSTED"
+// in a row). Two constraints layered on top of the weighted random:
+//   1. No same broad-type (jt | member-win | join) more than 2× consecutive
+//   2. No exact-text repeat within a 4-item sliding window
+type Category = "jt" | "member" | "join";
+
+function makeRandomCandidate(): { cat: Category; item: TickerItem } {
+  const r = Math.random();
+  if (r < 0.3) {
+    return {
+      cat: "jt",
+      item: { tone: "green", text: `JT POSTED NEW PICK · ${pick(JT_PICK_CATEGORIES)}` },
+    };
+  }
+  if (r < 0.42) {
+    return {
+      cat: "jt",
+      item: { tone: "gold", text: `JT POSTED LONG-FORM · ${pick(JT_LONGFORMS)}` },
+    };
+  }
+  if (r < 0.47) {
+    return { cat: "jt", item: { tone: "gold", text: pick(JT_OTHER) } };
+  }
+  if (r < 0.82) {
+    const name = randomName();
+    return {
+      cat: "member",
+      item: {
         tone: "green",
         text: `${name.display.toUpperCase()} CASHED ${pick(UNIT_WINS)} · ${pick(BET_CATEGORIES)}`,
-      });
-    } else {
-      const name = randomName();
-      const join = pick(JOIN_UPGRADE_ACTIONS);
-      items.push({
-        tone: join.tone,
-        text: `${name.display.toUpperCase()} ${join.action}`,
-      });
+      },
+    };
+  }
+  const name = randomName();
+  const join = pick(JOIN_UPGRADE_ACTIONS);
+  return {
+    cat: "join",
+    item: { tone: join.tone, text: `${name.display.toUpperCase()} ${join.action}` },
+  };
+}
+
+export function generateTickerItems(count: number = 40): TickerItem[] {
+  const items: TickerItem[] = [];
+  const recentTexts: string[] = [];
+  const RECENT_WINDOW = 4;
+  let lastCat: Category | null = null;
+  let consecutiveSameCat = 0;
+
+  for (let i = 0; i < count; i++) {
+    let candidate = makeRandomCandidate();
+    for (let attempt = 0; attempt < 8; attempt++) {
+      const sameCatStreakWouldExceed =
+        candidate.cat === lastCat && consecutiveSameCat >= 1;
+      const textRepeats = recentTexts.includes(candidate.item.text);
+      if (!sameCatStreakWouldExceed && !textRepeats) break;
+      candidate = makeRandomCandidate();
     }
+
+    items.push(candidate.item);
+    if (candidate.cat === lastCat) {
+      consecutiveSameCat++;
+    } else {
+      lastCat = candidate.cat;
+      consecutiveSameCat = 0;
+    }
+    recentTexts.push(candidate.item.text);
+    if (recentTexts.length > RECENT_WINDOW) recentTexts.shift();
   }
   return items;
 }
