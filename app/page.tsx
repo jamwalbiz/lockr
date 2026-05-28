@@ -1,5 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
+import {
+  IconBallAmericanFootball,
+  IconBallBasketball,
+  IconBallBaseball,
+  IconBallFootball,
+  IconBallTennis,
+  IconKarate,
+  IconDeviceGamepad2,
+  IconChartLine,
+  IconChartCandle,
+} from "@tabler/icons-react";
 import { PricingCards } from "@/components/PricingCards";
 import { Faq } from "@/components/Faq";
 import { TESTIMONIALS_ROW_1, TESTIMONIALS_ROW_2 } from "@/lib/testimonials";
@@ -328,90 +339,59 @@ export default function Home() {
           </div>
           <div className="sports-grid">
             <SportCard tag="NFL" name="Football" desc="Sundays, Mondays, Thursdays. Spreads, totals, player props, playoffs.">
-              {/* American football: oblong horizontal with laces */}
-              <ellipse cx="12" cy="12" rx="9" ry="5" />
-              <line x1="9" y1="12" x2="15" y2="12" />
-              <line x1="10" y1="11" x2="10" y2="13" />
-              <line x1="12" y1="11" x2="12" y2="13" />
-              <line x1="14" y1="11" x2="14" y2="13" />
-              <path d="M3 12c1.5-1 3-1.5 4-1.5" />
-              <path d="M21 12c-1.5-1-3-1.5-4-1.5" />
+              <IconBallAmericanFootball size={28} stroke={1.5} />
             </SportCard>
             <SportCard tag="NBA" name="Basketball" desc="Nightly props, spreads, totals. Deep dives on usage, pace, matchups.">
-              {/* Basketball: circle with classic 4-arc seam pattern */}
-              <circle cx="12" cy="12" r="9" />
-              <path d="M3 12h18" />
-              <path d="M12 3v18" />
-              <path d="M4.5 7c2 1.5 3 3 3 5s-1 3.5-3 5" />
-              <path d="M19.5 7c-2 1.5-3 3-3 5s1 3.5 3 5" />
+              <IconBallBasketball size={28} stroke={1.5} />
             </SportCard>
             <SportCard tag="MLB" name="Baseball" desc="Daily slates, F5, NRFI/YRFI. Carries you through summer.">
-              {/* Baseball: circle with dashed stitching curves */}
-              <circle cx="12" cy="12" r="9" />
-              <path d="M6 8c2 0.5 4 2 5 4" strokeDasharray="1.5 1.5" />
-              <path d="M18 8c-2 0.5-4 2-5 4" strokeDasharray="1.5 1.5" />
-              <path d="M6 16c2-0.5 4-2 5-4" strokeDasharray="1.5 1.5" />
-              <path d="M18 16c-2-0.5-4-2-5-4" strokeDasharray="1.5 1.5" />
+              <IconBallBaseball size={28} stroke={1.5} />
             </SportCard>
             <SportCard tag="NHL" name="Hockey" desc="Puck lines, totals, goalie props. Smart money lives in this market.">
-              {/* Hockey: stick + puck */}
-              <path d="M5 4l13 13" />
-              <path d="M17 17l3 3" />
-              <ellipse cx="7" cy="19" rx="4" ry="1.5" />
+              <CustomSportIcon>
+                {/* Hockey stick + puck — Tabler has no hockey icon */}
+                <path d="M5 4l13 13" />
+                <path d="M17 17l3 3" />
+                <ellipse cx="7" cy="19" rx="4" ry="1.5" />
+              </CustomSportIcon>
             </SportCard>
             <SportCard tag="UFC" name="UFC & Boxing" desc="Method-of-victory, round props, fight breakdowns. Soft books, big edges.">
-              {/* Boxing glove: rounded fist shape with thumb */}
-              <path d="M6 14c0-3 1-5 4-5h6c2 0 3 1.5 3 3.5v4c0 2.5-2 4.5-4.5 4.5h-5C7 21 6 19 6 17z" />
-              <path d="M6 14V9c0-1.5 1-2.5 2.5-2.5S11 7.5 11 9v1" />
-              <path d="M14 13.5h2" />
+              <IconKarate size={28} stroke={1.5} />
             </SportCard>
             <SportCard tag="F1" name="Formula 1" desc="Qualifying, podium, head-to-head. One of the softest markets in sports.">
-              {/* F1 race car: low silhouette with wheels and spoiler */}
-              <path d="M3 14h4l2-3h6l2 3h4" />
-              <path d="M3 14v2c0 0.5 0.5 1 1 1h1" />
-              <path d="M21 14v2c0 0.5-0.5 1-1 1h-1" />
-              <circle cx="7" cy="17" r="2" />
-              <circle cx="17" cy="17" r="2" />
-              <path d="M9 11l1-2h4l1 2" />
+              <CustomSportIcon>
+                {/* F1 race car silhouette — Tabler's IconCar* are all road cars */}
+                <path d="M3 14h4l2-3h6l2 3h4" />
+                <path d="M3 14v2c0 0.5 0.5 1 1 1h1" />
+                <path d="M21 14v2c0 0.5-0.5 1-1 1h-1" />
+                <circle cx="7" cy="17" r="2" />
+                <circle cx="17" cy="17" r="2" />
+                <path d="M9 11l1-2h4l1 2" />
+              </CustomSportIcon>
             </SportCard>
             <SportCard tag="NCAA" name="College Football & Hoops" desc="Saturdays, March Madness, bowl season. Where the books get it wrong most.">
-              {/* Graduation cap */}
-              <path d="M2 9l10-5 10 5-10 5z" />
-              <path d="M6 11v5c0 1.5 3 2.5 6 2.5s6-1 6-2.5v-5" />
-              <line x1="22" y1="9" x2="22" y2="14" />
-              <circle cx="22" cy="14.5" r="0.5" fill="currentColor" />
+              <CustomSportIcon>
+                {/* Graduation cap — Tabler has no school/graduation icon */}
+                <path d="M2 9l10-5 10 5-10 5z" />
+                <path d="M6 11v5c0 1.5 3 2.5 6 2.5s6-1 6-2.5v-5" />
+                <line x1="22" y1="9" x2="22" y2="14" />
+                <circle cx="22" cy="14.5" r="0.5" fill="currentColor" />
+              </CustomSportIcon>
             </SportCard>
             <SportCard tag="SOCCER" name="Soccer" desc="Premier League, Champions League, World Cup years. ML, totals, BTTS.">
-              {/* Soccer ball: classic pentagon + hex pattern */}
-              <circle cx="12" cy="12" r="9" />
-              <polygon points="12,7.5 15,9.7 13.8,13.3 10.2,13.3 9,9.7" />
-              <line x1="12" y1="7.5" x2="12" y2="3" />
-              <line x1="15" y1="9.7" x2="19" y2="7" />
-              <line x1="13.8" y1="13.3" x2="16.5" y2="17.5" />
-              <line x1="10.2" y1="13.3" x2="7.5" y2="17.5" />
-              <line x1="9" y1="9.7" x2="5" y2="7" />
+              <IconBallFootball size={28} stroke={1.5} />
             </SportCard>
             <SportCard tag="TENNIS" name="Tennis" desc="Grand Slams + ATP/WTA majors. Set spreads, total games, H2Hs.">
-              {/* Tennis racket: round head with handle */}
-              <circle cx="10" cy="10" r="6" />
-              <path d="M10 4v12M4 10h12" strokeWidth="0.8" />
-              <path d="M14.5 14.5L20 20" strokeLinecap="round" strokeWidth="2" />
+              <IconBallTennis size={28} stroke={1.5} />
             </SportCard>
             <SportCard tag="ESPORTS" name="Esports" desc="CS, Valorant, League. Money lines, map handicaps, total maps.">
-              {/* Gamepad with directional pad + buttons */}
-              <path d="M5 9h14a3 3 0 013 3v3a3 3 0 01-3 3h-2.5l-2-3h-5l-2 3H5a3 3 0 01-3-3v-3a3 3 0 013-3z" />
-              <path d="M6.5 12.5v2M5.5 13.5h2" strokeLinecap="round" />
-              <circle cx="16.5" cy="12.5" r="0.7" fill="currentColor" />
-              <circle cx="17.5" cy="14.5" r="0.7" fill="currentColor" />
+              <IconDeviceGamepad2 size={28} stroke={1.5} />
             </SportCard>
             <SportCard tag="KALSHI" name="Kalshi" desc="CFTC-regulated event contracts. Sports, politics, economics, tech." featured>
-              <line x1="6" y1="4" x2="6" y2="20" />
-              <line x1="6" y1="12" x2="18" y2="4" />
-              <line x1="6" y1="12" x2="18" y2="20" />
+              <IconChartLine size={28} stroke={1.5} />
             </SportCard>
             <SportCard tag="POLYMARKET" name="Polymarket" desc="Crypto-native prediction markets. The biggest pool of edges nobody is touching." featured>
-              <polygon points="12,3 21,9 18,20 6,20 3,9" />
-              <line x1="3" y1="9" x2="21" y2="9" />
+              <IconChartCandle size={28} stroke={1.5} />
             </SportCard>
           </div>
           <div className="inline-cta">
@@ -896,11 +876,7 @@ function SportCard({
 }) {
   return (
     <div className={`sport-card${featured ? " featured" : ""}`}>
-      <div className="sport-icon">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-          {children}
-        </svg>
-      </div>
+      <div className="sport-icon">{children}</div>
       <div className="sport-tag">
         <span className="sport-tag-dot"></span>
         {tag}
@@ -908,6 +884,24 @@ function SportCard({
       <div className="sport-name">{name}</div>
       <div className="sport-desc">{desc}</div>
     </div>
+  );
+}
+
+// Wrapper so hand-drawn icons match Tabler's API + visual weight.
+function CustomSportIcon({ children }: { children: React.ReactNode }) {
+  return (
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {children}
+    </svg>
   );
 }
 
