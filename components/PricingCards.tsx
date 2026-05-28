@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@vercel/analytics";
 import Link from "next/link";
 import { useState } from "react";
 import {
@@ -29,19 +30,28 @@ export function PricingCards() {
         <div className="cadence-toggle">
           <CadenceButton
             active={subCadence === "weekly"}
-            onClick={() => setSubCadence("weekly")}
+            onClick={() => {
+              setSubCadence("weekly");
+              track("cadence_change", { tier: "subscription", cadence: "weekly" });
+            }}
           >
             Weekly
           </CadenceButton>
           <CadenceButton
             active={subCadence === "monthly"}
-            onClick={() => setSubCadence("monthly")}
+            onClick={() => {
+              setSubCadence("monthly");
+              track("cadence_change", { tier: "subscription", cadence: "monthly" });
+            }}
           >
             Monthly
           </CadenceButton>
           <CadenceButton
             active={subCadence === "annual"}
-            onClick={() => setSubCadence("annual")}
+            onClick={() => {
+              setSubCadence("annual");
+              track("cadence_change", { tier: "subscription", cadence: "annual" });
+            }}
           >
             Annual
             <span className="cadence-save">SAVE 50%</span>
@@ -58,6 +68,14 @@ export function PricingCards() {
         <Link
           href={`/checkout?tier=subscription&cadence=${subCadence}`}
           className="price-cta primary text-center"
+          onClick={() =>
+            track("cta_click", {
+              cta: "subscribe",
+              tier: "subscription",
+              cadence: subCadence,
+              location: "pricing_card",
+            })
+          }
         >
           Subscribe →
         </Link>
@@ -69,13 +87,19 @@ export function PricingCards() {
         <div className="cadence-toggle two-col">
           <CadenceButton
             active={icCadence === "monthly"}
-            onClick={() => setIcCadence("monthly")}
+            onClick={() => {
+              setIcCadence("monthly");
+              track("cadence_change", { tier: "innercircle", cadence: "monthly" });
+            }}
           >
             Monthly
           </CadenceButton>
           <CadenceButton
             active={icCadence === "annual"}
-            onClick={() => setIcCadence("annual")}
+            onClick={() => {
+              setIcCadence("annual");
+              track("cadence_change", { tier: "innercircle", cadence: "annual" });
+            }}
           >
             Annual
             <span className="cadence-save">SAVE 17%</span>
@@ -96,7 +120,18 @@ export function PricingCards() {
           </div>
           <div className="ic-mini-line2">JT personally reviews every application</div>
         </div>
-        <Link href="/apply" className="price-cta primary text-center">
+        <Link
+          href="/apply"
+          className="price-cta primary text-center"
+          onClick={() =>
+            track("cta_click", {
+              cta: "apply_ic",
+              tier: "innercircle",
+              cadence: icCadence,
+              location: "pricing_card",
+            })
+          }
+        >
           Apply for Inner Circle
         </Link>
       </div>

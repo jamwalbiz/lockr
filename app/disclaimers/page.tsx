@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
 
 export const metadata: Metadata = {
   title: "Disclaimers — Lockr",
@@ -9,6 +10,12 @@ export const metadata: Metadata = {
 export default function DisclaimersPage() {
   return (
     <div className="shell">
+      <BreadcrumbsLd
+        trail={[
+          { name: "Home", url: "https://joinlockr.com/" },
+          { name: "Disclaimers", url: "https://joinlockr.com/disclaimers" },
+        ]}
+      />
       <article className="legal-page">
         <h1>Disclaimers</h1>
         <div className="updated">Last updated: May 27, 2026</div>

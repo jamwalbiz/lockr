@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
 
 export const metadata: Metadata = {
   title: "About — Lockr",
@@ -9,6 +10,12 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="shell">
+      <BreadcrumbsLd
+        trail={[
+          { name: "Home", url: "https://joinlockr.com/" },
+          { name: "About", url: "https://joinlockr.com/about" },
+        ]}
+      />
       <div className="about-hero">
         <div className="about-text">
           <div className="section-label">About</div>

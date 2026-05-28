@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@vercel/analytics";
 import { useState } from "react";
 import { FAQ_ITEMS } from "@/lib/faq";
 
@@ -15,7 +16,13 @@ export function Faq() {
             <button
               type="button"
               className="faq-q"
-              onClick={() => setOpenIndex(isOpen ? null : i)}
+              onClick={() => {
+                const next = isOpen ? null : i;
+                setOpenIndex(next);
+                if (next !== null) {
+                  track("faq_open", { question: item.q });
+                }
+              }}
               aria-expanded={isOpen}
               aria-controls={`faq-answer-${i}`}
             >

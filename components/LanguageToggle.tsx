@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@vercel/analytics";
 import { useEffect, useRef, useState } from "react";
 import { LANGUAGES } from "@/lib/copy";
 
@@ -52,6 +53,7 @@ export function LanguageToggle() {
             onClick={() => {
               setCurrent(l.code);
               setOpen(false);
+              track("language_change", { lang: l.code });
             }}
           >
             <span>{l.name}</span>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
 
 export const metadata: Metadata = {
   title: "Responsible Gaming — Lockr",
@@ -9,6 +10,12 @@ export const metadata: Metadata = {
 export default function ResponsibleGamingPage() {
   return (
     <div className="shell">
+      <BreadcrumbsLd
+        trail={[
+          { name: "Home", url: "https://joinlockr.com/" },
+          { name: "Responsible Gaming", url: "https://joinlockr.com/responsible-gaming" },
+        ]}
+      />
       <article className="legal-page">
         <h1>Responsible gaming</h1>
         <div className="updated">Last updated: May 27, 2026</div>

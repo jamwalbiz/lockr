@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@vercel/analytics";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -60,7 +61,11 @@ export function Nav() {
             <button className="btn btn-ghost nav-login" type="button">
               Log in
             </button>
-            <Link href="/checkout" className="btn btn-primary nav-join">
+            <Link
+              href="/checkout"
+              className="btn btn-primary nav-join"
+              onClick={() => track("cta_click", { cta: "join", location: "nav" })}
+            >
               Join Lockr
             </Link>
             <button
@@ -69,7 +74,12 @@ export function Nav() {
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
-              onClick={() => setMenuOpen((o) => !o)}
+              onClick={() => {
+                setMenuOpen((o) => {
+                  if (!o) track("mobile_menu_open");
+                  return !o;
+                });
+              }}
             >
               <span aria-hidden="true" className={`burger ${menuOpen ? "open" : ""}`}>
                 <span></span>
@@ -123,7 +133,10 @@ export function Nav() {
               href="/checkout"
               className="btn btn-primary btn-lg"
               style={{ width: "100%", justifyContent: "center" }}
-              onClick={closeMenu}
+              onClick={() => {
+                track("cta_click", { cta: "join", location: "mobile_menu" });
+                closeMenu();
+              }}
             >
               Join Lockr →
             </Link>

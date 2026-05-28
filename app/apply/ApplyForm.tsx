@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@vercel/analytics";
 import { useState } from "react";
 
 const SPORTS = ["NFL", "NBA", "MLB", "NHL", "UFC", "F1", "NCAA", "Soccer", "Tennis", "Esports", "Kalshi", "Polymarket"];
@@ -14,6 +15,7 @@ const BANKROLL_RANGES = [
 export function ApplyForm() {
   const [submitted, setSubmitted] = useState(false);
   const [selectedSports, setSelectedSports] = useState<string[]>([]);
+  const [honeypot, setHoneypot] = useState("");
 
   function toggleSport(s: string) {
     setSelectedSports((curr) =>
@@ -45,11 +47,34 @@ export function ApplyForm() {
       className="checkout-card"
       onSubmit={(e) => {
         e.preventDefault();
+        // Honeypot — bots fill hidden fields; humans don't. If filled, silently
+        // pretend success and bail. No tracking noise from bots.
+        if (honeypot) {
+          setSubmitted(true);
+          return;
+        }
         // TODO: wire to JT's intake — Formspree / direct mail / Notion DB
         // pending Phase 0 launch checklist
+        track("apply_submit", { sports_count: selectedSports.length });
         setSubmitted(true);
       }}
     >
+      {/* Honeypot: hidden from humans (off-screen + aria-hidden + autocomplete=off + tabIndex=-1).
+          Bots blindly fill every input including this one — filled = bot. */}
+      <div
+        aria-hidden="true"
+        style={{ position: "absolute", left: "-9999px", width: 1, height: 1, overflow: "hidden" }}
+      >
+        <label htmlFor="ap-website">Website (leave blank)</label>
+        <input
+          id="ap-website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+        />
+      </div>
       <div className="form-row">
         <label htmlFor="ap-name">Full name</label>
         <input id="ap-name" type="text" required placeholder="First Last" />

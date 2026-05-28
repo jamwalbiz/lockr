@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PricingCards } from "@/components/PricingCards";
+import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
 
 export const metadata: Metadata = {
   title: "Pricing — Lockr",
@@ -10,6 +11,12 @@ export const metadata: Metadata = {
 export default function PricingPage() {
   return (
     <div className="shell" style={{ padding: "60px 0" }}>
+      <BreadcrumbsLd
+        trail={[
+          { name: "Home", url: "https://joinlockr.com/" },
+          { name: "Pricing", url: "https://joinlockr.com/pricing" },
+        ]}
+      />
       <div className="section-head">
         <div className="section-label">Pricing</div>
         <h1

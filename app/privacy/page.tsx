@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
 
 export const metadata: Metadata = {
   title: "Privacy Policy — Lockr",
@@ -8,6 +9,12 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <div className="shell">
+      <BreadcrumbsLd
+        trail={[
+          { name: "Home", url: "https://joinlockr.com/" },
+          { name: "Privacy Policy", url: "https://joinlockr.com/privacy" },
+        ]}
+      />
       <article className="legal-page">
         <h1>Privacy Policy</h1>
         <div className="updated">Last updated: May 27, 2026</div>
@@ -29,10 +36,14 @@ export default function PrivacyPage() {
           </li>
           <li>
             <strong>Usage data:</strong> pages viewed, basic device info. We use{" "}
-            <a href="https://plausible.io" target="_blank" rel="noopener noreferrer">
-              Plausible Analytics
+            <a
+              href="https://vercel.com/docs/analytics"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Vercel Web Analytics
             </a>{" "}
-            (cookie-less, privacy-first).
+            (cookie-less, privacy-first — no fingerprinting, no cross-site tracking).
           </li>
           <li>
             <strong>Communications:</strong> emails you send us, Discord messages in
@@ -69,7 +80,7 @@ export default function PrivacyPage() {
             <strong>Discord</strong> — community access
           </li>
           <li>
-            <strong>Plausible</strong> — anonymous analytics
+            <strong>Vercel</strong> — hosting + anonymous analytics
           </li>
         </ul>
         <p>

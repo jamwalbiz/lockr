@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ApplyForm } from "./ApplyForm";
+import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
 
 export const metadata: Metadata = {
   title: "Inner Circle Application — Lockr",
@@ -11,6 +12,12 @@ export const metadata: Metadata = {
 export default function ApplyPage() {
   return (
     <div className="shell">
+      <BreadcrumbsLd
+        trail={[
+          { name: "Home", url: "https://joinlockr.com/" },
+          { name: "Inner Circle Application", url: "https://joinlockr.com/apply" },
+        ]}
+      />
       <div className="apply-page">
         <div className="apply-intro">
           <div className="badge">

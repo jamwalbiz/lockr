@@ -57,26 +57,41 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <body>
-        {/* Organization JSON-LD — applies site-wide */}
+        {/* Site-wide JSON-LD: Organization + WebSite */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Lockr",
-              url: "https://joinlockr.com",
-              logo: "https://joinlockr.com/apple-icon",
-              description:
-                "Premium subscription sports betting and prediction-market picks. Founded by Jairo Tovar.",
-              founder: { "@type": "Person", name: "Jairo Tovar" },
-              sameAs: [
-                "https://x.com/joinlockr",
-                "https://www.tiktok.com/@joinlockr",
-                "https://www.instagram.com/joinlockr",
-                "https://www.youtube.com/@joinlockr",
-              ],
-            }),
+            __html: JSON.stringify([
+              {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                name: "Lockr",
+                url: "https://joinlockr.com",
+                logo: "https://joinlockr.com/apple-icon",
+                description:
+                  "Premium subscription sports betting and prediction-market picks. Founded by Jairo Tovar.",
+                founder: { "@type": "Person", name: "Jairo Tovar" },
+                sameAs: [
+                  "https://x.com/joinlockr",
+                  "https://www.tiktok.com/@joinlockr",
+                  "https://www.instagram.com/joinlockr",
+                  "https://www.youtube.com/@joinlockr",
+                ],
+                contactPoint: {
+                  "@type": "ContactPoint",
+                  email: "hello@joinlockr.com",
+                  contactType: "customer support",
+                },
+              },
+              {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                name: "Lockr",
+                url: "https://joinlockr.com",
+                description:
+                  "Where serious bettors get serious edges. Daily picks across every sport plus prediction-market plays on Kalshi and Polymarket.",
+              },
+            ]),
           }}
         />
         <a href="#main" className="skip-link">
