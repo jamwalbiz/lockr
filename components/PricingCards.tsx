@@ -4,6 +4,8 @@ import { track } from "@vercel/analytics";
 import Link from "next/link";
 import { useState } from "react";
 import { useCadence } from "@/components/CadenceContext";
+import { TiltCard } from "@/components/TiltCard";
+import { feedbackClick } from "@/lib/sound";
 import {
   PRICING,
   SUBSCRIPTION_FEATURES,
@@ -25,7 +27,7 @@ export function PricingCards() {
   return (
     <div className="pricing-grid">
       {/* Lockr Subscription card */}
-      <div className="pricing-card instant">
+      <TiltCard className="pricing-card instant" maxTilt={4} scale={1.008}>
         <div className="price-tier">Lockr Subscription</div>
         <div className="cadence-toggle">
           <CadenceButton
@@ -70,21 +72,22 @@ export function PricingCards() {
         <Link
           href={`/checkout?tier=subscription&cadence=${subCadence}`}
           className="price-cta primary text-center"
-          onClick={() =>
+          onClick={() => {
+            feedbackClick();
             track("cta_click", {
               cta: "subscribe",
               tier: "subscription",
               cadence: subCadence,
               location: "pricing_card",
-            })
-          }
+            });
+          }}
         >
           Subscribe →
         </Link>
-      </div>
+      </TiltCard>
 
       {/* Inner Circle card */}
-      <div className="pricing-card gold">
+      <TiltCard className="pricing-card gold" maxTilt={4} scale={1.008}>
         <div className="price-tier">Inner Circle</div>
         <div className="cadence-toggle two-col">
           <CadenceButton
@@ -127,18 +130,19 @@ export function PricingCards() {
         <Link
           href="/apply"
           className="price-cta primary text-center"
-          onClick={() =>
+          onClick={() => {
+            feedbackClick();
             track("cta_click", {
               cta: "apply_ic",
               tier: "innercircle",
               cadence: icCadence,
               location: "pricing_card",
-            })
-          }
+            });
+          }}
         >
           Apply for Inner Circle
         </Link>
-      </div>
+      </TiltCard>
     </div>
   );
 }

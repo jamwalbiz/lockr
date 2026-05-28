@@ -3,6 +3,7 @@
 import { track } from "@vercel/analytics";
 import Link from "next/link";
 import { useCadence } from "@/components/CadenceContext";
+import { feedbackClick } from "@/lib/sound";
 import { PRICING } from "@/lib/copy";
 
 const CADENCE_SUFFIX = {
@@ -28,13 +29,14 @@ export function MobileCta() {
         <Link
           href={`/checkout?tier=subscription&cadence=${cadence}`}
           className="mobile-cta-btn"
-          onClick={() =>
+          onClick={() => {
+            feedbackClick();
             track("cta_click", {
               cta: "join",
               location: "mobile_sticky",
               cadence,
-            })
-          }
+            });
+          }}
         >
           Join Lockr →
         </Link>

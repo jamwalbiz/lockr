@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { feedbackClick, feedbackSuccess } from "@/lib/sound";
 import { PRICING } from "@/lib/copy";
 
 type Tier = "subscription" | "innercircle";
@@ -51,10 +52,22 @@ export function CheckoutFlow({
   const progressPct = (step / 4) * 100;
 
   function next() {
-    if (step < 4) setStep((step + 1) as Step);
+    if (step < 4) {
+      const nextStep = (step + 1) as Step;
+      setStep(nextStep);
+      // Step 4 is "you're in" — celebrate. All other transitions get the click tick.
+      if (nextStep === 4) {
+        feedbackSuccess();
+      } else {
+        feedbackClick();
+      }
+    }
   }
   function back() {
-    if (step > 1) setStep((step - 1) as Step);
+    if (step > 1) {
+      setStep((step - 1) as Step);
+      feedbackClick();
+    }
   }
 
   // Sub cadence valid: weekly, monthly, annual. IC: monthly, annual.

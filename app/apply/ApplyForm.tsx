@@ -2,6 +2,7 @@
 
 import { track } from "@vercel/analytics";
 import { useState } from "react";
+import { feedbackSuccess } from "@/lib/sound";
 
 const SPORTS = ["NFL", "NBA", "MLB", "NHL", "UFC", "F1", "NCAA", "Soccer", "Tennis", "Esports", "Kalshi", "Polymarket"];
 const BANKROLL_RANGES = [
@@ -56,6 +57,7 @@ export function ApplyForm() {
         // TODO: wire to JT's intake — Formspree / direct mail / Notion DB
         // pending Phase 0 launch checklist
         track("apply_submit", { sports_count: selectedSports.length });
+        feedbackSuccess();
         setSubmitted(true);
       }}
     >

@@ -4,6 +4,7 @@ import { track } from "@vercel/analytics";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { feedbackClick } from "@/lib/sound";
 
 export function Nav() {
   const pathname = usePathname();
@@ -64,7 +65,10 @@ export function Nav() {
             <Link
               href="/checkout"
               className="btn btn-primary nav-join"
-              onClick={() => track("cta_click", { cta: "join", location: "nav" })}
+              onClick={() => {
+                feedbackClick();
+                track("cta_click", { cta: "join", location: "nav" });
+              }}
             >
               Join Lockr
             </Link>
@@ -134,6 +138,7 @@ export function Nav() {
               className="btn btn-primary btn-lg"
               style={{ width: "100%", justifyContent: "center" }}
               onClick={() => {
+                feedbackClick();
                 track("cta_click", { cta: "join", location: "mobile_menu" });
                 closeMenu();
               }}

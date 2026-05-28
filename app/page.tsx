@@ -17,6 +17,8 @@ import { Faq } from "@/components/Faq";
 import { TESTIMONIALS_ROW_1, TESTIMONIALS_ROW_2 } from "@/lib/testimonials";
 import { BET_SLIPS } from "@/lib/betslips";
 import { FAQ_ITEMS } from "@/lib/faq";
+import { FadeInObserver } from "@/components/FadeInOnView";
+import { TiltCard } from "@/components/TiltCard";
 
 // FAQPage structured data — rich-snippet eligible.
 const FAQ_JSONLD = {
@@ -32,6 +34,10 @@ const FAQ_JSONLD = {
 export default function Home() {
   return (
     <>
+      {/* Scroll-triggered fade-in for sections below the fold. Hero is
+          excluded — it's already in view on load and should not animate. */}
+      <FadeInObserver />
+
       {/* Hero */}
       <section className="hero">
         <div className="hero-grid"></div>
@@ -88,7 +94,7 @@ export default function Home() {
       </section>
 
       {/* VSL */}
-      <section id="intro">
+      <section id="intro" className="fade-in-section">
         <div className="shell">
           <div className="section-head">
             <div className="section-label">Watch the breakdown</div>
@@ -116,7 +122,7 @@ export default function Home() {
       </section>
 
       {/* Pillars */}
-      <section>
+      <section className="fade-in-section">
         <div className="shell">
           <div className="section-head">
             <div className="section-label">Why Lockr</div>
@@ -168,7 +174,7 @@ export default function Home() {
       </section>
 
       {/* 3-Step Process */}
-      <section id="how-it-works">
+      <section id="how-it-works" className="fade-in-section">
         <div className="shell">
           <div className="section-head">
             <div className="section-label">How it works</div>
@@ -243,7 +249,7 @@ export default function Home() {
       </section>
 
       {/* Sportsbook logo wall */}
-      <section style={{ paddingTop: 0 }}>
+      <section className="fade-in-section" style={{ paddingTop: 0 }}>
         <div className="shell">
           <div className="books-label">
             Tail picks on every platform members already use
@@ -268,7 +274,7 @@ export default function Home() {
       </section>
 
       {/* By the numbers (static, no live tracker per handoff decision) */}
-      <section>
+      <section className="fade-in-section">
         <div className="shell">
           <div className="section-head">
             <div className="section-label">Receipts</div>
@@ -338,7 +344,7 @@ export default function Home() {
       </section>
 
       {/* Sports coverage grid */}
-      <section>
+      <section className="fade-in-section">
         <div className="shell">
           <div className="section-head">
             <div className="section-label">Coverage</div>
@@ -429,7 +435,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials + bet slips + Discord embeds */}
-      <section>
+      <section className="fade-in-section">
         <div className="shell">
           <div className="section-head">
             <div className="section-label">1,247 active members</div>
@@ -473,7 +479,12 @@ export default function Home() {
           </div>
           <div className="slips-grid">
             {BET_SLIPS.map((slip) => (
-              <div key={slip.handle + slip.date} className={`slip ${slip.book}`}>
+              <TiltCard
+                key={slip.handle + slip.date}
+                className={`slip ${slip.book}`}
+                maxTilt={5}
+                scale={1.015}
+              >
                 <div className="slip-head">
                   <div className="slip-book">{slip.bookLabel}</div>
                   <div className="slip-badges">
@@ -501,7 +512,7 @@ export default function Home() {
                     <div className="slip-member-date">{slip.date}</div>
                   </div>
                 </div>
-              </div>
+              </TiltCard>
             ))}
           </div>
 
@@ -646,7 +657,7 @@ export default function Home() {
       </section>
 
       {/* Pricing */}
-      <section id="pricing-section">
+      <section id="pricing-section" className="fade-in-section">
         <div className="shell">
           <div className="section-head">
             <div className="section-label">Pricing</div>
@@ -678,7 +689,7 @@ export default function Home() {
       </section>
 
       {/* VS comparison */}
-      <section>
+      <section className="fade-in-section">
         <div className="shell">
           <div className="section-head">
             <div className="section-label">Still skeptical?</div>
@@ -724,7 +735,7 @@ export default function Home() {
       </section>
 
       {/* Disqualifier */}
-      <section>
+      <section className="fade-in-section">
         <div className="shell">
           <div className="section-head">
             <div className="section-label">Be honest</div>
@@ -768,7 +779,7 @@ export default function Home() {
       </section>
 
       {/* FAQ */}
-      <section id="faq">
+      <section id="faq" className="fade-in-section">
         <div className="shell">
           <div className="section-head">
             <div className="section-label">FAQ</div>
@@ -784,7 +795,7 @@ export default function Home() {
       </section>
 
       {/* Final CTA */}
-      <section>
+      <section className="fade-in-section">
         <div className="shell">
           <div className="final-cta">
             <div className="final-cta-content">

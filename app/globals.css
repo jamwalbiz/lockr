@@ -377,8 +377,8 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
    Bet slips
    ------------------------------------------------------------------ */
 .slips-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 1100px; margin: 0 auto; }
-.slip { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px; padding: 18px 18px 14px; transition: all 0.2s; position: relative; overflow: hidden; }
-.slip:hover { border-color: var(--border-strong); transform: translateY(-3px); }
+.slip { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px; padding: 18px 18px 14px; position: relative; overflow: hidden; }
+.slip:hover { border-color: var(--border-strong); }
 .slip::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--book-accent, var(--accent)); }
 .slip.prizepicks { --book-accent: #6f4ff2; }
 .slip.underdog { --book-accent: #ff3f3f; }
@@ -464,8 +464,8 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
    ------------------------------------------------------------------ */
 .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1100px; margin: 0 auto; }
 @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; } }
-.pricing-card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 14px; padding: 28px 24px; display: flex; flex-direction: column; position: relative; transition: all 0.2s; }
-.pricing-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+.pricing-card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 14px; padding: 28px 24px; display: flex; flex-direction: column; position: relative; }
+.pricing-card:hover { border-color: var(--border-strong); }
 .pricing-card.featured { border-color: var(--accent); background: linear-gradient(180deg, rgba(0,255,133,0.04) 0%, var(--bg-elevated) 50%); }
 .pricing-card.gold { border-color: rgba(201,167,106,0.5); background: linear-gradient(180deg, rgba(201,167,106,0.05) 0%, var(--bg-elevated) 50%); }
 .pricing-card.gold::before { content: 'APPLICATION ONLY'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--bg); color: var(--gold); border: 1px solid rgba(201,167,106,0.5); font-size: 10px; font-weight: 700; padding: 3px 12px; border-radius: 100px; letter-spacing: 0.08em; }
@@ -613,6 +613,41 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .legal-page a:hover { text-decoration: underline; }
 .legal-page ul { color: var(--text-mute); font-size: 15px; line-height: 1.7; padding-left: 20px; margin-bottom: 12px; }
 .legal-page ul li { margin-bottom: 4px; }
+
+/* ------------------------------------------------------------------
+   Section fade-in on viewport entry
+   ------------------------------------------------------------------ */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.fade-in-section.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .fade-in-section {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Tilt-on-hover cards
+   ------------------------------------------------------------------ */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.15s, box-shadow 0.18s;
+  will-change: transform;
+}
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .tilt-card { transform: none !important; transition: border-color 0.15s; }
+}
 
 /* ------------------------------------------------------------------
    Accessibility
