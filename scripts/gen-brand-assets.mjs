@@ -198,61 +198,63 @@ const INVITE_SPLASH_SVG = svgWrap(1920, 1080, BG, `
         text-anchor="middle">DAILY PICKS · SPORTS + PREDICTION MARKETS</text>
 `);
 
-// 1500×500 — Lockr Subscription product card. Sits on the public Whop
-// business home page next to the Inner Circle card. Green-accent variant
-// of the brand mark + tier-specific tagline + perks accent line.
-const LOCKR_SUB_CARD_SVG = svgWrap(1500, 500, BG, `
+// 1600×900 — Lockr Subscription product card. 16:9 to match Whop's
+// product card slot. Green-accent variant of the brand mark + tier
+// tagline + category accent line. Copy is restricted to structural
+// claims (category list) so the image doesn't need re-baking if perks
+// like the weekly Q&A cadence shift.
+const LOCKR_SUB_CARD_SVG = svgWrap(1600, 900, BG, `
   <defs>
     <radialGradient id="subCardGlow" cx="50%" cy="55%" r="60%">
       <stop offset="0%" stop-color="${ACCENT}" stop-opacity="0.12"/>
       <stop offset="65%" stop-color="${BG}" stop-opacity="0"/>
     </radialGradient>
   </defs>
-  <rect width="1500" height="500" fill="url(#subCardGlow)"/>
-  ${inlineMark({ centerX: 750, centerY: 196, fontSize: 130 })}
-  <text x="750" y="324"
+  <rect width="1600" height="900" fill="url(#subCardGlow)"/>
+  ${inlineMark({ centerX: 800, centerY: 415, fontSize: 160 })}
+  <text x="800" y="570"
         font-family="${FONT}"
-        font-size="30"
+        font-size="34"
         font-weight="500"
         letter-spacing="-0.5"
         fill="${MUTE}"
         text-anchor="middle">Daily picks. Live in Discord.</text>
-  <text x="750" y="378"
+  <text x="800" y="634"
         font-family="${FONT}"
-        font-size="20"
+        font-size="24"
         font-weight="600"
-        letter-spacing="2.5"
+        letter-spacing="3"
         fill="${ACCENT}"
-        text-anchor="middle">SPORTS · KALSHI · POLYMARKET · WEEKLY Q&amp;A</text>
+        text-anchor="middle">SPORTS · KALSHI · POLYMARKET</text>
 `);
 
-// 1500×500 — Inner Circle product card. Gold accent variant so the IC
-// tier reads as visibly more premium next to the sub card. Gold dot on
-// the mark + gold radial glow + gold accent line. Tagline emphasises
-// the application-only / capped-room positioning.
-const IC_CARD_SVG = svgWrap(1500, 500, BG, `
+// 1600×900 — Inner Circle product card. Gold accent variant so the IC
+// tier reads as visibly more premium next to the sub card. Copy holds
+// only the durable IC framing — no specific cap numbers or perk lists
+// that might evolve.
+const IC_CARD_SVG = svgWrap(1600, 900, BG, `
   <defs>
     <radialGradient id="icCardGlow" cx="50%" cy="55%" r="60%">
       <stop offset="0%" stop-color="${GOLD}" stop-opacity="0.16"/>
       <stop offset="65%" stop-color="${BG}" stop-opacity="0"/>
     </radialGradient>
   </defs>
-  <rect width="1500" height="500" fill="url(#icCardGlow)"/>
-  ${inlineMark({ centerX: 750, centerY: 196, fontSize: 130, dotColor: GOLD })}
-  <text x="750" y="324"
+  <rect width="1600" height="900" fill="url(#icCardGlow)"/>
+  ${inlineMark({ centerX: 800, centerY: 415, fontSize: 160, dotColor: GOLD })}
+  <text x="800" y="570"
         font-family="${FONT}"
-        font-size="30"
+        font-size="34"
         font-weight="500"
         letter-spacing="-0.5"
         fill="${MUTE}"
         text-anchor="middle">The high-conviction room.</text>
-  <text x="750" y="378"
+  <text x="800" y="634"
         font-family="${FONT}"
-        font-size="20"
+        font-size="24"
         font-weight="600"
-        letter-spacing="2.5"
+        letter-spacing="3"
         fill="${GOLD}"
-        text-anchor="middle">BY APPLICATION · 200 HARD CAP · 1-ON-1 WITH JT</text>
+        text-anchor="middle">BY APPLICATION ONLY</text>
 `);
 
 // 1200×630 — OG card for the Whop business page (and any platform that
@@ -360,8 +362,8 @@ await writeCentered("lockr-icon-4k", ICON_SVG, 4096, 4096);
 await write("lockr-banner-1500x500", BANNER_SVG, 1500, 500);
 await write("lockr-banner-4k", BANNER_SVG, 4500, 1500);
 await write("lockr-og-1200x630", OG_SVG, 1200, 630);
-await write("lockr-sub-card-1500x500", LOCKR_SUB_CARD_SVG, 1500, 500);
-await write("inner-circle-card-1500x500", IC_CARD_SVG, 1500, 500);
+await write("lockr-sub-card-1600x900", LOCKR_SUB_CARD_SVG, 1600, 900);
+await write("inner-circle-card-1600x900", IC_CARD_SVG, 1600, 900);
 await write("discord-welcome-banner-1500x500", WELCOME_BANNER_SVG, 1500, 500);
 await write("discord-server-banner-960x540", SERVER_BANNER_SVG, 960, 540);
 await write("discord-invite-splash-1920x1080", INVITE_SPLASH_SVG, 1920, 1080);
@@ -404,8 +406,8 @@ console.log("  lockr-icon-4k.png                        — 4K master icon: uplo
 console.log("  lockr-icon-512.png                       — site-embedded use (OG, meta); platforms should get the 4K version");
 console.log("  lockr-banner-4k.png                      — 4K master banner: marketing decks, partner assets, hi-DPI screens");
 console.log("  lockr-og-1200x630.png                    — OG / social preview card: Whop business page, Slack/Discord/iMessage link previews");
-console.log("  lockr-sub-card-1500x500.png              — Lockr Subscription product card (Whop product card)");
-console.log("  inner-circle-card-1500x500.png           — Inner Circle product card (Whop product card, gold accent)");
+console.log("  lockr-sub-card-1600x900.png              — Lockr Subscription product card (Whop product card, 16:9)");
+console.log("  inner-circle-card-1600x900.png           — Inner Circle product card (Whop product card, gold accent, 16:9)");
 console.log("  lockr-banner-1500x500.png                — Whop product page banner (Whop's spec)");
 console.log("  discord-welcome-banner-1500x500.png      — attach to pinned #welcome message");
 console.log("  discord-server-banner-960x540.png        — Discord server banner (Tier 2 boost)");
