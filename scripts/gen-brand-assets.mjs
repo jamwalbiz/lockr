@@ -218,14 +218,14 @@ const LOCKR_SUB_CARD_SVG = svgWrap(1600, 900, BG, `
         font-weight="500"
         letter-spacing="-0.5"
         fill="${MUTE}"
-        text-anchor="middle">Daily picks. Live in Discord.</text>
+        text-anchor="middle">Daily picks, posted live.</text>
   <text x="800" y="634"
         font-family="${FONT}"
         font-size="24"
         font-weight="600"
         letter-spacing="3"
         fill="${ACCENT}"
-        text-anchor="middle">SPORTS · KALSHI · POLYMARKET</text>
+        text-anchor="middle">SPORTS + PREDICTION MARKETS</text>
 `);
 
 // 1600×900 — Inner Circle product card. Gold accent variant so the IC
