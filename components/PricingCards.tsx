@@ -51,6 +51,7 @@ export function PricingCards() {
             }}
           >
             Monthly
+            <span className="cadence-save">SAVE 20%</span>
           </CadenceButton>
           <CadenceButton
             active={subCadence === "annual"}
@@ -60,7 +61,7 @@ export function PricingCards() {
             }}
           >
             Annual
-            <span className="cadence-save">SAVE 50%</span>
+            <span className="cadence-save">SAVE 60%</span>
           </CadenceButton>
         </div>
         <div key={subCadence} className="price-block">

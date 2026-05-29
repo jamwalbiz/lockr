@@ -5,7 +5,7 @@ import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
 export const metadata: Metadata = {
   title: "Pricing — Lockr",
   description:
-    "Lockr Subscription from $29/wk, $99/mo, or $599/yr (save ~50%). Inner Circle by application only — $499/mo or $4,999/yr. Cancel any time.",
+    "Lockr Subscription from $29/wk, $99/mo (save ~20%), or $599/yr (save ~60%). Inner Circle by application only — $499/mo or $4,999/yr. Cancel any time.",
 };
 
 export default function PricingPage() {
