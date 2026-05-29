@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
   <rect width="128" height="128" rx="20" fill="#0a0a0b"/>
-  <text x="64" y="92"
-        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif"
-        font-size="96"
-        font-weight="900"
-        fill="#ff4d4d"
-        text-anchor="middle">✕</text>
+  <path d="M 36 36 L 92 92 M 92 36 L 36 92" fill="none" stroke="#ff4d4d" stroke-width="16" stroke-linecap="round"/>
 </svg>

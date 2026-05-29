@@ -1,20 +1,29 @@
 #!/usr/bin/env node
-// Generates Lockr brand assets (Whop business icon, Discord server icon,
-// product banner, social avatars) from SVG sources using sharp.
+// Generates Lockr brand assets from SVG sources using sharp.
 //
-// Brand recipe matches app/icon.tsx + app/apple-icon.tsx + the OG image:
-//   bg:     #0a0a0b
-//   accent: #00ff85
-//   text:   #f5f4f1
-//   font:   Inter, weight 800, tight letter-spacing
+// Brand recipe (matches app/globals.css):
+//   bg:      #0a0a0b
+//   surface: #141416
+//   text:    #f5f4f1
+//   mute:    #a1a1a6
+//   accent:  #00ff85
+//   gold:    #C9A76A   (Inner Circle)
+//   danger:  #ff4d4d
+//
+// Logo lockup matches the on-site brand mark exactly — see components/Nav.tsx
+// (.logo + .logo-dot in globals.css) and app/opengraph-image.tsx. It's an
+// inline `[•] LOCKR` arrangement: a small rounded-square accent dot to the
+// left of the LOCKR wordmark, vertically centered. The `inlineMark()` helper
+// below scales those proportions to whatever font size each surface needs.
+//
+// IMPORTANT: emoji glyphs are SVG paths, NOT <text>. The SVG (rendered by
+// the browser) and the PNG (rendered by sharp+pango) come out identical
+// because there's no font lookup. Don't switch them back to <text>.
 //
 // Run:   node scripts/gen-brand-assets.mjs
-// Out:   public/brand/lockr-icon-512.png       (square — Whop icon, Discord icon, all social avatars)
-//        public/brand/lockr-icon-512.svg
-//        public/brand/lockr-banner-1500x500.png (landscape — Whop product page banner)
-//        public/brand/lockr-banner-1500x500.svg
+// Out:   public/brand/
 //
-// Re-run after changing the SVG markup below.
+// Re-run after changing anything below.
 
 import sharp from "sharp";
 import { mkdir, writeFile } from "node:fs/promises";
@@ -24,55 +33,169 @@ import { dirname, join } from "node:path";
 const here = dirname(fileURLToPath(import.meta.url));
 const outDir = join(here, "..", "public", "brand");
 
-// 512×512 square. Centered: green accent square stacked above LOCKR wordmark.
-// Works as Whop business icon, Discord server icon, X/Twitter/Instagram/TikTok
-// avatar. Read-tested down to 32×32 — wordmark still legible.
-const ICON_SVG = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
-  <rect width="512" height="512" fill="#0a0a0b"/>
-  <rect x="216" y="146" width="80" height="80" rx="14" fill="#00ff85"/>
-  <text x="256" y="364"
-        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif"
-        font-size="92"
-        font-weight="800"
-        letter-spacing="-4"
-        fill="#f5f4f1"
-        text-anchor="middle">LOCKR</text>
-</svg>`;
+const BG = "#0a0a0b";
+const SURFACE = "#141416";
+const TEXT = "#f5f4f1";
+const MUTE = "#a1a1a6";
+const ACCENT = "#00ff85";
+const GOLD = "#C9A76A";
+const DANGER = "#ff4d4d";
+const FONT = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif";
 
-// 1500×500 banner. LOCKR wordmark left-aligned with a subtle accent block,
-// tagline beneath. Right side intentionally empty so the Whop "Join now"
-// CTA card doesn't fight with the type.
-const BANNER_SVG = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="500" viewBox="0 0 1500 500">
+// Inline `[•] LOCKR` mark. Matches the site nav + OG card lockup so every
+// surface (Whop icon, Discord server icon, banners, social avatars) reads
+// as the same brand mark. Proportions derived from the OG card:
+//   dot:font   = 0.55  (dot height relative to font size — emphatic display)
+//   gap:font   = 0.44  (whitespace between dot and wordmark)
+//   ls         = -0.025em (tighter than nav's -0.02 to match the OG card)
+//   weight     = 800   (display weight; nav uses 700 for inline body)
+//   dot rx     = 0.14 of dot size (matches OG card's 3/20 ratio)
+//
+// `centerX` / `centerY` is the visual center of the whole mark group.
+// `leftAlign: true` reinterprets `centerX` as the *left edge* of the mark
+// instead — used by left-anchored layouts like the Whop product banner.
+function inlineMark({ centerX, centerY, fontSize, leftAlign = false }) {
+  const dotSize = Math.round(fontSize * 0.55);
+  const dotRadius = Math.max(1, Math.round(dotSize * 0.14));
+  const gap = Math.round(fontSize * 0.44);
+  const letterSpacing = +(fontSize * -0.025).toFixed(2);
+  const capHeight = fontSize * 0.72;
+  // Approximate width of "LOCKR" in a geometric sans at this font size +
+  // letter-spacing — close enough for centering, no font metrics required.
+  const lockrWidth = Math.round(5 * fontSize * 0.62 + 4 * letterSpacing);
+  const totalWidth = dotSize + gap + lockrWidth;
+
+  const startX = leftAlign ? centerX : Math.round(centerX - totalWidth / 2);
+  const dotY = Math.round(centerY - dotSize / 2);
+  const textX = startX + dotSize + gap;
+  const textBaselineY = Math.round(centerY + capHeight / 2);
+
+  return `
+  <rect x="${startX}" y="${dotY}" width="${dotSize}" height="${dotSize}" rx="${dotRadius}" fill="${ACCENT}"/>
+  <text x="${textX}" y="${textBaselineY}"
+        font-family="${FONT}"
+        font-size="${fontSize}"
+        font-weight="800"
+        letter-spacing="${letterSpacing}"
+        fill="${TEXT}">LOCKR</text>`;
+}
+
+function svgWrap(w, h, bg, inner) {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+  <rect width="${w}" height="${h}" fill="${bg}"/>
+  ${inner}
+</svg>`;
+}
+
+// 512×512 — Whop business icon, Discord server icon, social avatars.
+// Inline mark, centered. Discord round-crops square icons into circles,
+// and our mark has enough padding to survive the crop.
+const ICON_SVG = svgWrap(512, 512, BG,
+  inlineMark({ centerX: 256, centerY: 256, fontSize: 96 })
+);
+
+// 1500×500 — Whop product page banner. Mark left-aligned (right side empty
+// for Whop's "Join now" CTA card), tagline + ALL-CAPS sub beneath.
+const BANNER_SVG = svgWrap(1500, 500, BG, `
   <defs>
-    <radialGradient id="glow" cx="0%" cy="50%" r="80%">
-      <stop offset="0%" stop-color="#00ff85" stop-opacity="0.08"/>
-      <stop offset="60%" stop-color="#0a0a0b" stop-opacity="0"/>
+    <radialGradient id="bannerGlow" cx="0%" cy="50%" r="80%">
+      <stop offset="0%" stop-color="${ACCENT}" stop-opacity="0.08"/>
+      <stop offset="60%" stop-color="${BG}" stop-opacity="0"/>
     </radialGradient>
   </defs>
-  <rect width="1500" height="500" fill="#0a0a0b"/>
-  <rect width="1500" height="500" fill="url(#glow)"/>
-  <rect x="120" y="184" width="44" height="44" rx="6" fill="#00ff85"/>
-  <text x="190" y="222"
-        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif"
-        font-size="84"
-        font-weight="800"
-        letter-spacing="-3"
-        fill="#f5f4f1">LOCKR</text>
-  <text x="120" y="304"
-        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif"
+  <rect width="1500" height="500" fill="url(#bannerGlow)"/>
+  ${inlineMark({ centerX: 120, centerY: 210, fontSize: 100, leftAlign: true })}
+  <text x="120" y="318"
+        font-family="${FONT}"
         font-size="32"
         font-weight="500"
         letter-spacing="-0.5"
-        fill="#a1a1a6">Where serious bettors get serious edges.</text>
-  <text x="120" y="350"
-        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif"
+        fill="${MUTE}">Where serious bettors get serious edges.</text>
+  <text x="120" y="366"
+        font-family="${FONT}"
         font-size="22"
         font-weight="600"
         letter-spacing="2"
-        fill="#00ff85">DAILY PICKS · SPORTS + PREDICTION MARKETS</text>
+        fill="${ACCENT}">DAILY PICKS · SPORTS + PREDICTION MARKETS</text>
+`);
+
+// 1500×500 — Discord welcome banner. Attach above the pinned #welcome
+// message. Centered mark + single tagline (no ALL-CAPS sub — the pinned
+// text below carries the next-steps content).
+const WELCOME_BANNER_SVG = svgWrap(1500, 500, BG, `
+  <defs>
+    <radialGradient id="welcomeGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="${ACCENT}" stop-opacity="0.12"/>
+      <stop offset="65%" stop-color="${BG}" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1500" height="500" fill="url(#welcomeGlow)"/>
+  ${inlineMark({ centerX: 750, centerY: 225, fontSize: 140 })}
+  <text x="750" y="360"
+        font-family="${FONT}"
+        font-size="32"
+        font-weight="500"
+        letter-spacing="-0.5"
+        fill="${MUTE}"
+        text-anchor="middle">Where serious bettors get serious edges.</text>
+`);
+
+// 960×540 — Discord server banner (Tier 2 boost). Sits at the top of
+// the channel list; Discord crops freely across viewport widths, so we
+// keep the mark in the top-left corner and the rest is brand backdrop.
+const SERVER_BANNER_SVG = svgWrap(960, 540, BG, `
+  <defs>
+    <linearGradient id="serverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="${SURFACE}"/>
+      <stop offset="100%" stop-color="${BG}"/>
+    </linearGradient>
+    <radialGradient id="serverGlow" cx="20%" cy="80%" r="60%">
+      <stop offset="0%" stop-color="${ACCENT}" stop-opacity="0.16"/>
+      <stop offset="70%" stop-color="${BG}" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="960" height="540" fill="url(#serverGrad)"/>
+  <rect width="960" height="540" fill="url(#serverGlow)"/>
+  ${inlineMark({ centerX: 56, centerY: 80, fontSize: 40, leftAlign: true })}
+`);
+
+// 1920×1080 — Discord invite splash (Tier 1 boost). Shown when someone
+// clicks an invite link before they hit "Accept Invite".
+const INVITE_SPLASH_SVG = svgWrap(1920, 1080, BG, `
+  <defs>
+    <radialGradient id="splashGlow" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="${ACCENT}" stop-opacity="0.10"/>
+      <stop offset="65%" stop-color="${BG}" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#splashGlow)"/>
+  ${inlineMark({ centerX: 960, centerY: 460, fontSize: 200 })}
+  <text x="960" y="700"
+        font-family="${FONT}"
+        font-size="44"
+        font-weight="500"
+        letter-spacing="-0.6"
+        fill="${MUTE}"
+        text-anchor="middle">Where serious bettors get serious edges.</text>
+  <text x="960" y="790"
+        font-family="${FONT}"
+        font-size="30"
+        font-weight="600"
+        letter-spacing="3"
+        fill="${ACCENT}"
+        text-anchor="middle">DAILY PICKS · SPORTS + PREDICTION MARKETS</text>
+`);
+
+// 64×64 role icon. Brand-colour rounded square in the colour of the role
+// (accent green for Lockr Subscriber, brand gold for Inner Circle). Sits
+// beside the member's name in the sidebar. Tier 2 boost required.
+function roleIconSvg(color) {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <rect x="6" y="6" width="52" height="52" rx="8" fill="${color}"/>
 </svg>`;
+}
 
 async function write(name, svg, w, h) {
   await mkdir(outDir, { recursive: true });
@@ -86,43 +209,53 @@ async function write(name, svg, w, h) {
 
 await write("lockr-icon-512", ICON_SVG, 512, 512);
 await write("lockr-banner-1500x500", BANNER_SVG, 1500, 500);
+await write("discord-welcome-banner-1500x500", WELCOME_BANNER_SVG, 1500, 500);
+await write("discord-server-banner-960x540", SERVER_BANNER_SVG, 960, 540);
+await write("discord-invite-splash-1920x1080", INVITE_SPLASH_SVG, 1920, 1080);
+await write("role-icon-subscriber-64", roleIconSvg(ACCENT), 64, 64);
+await write("role-icon-inner-circle-64", roleIconSvg(GOLD), 64, 64);
 
-// Discord custom emojis. Square 128×128, dark bg + bright glyph. Used as
-// reactions on pick posts so members can signal at-a-glance whether they
-// tailed / faded / are claiming win/loss. Upload via Server Settings →
-// Emoji → Upload Emoji. Name them :win:, :loss:, :tail:, :fade:, :lockr:.
-const EMOJI_BG = "#0a0a0b";
-function emojiSvg(glyph, color, fontSize = 84) {
+// Discord custom emojis, 128×128. Glyphs are SVG paths (NOT <text>) so
+// the .svg and .png renders are byte-identical in shape. Upload via
+// Server Settings → Emoji → Upload Emoji. Name them :win:, :loss:,
+// :tail:, :fade:, :lockr:.
+function emojiSvg(inner) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
-  <rect width="128" height="128" rx="20" fill="${EMOJI_BG}"/>
-  <text x="64" y="92"
-        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif"
-        font-size="${fontSize}"
-        font-weight="900"
-        fill="${color}"
-        text-anchor="middle">${glyph}</text>
+  <rect width="128" height="128" rx="20" fill="${BG}"/>
+  ${inner}
 </svg>`;
 }
 
-// :lockr: — reuses the brand accent square mark.
-const LOCKR_EMOJI_SVG = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
-  <rect width="128" height="128" rx="20" fill="${EMOJI_BG}"/>
-  <rect x="30" y="30" width="68" height="68" rx="10" fill="#00ff85"/>
-</svg>`;
+// Chunky check — round caps + joins so the corner reads as a soft hook.
+const WIN_GLYPH = `<path d="M 28 66 L 54 92 L 100 38" fill="none" stroke="${ACCENT}" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>`;
 
-await write("emoji-win", emojiSvg("✓", "#00ff85", 96), 128, 128);
-await write("emoji-loss", emojiSvg("✕", "#ff4d4d", 96), 128, 128);
-await write("emoji-tail", emojiSvg("▲", "#00ff85", 84), 128, 128);
-await write("emoji-fade", emojiSvg("▼", "#ff4d4d", 84), 128, 128);
-await write("emoji-lockr", LOCKR_EMOJI_SVG, 128, 128);
+// Two crossing strokes with round caps.
+const LOSS_GLYPH = `<path d="M 36 36 L 92 92 M 92 36 L 36 92" fill="none" stroke="${DANGER}" stroke-width="16" stroke-linecap="round"/>`;
+
+// Filled triangles. Round-joined so the points aren't visually piercing.
+const TAIL_GLYPH = `<path d="M 64 26 L 102 102 L 26 102 Z" fill="${ACCENT}" stroke="${ACCENT}" stroke-width="6" stroke-linejoin="round"/>`;
+const FADE_GLYPH = `<path d="M 64 102 L 102 26 L 26 26 Z" fill="${DANGER}" stroke="${DANGER}" stroke-width="6" stroke-linejoin="round"/>`;
+
+// :lockr: — the brand accent square mark, same shape as the icon dot.
+const LOCKR_GLYPH = `<rect x="30" y="30" width="68" height="68" rx="10" fill="${ACCENT}"/>`;
+
+await write("emoji-win", emojiSvg(WIN_GLYPH), 128, 128);
+await write("emoji-loss", emojiSvg(LOSS_GLYPH), 128, 128);
+await write("emoji-tail", emojiSvg(TAIL_GLYPH), 128, 128);
+await write("emoji-fade", emojiSvg(FADE_GLYPH), 128, 128);
+await write("emoji-lockr", emojiSvg(LOCKR_GLYPH), 128, 128);
 
 console.log("\nDone. Files in public/brand/:");
-console.log("  lockr-icon-512.png         — Whop biz icon, Discord server icon, all social avatars");
-console.log("  lockr-banner-1500x500.png  — Whop product page banner");
-console.log("  emoji-win.png              — Discord :win: reaction");
-console.log("  emoji-loss.png             — Discord :loss: reaction");
-console.log("  emoji-tail.png             — Discord :tail: reaction (member followed the pick)");
-console.log("  emoji-fade.png             — Discord :fade: reaction (member bet the other side)");
-console.log("  emoji-lockr.png            — Discord :lockr: reaction (general approval)");
+console.log("  lockr-icon-512.png                       — Whop biz icon, Discord server icon, all social avatars");
+console.log("  lockr-banner-1500x500.png                — Whop product page banner");
+console.log("  discord-welcome-banner-1500x500.png      — attach to pinned #welcome message");
+console.log("  discord-server-banner-960x540.png        — Discord server banner (Tier 2 boost)");
+console.log("  discord-invite-splash-1920x1080.png      — Discord invite-link preview (Tier 1 boost)");
+console.log("  role-icon-subscriber-64.png              — Lockr Subscriber role icon (Tier 2 boost)");
+console.log("  role-icon-inner-circle-64.png            — Inner Circle role icon (Tier 2 boost)");
+console.log("  emoji-win.png                            — Discord :win: reaction");
+console.log("  emoji-loss.png                           — Discord :loss: reaction");
+console.log("  emoji-tail.png                           — Discord :tail: reaction (member followed the pick)");
+console.log("  emoji-fade.png                           — Discord :fade: reaction (member bet the other side)");
+console.log("  emoji-lockr.png                          — Discord :lockr: reaction (general approval)");
