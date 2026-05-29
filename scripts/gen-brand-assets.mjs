@@ -26,7 +26,7 @@
 // Re-run after changing anything below.
 
 import sharp from "sharp";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -251,12 +251,14 @@ function densityFor(svg, targetW) {
 
 async function write(name, svg, w, h) {
   await mkdir(outDir, { recursive: true });
-  await writeFile(join(outDir, `${name}.svg`), svg);
+  // PNG only — SVGs were previously emitted as intermediates but they're not
+  // used in production (the script is the source of truth) and we don't want
+  // them publicly available at joinlockr.com/brand/*.svg either.
   await sharp(Buffer.from(svg), { density: densityFor(svg, w) })
     .resize(w, h)
     .png({ compressionLevel: 9 })
     .toFile(join(outDir, `${name}.png`));
-  console.log(`✓ ${name}.{svg,png} (${w}×${h})`);
+  console.log(`✓ ${name}.png (${w}×${h})`);
 }
 
 // Same as write() but guarantees the mark sits at the exact pixel center
@@ -267,7 +269,7 @@ async function write(name, svg, w, h) {
 // intentional whitespace between mark, tagline, and sub.
 async function writeCentered(name, svg, w, h, bg = BG) {
   await mkdir(outDir, { recursive: true });
-  await writeFile(join(outDir, `${name}.svg`), svg);
+  // PNG only (see write() comment above).
 
   const raw = await sharp(Buffer.from(svg), { density: densityFor(svg, w) })
     .resize(w, h)
@@ -293,7 +295,7 @@ async function writeCentered(name, svg, w, h, bg = BG) {
     .png({ compressionLevel: 9 })
     .toFile(join(outDir, `${name}.png`));
 
-  console.log(`✓ ${name}.{svg,png} (${w}×${h}) [centered]`);
+  console.log(`✓ ${name}.png (${w}×${h}) [centered]`);
 }
 
 await writeCentered("lockr-icon-512", ICON_SVG, 512, 512);

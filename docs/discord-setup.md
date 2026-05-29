@@ -108,7 +108,7 @@ Right-click channel → Edit Channel → Topic field. Paste:
 | `#general-chat` | `Member-to-member talk. Banter about plays, off-topic, ask anything.` |
 | `Weekly Call` (Stage) | `Live weekly Q&A with JT. Members raise hand to ask questions.` |
 | `#inner-circle` (Forum) | `IC-only discussions. Deep dives + custom research = individual threads. Pick a tag when posting.` |
-| `IC Mastermind` (Stage) | `Monthly mastermind call. IC members only. Strategy talk + open Q&A with JT.` |
+| `IC Mastermind` (Stage) | `Quarterly cohort mastermind. Full IC room live — 60-min deep dive on the quarter, what worked, what didn't, where the edge moved. (Monthly 1-on-1 strategy calls happen separately via DM scheduling — no channel for those.)` |
 
 ### 3c. Pinned starter message in `#welcome`
 
