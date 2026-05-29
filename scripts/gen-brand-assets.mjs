@@ -100,29 +100,35 @@ const ICON_SVG = svgWrap(512, 512, BG,
   inlineMark({ centerX: 256, centerY: 256, fontSize: 96 })
 );
 
-// 1500×500 — Whop product page banner. Mark left-aligned (right side empty
-// for Whop's "Join now" CTA card), tagline + ALL-CAPS sub beneath.
+// 1500×500 — Whop product page banner. Mark + tagline + ALL-CAPS sub all
+// CENTERED. Originally left-aligned (expecting Whop to overlay a "Join now"
+// CTA card on the right), but Whop also uses the same image as a cropped
+// thumbnail in product cards — which clipped the left edge and ate the
+// LOCKR mark. Centering it survives both the full-banner display AND any
+// thumbnail crop Whop applies.
 const BANNER_SVG = svgWrap(1500, 500, BG, `
   <defs>
-    <radialGradient id="bannerGlow" cx="0%" cy="50%" r="80%">
-      <stop offset="0%" stop-color="${ACCENT}" stop-opacity="0.08"/>
-      <stop offset="60%" stop-color="${BG}" stop-opacity="0"/>
+    <radialGradient id="bannerGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="${ACCENT}" stop-opacity="0.10"/>
+      <stop offset="65%" stop-color="${BG}" stop-opacity="0"/>
     </radialGradient>
   </defs>
   <rect width="1500" height="500" fill="url(#bannerGlow)"/>
-  ${inlineMark({ centerX: 120, centerY: 210, fontSize: 100, leftAlign: true })}
-  <text x="120" y="318"
+  ${inlineMark({ centerX: 750, centerY: 210, fontSize: 130 })}
+  <text x="750" y="338"
         font-family="${FONT}"
-        font-size="32"
+        font-size="30"
         font-weight="500"
         letter-spacing="-0.5"
-        fill="${MUTE}">Where serious bettors get serious edges.</text>
-  <text x="120" y="366"
+        fill="${MUTE}"
+        text-anchor="middle">Where serious bettors get serious edges.</text>
+  <text x="750" y="392"
         font-family="${FONT}"
-        font-size="22"
+        font-size="20"
         font-weight="600"
-        letter-spacing="2"
-        fill="${ACCENT}">DAILY PICKS · SPORTS + PREDICTION MARKETS</text>
+        letter-spacing="2.5"
+        fill="${ACCENT}"
+        text-anchor="middle">DAILY PICKS · SPORTS + PREDICTION MARKETS</text>
 `);
 
 // 1500×500 — Discord welcome banner. Attach above the pinned #welcome

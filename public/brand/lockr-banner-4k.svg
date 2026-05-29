@@ -3,31 +3,33 @@
   <rect width="1500" height="500" fill="#0a0a0b"/>
   
   <defs>
-    <radialGradient id="bannerGlow" cx="0%" cy="50%" r="80%">
-      <stop offset="0%" stop-color="#00ff85" stop-opacity="0.08"/>
-      <stop offset="60%" stop-color="#0a0a0b" stop-opacity="0"/>
+    <radialGradient id="bannerGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#00ff85" stop-opacity="0.10"/>
+      <stop offset="65%" stop-color="#0a0a0b" stop-opacity="0"/>
     </radialGradient>
   </defs>
   <rect width="1500" height="500" fill="url(#bannerGlow)"/>
   
-  <rect x="120" y="183" width="55" height="55" rx="8" fill="#00ff85"/>
-  <text x="219" y="246"
+  <rect x="491" y="174" width="72" height="72" rx="10" fill="#00ff85"/>
+  <text x="620" y="257"
         font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif"
-        font-size="100"
+        font-size="130"
         font-weight="800"
-        letter-spacing="-2.5"
+        letter-spacing="-3.25"
         fill="#f5f4f1">LOCKR</text>
-  <text x="120" y="318"
+  <text x="750" y="338"
         font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif"
-        font-size="32"
+        font-size="30"
         font-weight="500"
         letter-spacing="-0.5"
-        fill="#a1a1a6">Where serious bettors get serious edges.</text>
-  <text x="120" y="366"
+        fill="#a1a1a6"
+        text-anchor="middle">Where serious bettors get serious edges.</text>
+  <text x="750" y="392"
         font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif"
-        font-size="22"
+        font-size="20"
         font-weight="600"
-        letter-spacing="2"
-        fill="#00ff85">DAILY PICKS · SPORTS + PREDICTION MARKETS</text>
+        letter-spacing="2.5"
+        fill="#00ff85"
+        text-anchor="middle">DAILY PICKS · SPORTS + PREDICTION MARKETS</text>
 
 </svg>
