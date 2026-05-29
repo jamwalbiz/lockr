@@ -60,8 +60,13 @@ function inlineMark({ centerX, centerY, fontSize, leftAlign = false }) {
   const gap = Math.round(fontSize * 0.44);
   const letterSpacing = +(fontSize * -0.025).toFixed(2);
   const capHeight = fontSize * 0.72;
-  // Approximate width of "LOCKR" in a geometric sans at this font size +
-  // letter-spacing — close enough for centering, no font metrics required.
+  // LOCKR's actual rendered width depends on which font librsvg ends up
+  // picking — DejaVu Sans (sharp's pango fallback) is ~12% wider than
+  // Inter / SF Pro. The math here uses a midpoint estimate; for SQUARE
+  // icon outputs we then run a trim+re-pad pass in `writeCentered()` to
+  // snap the mark to pixel-perfect center regardless of width drift.
+  // For landscape banners the slight drift is masked by the radial glow
+  // and the centered tagline beneath, so they use `write()` directly.
   const lockrWidth = Math.round(5 * fontSize * 0.62 + 4 * letterSpacing);
   const totalWidth = dotSize + gap + lockrWidth;
 
@@ -197,18 +202,67 @@ function roleIconSvg(color) {
 </svg>`;
 }
 
+// Compute the librsvg density needed to rasterise an SVG (with viewBox W)
+// at `targetW` natively, so sharp doesn't have to upscale a low-res
+// raster. Density 96 = 1 SVG-px → 1 raster-px; for a 4K render of a
+// 512-viewBox SVG we want 768 (= 96 * 8).
+function densityFor(svg, targetW) {
+  const m = svg.match(/viewBox="0 0 (\d+) /);
+  const viewBoxW = m ? parseInt(m[1]) : targetW;
+  return Math.max(96, Math.round(96 * (targetW / viewBoxW)));
+}
+
 async function write(name, svg, w, h) {
   await mkdir(outDir, { recursive: true });
   await writeFile(join(outDir, `${name}.svg`), svg);
-  await sharp(Buffer.from(svg))
+  await sharp(Buffer.from(svg), { density: densityFor(svg, w) })
     .resize(w, h)
     .png({ compressionLevel: 9 })
     .toFile(join(outDir, `${name}.png`));
   console.log(`✓ ${name}.{svg,png} (${w}×${h})`);
 }
 
-await write("lockr-icon-512", ICON_SVG, 512, 512);
+// Same as write() but guarantees the mark sits at the exact pixel center
+// by rasterising, trimming all background-coloured borders to the mark's
+// true bounding box, then re-padding symmetrically. Use this for SQUARE
+// icon outputs where there's a single content blob and centering is the
+// whole point — don't use it on banners, the trim would collapse the
+// intentional whitespace between mark, tagline, and sub.
+async function writeCentered(name, svg, w, h, bg = BG) {
+  await mkdir(outDir, { recursive: true });
+  await writeFile(join(outDir, `${name}.svg`), svg);
+
+  const raw = await sharp(Buffer.from(svg), { density: densityFor(svg, w) })
+    .resize(w, h)
+    .png()
+    .toBuffer();
+
+  const trimmed = await sharp(raw)
+    .trim({ background: bg, threshold: 10 })
+    .png()
+    .toBuffer();
+  const { width: cw, height: ch } = await sharp(trimmed).metadata();
+
+  const padLeft = Math.floor((w - cw) / 2);
+  const padTop = Math.floor((h - ch) / 2);
+  await sharp(trimmed)
+    .extend({
+      top: padTop,
+      bottom: h - ch - padTop,
+      left: padLeft,
+      right: w - cw - padLeft,
+      background: bg,
+    })
+    .png({ compressionLevel: 9 })
+    .toFile(join(outDir, `${name}.png`));
+
+  console.log(`✓ ${name}.{svg,png} (${w}×${h}) [centered]`);
+}
+
+await writeCentered("lockr-icon-512", ICON_SVG, 512, 512);
+await writeCentered("lockr-icon-4k", ICON_SVG, 4096, 4096);
 await write("lockr-banner-1500x500", BANNER_SVG, 1500, 500);
+await write("lockr-banner-4k", BANNER_SVG, 4500, 1500);
 await write("discord-welcome-banner-1500x500", WELCOME_BANNER_SVG, 1500, 500);
 await write("discord-server-banner-960x540", SERVER_BANNER_SVG, 960, 540);
 await write("discord-invite-splash-1920x1080", INVITE_SPLASH_SVG, 1920, 1080);
@@ -247,8 +301,10 @@ await write("emoji-fade", emojiSvg(FADE_GLYPH), 128, 128);
 await write("emoji-lockr", emojiSvg(LOCKR_GLYPH), 128, 128);
 
 console.log("\nDone. Files in public/brand/:");
-console.log("  lockr-icon-512.png                       — Whop biz icon, Discord server icon, all social avatars");
-console.log("  lockr-banner-1500x500.png                — Whop product page banner");
+console.log("  lockr-icon-4k.png                        — 4K master icon: upload everywhere (Whop, Discord, X, IG, TikTok, decks)");
+console.log("  lockr-icon-512.png                       — site-embedded use (OG, meta); platforms should get the 4K version");
+console.log("  lockr-banner-4k.png                      — 4K master banner: marketing decks, partner assets, hi-DPI screens");
+console.log("  lockr-banner-1500x500.png                — Whop product page banner (Whop's spec)");
 console.log("  discord-welcome-banner-1500x500.png      — attach to pinned #welcome message");
 console.log("  discord-server-banner-960x540.png        — Discord server banner (Tier 2 boost)");
 console.log("  discord-invite-splash-1920x1080.png      — Discord invite-link preview (Tier 1 boost)");
