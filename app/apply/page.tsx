@@ -5,7 +5,7 @@ import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
 export const metadata: Metadata = {
   title: "Inner Circle Application — Lockr",
   description:
-    "Apply for Lockr Inner Circle. 200-member cap. JT personally reviews every application. Average response 48 hours.",
+    "Apply for Lockr Inner Circle. 200-member cap. Instant approval — your checkout link appears the moment you submit.",
   robots: { index: false, follow: false },
 };
 
@@ -25,9 +25,9 @@ export default function ApplyPage() {
           </div>
           <h1>Apply for Inner Circle.</h1>
           <p>
-            Inner Circle is capped at 200 active members. JT personally reviews every
-            application. Tell us a bit about how you bet today and what you want from the
-            top tier — most decisions come back within 48 hours.
+            Inner Circle is capped at 200 active members. Tell us how you bet today and
+            what you want from the top tier — so JT knows what to deliver when you join.
+            Your checkout link appears the moment you submit.
           </p>
         </div>
         <ApplyForm />

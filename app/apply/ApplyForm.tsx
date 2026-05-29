@@ -2,7 +2,8 @@
 
 import { track } from "@vercel/analytics";
 import { useState } from "react";
-import { feedbackSuccess } from "@/lib/sound";
+import { feedbackClick, feedbackSuccess } from "@/lib/sound";
+import { whopCheckoutUrl } from "@/lib/copy";
 
 const SPORTS = ["NFL", "NBA", "MLB", "NHL", "UFC", "F1", "NCAA", "Soccer", "Tennis", "Esports", "Kalshi", "Polymarket"];
 const BANKROLL_RANGES = [
@@ -27,19 +28,49 @@ export function ApplyForm() {
   }
 
   if (submitted) {
+    // IC monthly only — annual is intentionally out-of-band (no Whop plan).
+    // whopCheckoutUrl returns null if the plan doesn't exist; the fallback
+    // text handles that case but in practice IC monthly always has a plan.
+    const checkoutUrl = whopCheckoutUrl("innercircle", "monthly");
     return (
       <div className="checkout-card">
-        <h2>Application received.</h2>
-        <p style={{ color: "var(--text-mute)", marginBottom: 16 }}>
-          JT will personally review your application. Expect a response at the email you
-          provided within 48 hours.
+        <h2>You&apos;re in.</h2>
+        <p style={{ color: "var(--text-mute)", marginBottom: 24 }}>
+          Inner Circle approved. Lock your spot below — payment via Whop, Discord
+          access auto-granted by our bot the moment you finish.
         </p>
-        <p style={{ color: "var(--text-mute)", marginBottom: 0, fontSize: 14 }}>
-          In the meantime, follow{" "}
-          <a href="https://x.com/joinlockr" style={{ color: "var(--accent)" }}>
-            @joinlockr
-          </a>{" "}
-          for daily picks and pre-decision context.
+        {checkoutUrl ? (
+          <a
+            href={checkoutUrl}
+            className="btn btn-primary btn-lg"
+            style={{
+              width: "100%",
+              justifyContent: "center",
+              background: "var(--gold)",
+              borderColor: "var(--gold)",
+            }}
+            onClick={() => {
+              feedbackClick();
+              track("ic_apply_to_checkout");
+            }}
+          >
+            Continue to checkout · $499/mo →
+          </a>
+        ) : (
+          <p style={{ color: "var(--text-mute)", fontSize: 14 }}>
+            JT will email you the checkout link shortly.
+          </p>
+        )}
+        <p
+          style={{
+            color: "var(--text-dim)",
+            marginTop: 16,
+            fontSize: 12,
+            textAlign: "center",
+          }}
+        >
+          Prefer annual ($4,999/yr)? Reply to your confirmation email and JT will
+          send you a direct payment link.
         </p>
       </div>
     );
@@ -237,7 +268,7 @@ export function ApplyForm() {
           textAlign: "center",
         }}
       >
-        JT reviews every application personally. Average response time: 48 hours.
+        200-member cap · Instant approval · Cancel any time.
       </div>
     </form>
   );
