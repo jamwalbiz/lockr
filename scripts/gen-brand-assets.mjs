@@ -60,14 +60,14 @@ function inlineMark({ centerX, centerY, fontSize, leftAlign = false }) {
   const gap = Math.round(fontSize * 0.44);
   const letterSpacing = +(fontSize * -0.025).toFixed(2);
   const capHeight = fontSize * 0.72;
-  // LOCKR's actual rendered width depends on which font librsvg ends up
-  // picking — DejaVu Sans (sharp's pango fallback) is ~12% wider than
-  // Inter / SF Pro. The math here uses a midpoint estimate; for SQUARE
-  // icon outputs we then run a trim+re-pad pass in `writeCentered()` to
-  // snap the mark to pixel-perfect center regardless of width drift.
-  // For landscape banners the slight drift is masked by the radial glow
-  // and the centered tagline beneath, so they use `write()` directly.
-  const lockrWidth = Math.round(5 * fontSize * 0.62 + 4 * letterSpacing);
+  // Per-char width = 0.69 of fontSize. Measured by rendering LOCKR alone
+  // through sharp+librsvg and pixel-inspecting the bbox of the raster.
+  // The pure measurement came out to 0.674 but consistently left a 4-7px
+  // rightward drift (anti-aliased edges past the 30-tol threshold the
+  // probe used); bumping to 0.69 nudges the mark into true visual centre
+  // on the multi-element banners. Icon outputs still go through
+  // writeCentered() for a final trim+re-pad guarantee.
+  const lockrWidth = Math.round(5 * fontSize * 0.69 + 4 * letterSpacing);
   const totalWidth = dotSize + gap + lockrWidth;
 
   const startX = leftAlign ? centerX : Math.round(centerX - totalWidth / 2);

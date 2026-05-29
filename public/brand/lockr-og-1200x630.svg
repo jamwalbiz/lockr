@@ -10,8 +10,8 @@
   </defs>
   <rect width="1200" height="630" fill="url(#ogGlow)"/>
   
-  <rect x="341" y="244" width="72" height="72" rx="10" fill="#00ff85"/>
-  <text x="470" y="327"
+  <rect x="318" y="244" width="72" height="72" rx="10" fill="#00ff85"/>
+  <text x="447" y="327"
         font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif"
         font-size="130"
         font-weight="800"
