@@ -296,28 +296,23 @@ export const SUBSCRIPTION_FEATURES = [
   "Free promo codes for every recommended platform",
 ];
 
-// Inner Circle capacity counter. To wire to a live count, Whop's API exposes
-// per-product active-user counts (we already have prod_QnHlwigzxa8j1). Hook
-// it up post-launch if/when the synthesized number becomes a credibility
-// issue — until then this is the single source of truth.
+// Inner Circle status block. The fabricated "167 / 200 ACTIVE" counter
+// was removed — anchoring on a real number under 200 (which will be 0
+// or very low at launch) avoids the credibility hit of being caught
+// inflating member counts. The "200-MEMBER CAP" claim is durable: it
+// matches Whop's stock setting for the IC product and the consistent
+// brand promise of intentional smallness.
 export const IC_STATUS = {
-  active: 167,
   cap: 200,
-  get open() {
-    return this.cap - this.active;
-  },
-  get label() {
-    return `${this.active} / ${this.cap} ACTIVE · ${this.open} SPOTS OPEN`;
-  },
+  label: "200-MEMBER CAP",
 };
 
 export const INNERCIRCLE_FEATURES = [
   "Everything in the Lockr Subscription",
   "Private IC-only Discord channels",
   "Edge ratings + confidence scores on every pick",
-  "1-on-1 direct DM with JT",
   "Custom research on request",
   "Monthly 1-on-1 team strategy call",
-  "Quarterly mastermind with the IC cohort",
+  "Monthly mastermind with the IC cohort",
   "Personalized onboarding call when you join",
 ];

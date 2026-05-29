@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
 
 export const metadata: Metadata = {
@@ -55,20 +56,16 @@ export default function AboutPage() {
           </div>
         </div>
         <div className="about-img">
-          {/*
-            Founder portrait. While the photo isn't shot yet, the CSS-only card
-            (gradient + "JAIRO TOVAR · JT" pseudo-element from .about-img::before
-            in globals.css) reads as intentional brand-typographic, not as a
-            "site under construction" hole.
+          {/* Founder portrait placeholder. The Lockr brand icon sits
+              centered behind the .about-img::before "JAIRO TOVAR · JT"
+              pseudo-element so the card reads as intentional brand-
+              typographic instead of a blank box.
 
-            TO SWAP IN THE REAL PHOTO:
-              1. Save as /public/brand/jt-portrait.jpg
-                 (target 1600x2000 — 4:5 portrait; high-contrast low-light,
-                 Whoop founder style, not Tate yacht style — see
-                 docs/asset-specs.md)
-              2. Replace this entire <div className="about-img"> block with:
-
-                   <div className="about-img">
+              TO SWAP IN THE REAL PHOTO when it's shot (specs in
+              docs/asset-specs.md):
+                1. Save as /public/brand/jt-portrait.jpg (1600x2000, 4:5).
+                2. Replace the <Image src="/brand/lockr-icon-512.png" .../>
+                   below with:
                      <Image
                        src="/brand/jt-portrait.jpg"
                        alt="Jairo Tovar — founder of Lockr"
@@ -77,13 +74,17 @@ export default function AboutPage() {
                        priority
                        style={{ objectFit: "cover" }}
                      />
-                   </div>
-
-              3. Add `import Image from "next/image";` to the imports above.
-              4. Drop the .about-img::before pseudo-element in globals.css
-                 (currently centers "JAIRO TOVAR · JT" text — the real photo
-                 will cover it).
-          */}
+                3. Drop the .about-img::before pseudo-element in
+                   globals.css (the "JAIRO TOVAR · JT" text — the real
+                   photo will cover it). */}
+          <Image
+            src="/brand/lockr-icon-512.png"
+            alt=""
+            width={220}
+            height={220}
+            priority
+            style={{ opacity: 0.3, position: "relative", zIndex: 0 }}
+          />
         </div>
       </div>
 

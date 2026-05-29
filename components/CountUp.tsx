@@ -35,13 +35,20 @@ export function CountUp({
           if (!entry.isIntersecting || cleared) return;
           cleared = true;
           observer.disconnect();
+          // Animate from 80% of target → target, not 0 → target. The old
+          // 0-baseline produced an embarrassing "+0u / 0% / 0.0★" flash on
+          // first paint for the above-the-fold hero stats, since the
+          // intersection observer fired immediately for already-visible
+          // elements. Animating a smaller range keeps the count-up feel
+          // without ever showing a value that looks broken.
+          const FROM = 0.8;
           const startedAt = performance.now();
-          setValue(0);
+          setValue(to * FROM);
           const tick = (now: number) => {
             const t = Math.min((now - startedAt) / duration, 1);
             // ease-out cubic
             const eased = 1 - Math.pow(1 - t, 3);
-            setValue(to * eased);
+            setValue(to * (FROM + (1 - FROM) * eased));
             if (t < 1) raf = requestAnimationFrame(tick);
             else setValue(to);
           };

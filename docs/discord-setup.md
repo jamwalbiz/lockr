@@ -97,6 +97,25 @@ Under the **INNER CIRCLE** category, add three new channels so every IC perk run
 
 Then create a **recurring monthly Discord Event** linked to the `IC Mastermind` Stage: Server → Events → Create Event → Recurring monthly → Location: Stage Channel → restrict visibility to IC role. Members see "next mastermind in N days" on the Events tab without JT having to post a reminder.
 
+### 3a.5. Add a RESOURCES category (educational content + promo codes)
+
+The "Free promo codes for every recommended platform" line on the site's pricing cards needs a real home. Same for the bankroll & sizing playbook claim, the sport-specific guides, and the "we'll teach you how" promise built into the methodology framing. A dedicated **RESOURCES** category sits between SUBSCRIBER and INNER CIRCLE in the sidebar and gives the educational content a real surface.
+
+Create a new category — **RESOURCES** — with the same access pattern as SUBSCRIBER (private, gated to Lockr Subscriber + Inner Circle + Lockr Team). The IC role inherits view via being higher tier; Lockr Subscriber sees it as a paid-tier perk; `@everyone` denied.
+
+Channels to create under it (text channels, broadcast-only — Lockr Team posts, members can react/thread but not send messages, matching the same `Send Messages = ❌` + `Add Reactions = ✓` pattern as the broadcast channels under SUBSCRIBER):
+
+| Channel | What goes in it | Why it matters |
+|---|---|---|
+| `#promo-codes` | One pinned post per platform (PrizePicks, Underdog, Sleeper, Dabble, DK, FD, BetMGM, Kalshi, Polymarket) with the JT-specific affiliate code + sign-up link + bonus details. Updated as JT's affiliate approvals land. | Backs the "Free promo codes for every recommended platform" claim on the pricing cards. Until any affiliate is approved, this channel sits with a pinned "promo partnerships coming online — drop a note in #general-chat if you're stuck on a specific platform" message. Honest about timing, not a broken promise. |
+| `#dictionary` | A→Z glossary of betting + prediction-market terms (CLV, vig, EV, Kelly, parlay, prop, OU, ML, etc.). Single long pinned post or one entry per message — searchable either way. | New members joining from social will not know half the terminology JT uses in picks. This is a 1-time investment that compounds — every new member sends fewer "what does CLV mean?" pings in `#general-chat`. |
+| `#guides` | Long-form how-to posts. Bankroll & sizing (matches the marketing-page promise). Line shopping. Sportsbook arbitrage basics. How to read a prop pick. How to evaluate a Kalshi event contract. Each a pinned message or a thread. | Backs the "Bankroll & sizing playbook" line on the pricing card. Also, this is content JT writes once and reuses for content marketing (X threads, TikTok carousels). |
+| `#methodology` | Deeper-than-the-marketing-page explanations of how JT actually finds picks. Model → Price → Size, with examples. Why CLV is the real proof of edge. How JT's process differs from generic touts. | Reinforces the trust mechanic post-purchase. A member who reads the methodology channel is far less likely to churn after a losing week — they understand the process. |
+
+All four sit in the **RESOURCES** category with the access pattern: Lockr Team can post, Lockr Subscriber + Inner Circle can view + react (broadcast-only), `@everyone` denied.
+
+The `#getting-started` channel role is already served by `#welcome` under START HERE. No need to duplicate.
+
 ### 3b. Channel topics — paste these into each channel header
 
 Right-click channel → Edit Channel → Topic field. Paste:
@@ -115,6 +134,10 @@ Right-click channel → Edit Channel → Topic field. Paste:
 | `#schedule-with-jt` | `Request a 1-on-1 with JT. Post your topic + 2-3 windows you're free. JT confirms here. No DMs — everything in this channel.` |
 | `🎙 1-on-1 with JT` (voice) | `1-on-1 call venue. Member-of-2 cap — once you + JT are both in, nobody else can join. Drop in at your scheduled time.` |
 | `#ic-coaching-notes` | `Pre-call notes + post-call action items. Long-form receipts of every 1-on-1 — searchable IC IP.` |
+| `#promo-codes` | `JT's affiliate codes + sign-up bonuses for every recommended platform. Pinned post per platform — check before signing up anywhere.` |
+| `#dictionary` | `A→Z glossary of betting + prediction-market terms. Search the channel for any term you don't know.` |
+| `#guides` | `Bankroll & sizing, line shopping, prop deep-dives, prediction-market 101. Long-form how-tos pinned at the top.` |
+| `#methodology` | `How JT actually finds picks. Model → Price → Size, deeper than the marketing page. Worked examples.` |
 
 ### 3c. Pinned starter message in `#welcome`
 

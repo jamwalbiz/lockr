@@ -518,9 +518,8 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
    About page
    ------------------------------------------------------------------ */
 .about-hero { padding: 60px 0; display: grid; grid-template-columns: 3fr 2fr; gap: 64px; align-items: center; }
-.about-img { aspect-ratio: 4/5; background: linear-gradient(135deg, #1a1a1d 0%, #0a0a0b 100%); border-radius: 16px; border: 1px solid var(--border); display: flex; align-items: flex-end; justify-content: center; padding: 24px; position: relative; overflow: hidden; }
-.about-img::before { content: 'JAIRO TOVAR · JT'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: var(--font-jetbrains), monospace; font-size: 14px; color: var(--text-dim); letter-spacing: 0.2em; }
-.about-img-meta { font-family: var(--font-jetbrains), monospace; font-size: 11px; color: var(--text-mute); position: relative; }
+.about-img { aspect-ratio: 4/5; background: linear-gradient(135deg, #1a1a1d 0%, #0a0a0b 100%); border-radius: 16px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; padding: 24px; position: relative; overflow: hidden; }
+.about-img::before { content: 'JAIRO TOVAR · JT'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: var(--font-jetbrains), monospace; font-size: 14px; color: var(--text-dim); letter-spacing: 0.2em; z-index: 2; }
 .about-text h1 { font-size: clamp(36px, 5vw, 56px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 24px; }
 .about-text p { color: var(--text-mute); font-size: 16px; line-height: 1.7; margin-bottom: 16px; }
 .about-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--border); }

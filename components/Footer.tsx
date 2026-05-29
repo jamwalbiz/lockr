@@ -37,12 +37,10 @@ export function Footer() {
         </div>
         <div className="footer-bottom">
           <div>© 2026 Lockr. All rights reserved.</div>
-          <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-            <a href="#">X</a>
-            <a href="#">TikTok</a>
-            <a href="#">Instagram</a>
-            <a href="#">YouTube</a>
-          </div>
+          {/* Social handles hidden until reserved + linked. Re-enable when
+              the X / TikTok / Instagram / YouTube accounts are live —
+              previously these all pointed at href="#" which scrolled the
+              user to the top of the page (worse than no link). */}
         </div>
         <div className="footer-disclaimer" style={{ marginTop: 24 }}>
           Lockr is an education and entertainment service. Picks are opinions, not

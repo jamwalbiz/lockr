@@ -75,7 +75,7 @@ export default function Home() {
               <div className="stat-num mono">
                 <CountUp to={60} suffix="%+" />
               </div>
-              <div className="stat-label">Win rate · 1,847 picks</div>
+              <div className="stat-label">Win rate</div>
             </div>
             <div className="stat-cell">
               <div className="stat-num positive mono">
@@ -132,7 +132,17 @@ export default function Home() {
                 style={{ cursor: "default" }}
                 aria-label="Founder intro video — coming soon"
               >
-                <div className="vsl-thumb"></div>
+                {/* Lockr OG banner as a soft backdrop so the placeholder
+                    reads as branded, not empty. Sits underneath the dimmed
+                    play button and JT · INTRO / COMING SOON overlay. */}
+                <Image
+                  src="/brand/lockr-og-1200x630.png"
+                  alt=""
+                  fill
+                  sizes="(max-width: 920px) 100vw, 920px"
+                  priority
+                  style={{ objectFit: "cover", opacity: 0.5 }}
+                />
                 {/* Disabled-looking play affordance — kept for visual weight
                     so the section doesn't feel empty, but doesn't claim a
                     playable video exists. */}
@@ -233,8 +243,9 @@ export default function Home() {
               </div>
               <h3>Pick a tier &amp; join</h3>
               <p>
-                Checkout in 60 seconds with a card, ACH, or crypto. Your private Discord
-                invite hits your inbox immediately — no manual approval, no waiting.
+                Checkout in 60 seconds with card, Apple Pay, Cash App, or bank
+                transfer. Link Discord in your account and claim access — your role
+                assigns in under 30 seconds, no manual approval, no waiting.
               </p>
             </div>
             <div className="step">
@@ -853,8 +864,8 @@ export default function Home() {
                   margin: "0 auto 32px",
                 }}
               >
-                Your Discord invite hits your inbox the moment you join. The next pick
-                drops soon after.
+                Link Discord in your account, claim access, and your role assigns
+                in under 30 seconds. The next pick drops soon after.
               </p>
               <JoinCta href="/checkout" location="final-cta">
                 Join Lockr · from $29/wk
