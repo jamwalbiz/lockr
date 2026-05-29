@@ -1,21 +1,10 @@
 import Link from "next/link";
 import { LanguageToggle } from "./LanguageToggle";
-import { NewsletterForm } from "./NewsletterForm";
 
 export function Footer() {
   return (
     <footer>
       <div className="shell">
-        <div className="footer-capture">
-          <div className="footer-capture-text">
-            <strong>Stay in the loop</strong>
-            <span className="sub">
-              Lockr newsletter — strategy content, big member wins, launch updates, and
-              occasional promos. Unsubscribe any time.
-            </span>
-          </div>
-          <NewsletterForm />
-        </div>
         <div className="footer-grid">
           <div className="footer-brand">
             <div className="logo">

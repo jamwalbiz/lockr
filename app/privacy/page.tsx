@@ -54,7 +54,7 @@ export default function PrivacyPage() {
         <h2>How we use it</h2>
         <ul>
           <li>To run your subscription and grant Discord access.</li>
-          <li>To send you the newsletter, picks notifications, and service emails.</li>
+          <li>To send you service emails (receipts, account changes).</li>
           <li>To improve the product based on aggregate usage.</li>
           <li>To prevent fraud, abuse, and resold access.</li>
         </ul>
@@ -67,9 +67,6 @@ export default function PrivacyPage() {
           <li>
             <strong>Whop</strong> — payment processing, subscription billing, and
             Discord access provisioning
-          </li>
-          <li>
-            <strong>Beehiiv</strong> — newsletter
           </li>
           <li>
             <strong>Discord</strong> — community access
