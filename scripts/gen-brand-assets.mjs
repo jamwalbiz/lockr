@@ -198,6 +198,37 @@ const INVITE_SPLASH_SVG = svgWrap(1920, 1080, BG, `
         text-anchor="middle">DAILY PICKS · SPORTS + PREDICTION MARKETS</text>
 `);
 
+// 1200×630 — OG card for the Whop business page (and any platform that
+// requests a 1.91:1 social preview). Brand-only composition: no launch
+// stats here because Whop is the source of truth for revenue / member
+// count, so faking +147u or 60% win rate would be a worse signal here
+// than on joinlockr.com. The on-site OG (app/opengraph-image.tsx) keeps
+// the stats as marketing copy per the README handoff brief.
+const OG_SVG = svgWrap(1200, 630, BG, `
+  <defs>
+    <radialGradient id="ogGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="${ACCENT}" stop-opacity="0.12"/>
+      <stop offset="65%" stop-color="${BG}" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#ogGlow)"/>
+  ${inlineMark({ centerX: 600, centerY: 280, fontSize: 130 })}
+  <text x="600" y="420"
+        font-family="${FONT}"
+        font-size="32"
+        font-weight="500"
+        letter-spacing="-0.5"
+        fill="${MUTE}"
+        text-anchor="middle">Where serious bettors get serious edges.</text>
+  <text x="600" y="478"
+        font-family="${FONT}"
+        font-size="22"
+        font-weight="600"
+        letter-spacing="2.5"
+        fill="${ACCENT}"
+        text-anchor="middle">DAILY PICKS · SPORTS + PREDICTION MARKETS</text>
+`);
+
 // 64×64 role icon. Brand-colour rounded square in the colour of the role
 // (accent green for Lockr Subscriber, brand gold for Inner Circle). Sits
 // beside the member's name in the sidebar. Tier 2 boost required.
@@ -269,6 +300,7 @@ await writeCentered("lockr-icon-512", ICON_SVG, 512, 512);
 await writeCentered("lockr-icon-4k", ICON_SVG, 4096, 4096);
 await write("lockr-banner-1500x500", BANNER_SVG, 1500, 500);
 await write("lockr-banner-4k", BANNER_SVG, 4500, 1500);
+await write("lockr-og-1200x630", OG_SVG, 1200, 630);
 await write("discord-welcome-banner-1500x500", WELCOME_BANNER_SVG, 1500, 500);
 await write("discord-server-banner-960x540", SERVER_BANNER_SVG, 960, 540);
 await write("discord-invite-splash-1920x1080", INVITE_SPLASH_SVG, 1920, 1080);
@@ -310,6 +342,7 @@ console.log("\nDone. Files in public/brand/:");
 console.log("  lockr-icon-4k.png                        — 4K master icon: upload everywhere (Whop, Discord, X, IG, TikTok, decks)");
 console.log("  lockr-icon-512.png                       — site-embedded use (OG, meta); platforms should get the 4K version");
 console.log("  lockr-banner-4k.png                      — 4K master banner: marketing decks, partner assets, hi-DPI screens");
+console.log("  lockr-og-1200x630.png                    — OG / social preview card: Whop business page, Slack/Discord/iMessage link previews");
 console.log("  lockr-banner-1500x500.png                — Whop product page banner (Whop's spec)");
 console.log("  discord-welcome-banner-1500x500.png      — attach to pinned #welcome message");
 console.log("  discord-server-banner-960x540.png        — Discord server banner (Tier 2 boost)");
