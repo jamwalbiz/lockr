@@ -289,9 +289,9 @@ export const PRICING = {
     },
     annual: {
       price: "$4,999",
-      period: "per year · save ~16%",
+      period: "per year · save ~17%",
       equiv: "$416/mo equivalent",
-      save: "SAVE 16%",
+      save: "SAVE 17%",
       // whopPlanId omitted — see header comment.
     },
   },

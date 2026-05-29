@@ -122,7 +122,7 @@ export function CheckoutFlow({
             <h2>Pick your plan</h2>
             <p style={{ color: "var(--text-mute)", fontSize: 14, marginBottom: 24 }}>
               Same features at every cadence. Pay weekly to try it. Pay annually to save
-              ~50%.
+              ~60% vs weekly.
             </p>
 
             <div className="cadence-toggle" style={{ marginBottom: 24 }}>
@@ -138,7 +138,8 @@ export function CheckoutFlow({
                     }}
                   >
                     {c === "weekly" ? "Weekly" : c === "monthly" ? "Monthly" : "Annual"}
-                    {c === "annual" && <span className="cadence-save">SAVE 50%</span>}
+                    {c === "monthly" && <span className="cadence-save">SAVE 20%</span>}
+                    {c === "annual" && <span className="cadence-save">SAVE 60%</span>}
                   </button>
                 );
               })}
