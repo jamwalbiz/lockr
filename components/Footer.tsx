@@ -23,7 +23,6 @@ export function Footer() {
             </div>
             <p>
               Where serious bettors get serious edges. Built by JT and the Lockr team.
-              Public track record, updated daily.
             </p>
           </div>
           <div className="footer-col">

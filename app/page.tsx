@@ -419,7 +419,7 @@ export default function Home() {
             <SportCard tag="KALSHI" name="Kalshi" desc="CFTC-regulated event contracts. Sports, politics, economics, tech." featured>
               <IconChartLine size={28} stroke={1.5} />
             </SportCard>
-            <SportCard tag="POLYMARKET" name="Polymarket" desc="Crypto-native prediction markets. The biggest pool of edges nobody is touching." featured>
+            <SportCard tag="POLYMARKET" name="Polymarket" desc="Crypto-native prediction markets. Softest edges in all of betting." featured>
               <IconChartCandle size={28} stroke={1.5} />
             </SportCard>
           </div>
