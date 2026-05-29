@@ -10,14 +10,14 @@
   </defs>
   <rect width="1500" height="500" fill="url(#welcomeGlow)"/>
   
-  <rect x="446" y="187" width="77" height="77" rx="11" fill="#00ff85"/>
-  <text x="585" y="275"
+  <rect x="446" y="169" width="77" height="77" rx="11" fill="#00ff85"/>
+  <text x="585" y="257"
         font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif"
         font-size="140"
         font-weight="800"
         letter-spacing="-3.5"
         fill="#f5f4f1">LOCKR</text>
-  <text x="750" y="360"
+  <text x="750" y="342"
         font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif"
         font-size="32"
         font-weight="500"
