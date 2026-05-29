@@ -138,8 +138,8 @@ export default function Home() {
               <h3>Public track record</h3>
               <p>
                 Every pick published live before the event starts. No screenshot edits. No
-                &quot;I told you so&quot; posted after the fact. Public unit count,
-                updated daily for anyone to audit.
+                &quot;I told you so&quot; posted after the fact. Wins and losses logged in
+                Discord — members audit by being there.
               </p>
             </div>
             <div className="pillar">
