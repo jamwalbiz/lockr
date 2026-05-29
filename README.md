@@ -68,20 +68,27 @@ lib/
   betslips.ts              # bet slip gallery data
 ```
 
-## Integration seams — TODO
+## Integration seams
 
-Each of these is a real placeholder in code waiting for the matching account/credential. Search `TODO` to find them.
+Currently wired (live in production):
 
-| Seam | Wire to | Owner |
-|---|---|---|
-| Newsletter submit | Beehiiv API | JT (account creation) |
-| Checkout payment | PaymentCloud + Coinbase Commerce + Recurly | JT (PaymentCloud underwriting, 2–4 weeks) |
-| IC application submit | Mail / Formspree / Notion DB | JT decides intake |
-| Payment → Discord role | Discord.js bot + webhook | Build during PaymentCloud underwriting |
-| Error reporting | Sentry / Highlight | Optional, pick before launch |
-| Founder portrait | Real photo | JT shoots |
-| VSL video | Wistia embed | JT records |
-| Activity ticker, social-proof, member count, win rate, +147u | Discord webhook stream + Pikkit/Beterson | Wire post-launch once real data exists |
+| Seam | Wire | Env var | Status |
+|---|---|---|---|
+| Payments + subscription billing | Whop hosted checkout (`whop.com/checkout/<plan_id>`) | none on our side — plan IDs in `lib/copy.ts` | live |
+| Payment → Discord role | Whop Discord app + Wbot | none on our side — configured in Whop dashboard | live |
+| IC application submit | `/api/apply` → Resend → `hello@joinlockr.com` | `RESEND_API_KEY` | waiting on key |
+| Newsletter submit | `/api/newsletter` → Beehiiv | `BEEHIIV_API_KEY`, `BEEHIIV_PUBLICATION_ID` | waiting on keys |
+
+Still TODO (pre-launch checklist):
+
+| Item | Owner |
+|---|---|
+| Whop tax + bank verification (KYC) | JT |
+| Discord channel permissions (gate paid channels to roles) | JT |
+| Founder portrait — real photo | JT shoots |
+| VSL video — Wistia embed | JT records |
+| Error reporting (Sentry / Highlight) | Optional, pick before launch |
+| Live unit count / win rate (currently fabricated) | Wire Whop API + Discord webhook stream post-launch |
 
 See `~/Downloads/Lockr_Full_Package/lockr_launch_checklist.md` for the full operational launch sequence.
 
