@@ -112,7 +112,7 @@ export function PricingCards() {
             }}
           >
             Annual
-            <span className="cadence-save">SAVE 17%</span>
+            <span className="cadence-save">SAVE 16%</span>
           </CadenceButton>
         </div>
         <div key={icCadence} className="price-block">
