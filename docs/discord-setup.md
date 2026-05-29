@@ -80,21 +80,19 @@ Default sort: **Recent activity**. Auto-archive: **3 days of inactivity** (so ol
 
 ### 3a. Community Onboarding flow
 
-Server Settings → Onboarding → Setup. Two questions:
+Server Settings → Onboarding → Setup. **One question** (paid members get
+all channels regardless of interest, so the "what do you bet" question
+that's standard in free communities is pure friction for Lockr):
 
-**Question 1 — "What do you mostly bet?"** (multi-select)
-
-- *Sports* → unlocks `#sports-picks`
-- *Prediction markets* → unlocks `#prediction-markets`
-- *Both* → unlocks both
-
-**Question 2 — "Notifications"** (single-select)
+**Question — "How loud should the picks be?"** (single-select)
 
 - *All picks* → gives role `daily-pings` (you @ this role when a pick drops)
 - *Big plays only* → gives role `big-play-alerts`
 - *Silent — I check on my own time* → no notification role
 
-(You'll need to create the `daily-pings` and `big-play-alerts` roles first — Server Settings → Roles → Create Role. No special permissions needed; they're @-ping targets.)
+You'll need to create the `daily-pings` and `big-play-alerts` roles first
+— Server Settings → Roles → Create Role. No special permissions needed;
+they exist solely as @-ping targets.
 
 ### 3b. Channel topics — paste these into each channel header
 
@@ -106,7 +104,7 @@ Right-click channel → Edit Channel → Topic field. Paste:
 | `#announcements` | `JT broadcasts only. Schedule changes, big wins, product updates.` |
 | `#sports-picks` | `Daily picks across every sport in season. Pick + reasoning + recommended size, posted live before each event.` |
 | `#prediction-markets` | `Daily plays on Kalshi + Polymarket. Event contracts, political markets, economic indicators, weather.` |
-| `#wins-and-losses` | `The receipts. Every pick's outcome logged here as it settles.` |
+| `#wins-and-losses` | `The receipts. JT logs every pick's outcome here as it settles. Drop your own bet slips, tailing wins, and fade calls too — show the room.` |
 | `#general-chat` | `Member-to-member talk. Banter about plays, off-topic, ask anything.` |
 | `Weekly Call` (Stage) | `Live weekly Q&A with JT. Members raise hand to ask questions.` |
 | `#inner-circle` (Forum) | `IC-only discussions. Deep dives + custom research = individual threads. Pick a tag when posting.` |
@@ -158,6 +156,12 @@ Once uploaded, members can react with `:win:` `:loss:` `:tail:` `:fade:` `:lockr
 
 All 5 PNGs are in this repo under `public/brand/`. They're also live at
 `https://joinlockr.com/brand/emoji-*.png` after Vercel redeploys.
+
+### 4a. About restricting members to *only* the uploaded emojis
+
+Short answer: Discord doesn't let you. Unicode emojis (😀 🔥 💯 etc.) are always available to every member on every server — it's a platform-level thing, not a server setting. You can lock down who can **upload** new custom emojis (Server Settings → Roles → "Create Expressions" / "Manage Expressions" off for `@everyone`), but you can't disable the standard Unicode set.
+
+The practical workaround — **seed the reaction with the Lockr emoji first.** When JT (or the bot) posts a pick, immediately react to it with `:tail:` and `:fade:`. When the result is posted, react with `:win:` or `:loss:`. Members tapping the existing reaction is one click; finding a Unicode emoji is three. The Lockr set becomes the path of least resistance and you get the at-a-glance signal without having to police anything.
 
 ---
 
