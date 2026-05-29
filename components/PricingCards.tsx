@@ -19,7 +19,11 @@ export function PricingCards() {
   // Subscription cadence lives in shared context — MobileCta reads from it
   // to show the matching price in the sticky bar.
   const { subscription: subCadence, setSubscription: setSubCadence } = useCadence();
-  const [icCadence, setIcCadence] = useState<IcKey>("annual");
+  // Default to monthly: matches the Lockr Subscription card default, less
+  // sticker shock than the $4,999/yr annual lead, and monthly is the only
+  // IC cadence that actually transacts through Whop right now (annual is
+  // application-only — JT arranges payment out-of-band per task #50).
+  const [icCadence, setIcCadence] = useState<IcKey>("monthly");
 
   const sub = PRICING.subscription[subCadence];
   const ic = PRICING.innercircle[icCadence];
