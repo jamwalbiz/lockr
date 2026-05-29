@@ -24,8 +24,8 @@ export const FAQ_ITEMS: Array<{ q: string; a: React.ReactNode; text: string }> =
   },
   {
     q: "How do I get into the Discord?",
-    a: "One-click via Whop. After payment, link your Discord account in your Whop profile, then claim access on the Discord tile. The Whop Bot auto-assigns your tier role in under 30 seconds — no manual approval.",
-    text: "One-click via Whop. After payment, link your Discord account in your Whop profile, then claim access on the Discord tile. The Whop Bot auto-assigns your tier role in under 30 seconds — no manual approval.",
+    a: "One-click via Whop. After payment, link your Discord account in your Whop profile, then claim access on the Discord tile. Your tier role is auto-assigned in under 30 seconds — no manual approval.",
+    text: "One-click via Whop. After payment, link your Discord account in your Whop profile, then claim access on the Discord tile. Your tier role is auto-assigned in under 30 seconds — no manual approval.",
   },
   {
     q: "What payment methods do you accept?",

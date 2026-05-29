@@ -37,7 +37,7 @@ export function ApplyForm() {
         <h2>You&apos;re in.</h2>
         <p style={{ color: "var(--text-mute)", marginBottom: 24 }}>
           Inner Circle approved. Lock your spot below — payment via Whop, Discord
-          access auto-granted by our bot the moment you finish.
+          access is automatic the moment you finish.
         </p>
         {checkoutUrl ? (
           <a
