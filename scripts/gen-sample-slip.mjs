@@ -110,8 +110,19 @@ function sparkles({ x, y, w, h, count, seed }) {
 // Build the SVG.
 const arrow = PICK.direction === "over" ? "▲" : "▼";
 const directionWord = PICK.direction.toUpperCase();
-const matchup = `${PICK.awayAbbrev}  @  ${PICK.homeAbbrev}`;
 const fullMatchup = `${PICK.awayFull}  vs  ${PICK.homeFull}`;
+
+// Layout map (vertical), tuned for legibility — no wasted whitespace,
+// hero typography sized to dominate the canvas:
+//
+//   y 0   – 280   header strip (logo + sparkle field + "TONIGHT'S PLAY")
+//   y 320 – 410   NHL badge (left-aligned, large)
+//   y 450 – 540   matchup (full team names, prominent)
+//   y 600 – 880   hero play (arrow + line number, inline)
+//   y 920 – 1000  direction word (OVER / UNDER) — large
+//   y 1010 – 1080 market subtitle (TOTAL GOALS) — large
+//   y 1130 – 1230 unit stamp (wide, beefy)
+//   y 1260 – 1350 bottom strip (URL + tagline)
 
 const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
@@ -125,10 +136,6 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
       <stop offset="45%" stop-color="${ACCENT}" stop-opacity="0.06"/>
       <stop offset="80%" stop-color="${BG}" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="headerFade" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="${ACCENT}" stop-opacity="0"/>
-      <stop offset="100%" stop-color="${ACCENT}" stop-opacity="0.06"/>
-    </linearGradient>
   </defs>
   <rect x="0" y="0" width="${W}" height="280" fill="url(#headerGlow)"/>
   ${sparkles({ x: 0, y: 0, w: W, h: 280, count: 220, seed: 4242 })}
@@ -139,116 +146,124 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
   <!-- Header label top-right -->
   <text x="${W - 80}" y="138"
         font-family="${MONO}"
-        font-size="22"
+        font-size="24"
         font-weight="600"
-        letter-spacing="3"
+        letter-spacing="4"
         text-anchor="end"
         fill="${MUTE}">${PICK.label}</text>
 
   <!-- Subtle hairline divider under header strip -->
   <rect x="80" y="278" width="${W - 160}" height="1" fill="${SURFACE_2}"/>
 
-  <!-- ─────────────────── MAIN CARD ─────────────────── -->
+  <!-- ═══════════════════ MAIN CARD ═══════════════════ -->
 
-  <!-- League badge -->
-  <rect x="80" y="360" width="120" height="40" rx="6" fill="${SURFACE}" stroke="${SURFACE_2}" stroke-width="1"/>
-  <text x="140" y="387"
+  <!-- LEAGUE BADGE — left-aligned, much bigger than before. The previous
+       120×40 read as a tiny chip lost in the canvas; 200×80 with a 36pt
+       label has the visual weight to anchor the top of the play card. -->
+  <rect x="80" y="328" width="200" height="80" rx="10"
+        fill="${SURFACE}"
+        stroke="${ACCENT}"
+        stroke-width="2"
+        opacity="0.9"/>
+  <text x="180" y="383"
         font-family="${MONO}"
-        font-size="18"
-        font-weight="700"
-        letter-spacing="3"
+        font-size="36"
+        font-weight="800"
+        letter-spacing="6"
         text-anchor="middle"
-        fill="${TEXT}">${PICK.league}</text>
+        fill="${ACCENT}">${PICK.league}</text>
 
-  <!-- Matchup line (short abbreviations) -->
-  <text x="${W / 2}" y="500"
-        font-family="${MONO}"
-        font-size="56"
-        font-weight="700"
-        letter-spacing="-1"
-        text-anchor="middle"
-        fill="${TEXT}">${matchup}</text>
-
-  <!-- Matchup line (full names) -->
-  <text x="${W / 2}" y="552"
+  <!-- MATCHUP — only full names now (dropped the redundant CAR @ MTL
+       abbreviation; full team names alone read clearer and look more
+       professional). Bumped 22 → 38pt. -->
+  <text x="${W / 2}" y="510"
         font-family="${FONT}"
-        font-size="22"
-        font-weight="500"
-        letter-spacing="3"
+        font-size="38"
+        font-weight="700"
+        letter-spacing="2"
         text-anchor="middle"
-        fill="${MUTE}">${fullMatchup.toUpperCase()}</text>
+        fill="${TEXT}">${fullMatchup.toUpperCase()}</text>
 
-  <!-- Spacer ─ thin accent line -->
-  <rect x="${W / 2 - 80}" y="630" width="160" height="2" fill="${ACCENT}" opacity="0.6"/>
+  <!-- Thin accent rule sets the hero block apart from the matchup line. -->
+  <rect x="${W / 2 - 80}" y="572" width="160" height="3" fill="${ACCENT}" opacity="0.7"/>
 
-  <!-- Direction arrow + LINE — the hero number -->
+  <!-- ─── HERO PLAY: arrow + line, inline like PrizePicks ↑ 27.5 ───
+       Group is centered as a unit. Arrow sized so its visual height
+       matches roughly half the line-number cap height, sitting tight
+       to the left of the number with a 40px gap. -->
   <g transform="translate(${W / 2}, 760)">
-    <!-- arrow + line number side by side, centered as a group -->
-    <text x="-220" y="64"
+    <!-- Arrow: 140pt, baseline-aligned with line number visual middle. -->
+    <text x="-210" y="40"
           font-family="${FONT}"
-          font-size="120"
+          font-size="140"
           font-weight="900"
           text-anchor="middle"
           fill="${ACCENT}">${arrow}</text>
-    <text x="80" y="64"
+    <!-- Line number: 260pt, dominant. Negative letter-spacing tightens
+         the digit pair so the decimal point doesn't pull right. -->
+    <text x="100" y="80"
           font-family="${FONT}"
-          font-size="200"
+          font-size="260"
           font-weight="900"
-          letter-spacing="-6"
+          letter-spacing="-8"
           text-anchor="middle"
           fill="${TEXT}">${PICK.line}</text>
   </g>
 
-  <!-- OVER / UNDER label -->
-  <text x="${W / 2}" y="900"
+  <!-- DIRECTION WORD — bumped 38 → 76pt so it reads as part of the
+       hero, not as a small subtitle. -->
+  <text x="${W / 2}" y="970"
         font-family="${MONO}"
-        font-size="38"
-        font-weight="700"
-        letter-spacing="8"
+        font-size="76"
+        font-weight="800"
+        letter-spacing="14"
         text-anchor="middle"
         fill="${ACCENT}">${directionWord}</text>
 
-  <!-- Market type subtitle -->
-  <text x="${W / 2}" y="958"
+  <!-- MARKET SUBTITLE — bumped 22 → 44pt. Reads as a real hero element
+       now, not a footnote. -->
+  <text x="${W / 2}" y="1050"
         font-family="${FONT}"
-        font-size="22"
-        font-weight="500"
-        letter-spacing="3"
+        font-size="44"
+        font-weight="700"
+        letter-spacing="6"
         text-anchor="middle"
-        fill="${MUTE}">${PICK.market}</text>
+        fill="${TEXT}">${PICK.market}</text>
 
-  <!-- ─────────────────── UNITS STAMP ─────────────────── -->
-  <g transform="translate(${W / 2 - 200}, 1050)">
-    <rect x="0" y="0" width="400" height="92" rx="46"
+  <!-- ─────────────────── UNITS STAMP ───────────────────
+       Wider and taller than the old 400×92 — now 520×110, with 44pt
+       label inside, to balance against the bigger hero typography. -->
+  <g transform="translate(${W / 2 - 260}, 1140)">
+    <rect x="0" y="0" width="520" height="110" rx="55"
           fill="${SURFACE}"
           stroke="${ACCENT}"
-          stroke-width="2"/>
-    <text x="200" y="60"
+          stroke-width="3"/>
+    <text x="260" y="73"
           font-family="${MONO}"
-          font-size="32"
+          font-size="44"
           font-weight="800"
-          letter-spacing="5"
+          letter-spacing="8"
           text-anchor="middle"
           fill="${ACCENT}">${PICK.units} UNIT PLAY</text>
   </g>
 
   <!-- ─────────────────── BOTTOM STRIP ─────────────────── -->
-  <rect x="80" y="${H - 138}" width="${W - 160}" height="1" fill="${SURFACE_2}"/>
+  <rect x="80" y="${H - 90}" width="${W - 160}" height="1" fill="${SURFACE_2}"/>
 
   <!-- URL bottom-left -->
-  <text x="80" y="${H - 75}"
+  <text x="80" y="${H - 38}"
         font-family="${MONO}"
-        font-size="22"
+        font-size="24"
         font-weight="600"
-        letter-spacing="2"
+        letter-spacing="3"
         fill="${MUTE}">joinlockr.com</text>
 
   <!-- Tagline bottom-right -->
-  <text x="${W - 80}" y="${H - 75}"
+  <text x="${W - 80}" y="${H - 38}"
         font-family="${MONO}"
-        font-size="18"
+        font-size="20"
         font-weight="500"
-        letter-spacing="3"
+        letter-spacing="4"
         text-anchor="end"
         fill="${DIM}">WHERE THE EDGE LIVES</text>
 </svg>`;
