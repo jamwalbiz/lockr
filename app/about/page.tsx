@@ -56,12 +56,34 @@ export default function AboutPage() {
         </div>
         <div className="about-img">
           {/*
-            Founder portrait placeholder. Replace with high-contrast low-light
-            photography (Whoop founder portrait style, not Tate yacht style)
-            once asset is delivered. See lockr_handoff_brief.md §5 "Must replace
-            before launch".
+            Founder portrait. While the photo isn't shot yet, the CSS-only card
+            (gradient + "JAIRO TOVAR · JT" pseudo-element from .about-img::before
+            in globals.css) reads as intentional brand-typographic, not as a
+            "site under construction" hole.
+
+            TO SWAP IN THE REAL PHOTO:
+              1. Save as /public/brand/jt-portrait.jpg
+                 (target 1600x2000 — 4:5 portrait; high-contrast low-light,
+                 Whoop founder style, not Tate yacht style — see
+                 docs/asset-specs.md)
+              2. Replace this entire <div className="about-img"> block with:
+
+                   <div className="about-img">
+                     <Image
+                       src="/brand/jt-portrait.jpg"
+                       alt="Jairo Tovar — founder of Lockr"
+                       fill
+                       sizes="(max-width: 768px) 100vw, 40vw"
+                       priority
+                       style={{ objectFit: "cover" }}
+                     />
+                   </div>
+
+              3. Add `import Image from "next/image";` to the imports above.
+              4. Drop the .about-img::before pseudo-element in globals.css
+                 (currently centers "JAIRO TOVAR · JT" text — the real photo
+                 will cover it).
           */}
-          <div className="about-img-meta">[ FOUNDER PORTRAIT PLACEHOLDER ]</div>
         </div>
       </div>
 

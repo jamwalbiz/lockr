@@ -93,7 +93,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* VSL */}
+      {/* VSL — founder-to-camera intro.
+          To swap in the real video without touching code: set the
+          NEXT_PUBLIC_VSL_URL env var in Vercel (any standard embed URL works
+          — https://player.vimeo.com/video/XXXXXX, https://www.youtube.com/embed/XXXXXX,
+          a Wistia oEmbed URL, a Mux signed URL, etc.). When the var is set
+          the iframe replaces the placeholder card automatically.
+          The placeholder (when no URL is configured) intentionally has no
+          fake duration/HD chip — we don't lie about a video that doesn't
+          exist yet. */}
       <section id="intro" className="fade-in-section">
         <div className="shell">
           <div className="section-head">
@@ -101,22 +109,48 @@ export default function Home() {
             <h2 className="section-title">How Lockr finds edges your book is missing.</h2>
           </div>
           <div className="vsl-wrap">
-            <div className="vsl-player">
-              <div className="vsl-thumb"></div>
-              <button className="vsl-play" aria-label="Play founder intro video" type="button">
-                <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </button>
-              <div className="vsl-overlay">
-                <div className="vsl-meta">
-                  <span>03:42</span>
-                  <span>·</span>
-                  <span>HD</span>
-                </div>
-                <div className="vsl-meta">JT · INTRO</div>
+            {process.env.NEXT_PUBLIC_VSL_URL ? (
+              <div className="vsl-player" style={{ cursor: "default" }}>
+                <iframe
+                  src={process.env.NEXT_PUBLIC_VSL_URL}
+                  title="Lockr founder intro"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    border: 0,
+                    borderRadius: 10,
+                  }}
+                ></iframe>
               </div>
-            </div>
+            ) : (
+              <div
+                className="vsl-player"
+                style={{ cursor: "default" }}
+                aria-label="Founder intro video — coming soon"
+              >
+                <div className="vsl-thumb"></div>
+                {/* Disabled-looking play affordance — kept for visual weight
+                    so the section doesn't feel empty, but doesn't claim a
+                    playable video exists. */}
+                <div
+                  className="vsl-play"
+                  style={{ opacity: 0.45, cursor: "default", pointerEvents: "none" }}
+                  aria-hidden="true"
+                >
+                  <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+                <div className="vsl-overlay">
+                  <div className="vsl-meta">JT · INTRO</div>
+                  <div className="vsl-meta">COMING SOON</div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
