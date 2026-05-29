@@ -18,8 +18,6 @@ export function ApplyForm() {
   const [submitted, setSubmitted] = useState(false);
   const [selectedSports, setSelectedSports] = useState<string[]>([]);
   const [honeypot, setHoneypot] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   function toggleSport(s: string) {
     setSelectedSports((curr) =>
@@ -34,10 +32,10 @@ export function ApplyForm() {
     const checkoutUrl = whopCheckoutUrl("innercircle", "monthly");
     return (
       <div className="checkout-card">
-        <h2>You&apos;re in.</h2>
+        <h2>Application received.</h2>
         <p style={{ color: "var(--text-mute)", marginBottom: 24 }}>
-          Inner Circle approved. Lock your spot below — payment via Whop, Discord
-          access is automatic the moment you finish.
+          Spots are limited. Complete checkout below to claim yours — payment via
+          Whop, Discord access is automatic the moment you finish.
         </p>
         {checkoutUrl ? (
           <a
@@ -69,63 +67,31 @@ export function ApplyForm() {
             textAlign: "center",
           }}
         >
-          Prefer annual ($4,999/yr)? Reply to your confirmation email and JT will
-          send you a direct payment link.
+          Prefer annual ($4,999/yr)? Email{" "}
+          <a href="mailto:hello@joinlockr.com" style={{ color: "var(--accent)" }}>
+            hello@joinlockr.com
+          </a>{" "}
+          and JT will send you a direct payment link.
         </p>
       </div>
     );
   }
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  // Submit is purely client-side now — no backend route, no email. The form
+  // exists to gather signal (bankroll, sports, why-join) so JT knows who's
+  // coming in. The 200-member cap is enforced programmatically by Whop's
+  // per-plan stock limit, not by application review.
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    // Honeypot — bots fill hidden fields; humans don't. If filled, silently
-    // pretend success and bail. No tracking noise from bots, no network call.
+    // Honeypot: bots fill hidden fields; humans don't. If filled, silently
+    // pretend success and bail.
     if (honeypot) {
       setSubmitted(true);
       return;
     }
-
-    if (submitting) return;
-    setError(null);
-    setSubmitting(true);
-
-    // Read inputs via name attributes on the form — fewer useState hooks,
-    // matches how the page already wires submit.
-    const fd = new FormData(e.currentTarget);
-    const payload = {
-      name: fd.get("name"),
-      email: fd.get("email"),
-      age: fd.get("age"),
-      bankroll: fd.get("bankroll"),
-      why: fd.get("why"),
-      useCase: fd.get("useCase"),
-      sports: selectedSports,
-    };
-
-    try {
-      const res = await fetch("/api/apply", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const data: { ok?: boolean; error?: string } = await res
-        .json()
-        .catch(() => ({}));
-
-      if (!res.ok || !data.ok) {
-        setError(data.error || "Something went wrong. Try again in a minute.");
-        setSubmitting(false);
-        return;
-      }
-
-      track("apply_submit", { sports_count: selectedSports.length });
-      feedbackSuccess();
-      setSubmitted(true);
-    } catch {
-      setError("Network error. Check your connection and try again.");
-      setSubmitting(false);
-    }
+    track("apply_submit", { sports_count: selectedSports.length });
+    feedbackSuccess();
+    setSubmitted(true);
   }
 
   return (
@@ -227,38 +193,18 @@ export function ApplyForm() {
         />
       </div>
 
-      {error && (
-        <div
-          role="alert"
-          style={{
-            marginTop: 16,
-            padding: "10px 14px",
-            borderRadius: 8,
-            background: "rgba(255,80,80,0.08)",
-            border: "1px solid rgba(255,80,80,0.35)",
-            color: "var(--text)",
-            fontSize: 13,
-          }}
-        >
-          {error}
-        </div>
-      )}
-
       <button
         type="submit"
         className="btn btn-primary btn-lg"
-        disabled={submitting}
         style={{
           width: "100%",
           marginTop: 16,
           justifyContent: "center",
           background: "var(--gold)",
           borderColor: "var(--gold)",
-          opacity: submitting ? 0.7 : 1,
-          cursor: submitting ? "wait" : "pointer",
         }}
       >
-        {submitting ? "Submitting…" : "Submit application →"}
+        Submit application →
       </button>
       <div
         style={{
@@ -268,7 +214,7 @@ export function ApplyForm() {
           textAlign: "center",
         }}
       >
-        200-member cap · Instant approval · Cancel any time.
+        200-member cap · Cancel any time.
       </div>
     </form>
   );

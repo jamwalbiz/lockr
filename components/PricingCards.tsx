@@ -125,7 +125,7 @@ export function PricingCards() {
             <span className="ic-mini-dot"></span>
             {IC_STATUS.label}
           </div>
-          <div className="ic-mini-line2">Application form · instant approval</div>
+          <div className="ic-mini-line2">By application only</div>
         </div>
         <Link
           href="/apply"

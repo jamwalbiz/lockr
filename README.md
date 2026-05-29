@@ -76,7 +76,7 @@ Currently wired (live in production):
 |---|---|---|---|
 | Payments + subscription billing | Whop hosted checkout (`whop.com/checkout/<plan_id>`) | none on our side — plan IDs in `lib/copy.ts` | live |
 | Payment → Discord role | Whop Discord app + Wbot | none on our side — configured in Whop dashboard | live |
-| IC application submit | `/api/apply` → Resend → `hello@joinlockr.com` | `RESEND_API_KEY` | waiting on key |
+| IC application | Client-side form → `@vercel/analytics` event → direct Whop checkout link | none — fully client-side, no per-submit email | live |
 | Newsletter submit | `/api/newsletter` → Beehiiv | `BEEHIIV_API_KEY`, `BEEHIIV_PUBLICATION_ID` | waiting on keys |
 
 Still TODO (pre-launch checklist):
