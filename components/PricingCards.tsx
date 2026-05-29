@@ -133,12 +133,12 @@ export function PricingCards() {
           <div className="ic-mini-line2">By application only</div>
         </div>
         <Link
-          href="/apply"
+          href={`/checkout?tier=innercircle&cadence=${icCadence}`}
           className="price-cta primary text-center"
           onClick={() => {
             feedbackClick();
             track("cta_click", {
-              cta: "apply_ic",
+              cta: "ic_checkout",
               tier: "innercircle",
               cadence: icCadence,
               location: "pricing_card",

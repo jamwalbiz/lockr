@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { LanguageToggle } from "./LanguageToggle";
 
 export function Footer() {
   return (
@@ -43,7 +42,6 @@ export function Footer() {
             <a href="#">TikTok</a>
             <a href="#">Instagram</a>
             <a href="#">YouTube</a>
-            <LanguageToggle />
           </div>
         </div>
         <div className="footer-disclaimer" style={{ marginTop: 24 }}>

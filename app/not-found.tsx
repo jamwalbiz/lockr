@@ -82,7 +82,7 @@ export default function NotFound() {
             { href: "/", label: "Home", desc: "Daily picks + the rest" },
             { href: "/pricing", label: "Pricing", desc: "$29/wk, $99/mo, $599/yr" },
             { href: "/about", label: "About JT", desc: "Founder, methodology" },
-            { href: "/apply", label: "Inner Circle", desc: "Application only · 33 spots open" },
+            { href: "/checkout?tier=innercircle&cadence=monthly", label: "Inner Circle", desc: "Application only · 33 spots open" },
             { href: "/#faq", label: "FAQ", desc: "The questions everyone asks" },
           ].map((it) => (
             <Link

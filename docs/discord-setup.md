@@ -76,23 +76,26 @@ Default sort: **Recent activity**. Auto-archive: **3 days of inactivity** (so ol
 
 ---
 
-## 3. Onboarding + channel topics
+## 3. Channel topics + IC additions
 
-### 3a. Community Onboarding flow
+> Community Onboarding flow is intentionally skipped. Paid members get every channel by default; opt-in roles like `daily-pings` / `big-play-alerts` are dropped — JT prefers a simpler member experience without notification toggles.
 
-Server Settings → Onboarding → Setup. **One question** (paid members get
-all channels regardless of interest, so the "what do you bet" question
-that's standard in free communities is pure friction for Lockr):
+### 3a. Add IC channels (keep 1-on-1s + scheduling in-platform)
 
-**Question — "How loud should the picks be?"** (single-select)
+Under the **INNER CIRCLE** category, add three new channels so every IC perk runs inside the server (no DMs, no Zoom, no Calendly):
 
-- *All picks* → gives role `daily-pings` (you @ this role when a pick drops)
-- *Big plays only* → gives role `big-play-alerts`
-- *Silent — I check on my own time* → no notification role
+1. **`#schedule-with-jt`** (text)
+   - Slowmode: 1 hour
+   - Permissions: IC role gets `Send Messages` ✓, `Add Reactions` ✓. Lockr Team gets `Send Messages` ✓ + `Manage Messages` ✓. Inherits category view-gate.
 
-You'll need to create the `daily-pings` and `big-play-alerts` roles first
-— Server Settings → Roles → Create Role. No special permissions needed;
-they exist solely as @-ping targets.
+2. **`🎙 1-on-1 with JT`** (voice)
+   - **User Limit: 2** — this is the privacy primitive. Once member + JT are both connected, nobody else can join the room. Cleaner than per-call permission edits.
+   - Permissions: IC role gets `Connect` ✓ + `Speak` ✓. Lockr Team gets `Connect` + `Speak` + `Move Members` + `Mute Members`. Inherits category view-gate.
+
+3. **`#ic-coaching-notes`** (text, threads on)
+   - Permissions: IC role gets `Send Messages` ✓ + `Create Public Threads` ✓. Lockr Team same. Inherits category view-gate.
+
+Then create a **recurring monthly Discord Event** linked to the `IC Mastermind` Stage: Server → Events → Create Event → Recurring monthly → Location: Stage Channel → restrict visibility to IC role. Members see "next mastermind in N days" on the Events tab without JT having to post a reminder.
 
 ### 3b. Channel topics — paste these into each channel header
 
@@ -108,7 +111,10 @@ Right-click channel → Edit Channel → Topic field. Paste:
 | `#general-chat` | `Member-to-member talk. Banter about plays, off-topic, ask anything.` |
 | `Weekly Call` (Stage) | `Live weekly Q&A with JT. Members raise hand to ask questions.` |
 | `#inner-circle` (Forum) | `IC-only discussions. Deep dives + custom research = individual threads. Pick a tag when posting.` |
-| `IC Mastermind` (Stage) | `Quarterly cohort mastermind. Full IC room live — 60-min deep dive on the quarter, what worked, what didn't, where the edge moved. (Monthly 1-on-1 strategy calls happen separately via DM scheduling — no channel for those.)` |
+| `IC Mastermind` (Stage) | `Monthly cohort mastermind. Full IC room live — 60-min deep dive on the month, what worked, what didn't, where the edge moved. Recurring Discord Event linked.` |
+| `#schedule-with-jt` | `Request a 1-on-1 with JT. Post your topic + 2-3 windows you're free. JT confirms here. No DMs — everything in this channel.` |
+| `🎙 1-on-1 with JT` (voice) | `1-on-1 call venue. Member-of-2 cap — once you + JT are both in, nobody else can join. Drop in at your scheduled time.` |
+| `#ic-coaching-notes` | `Pre-call notes + post-call action items. Long-form receipts of every 1-on-1 — searchable IC IP.` |
 
 ### 3c. Pinned starter message in `#welcome`
 

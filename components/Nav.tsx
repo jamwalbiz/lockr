@@ -121,7 +121,11 @@ export function Nav() {
           >
             FAQ
           </Link>
-          <Link href="/apply" className="mobile-link" onClick={closeMenu}>
+          <Link
+            href="/checkout?tier=innercircle&cadence=monthly"
+            className="mobile-link"
+            onClick={closeMenu}
+          >
             Apply for Inner Circle
           </Link>
           <div className="mobile-menu-cta">

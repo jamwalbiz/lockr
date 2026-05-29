@@ -2,18 +2,22 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { track } from "@vercel/analytics";
+import { WhopCheckoutEmbed } from "@whop/checkout/react";
 import { feedbackClick, feedbackSuccess } from "@/lib/sound";
-import { PRICING, whopCheckoutUrl, isValidEmail } from "@/lib/copy";
+import { PRICING } from "@/lib/copy";
 
 type Tier = "subscription" | "innercircle";
 type Cadence = "weekly" | "monthly" | "annual";
-// Two-step wizard: Tier → Account → (redirect to Whop). Whop runs the
-// payment + post-purchase community access; we don't render either step.
+// Two-step wizard: Tier → Pay (embedded Whop checkout, inline). Whop's
+// embed runs the payment + identity capture; we stay on joinlockr.com the
+// whole time. After completion the embed fires onComplete and we render
+// our own success state instead of a redirect.
 type Step = 1 | 2;
 
 const STEP_LABELS: Record<Step, string> = {
   1: "Tier",
-  2: "Account",
+  2: "Pay",
 };
 
 export function CheckoutFlow({
@@ -34,15 +38,19 @@ export function CheckoutFlow({
       ? "monthly"
       : (initialCadence ?? "monthly"),
   );
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [completed, setCompleted] = useState(false);
 
   // Resolve the price entry for the current tier+cadence combo.
   const priceEntry =
     tier === "subscription"
       ? PRICING.subscription[cadence as keyof typeof PRICING.subscription]
       : PRICING.innercircle[cadence as keyof typeof PRICING.innercircle];
+
+  // The Whop plan ID for the current tier+cadence. IC annual is the one
+  // exception — no plan ID exists yet ($2,500 Whop cap), so we render a
+  // fallback that routes folks to IC monthly + offers email arrangement.
+  // Every other combo embeds inline.
+  const planId = (priceEntry as { whopPlanId?: string }).whopPlanId;
 
   const tierLabel = tier === "subscription" ? "Lockr Subscription" : "Inner Circle";
   const cadenceLabel =
@@ -57,27 +65,41 @@ export function CheckoutFlow({
   }
   function back() {
     // Back is a retreat, not a commit — intentionally silent. Going forward
-    // (next()) keeps the chime as a positive-progress signal.
+    // (next()) keeps the chime as a positive-progress signal. Going back
+    // also clears the completed flag so the embed re-mounts on a new step 2.
     if (step > 1) {
       setStep((step - 1) as Step);
+      setCompleted(false);
     }
   }
 
   /**
-   * Step 2 commit — hand off to Whop's hosted checkout. We fire the success
-   * chime (this is the conversion moment) and then redirect. Whop handles
-   * payment, confirmation, and granting community access; we don't need our
-   * old stub Step 3 / Step 4 for that. If no plan exists for the chosen
-   * tier+cadence (currently only IC annual, deferred until Whop's $2,500
-   * cap lifts), fall back to /apply so the user can still get to JT.
+   * Embed completion callback. Whop fires this on successful purchase
+   * with the plan_id + receipt_id. We chime, fire analytics, and render
+   * the in-page success state — no redirect, the user stays on
+   * joinlockr.com so the brand experience is continuous.
    */
-  function proceedToWhop() {
+  function handleComplete(planIdReceived: string, receiptId?: string) {
     feedbackSuccess();
-    // Pass the email so Whop's hosted checkout pre-fills it for buyers
-    // who don't already have a Whop account. Logged-in Whop users keep
-    // their own account email — Whop ignores the param in that case.
-    const url = whopCheckoutUrl(tier, cadence, email);
-    window.location.href = url ?? "/apply";
+    track("checkout_complete", {
+      tier,
+      cadence,
+      planId: planIdReceived,
+      receiptId: receiptId ?? "",
+    });
+    setCompleted(true);
+  }
+
+  /**
+   * Fired when the buyer types their email into the embed. Useful as a
+   * funnel-stage signal — most drop-off happens between picker and email,
+   * so knowing email-entered helps separate "didn't engage" from "engaged
+   * but bailed on payment."
+   */
+  function handleIdentityCaptured(data: { email?: string; user_id?: string }) {
+    if (data.email) {
+      track("checkout_email_entered", { tier, cadence });
+    }
   }
 
   // Sub cadence valid: weekly, monthly, annual. IC: monthly, annual.
@@ -88,7 +110,7 @@ export function CheckoutFlow({
       <div className="checkout-progress">
         <div className="checkout-progress-meta">
           <span className="checkout-progress-label">
-            Step {step} of 2 · {step === 1 ? "Pick your plan" : "Almost there"}
+            Step {step} of 2 · {step === 1 ? "Pick your plan" : completed ? "Done" : "Almost there"}
           </span>
           <span className="checkout-progress-pct">{progressPct}% complete</span>
         </div>
@@ -108,7 +130,7 @@ export function CheckoutFlow({
               s === step ? "active" : s < step ? "done" : ""
             }`}
           >
-            <div className="checkout-step-num">{s < step ? "✓" : s}</div>
+            <div className="checkout-step-num">{s < step || (s === step && completed) ? "✓" : s}</div>
             <span>{STEP_LABELS[s]}</span>
             {idx < 1 && <div className="checkout-step-line" style={{ minWidth: 16 }}></div>}
           </div>
@@ -188,7 +210,10 @@ export function CheckoutFlow({
               }}
             >
               Looking for Inner Circle?{" "}
-              <Link href="/apply" style={{ color: "var(--accent)" }}>
+              <Link
+                href="/checkout?tier=innercircle&cadence=monthly"
+                style={{ color: "var(--accent)" }}
+              >
                 Apply here →
               </Link>{" "}
               · application only, 200-member cap
@@ -196,80 +221,86 @@ export function CheckoutFlow({
           </>
         )}
 
-        {/* Step 2 — Account + payment method */}
-        {step === 2 && (
+        {/* Step 2 — Embedded Whop checkout */}
+        {step === 2 && !completed && (
           <>
-            <h2>Your details</h2>
-            <div className="form-row">
-              <label htmlFor="co-email">Email</label>
-              <input
-                id="co-email"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-              <div className="form-row">
-                <label htmlFor="co-first">First name</label>
-                <input
-                  id="co-first"
-                  type="text"
-                  placeholder="First"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                />
-              </div>
-              <div className="form-row">
-                <label htmlFor="co-last">Last name</label>
-                <input
-                  id="co-last"
-                  type="text"
-                  placeholder="Last"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-              </div>
-            </div>
-            {/* Discord username isn't collected here — Whop captures it
-                post-payment in their Connected Accounts flow, and the bot
-                auto-assigns the role from there. Asking twice = friction.
-                Whop's hosted checkout also owns the payment-method picker
-                (Card / Cash App / Bank transfer). */}
+            <h2>Complete your subscription</h2>
 
-            <div className="checkout-summary">
+            <div className="checkout-summary" style={{ marginBottom: 16 }}>
               <div className="checkout-summary-row">
                 <span>
                   {tierLabel} · {cadenceLabel}
                 </span>
                 <span className="mono">{priceEntry.price}</span>
               </div>
-              <div className="checkout-summary-row total">
-                <span>Due today</span>
-                <span className="mono">{priceEntry.price}</span>
-              </div>
-              <div style={{ fontSize: 11, color: "var(--text-mute)", marginTop: 12 }}>
+              <div style={{ fontSize: 11, color: "var(--text-mute)", marginTop: 8 }}>
                 {cadence === "weekly"
                   ? "Recurring weekly."
                   : cadence === "monthly"
                   ? "Recurring monthly."
                   : "Recurring annually."}{" "}
-                Cancel any time from your account — keep access through your billing
+                Cancel any time from your Whop account — keep access through your billing
                 period.
               </div>
             </div>
 
-            <button
-              type="button"
-              className="btn btn-primary btn-lg"
-              style={{ width: "100%", marginTop: 24, justifyContent: "center" }}
-              onClick={proceedToWhop}
-              disabled={!isValidEmail(email)}
-            >
-              Continue to secure checkout →
-            </button>
+            {planId ? (
+              <div className="whop-embed-wrap">
+                <WhopCheckoutEmbed
+                  planId={planId}
+                  theme="dark"
+                  themeOptions={{ accentColor: "green" }}
+                  skipRedirect
+                  onComplete={handleComplete}
+                  onIdentityCaptured={handleIdentityCaptured}
+                  fallback={
+                    <div
+                      style={{
+                        padding: "60px 20px",
+                        textAlign: "center",
+                        color: "var(--text-mute)",
+                        fontSize: 14,
+                      }}
+                    >
+                      Loading secure checkout…
+                    </div>
+                  }
+                />
+              </div>
+            ) : (
+              // IC annual fallback — Whop's $2,500 cap blocks the annual
+              // plan today, so we route folks to the monthly embed (same
+              // application gate, same product) and offer email contact
+              // for direct annual arrangement. When the cap lifts we'll
+              // wire annual through the embed and delete this branch.
+              <div
+                style={{
+                  padding: 24,
+                  background: "var(--bg)",
+                  border: "1px solid var(--border)",
+                  borderRadius: 12,
+                  textAlign: "center",
+                }}
+              >
+                <p style={{ marginBottom: 16, fontSize: 14, lineHeight: 1.5 }}>
+                  Inner Circle annual isn&apos;t live for self-checkout yet
+                  (processor cap). Two options:
+                </p>
+                <Link
+                  href="/checkout?tier=innercircle&cadence=monthly"
+                  className="btn btn-primary btn-lg"
+                  style={{ width: "100%", justifyContent: "center" }}
+                >
+                  Start with Inner Circle monthly →
+                </Link>
+                <div style={{ marginTop: 12, fontSize: 12, color: "var(--text-mute)" }}>
+                  Or arrange annual direct:{" "}
+                  <a href="mailto:hello@joinlockr.com" style={{ color: "var(--accent)" }}>
+                    hello@joinlockr.com
+                  </a>
+                </div>
+              </div>
+            )}
 
             <div
               style={{
@@ -284,9 +315,49 @@ export function CheckoutFlow({
           </>
         )}
 
+        {/* Step 2 — success state (replaces the embed after onComplete fires) */}
+        {step === 2 && completed && (
+          <div style={{ textAlign: "center", padding: "32px 16px" }}>
+            <h2 style={{ marginBottom: 12 }}>You&apos;re in.</h2>
+            <p style={{ color: "var(--text-mute)", marginBottom: 24, lineHeight: 1.6 }}>
+              Welcome to {tierLabel}. Two more clicks to get into Discord:
+              <br />
+              <strong style={{ color: "var(--text)" }}>
+                In your Whop account → Connected Accounts → link Discord → hit
+                &quot;Claim Access&quot; on your product.
+              </strong>
+              <br />
+              Your tier role assigns in under a minute. No manual approval.
+            </p>
+            <a
+              href="https://whop.com/orders"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary btn-lg"
+              style={{ justifyContent: "center" }}
+            >
+              Go to Whop →
+            </a>
+            <div
+              style={{
+                marginTop: 16,
+                fontSize: 12,
+                color: "var(--text-mute)",
+              }}
+            >
+              Receipt sent to your email. Any issues:{" "}
+              <a
+                href="mailto:hello@joinlockr.com"
+                style={{ color: "var(--accent)" }}
+              >
+                hello@joinlockr.com
+              </a>
+            </div>
+          </div>
+        )}
       </div>
 
-      {step > 1 && (
+      {step > 1 && !completed && (
         <div style={{ marginTop: 16, textAlign: "center" }}>
           <button type="button" className="btn btn-ghost" onClick={back}>
             ← Back

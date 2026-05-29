@@ -8,8 +8,8 @@ import { feedbackClick } from "@/lib/sound";
 /**
  * Wrapper for any CTA Link that should fire the brand chime + analytics.
  * Use this for every primary "Join Lockr / Get picks / Subscribe" button
- * that routes to /checkout or /apply. Secondary navigation (footer, anchor
- * jumps, FAQ toggles) should NOT use this — keep the chime as a brand signal
+ * that routes to /checkout. Secondary navigation (footer, anchor jumps,
+ * FAQ toggles) should NOT use this — keep the chime as a brand signal
  * tied to conversion intent.
  */
 export function JoinCta({

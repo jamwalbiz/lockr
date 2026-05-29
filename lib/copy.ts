@@ -231,32 +231,20 @@ export function generateSocialProofItems(count: number = 30): SocialProofItem[] 
   return items;
 }
 
-export const LANGUAGES = [
-  { code: "EN", name: "English" },
-  { code: "ES", name: "Español" },
-  { code: "PT", name: "Português" },
-  { code: "FR", name: "Français" },
-  { code: "DE", name: "Deutsch" },
-  { code: "IT", name: "Italiano" },
-  { code: "JA", name: "日本語" },
-  { code: "ZH", name: "中文" },
-] as const;
 
 export type CadenceTier = "subscription" | "innercircle";
 export type CadenceKey = "weekly" | "monthly" | "annual";
 
-// Whop plan IDs — public-facing checkout URL is `https://whop.com/checkout/<id>`.
-// IC annual ($4,999) intentionally has no whopPlanId. Two reasons:
-//   1. Whop's new-merchant cap is $2,500 per transaction (would block it anyway
-//      until KYC clears and the cap lifts).
-//   2. More importantly: Inner Circle is application-only by design. JT
-//      reviews each applicant via /apply, then arranges payment manually for
-//      approved applicants (wire / direct Stripe link / etc.). Showing
-//      $4,999/yr on the site is a marketing tier; the actual transaction
-//      happens out-of-band.
-// proceedToWhop() in CheckoutFlow falls back to /apply when whopPlanId is
-// absent, which is the right behavior for IC annual (and the IC monthly
-// whopPlanId only fires if JT chooses to share that checkout link directly).
+// Whop plan IDs — passed directly to <WhopCheckoutEmbed planId=... /> in
+// CheckoutFlow. Application gating for Inner Circle is handled by Whop's
+// "Ask questions before checkout" feature, which renders the application
+// questions inline in the embed before payment is collected.
+//
+// IC annual ($4,999) intentionally has no whopPlanId — Whop's new-merchant
+// cap is $2,500 per transaction, which blocks the annual plan until KYC
+// clears and the cap lifts. Showing $4,999/yr on the site is a marketing
+// reference; the CheckoutFlow IC-no-plan-id branch routes folks to IC
+// monthly + offers direct email arrangement.
 export const PRICING = {
   subscription: {
     weekly: {
@@ -296,36 +284,6 @@ export const PRICING = {
     },
   },
 } as const;
-
-/**
- * Build the Whop hosted-checkout URL for a given tier+cadence. Returns null
- * if no plan exists (e.g. IC annual until the $2,500 cap lifts). Callers
- * should fall back to /apply when null.
- *
- * If `email` is supplied, it's passed via `?email=` so Whop pre-fills the
- * email field for anonymous buyers. Whop ignores the param if the user is
- * already logged in to a Whop account (uses their own email instead).
- */
-export function whopCheckoutUrl(
-  tier: "subscription" | "innercircle",
-  cadence: CadenceKey,
-  email?: string,
-): string | null {
-  const entry =
-    tier === "subscription"
-      ? PRICING.subscription[cadence as keyof typeof PRICING.subscription]
-      : PRICING.innercircle[cadence as keyof typeof PRICING.innercircle];
-  const planId = (entry as { whopPlanId?: string }).whopPlanId;
-  if (!planId) return null;
-  const base = `https://whop.com/checkout/${planId}`;
-  const trimmed = email?.trim();
-  return trimmed ? `${base}?email=${encodeURIComponent(trimmed)}` : base;
-}
-
-/** Lightweight email validity check: one `@`, one `.` after it, no spaces. */
-export function isValidEmail(s: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.trim());
-}
 
 export const SUBSCRIPTION_FEATURES = [
   "Daily picks across every sport + prediction markets",

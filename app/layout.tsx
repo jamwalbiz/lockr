@@ -8,8 +8,6 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { MobileCta } from "@/components/MobileCta";
 import { SocialProofPopups } from "@/components/SocialProofPopups";
-// LanguageToggle now lives inline in the Footer (moved out of the bottom-right
-// fixed slot to unclog the mobile corner with sticky CTA + social-proof popups).
 
 const inter = Inter({
   variable: "--font-inter",

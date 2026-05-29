@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/checkout", "/apply", "/api/"],
+        disallow: ["/checkout", "/api/"],
       },
     ],
     sitemap: "https://joinlockr.com/sitemap.xml",
