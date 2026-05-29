@@ -30,6 +30,14 @@ const nextConfig: NextConfig = {
         source: "/:path*",
         headers: securityHeaders,
       },
+      // Apple Pay domain verification. The file has no extension so Vercel
+      // serves it as application/octet-stream by default, which can confuse
+      // Apple's / Whop's verifier. Force text/plain so the response looks
+      // right to whatever's fetching it.
+      {
+        source: "/.well-known/apple-developer-merchantid-domain-association",
+        headers: [{ key: "Content-Type", value: "text/plain" }],
+      },
     ];
   },
 };
