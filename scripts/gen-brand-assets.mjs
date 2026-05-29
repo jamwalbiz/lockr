@@ -114,15 +114,15 @@ const BANNER_SVG = svgWrap(1500, 500, BG, `
     </radialGradient>
   </defs>
   <rect width="1500" height="500" fill="url(#bannerGlow)"/>
-  ${inlineMark({ centerX: 750, centerY: 183, fontSize: 130 })}
-  <text x="750" y="311"
+  ${inlineMark({ centerX: 750, centerY: 196, fontSize: 130 })}
+  <text x="750" y="324"
         font-family="${FONT}"
         font-size="30"
         font-weight="500"
         letter-spacing="-0.5"
         fill="${MUTE}"
         text-anchor="middle">Where serious bettors get serious edges.</text>
-  <text x="750" y="365"
+  <text x="750" y="378"
         font-family="${FONT}"
         font-size="20"
         font-weight="600"
@@ -142,8 +142,8 @@ const WELCOME_BANNER_SVG = svgWrap(1500, 500, BG, `
     </radialGradient>
   </defs>
   <rect width="1500" height="500" fill="url(#welcomeGlow)"/>
-  ${inlineMark({ centerX: 750, centerY: 207, fontSize: 140 })}
-  <text x="750" y="342"
+  ${inlineMark({ centerX: 750, centerY: 216, fontSize: 140 })}
+  <text x="750" y="351"
         font-family="${FONT}"
         font-size="32"
         font-weight="500"
@@ -181,15 +181,15 @@ const INVITE_SPLASH_SVG = svgWrap(1920, 1080, BG, `
     </radialGradient>
   </defs>
   <rect width="1920" height="1080" fill="url(#splashGlow)"/>
-  ${inlineMark({ centerX: 960, centerY: 411, fontSize: 200 })}
-  <text x="960" y="651"
+  ${inlineMark({ centerX: 960, centerY: 435, fontSize: 200 })}
+  <text x="960" y="675"
         font-family="${FONT}"
         font-size="44"
         font-weight="500"
         letter-spacing="-0.6"
         fill="${MUTE}"
         text-anchor="middle">Where serious bettors get serious edges.</text>
-  <text x="960" y="741"
+  <text x="960" y="765"
         font-family="${FONT}"
         font-size="30"
         font-weight="600"
@@ -212,15 +212,15 @@ const OG_SVG = svgWrap(1200, 630, BG, `
     </radialGradient>
   </defs>
   <rect width="1200" height="630" fill="url(#ogGlow)"/>
-  ${inlineMark({ centerX: 600, centerY: 240, fontSize: 130 })}
-  <text x="600" y="380"
+  ${inlineMark({ centerX: 600, centerY: 260, fontSize: 130 })}
+  <text x="600" y="400"
         font-family="${FONT}"
         font-size="32"
         font-weight="500"
         letter-spacing="-0.5"
         fill="${MUTE}"
         text-anchor="middle">Where serious bettors get serious edges.</text>
-  <text x="600" y="438"
+  <text x="600" y="458"
         font-family="${FONT}"
         font-size="22"
         font-weight="600"
