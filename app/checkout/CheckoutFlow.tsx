@@ -221,29 +221,13 @@ export function CheckoutFlow({
           </>
         )}
 
-        {/* Step 2 — Embedded Whop checkout */}
+        {/* Step 2 — Embedded Whop checkout. We intentionally don't render
+            a heading or order summary above the embed: Whop's own card shows
+            product + price + cadence at the top, so an extra "Complete your
+            subscription" header just pushed the email input below the fold.
+            Compact layout = email visible without scrolling on most viewports. */}
         {step === 2 && !completed && (
           <>
-            <h2>Complete your subscription</h2>
-
-            <div className="checkout-summary" style={{ marginBottom: 16 }}>
-              <div className="checkout-summary-row">
-                <span>
-                  {tierLabel} · {cadenceLabel}
-                </span>
-                <span className="mono">{priceEntry.price}</span>
-              </div>
-              <div style={{ fontSize: 11, color: "var(--text-mute)", marginTop: 8 }}>
-                {cadence === "weekly"
-                  ? "Recurring weekly."
-                  : cadence === "monthly"
-                  ? "Recurring monthly."
-                  : "Recurring annually."}{" "}
-                Cancel any time from your Whop account — keep access through your billing
-                period.
-              </div>
-            </div>
-
             {planId ? (
               <div className="whop-embed-wrap">
                 <WhopCheckoutEmbed
