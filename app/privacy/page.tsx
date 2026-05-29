@@ -27,12 +27,12 @@ export default function PrivacyPage() {
         <h2>What we collect</h2>
         <ul>
           <li>
-            <strong>Account info:</strong> name, email, optional Discord username.
+            <strong>Account info:</strong> name, email. Your Discord identity is linked
+            via Whop&apos;s Connected Accounts flow after payment.
           </li>
           <li>
-            <strong>Payment info:</strong> processed by PaymentCloud (cards/ACH) or
-            Coinbase Commerce (crypto). We do not store full card numbers — we receive a
-            token and a last-four.
+            <strong>Payment info:</strong> processed by Whop. We never receive your
+            full card number — Whop returns a token and a last-four.
           </li>
           <li>
             <strong>Usage data:</strong> pages viewed, basic device info. We use{" "}
@@ -65,13 +65,8 @@ export default function PrivacyPage() {
         </p>
         <ul>
           <li>
-            <strong>PaymentCloud / Coinbase Commerce</strong> — payment processing
-          </li>
-          <li>
-            <strong>Recurly</strong> — subscription billing
-          </li>
-          <li>
-            <strong>Postmark</strong> — transactional email
+            <strong>Whop</strong> — payment processing, subscription billing, and
+            Discord access provisioning
           </li>
           <li>
             <strong>Beehiiv</strong> — newsletter

@@ -24,13 +24,13 @@ export const FAQ_ITEMS: Array<{ q: string; a: React.ReactNode; text: string }> =
   },
   {
     q: "How do I get into the Discord?",
-    a: "Auto-invite. You'll get a Discord link in your email within 60 seconds of payment. Your tier badge is auto-assigned by our bot — no manual approval, no waiting.",
-    text: "Auto-invite. You'll get a Discord link in your email within 60 seconds of payment. Your tier badge is auto-assigned by our bot — no manual approval, no waiting.",
+    a: "One-click via Whop. After payment, link your Discord account in your Whop profile, then claim access on the Discord tile. The Whop Bot auto-assigns your tier role in under 30 seconds — no manual approval.",
+    text: "One-click via Whop. After payment, link your Discord account in your Whop profile, then claim access on the Discord tile. The Whop Bot auto-assigns your tier role in under 30 seconds — no manual approval.",
   },
   {
     q: "What payment methods do you accept?",
-    a: "All major cards, ACH, and crypto (BTC, ETH, USDC) via Coinbase Commerce. Annual subscriptions can be paid in installments on request.",
-    text: "All major cards, ACH, and crypto (BTC, ETH, USDC) via Coinbase Commerce. Annual subscriptions can be paid in installments on request.",
+    a: "All major cards, ACH bank transfer, and Cash App via Whop. Annual subscriptions can be paid up-front or split on request.",
+    text: "All major cards, ACH bank transfer, and Cash App via Whop. Annual subscriptions can be paid up-front or split on request.",
   },
   {
     q: "Can I cancel any time?",

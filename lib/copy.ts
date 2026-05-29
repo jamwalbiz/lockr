@@ -1,6 +1,7 @@
-// Static placeholder data — wire to real Discord webhook events post-launch.
-// Until then: combinatorial generation so each page visit produces a fresh
-// mix of names + actions (refresh ≠ refresh).
+// Activity-ticker + social-proof data, generated combinatorially each page
+// visit so refresh ≠ refresh. Names are not real members. If JT ever wants
+// to flip this to live data, the Whop webhook → our backend → ticker pipe
+// is the path — for now it stays synthesized.
 //
 // Name pool tuned to JT's demographic call:
 //   - Drop K last-initials (was a too-obvious repeating pattern)
@@ -245,10 +246,17 @@ export type CadenceTier = "subscription" | "innercircle";
 export type CadenceKey = "weekly" | "monthly" | "annual";
 
 // Whop plan IDs — public-facing checkout URL is `https://whop.com/checkout/<id>`.
-// IC annual ($4,999) is intentionally absent: Whop's new-merchant cap is $2,500
-// per transaction, so the annual plan wasn't created. Re-add once the cap lifts
-// (see task #50). Until then, IC stays application-only via /apply and JT sends
-// the monthly checkout link to approved applicants.
+// IC annual ($4,999) intentionally has no whopPlanId. Two reasons:
+//   1. Whop's new-merchant cap is $2,500 per transaction (would block it anyway
+//      until KYC clears and the cap lifts).
+//   2. More importantly: Inner Circle is application-only by design. JT
+//      reviews each applicant via /apply, then arranges payment manually for
+//      approved applicants (wire / direct Stripe link / etc.). Showing
+//      $4,999/yr on the site is a marketing tier; the actual transaction
+//      happens out-of-band.
+// proceedToWhop() in CheckoutFlow falls back to /apply when whopPlanId is
+// absent, which is the right behavior for IC annual (and the IC monthly
+// whopPlanId only fires if JT chooses to share that checkout link directly).
 export const PRICING = {
   subscription: {
     weekly: {
@@ -329,9 +337,10 @@ export const SUBSCRIPTION_FEATURES = [
   "Free promo codes for every recommended platform",
 ];
 
-// TODO: wire to live count from billing (Recurly/Chargebee) once Phase 0 underwriting
-// completes. Until then this is the single source of truth — never hardcode the numbers
-// in two places.
+// Inner Circle capacity counter. To wire to a live count, Whop's API exposes
+// per-product active-user counts (we already have prod_QnHlwigzxa8j1). Hook
+// it up post-launch if/when the synthesized number becomes a credibility
+// issue — until then this is the single source of truth.
 export const IC_STATUS = {
   active: 167,
   cap: 200,

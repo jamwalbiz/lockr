@@ -37,7 +37,6 @@ export function CheckoutFlow({
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [discordUsername, setDiscordUsername] = useState("");
 
   // Resolve the price entry for the current tier+cadence combo.
   const priceEntry =
@@ -233,20 +232,11 @@ export function CheckoutFlow({
                 />
               </div>
             </div>
-            <div className="form-row">
-              <label htmlFor="co-discord">Discord username (optional)</label>
-              <input
-                id="co-discord"
-                type="text"
-                placeholder="username"
-                value={discordUsername}
-                onChange={(e) => setDiscordUsername(e.target.value)}
-              />
-            </div>
-
-            {/* Whop's hosted checkout owns the payment-method picker
-                (Card / Cash App / Bank transfer). No point in collecting
-                preference here and then asking again. */}
+            {/* Discord username isn't collected here — Whop captures it
+                post-payment in their Connected Accounts flow, and the bot
+                auto-assigns the role from there. Asking twice = friction.
+                Whop's hosted checkout also owns the payment-method picker
+                (Card / Cash App / Bank transfer). */}
 
             <div className="checkout-summary">
               <div className="checkout-summary-row">
