@@ -424,40 +424,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Plain-English glossary - beginner hand-holding, understandable by all ages */}
-      <section className="glossary-strip fade-in-section">
-        <div className="shell">
-          <div className="glossary-head">New to betting? The only words you need:</div>
-          <dl className="glossary-grid">
-            <div className="glossary-item">
-              <dt>Unit (u)</dt>
-              <dd>
-                Your standard bet size. We say &quot;2 units&quot; and you decide if a unit
-                is $10 or $100. It keeps everyone&apos;s sizing comparable.
-              </dd>
-            </div>
-            <div className="glossary-item">
-              <dt>Tail</dt>
-              <dd>To copy a play we post. See the pick, place the same bet on your app.</dd>
-            </div>
-            <div className="glossary-item">
-              <dt>Over / Under</dt>
-              <dd>
-                Betting whether a total (points, goals, etc.) lands above or below a
-                set number.
-              </dd>
-            </div>
-            <div className="glossary-item">
-              <dt>CLV</dt>
-              <dd>
-                Closing line value: proof we got a better price than the line ended at.
-                That is the mark of a real edge, not luck.
-              </dd>
-            </div>
-          </dl>
-        </div>
-      </section>
-
       {/* Sportsbook logo wall */}
       <section className="fade-in-section" style={{ paddingTop: 0 }}>
         <div className="shell">

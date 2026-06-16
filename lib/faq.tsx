@@ -43,14 +43,17 @@ export const FAQ_ITEMS: Array<{ q: string; a: React.ReactNode; text: string }> =
     text: "Yes. One-click cancel from your account page. No retention department. No \"are you sure\" friction. You keep access until the end of your billing period. We'd rather lose you than fight you.",
   },
   {
-    q: "New to betting? What do “units” and “edges” mean?",
+    q: "New to betting? What do the key terms mean?",
     a: (
       <>
         <strong>Units</strong> are how bettors measure profit and loss as a percentage of
         bankroll, not in raw dollars. One unit usually equals 1–5% of your bankroll, so
-        &ldquo;+5u&rdquo; means the same growth whether you bet $50 or $5,000 per play.{" "}
+        &ldquo;+5u&rdquo; means the same growth whether you bet $50 or $5,000 per play. To{" "}
+        <strong>tail</strong> a pick just means to copy it on your own app.{" "}
         <strong>Edges</strong> are bets where the math is on your side: your projection
-        of an outcome is meaningfully better than the price the sportsbook is offering.{" "}
+        of an outcome is meaningfully better than the price the sportsbook is offering,
+        and <strong>CLV</strong> (closing line value) is the proof we got a better price
+        than the line&apos;s closing number, which is what separates a real edge from luck.{" "}
         <strong>Prediction markets</strong> (Kalshi, Polymarket) are regulated
         event-contract platforms where you can take positions on outcomes your sportsbook
         either won&apos;t price or prices badly. You don&apos;t need to know any of this
@@ -59,7 +62,7 @@ export const FAQ_ITEMS: Array<{ q: string; a: React.ReactNode; text: string }> =
         playbook.
       </>
     ),
-    text: "Units are how bettors measure profit and loss as a percentage of bankroll, not in raw dollars. One unit usually equals 1–5% of your bankroll, so \"+5u\" means the same growth whether you bet $50 or $5,000 per play. Edges are bets where the math is on your side: your projection of an outcome is meaningfully better than the price the sportsbook is offering. Prediction markets (Kalshi, Polymarket) are regulated event-contract platforms where you can take positions on outcomes your sportsbook either won't price or prices badly. You don't need to know any of this to follow the picks. Each play comes with the reasoning and recommended size spelled out. Pick up the rest from JT's weekly Q&As and the bankroll playbook.",
+    text: "Units are how bettors measure profit and loss as a percentage of bankroll, not in raw dollars. One unit usually equals 1–5% of your bankroll, so \"+5u\" means the same growth whether you bet $50 or $5,000 per play. To tail a pick just means to copy it on your own app. Edges are bets where the math is on your side: your projection of an outcome is meaningfully better than the price the sportsbook is offering, and CLV (closing line value) is the proof we got a better price than the line's closing number, which is what separates a real edge from luck. Prediction markets (Kalshi, Polymarket) are regulated event-contract platforms where you can take positions on outcomes your sportsbook either won't price or prices badly. You don't need to know any of this to follow the picks. Each play comes with the reasoning and recommended size spelled out. Pick up the rest from JT's weekly Q&As and the bankroll playbook.",
   },
   {
     q: "Is this gambling advice?",

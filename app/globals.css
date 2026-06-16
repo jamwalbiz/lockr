@@ -675,46 +675,6 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
   }
 }
 
-/* ------------------------------------------------------------------
-   Plain-English glossary strip - beginner hand-holding
-   ------------------------------------------------------------------ */
-.glossary-strip { padding: 4px 0 8px; }
-.glossary-head {
-  font-family: var(--font-jetbrains), monospace;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 22px;
-}
-.glossary-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px 32px;
-  border-top: 1px solid var(--border);
-  padding-top: 26px;
-  margin: 0;
-}
-@media (min-width: 1080px) {
-  .glossary-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-}
-@media (max-width: 540px) {
-  .glossary-grid { grid-template-columns: 1fr; }
-}
-.glossary-item dt {
-  font-family: var(--font-jetbrains), monospace;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 7px;
-}
-.glossary-item dd {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.55;
-  color: var(--text-mute);
-  max-width: 34ch;
-}
 
 /* ------------------------------------------------------------------
    Tilt-on-hover cards
