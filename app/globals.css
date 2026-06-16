@@ -301,6 +301,18 @@ h1.hero-title { font-family: var(--font-display), var(--font-inter), sans-serif;
 .pillar-icon { width: 40px; height: 40px; background: rgba(0,255,133,0.08); border: 1px solid rgba(0,255,133,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; color: var(--accent); }
 .pillar h3 { font-size: 19px; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.01em; }
 .pillar p { color: var(--text-mute); font-size: 14px; line-height: 1.6; }
+
+/* Cursor spotlight on the feature-card grids (--mx/--my from SpotlightObserver). */
+.pillar, .sport-card { position: relative; overflow: hidden; }
+.pillar::before, .sport-card::before {
+  content: ''; position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 255, 133, 0.10), transparent 60%);
+  opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+}
+.sport-card.featured::before { background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(201, 167, 106, 0.12), transparent 60%); }
+.pillar:hover::before, .sport-card:hover::before { opacity: 1; }
+.pillar > *, .sport-card > * { position: relative; z-index: 1; }
+@media (prefers-reduced-motion: reduce) { .pillar::before, .sport-card::before { transition: none; } }
 @media (max-width: 768px) { .pillars { grid-template-columns: 1fr; } }
 
 /* ------------------------------------------------------------------

@@ -19,6 +19,7 @@ import { BET_SLIPS } from "@/lib/betslips";
 import { FAQ_ITEMS } from "@/lib/faq";
 import { FadeInObserver } from "@/components/FadeInOnView";
 import { ScrollProgress } from "@/components/ScrollProgress";
+import { SpotlightObserver } from "@/components/SpotlightObserver";
 import { PickCards } from "@/components/PickCards";
 import { TiltCard } from "@/components/TiltCard";
 
@@ -56,6 +57,9 @@ export default function Home() {
 
       {/* Scroll-depth indicator for the long single-page funnel. */}
       <ScrollProgress />
+
+      {/* Cursor-spotlight glow on the feature-card grids. */}
+      <SpotlightObserver />
 
       {/* Hero - asymmetric split: the pitch on the left, a small deck of
           tonight's pick cards on the right (Betr / PrizePicks-style). The
