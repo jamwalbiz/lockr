@@ -76,8 +76,8 @@ export default function PrivacyPage() {
           </li>
         </ul>
         <p>
-          We do not sell your data. We do not share your email with other operators or
-          touts in the category.
+          We do not sell your data. We do not share your email with other picks services
+          in the category.
         </p>
 
         <h2>Your choices</h2>

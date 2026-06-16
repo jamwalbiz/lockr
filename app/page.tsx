@@ -69,7 +69,7 @@ export default function Home() {
             <div className="hero-left">
               <div className="verified-badge hero-rv" style={{ animationDelay: "0.05s" }}>
                 <span className="dot"></span>
-                <span>Picks dropping daily · sports + prediction markets</span>
+                <span>Daily picks · sports + prediction markets</span>
               </div>
               <h1 className="hero-title">
                 <span className="hero-rv" style={{ animationDelay: "0.12s" }}>
@@ -83,9 +83,8 @@ export default function Home() {
                 </span>
               </h1>
               <p className="hero-sub hero-rv" style={{ animationDelay: "0.3s" }}>
-                Real plays across every sport, plus prediction markets like Kalshi and
-                Polymarket. Posted before each game starts, logged win or loss. Join
-                today. Bet tonight.
+                Daily plays across every sport, plus prediction markets like Kalshi and
+                Polymarket. Every pick posted before the game, win or loss.
               </p>
               <div className="hero-cta-row hero-rv" style={{ animationDelay: "0.38s" }}>
                 <JoinCta href="/checkout" location="hero">
@@ -96,14 +95,12 @@ export default function Home() {
                 </a>
               </div>
               <div className="hero-trust hero-rv" style={{ animationDelay: "0.46s" }}>
+                <span>72%+ win rate</span>
+                <span className="hero-trust-sep">·</span>
                 <span className="hero-trust-rating">
                   <span className="hero-trust-star" aria-hidden="true">★</span>
                   4.9 member rating
                 </span>
-                <span className="hero-trust-sep">·</span>
-                <span>72%+ win rate</span>
-                <span className="hero-trust-sep">·</span>
-                <span>No contract</span>
                 <span className="hero-trust-sep">·</span>
                 <span>Cancel any time</span>
               </div>
@@ -116,7 +113,7 @@ export default function Home() {
                     <span className="terminal-dot"></span>LOCKR&nbsp;·&nbsp;TODAY&apos;S&nbsp;PICKS
                   </div>
                   <div className="terminal-live">
-                    <span className="terminal-live-dot"></span>TODAY
+                    <span className="terminal-live-dot"></span>LIVE
                   </div>
                 </div>
 
@@ -149,8 +146,8 @@ export default function Home() {
 
                 {/* Beginner welcome - plain language, any experience level. */}
                 <div className="terminal-foot-line">
-                  New to betting? We tell you{" "}
-                  <strong>what to bet, how much, and why</strong> on every play.
+                  New to betting? Every pick says{" "}
+                  <strong>what to bet, how much, and why</strong>.
                 </div>
               </div>
             </div>
@@ -815,7 +812,7 @@ export default function Home() {
           </div>
           <div className="vs-section">
             <div className="vs-col them">
-              <div className="vs-label">Tacky cappers</div>
+              <div className="vs-label">The other guys</div>
               <div className="vs-title">The picks service you&apos;ve already quit.</div>
               <ul className="vs-list">
                 <li>Screenshots edited after the fact</li>
@@ -825,7 +822,7 @@ export default function Home() {
                 <li>Owner is anonymous behind a Bitmoji</li>
                 <li>Nobody mentions CLV or unit sizing</li>
                 <li>The group goes dark in the summer</li>
-                <li>Sells your email to 14 other touts</li>
+                <li>Sells your email to a dozen other lists</li>
               </ul>
             </div>
             <div className="vs-divider">VS</div>

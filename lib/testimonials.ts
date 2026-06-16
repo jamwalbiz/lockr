@@ -32,7 +32,7 @@ export const TESTIMONIALS_ROW_1: Testimonial[] = [
     name: "Devon M.",
     initials: "DM",
     handle: "Annual member · 8mo",
-    body: "Was tired of touts who'd block you after a bad week. Lockr publishes every loss. That's it for me.",
+    body: "Tired of getting blocked after one bad week. Lockr publishes every loss. That's it for me.",
     pl: "+27.8u",
   },
   {
