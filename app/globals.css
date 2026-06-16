@@ -77,8 +77,23 @@ input, textarea, select { font-family: inherit; }
 .nav-links a:hover, .nav-links a.active { color: var(--text); }
 .nav-cta { display: flex; align-items: center; gap: 10px; }
 .btn { padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
-.btn-primary { background: var(--accent); color: #000; }
+.btn-primary { background: var(--accent); color: #000; position: relative; overflow: hidden; }
 .btn-primary:hover { background: #00e677; transform: translateY(-1px); }
+/* Cursor-tracked light sheen on the primary (purchase) CTAs. The --mx/--my
+   vars are updated on mousemove by JoinCta + the nav Join button; buttons that
+   don't track the cursor get a centered glow on hover. Hover-only, so it adds
+   no idle motion. */
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(110px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.4), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.btn-primary:hover::after { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .btn-primary::after { transition: none; } }
 .btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--border-strong); }
 .btn-secondary:hover { background: var(--bg-elevated); }
 .btn-ghost { color: var(--text-mute); }
@@ -118,6 +133,9 @@ input, textarea, select { font-family: inherit; }
    ------------------------------------------------------------------ */
 .activity-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 101; background: #000; border-bottom: 1px solid var(--border); font-family: var(--font-jetbrains), 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-mute); overflow: hidden; height: 30px; display: flex; align-items: center; }
 .activity-live { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; padding: 0 14px; height: 30px; background: linear-gradient(90deg, #000 60%, transparent); color: var(--accent); font-weight: 700; letter-spacing: 0.1em; font-size: 10px; z-index: 1; position: relative; }
+/* Right-edge fade so the scrolling ticker dissolves out instead of hard-cutting
+   (the left edge is covered by the LIVE label's gradient). */
+.activity-bar::after { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 56px; background: linear-gradient(90deg, transparent, #000); pointer-events: none; z-index: 1; }
 .activity-live-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; }
 .activity-track { display: flex; gap: 32px; padding: 8px 0; animation: scroll-x 180s linear infinite; width: max-content; white-space: nowrap; }
 .activity-item { display: inline-flex; align-items: center; gap: 8px; }

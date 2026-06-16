@@ -30,6 +30,12 @@ export function JoinCta({
       href={href}
       className={className}
       style={style}
+      onMouseMove={(e) => {
+        // Drive the .btn-primary cursor-glow (CSS reads --mx/--my).
+        const r = e.currentTarget.getBoundingClientRect();
+        e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+        e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+      }}
       onClick={() => {
         feedbackClick();
         track("cta_click", { cta: "join", location });
