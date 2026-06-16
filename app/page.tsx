@@ -67,6 +67,11 @@ export default function Home() {
       <section className="hero">
         <div className="hero-grid" aria-hidden="true"></div>
         <div className="hero-glow" aria-hidden="true"></div>
+        {/* Animated "lightning" - diagonal neon light beams sweeping the
+            upper-right. Pure CSS (no JS); masked away from the left text. */}
+        <div className="hero-lightning" aria-hidden="true">
+          <div className="beam" />
+        </div>
         <div className="hero-grain" aria-hidden="true"></div>
         <div className="shell">
           <div className="hero-layout">
