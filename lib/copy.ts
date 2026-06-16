@@ -1,7 +1,7 @@
 // Activity-ticker + social-proof data, generated combinatorially each page
 // visit so refresh ≠ refresh. Names are not real members. If JT ever wants
 // to flip this to live data, the Whop webhook → our backend → ticker pipe
-// is the path — for now it stays synthesized.
+// is the path. For now it stays synthesized.
 //
 // Name pool tuned to JT's demographic call:
 //   - Drop K last-initials (was a too-obvious repeating pattern)
@@ -22,7 +22,7 @@ export type SocialProofItem = {
   flag: string;
 };
 
-// Flag pool for the social-proof popups — gives the feed a global feel
+// Flag pool for the social-proof popups: gives the feed a global feel
 // without straying from the US-bettor-demographic names. US-dominant
 // (it's the core market) with a believable international spread:
 // the English-speaking + Latin-American + a few European markets where
@@ -88,7 +88,7 @@ const UNIT_WINS = [
   "+1.82u", "+2.05u", "+2.18u", "+2.41u", "+2.76u", "+3.10u",
 ] as const;
 
-// JT activity — heavily weighted in the ticker. Per JT: "the more we flood
+// JT activity, heavily weighted in the ticker. Per JT: "the more we flood
 // my name the more it becomes common."
 const JT_PICK_CATEGORIES = [
   "NBA PROP", "UFC METHOD", "F1 PODIUM", "KALSHI HEDGE",
@@ -142,7 +142,7 @@ function randomName(): { display: string; avatar: string } {
 //   • 5%  JT other
 //   • 35% member wins
 //   • 18% joins / upgrades
-// Means ~47% of items mention JT — heavy personal-brand surface.
+// Means ~47% of items mention JT: heavy personal-brand surface.
 //
 // Anti-clustering: pure per-slot random gave streaks (e.g., 4× "JT POSTED"
 // in a row). Two constraints layered on top of the weighted random:
@@ -259,12 +259,12 @@ export function generateSocialProofItems(count: number = 30): SocialProofItem[] 
 export type CadenceTier = "subscription" | "innercircle";
 export type CadenceKey = "weekly" | "monthly" | "annual";
 
-// Whop plan IDs — passed directly to <WhopCheckoutEmbed planId=... /> in
+// Whop plan IDs, passed directly to <WhopCheckoutEmbed planId=... /> in
 // CheckoutFlow. Application gating for Inner Circle is handled by Whop's
 // "Ask questions before checkout" feature, which renders the application
 // questions inline in the embed before payment is collected.
 //
-// IC annual ($4,999) intentionally has no whopPlanId — Whop's new-merchant
+// IC annual ($4,999) intentionally has no whopPlanId. Whop's new-merchant
 // cap is $2,500 per transaction, which blocks the annual plan until KYC
 // clears and the cap lifts. Showing $4,999/yr on the site is a marketing
 // reference; the CheckoutFlow IC-no-plan-id branch routes folks to IC
@@ -304,7 +304,7 @@ export const PRICING = {
       period: "per year · save ~17%",
       equiv: "$416/mo equivalent",
       save: "SAVE 17%",
-      // whopPlanId omitted — see header comment.
+      // whopPlanId omitted; see header comment.
     },
   },
 } as const;
@@ -322,7 +322,7 @@ export const SUBSCRIPTION_FEATURES = [
 ];
 
 // Inner Circle status block. The fabricated "167 / 200 ACTIVE" counter
-// was removed — anchoring on a real number under 200 (which will be 0
+// was removed. Anchoring on a real number under 200 (which will be 0
 // or very low at launch) avoids the credibility hit of being caught
 // inflating member counts. The "200-MEMBER CAP" claim is durable: it
 // matches Whop's stock setting for the IC product and the consistent
@@ -337,8 +337,8 @@ export const INNERCIRCLE_FEATURES = [
   "Private IC-only channels",
   "Edge ratings + confidence scores on every play",
   "Custom research on request",
-  "Monthly 1-on-1 mentorship call — build your own system",
+  "Monthly 1-on-1 mentorship call to build your own system",
   "Monthly mastermind with the IC cohort",
-  "A direct line to the team — you're a partner, not a number",
+  "A direct line to the team: you're a partner, not a number",
   "Personalized onboarding call when you join",
 ];

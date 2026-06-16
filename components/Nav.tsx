@@ -43,19 +43,15 @@ export function Nav() {
     <>
       <nav className={`nav ${scrolled ? "scrolled" : ""}`} aria-label="Primary">
         <div className="nav-inner">
-          <Link href="/" className="logo" aria-label="Lockr — Home">
+          <Link href="/" className="logo" aria-label="Lockr, Home">
             <span className="logo-dot" aria-hidden="true"></span>LOCKR
           </Link>
           <div className="nav-links">
             <Link href="/" className={isHome ? "active" : ""}>
               Picks
             </Link>
-            <Link href="/pricing" className={pathname === "/pricing" ? "active" : ""}>
-              Pricing
-            </Link>
-            <Link href="/about" className={pathname === "/about" ? "active" : ""}>
-              About
-            </Link>
+            <Link href={isHome ? "#how-it-works" : "/#how-it-works"}>How it works</Link>
+            <Link href={isHome ? "#pricing" : "/#pricing"}>Pricing</Link>
             <Link href={isHome ? "#faq" : "/#faq"}>FAQ</Link>
           </div>
           <div className="nav-cta">
@@ -95,7 +91,7 @@ export function Nav() {
         </div>
       </nav>
 
-      {/* Mobile slide-down menu — display:none on desktop via CSS */}
+      {/* Mobile slide-down menu: display:none on desktop via CSS */}
       <div
         id="mobile-menu"
         className={`mobile-menu ${menuOpen ? "open" : ""}`}
@@ -108,11 +104,19 @@ export function Nav() {
           <Link href="/" className="mobile-link" onClick={closeMenu}>
             Picks
           </Link>
-          <Link href="/pricing" className="mobile-link" onClick={closeMenu}>
-            Pricing
+          <Link
+            href={isHome ? "#how-it-works" : "/#how-it-works"}
+            className="mobile-link"
+            onClick={closeMenu}
+          >
+            How it works
           </Link>
-          <Link href="/about" className="mobile-link" onClick={closeMenu}>
-            About
+          <Link
+            href={isHome ? "#pricing" : "/#pricing"}
+            className="mobile-link"
+            onClick={closeMenu}
+          >
+            Pricing
           </Link>
           <Link
             href={isHome ? "#faq" : "/#faq"}

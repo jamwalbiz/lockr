@@ -28,7 +28,7 @@ export function CheckoutFlow({
   initialCadence: Cadence | undefined;
 }) {
   // If they came from the pricing card (params present), they've already
-  // picked — skip to step 2. Otherwise start at step 1 (tier picker).
+  // picked, so skip to step 2. Otherwise start at step 1 (tier picker).
   const cameInPrePicked = !!(initialTier && initialCadence);
   const [step, setStep] = useState<Step>(cameInPrePicked ? 2 : 1);
   const [tier, setTier] = useState<Tier>(initialTier ?? "subscription");
@@ -47,7 +47,7 @@ export function CheckoutFlow({
       : PRICING.innercircle[cadence as keyof typeof PRICING.innercircle];
 
   // The Whop plan ID for the current tier+cadence. IC annual is the one
-  // exception — no plan ID exists yet ($2,500 Whop cap), so we render a
+  // exception: no plan ID exists yet ($2,500 Whop cap), so we render a
   // fallback that routes folks to IC monthly + offers email arrangement.
   // Every other combo embeds inline.
   const planId = (priceEntry as { whopPlanId?: string }).whopPlanId;
@@ -64,7 +64,7 @@ export function CheckoutFlow({
     }
   }
   function back() {
-    // Back is a retreat, not a commit — intentionally silent. Going forward
+    // Back is a retreat, not a commit, so intentionally silent. Going forward
     // (next()) keeps the chime as a positive-progress signal. Going back
     // also clears the completed flag so the embed re-mounts on a new step 2.
     if (step > 1) {
@@ -76,7 +76,7 @@ export function CheckoutFlow({
   /**
    * Embed completion callback. Whop fires this on successful purchase
    * with the plan_id + receipt_id. We chime, fire analytics, and render
-   * the in-page success state — no redirect, the user stays on
+   * the in-page success state; no redirect, the user stays on
    * joinlockr.com so the brand experience is continuous.
    */
   function handleComplete(planIdReceived: string, receiptId?: string) {
@@ -92,7 +92,7 @@ export function CheckoutFlow({
 
   /**
    * Fired when the buyer types their email into the embed. Useful as a
-   * funnel-stage signal — most drop-off happens between picker and email,
+   * funnel-stage signal. Most drop-off happens between picker and email,
    * so knowing email-entered helps separate "didn't engage" from "engaged
    * but bailed on payment."
    */
@@ -138,7 +138,7 @@ export function CheckoutFlow({
       </div>
 
       <div className="checkout-card">
-        {/* Step 1 — Tier + cadence picker */}
+        {/* Step 1: Tier + cadence picker */}
         {step === 1 && (
           <>
             <h2>Pick your plan</h2>
@@ -221,7 +221,7 @@ export function CheckoutFlow({
           </>
         )}
 
-        {/* Step 2 — Embedded Whop checkout. We intentionally don't render
+        {/* Step 2: Embedded Whop checkout. We intentionally don't render
             a heading or order summary above the embed: Whop's own card shows
             product + price + cadence at the top, so an extra "Complete your
             subscription" header just pushed the email input below the fold.
@@ -252,7 +252,7 @@ export function CheckoutFlow({
                 />
               </div>
             ) : (
-              // IC annual fallback — Whop's $2,500 cap blocks the annual
+              // IC annual fallback: Whop's $2,500 cap blocks the annual
               // plan today, so we route folks to the monthly embed (same
               // application gate, same product) and offer email contact
               // for direct annual arrangement. When the cap lifts we'll
@@ -299,7 +299,7 @@ export function CheckoutFlow({
           </>
         )}
 
-        {/* Step 2 — success state (replaces the embed after onComplete fires) */}
+        {/* Step 2: success state (replaces the embed after onComplete fires) */}
         {step === 2 && completed && (
           <div style={{ textAlign: "center", padding: "32px 16px" }}>
             <h2 style={{ marginBottom: 12 }}>You&apos;re in.</h2>

@@ -34,8 +34,8 @@ export default function NotFound() {
           margin: "0 auto 32px",
         }}
       >
-        Either it never existed or it&apos;s been retired. Try one of the links below —
-        the picks haven&apos;t moved.
+        Either it never existed or it&apos;s been retired. Try one of the links below.
+        The picks haven&apos;t moved.
       </p>
       <div
         style={{
@@ -48,12 +48,12 @@ export default function NotFound() {
         <Link href="/" className="btn btn-primary btn-lg">
           Back to picks
         </Link>
-        <Link href="/pricing" className="btn btn-secondary btn-lg">
+        <Link href="/#pricing" className="btn btn-secondary btn-lg">
           See pricing
         </Link>
       </div>
 
-      {/* Popular links — quick recovery for mistyped URLs */}
+      {/* Popular links: quick recovery for mistyped URLs */}
       <div
         style={{
           marginTop: 64,
@@ -80,8 +80,8 @@ export default function NotFound() {
         <div style={{ display: "grid", gap: 4 }}>
           {[
             { href: "/", label: "Home", desc: "Daily picks + the rest" },
-            { href: "/pricing", label: "Pricing", desc: "$29/wk, $99/mo, $599/yr" },
-            { href: "/about", label: "About JT", desc: "Founder, methodology" },
+            { href: "/#pricing", label: "Pricing", desc: "$29/wk, $99/mo, $599/yr" },
+            { href: "/#methodology", label: "Methodology", desc: "How Lockr finds edges" },
             { href: "/checkout?tier=innercircle&cadence=monthly", label: "Inner Circle", desc: "Application only · 33 spots open" },
             { href: "/#faq", label: "FAQ", desc: "The questions everyone asks" },
           ].map((it) => (

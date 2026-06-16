@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og";
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
-// 180×180 Apple touch icon — LOCKR mark on dark.
+// 180×180 Apple touch icon: LOCKR mark on dark.
 // next/og (Satori) constraints: stick to text Noto Sans can render. Plain Latin only.
 export default function AppleIcon() {
   return new ImageResponse(

@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 // Global security headers applied to every response.
-// Conservative — no CSP yet (deliberate; CSP needs a dedicated security pass
+// Conservative: no CSP yet (deliberate; CSP needs a dedicated security pass
 // once 3rd-party integrations are wired so we don't whack-a-mole break things).
 const securityHeaders = [
   // Force HTTPS for 2 years, including subdomains. Preload-eligible.
@@ -11,7 +11,7 @@ const securityHeaders = [
   },
   // Stop the browser from MIME-sniffing.
   { key: "X-Content-Type-Options", value: "nosniff" },
-  // Block other sites from iframing us — clickjacking defense.
+  // Block other sites from iframing us (clickjacking defense).
   { key: "X-Frame-Options", value: "DENY" },
   // Limit referrer info leaked to other origins.
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
@@ -24,6 +24,15 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // The site is a single-page scroll now. /pricing and /about were folded into
+  // the homepage; redirect their old URLs to the matching anchors so inbound
+  // links and bookmarks keep working and the SEO consolidates onto /.
+  async redirects() {
+    return [
+      { source: "/pricing", destination: "/#pricing", permanent: true },
+      { source: "/about", destination: "/#faq", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

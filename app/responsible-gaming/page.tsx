@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
 
 export const metadata: Metadata = {
-  title: "Responsible Gaming — Lockr",
+  title: "Responsible Gaming | Lockr",
   description:
     "Resources and help lines for problem gambling. 1-800-GAMBLER. ncpgambling.org.",
 };
@@ -30,12 +30,12 @@ export default function ResponsibleGamingPage() {
         <h2>Help lines</h2>
         <ul>
           <li>
-            <strong>1-800-GAMBLER</strong> — National Council on Problem Gambling helpline
+            <strong>1-800-GAMBLER:</strong> National Council on Problem Gambling helpline
             (24/7).{" "}
             <a href="tel:1-800-426-2537">Call or text 1-800-426-2537</a>.
           </li>
           <li>
-            <strong>ncpgambling.org</strong> —{" "}
+            <strong>ncpgambling.org:</strong>{" "}
             <a
               href="https://www.ncpgambling.org/help-treatment/"
               target="_blank"
@@ -46,7 +46,7 @@ export default function ResponsibleGamingPage() {
             .
           </li>
           <li>
-            <strong>GamblersAnonymous.org</strong> —{" "}
+            <strong>GamblersAnonymous.org:</strong>{" "}
             <a
               href="https://www.gamblersanonymous.org/ga/locations"
               target="_blank"
@@ -72,7 +72,7 @@ export default function ResponsibleGamingPage() {
         <ul>
           <li>
             <strong>Set deposit limits</strong> directly with every sportsbook and
-            prediction market you use — every major platform supports this in account
+            prediction market you use. Every major platform supports this in account
             settings.
           </li>
           <li>

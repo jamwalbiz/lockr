@@ -4,28 +4,33 @@
 export const FAQ_ITEMS: Array<{ q: string; a: React.ReactNode; text: string }> = [
   {
     q: "How is the track record actually verified?",
-    a: "Every pick is posted in our private member Discord with a timestamp before the line moves and before the event starts. The Discord post timestamps are the record — once you're in, you can scroll back any time to verify exactly when a pick was made, before any outcome was known. We don't edit or delete picks. Win or lose, every play stays in the channel.",
-    text: "Every pick is posted in our private member Discord with a timestamp before the line moves and before the event starts. The Discord post timestamps are the record — once you're in, you can scroll back any time to verify exactly when a pick was made, before any outcome was known. We don't edit or delete picks. Win or lose, every play stays in the channel.",
+    a: "Every pick is posted in our private member Discord with a timestamp before the line moves and before the event starts. The Discord post timestamps are the record. Once you're in, you can scroll back any time to verify exactly when a pick was made, before any outcome was known. We don't edit or delete picks. Win or lose, every play stays in the channel.",
+    text: "Every pick is posted in our private member Discord with a timestamp before the line moves and before the event starts. The Discord post timestamps are the record. Once you're in, you can scroll back any time to verify exactly when a pick was made, before any outcome was known. We don't edit or delete picks. Win or lose, every play stays in the channel.",
+  },
+  {
+    q: "Who's behind Lockr?",
+    a: "Lockr was founded by Jairo Tovar (JT), who started betting in college and turned it into a disciplined process: modeling lines, hunting value, and arbitraging between sportsbooks and prediction markets. From day one he posted every bet in public with a timestamp, win or loss, and never deleted a single one. Today Lockr runs as a small team built on that same rule, so the public track record speaks for itself.",
+    text: "Lockr was founded by Jairo Tovar (JT), who started betting in college and turned it into a disciplined process: modeling lines, hunting value, and arbitraging between sportsbooks and prediction markets. From day one he posted every bet in public with a timestamp, win or loss, and never deleted a single one. Today Lockr runs as a small team built on that same rule, so the public track record speaks for itself.",
   },
   {
     q: "What happens after a losing week?",
-    a: "JT posts a long-form breakdown of what went wrong — line moves, injury impacts, model adjustments. This is the deal: you'll lose weeks. The job is to win across volume. The discipline content is what separates the members who compound from the ones who churn after one bad stretch.",
-    text: "JT posts a long-form breakdown of what went wrong — line moves, injury impacts, model adjustments. This is the deal: you'll lose weeks. The job is to win across volume. The discipline content is what separates the members who compound from the ones who churn after one bad stretch.",
+    a: "JT posts a long-form breakdown of what went wrong: line moves, injury impacts, model adjustments. This is the deal: you'll lose weeks. The job is to win across volume. The discipline content is what separates the members who compound from the ones who churn after one bad stretch.",
+    text: "JT posts a long-form breakdown of what went wrong: line moves, injury impacts, model adjustments. This is the deal: you'll lose weeks. The job is to win across volume. The discipline content is what separates the members who compound from the ones who churn after one bad stretch.",
   },
   {
     q: "What sports do you cover?",
-    a: "NFL, NBA, MLB, UFC, boxing, F1, soccer (Premier League + Champions League), NHL, tennis (majors), esports (CS, Valorant, LoL), and prediction markets via Kalshi and Polymarket. Year-round coverage — no summer dead zones.",
-    text: "NFL, NBA, MLB, UFC, boxing, F1, soccer (Premier League + Champions League), NHL, tennis (majors), esports (CS, Valorant, LoL), and prediction markets via Kalshi and Polymarket. Year-round coverage — no summer dead zones.",
+    a: "NFL, NBA, MLB, UFC, boxing, F1, soccer (Premier League + Champions League), NHL, tennis (majors), esports (CS, Valorant, LoL), and prediction markets via Kalshi and Polymarket. Year-round coverage. No summer dead zones.",
+    text: "NFL, NBA, MLB, UFC, boxing, F1, soccer (Premier League + Champions League), NHL, tennis (majors), esports (CS, Valorant, LoL), and prediction markets via Kalshi and Polymarket. Year-round coverage. No summer dead zones.",
   },
   {
     q: "What's the deal with prediction markets?",
-    a: "Kalshi and Polymarket let you take positions on events your sportsbook either won't price or prices badly. We show you when there's a real edge — and when those markets give you a clean hedge against a position your book takes you out of.",
-    text: "Kalshi and Polymarket let you take positions on events your sportsbook either won't price or prices badly. We show you when there's a real edge — and when those markets give you a clean hedge against a position your book takes you out of.",
+    a: "Kalshi and Polymarket let you take positions on events your sportsbook either won't price or prices badly. We show you when there's a real edge, and when those markets give you a clean hedge against a position your book takes you out of.",
+    text: "Kalshi and Polymarket let you take positions on events your sportsbook either won't price or prices badly. We show you when there's a real edge, and when those markets give you a clean hedge against a position your book takes you out of.",
   },
   {
     q: "How do I get into the Discord?",
-    a: "One-click via Whop. After payment, link your Discord account in your Whop profile, then claim access on the Discord tile. Your tier role is auto-assigned in under 30 seconds — no manual approval.",
-    text: "One-click via Whop. After payment, link your Discord account in your Whop profile, then claim access on the Discord tile. Your tier role is auto-assigned in under 30 seconds — no manual approval.",
+    a: "One-click via Whop. After payment, link your Discord account in your Whop profile, then claim access on the Discord tile. Your tier role is auto-assigned in under 30 seconds. No manual approval.",
+    text: "One-click via Whop. After payment, link your Discord account in your Whop profile, then claim access on the Discord tile. Your tier role is auto-assigned in under 30 seconds. No manual approval.",
   },
   {
     q: "What payment methods do you accept?",
@@ -42,19 +47,19 @@ export const FAQ_ITEMS: Array<{ q: string; a: React.ReactNode; text: string }> =
     a: (
       <>
         <strong>Units</strong> are how bettors measure profit and loss as a percentage of
-        bankroll, not in raw dollars. One unit usually equals 1–5% of your bankroll — so
+        bankroll, not in raw dollars. One unit usually equals 1–5% of your bankroll, so
         &ldquo;+5u&rdquo; means the same growth whether you bet $50 or $5,000 per play.{" "}
-        <strong>Edges</strong> are bets where the math is on your side — your projection
+        <strong>Edges</strong> are bets where the math is on your side: your projection
         of an outcome is meaningfully better than the price the sportsbook is offering.{" "}
         <strong>Prediction markets</strong> (Kalshi, Polymarket) are regulated
         event-contract platforms where you can take positions on outcomes your sportsbook
         either won&apos;t price or prices badly. You don&apos;t need to know any of this
-        to follow the picks — each play comes with the reasoning and recommended size
+        to follow the picks. Each play comes with the reasoning and recommended size
         spelled out. Pick up the rest from JT&apos;s weekly Q&amp;As and the bankroll
         playbook.
       </>
     ),
-    text: "Units are how bettors measure profit and loss as a percentage of bankroll, not in raw dollars. One unit usually equals 1–5% of your bankroll — so \"+5u\" means the same growth whether you bet $50 or $5,000 per play. Edges are bets where the math is on your side — your projection of an outcome is meaningfully better than the price the sportsbook is offering. Prediction markets (Kalshi, Polymarket) are regulated event-contract platforms where you can take positions on outcomes your sportsbook either won't price or prices badly. You don't need to know any of this to follow the picks — each play comes with the reasoning and recommended size spelled out. Pick up the rest from JT's weekly Q&As and the bankroll playbook.",
+    text: "Units are how bettors measure profit and loss as a percentage of bankroll, not in raw dollars. One unit usually equals 1–5% of your bankroll, so \"+5u\" means the same growth whether you bet $50 or $5,000 per play. Edges are bets where the math is on your side: your projection of an outcome is meaningfully better than the price the sportsbook is offering. Prediction markets (Kalshi, Polymarket) are regulated event-contract platforms where you can take positions on outcomes your sportsbook either won't price or prices badly. You don't need to know any of this to follow the picks. Each play comes with the reasoning and recommended size spelled out. Pick up the rest from JT's weekly Q&As and the bankroll playbook.",
   },
   {
     q: "Is this gambling advice?",

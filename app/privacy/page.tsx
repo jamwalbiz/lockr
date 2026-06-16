@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — Lockr",
+  title: "Privacy Policy | Lockr",
   description: "How Lockr collects, uses, and protects your personal information.",
 };
 
@@ -32,7 +32,7 @@ export default function PrivacyPage() {
           </li>
           <li>
             <strong>Payment info:</strong> processed by Whop. We never receive your
-            full card number — Whop returns a token and a last-four.
+            full card number. Whop returns a token and a last-four.
           </li>
           <li>
             <strong>Usage data:</strong> pages viewed, basic device info. We use{" "}
@@ -43,7 +43,7 @@ export default function PrivacyPage() {
             >
               Vercel Web Analytics
             </a>{" "}
-            (cookie-less, privacy-first — no fingerprinting, no cross-site tracking).
+            (cookie-less, privacy-first: no fingerprinting, no cross-site tracking).
           </li>
           <li>
             <strong>Communications:</strong> emails you send us, Discord messages in
@@ -65,14 +65,14 @@ export default function PrivacyPage() {
         </p>
         <ul>
           <li>
-            <strong>Whop</strong> — payment processing, subscription billing, and
+            <strong>Whop:</strong> payment processing, subscription billing, and
             Discord access provisioning
           </li>
           <li>
-            <strong>Discord</strong> — community access
+            <strong>Discord:</strong> community access
           </li>
           <li>
-            <strong>Vercel</strong> — hosting + anonymous analytics
+            <strong>Vercel:</strong> hosting + anonymous analytics
           </li>
         </ul>
         <p>

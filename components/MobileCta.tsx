@@ -15,7 +15,7 @@ const CADENCE_SUFFIX = {
 
 // Routes where the sticky "Join Lockr" bar would compete with the page's
 // own primary action. /checkout has the Whop embed submit button right
-// there — a sticky "join" bar would physically cover the submit on
+// there; a sticky "join" bar would physically cover the submit on
 // mobile and create two competing CTAs.
 const HIDE_ON = ["/checkout"];
 

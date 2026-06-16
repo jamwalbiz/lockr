@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og";
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
-// Dynamic favicon — the LOCKR brand dot (accent green) on dark bg.
+// Dynamic favicon: the LOCKR brand dot (accent green) on dark bg.
 export default function Icon() {
   return new ImageResponse(
     (

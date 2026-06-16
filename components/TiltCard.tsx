@@ -2,7 +2,7 @@
 
 import { useRef, type ReactNode } from "react";
 
-// Mouse-tilt card effect — Apple / Stripe pattern. Tracks cursor position
+// Mouse-tilt card effect, Apple / Stripe pattern. Tracks cursor position
 // over the card and tilts the element accordingly. Auto-disabled on
 // hover-incapable devices and reduced-motion preferences via CSS.
 export function TiltCard({

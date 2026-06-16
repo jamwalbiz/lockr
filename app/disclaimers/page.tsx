@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
 
 export const metadata: Metadata = {
-  title: "Disclaimers — Lockr",
+  title: "Disclaimers | Lockr",
   description:
     "Lockr is an education and entertainment service. Picks are opinions, not advice. Bet only what you can afford to lose.",
 };
@@ -30,8 +30,8 @@ export default function DisclaimersPage() {
 
         <h2>No guarantees</h2>
         <p>
-          No outcome is guaranteed. Past performance — including the trailing
-          12-month unit count, win rate, and ROI shown on this site — does not predict
+          No outcome is guaranteed. Past performance (including the trailing
+          12-month unit count, win rate, and ROI shown on this site) does not predict
           future results. Sports outcomes and prediction-market resolutions are inherently
           uncertain.
         </p>

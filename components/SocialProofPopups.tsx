@@ -12,7 +12,7 @@ type Active = {
 
 // Routes where the floating social-proof toasts would distract from the
 // page's actual task. /checkout has the Whop embed (and its submit button)
-// in the bottom-right zone — popups would physically cover it and create
+// in the bottom-right zone; popups would physically cover it and create
 // two competing "join now" signals. The persuasion job is already done
 // by the time someone reaches checkout.
 const HIDE_ON = ["/checkout"];
@@ -25,7 +25,7 @@ export function SocialProofPopups() {
   );
 
   useEffect(() => {
-    // On hidden routes, don't even schedule the loop — saves work and
+    // On hidden routes, don't even schedule the loop; saves work and
     // prevents popups from appearing during a brief render flicker.
     if (hide) return;
     // Generate a fresh pool per visit so back-to-back loads show different names.

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — Lockr",
+  title: "Terms of Service | Lockr",
   description: "Lockr Terms of Service. Education and entertainment service. Subscription, cancellation, and acceptable use.",
 };
 
@@ -46,8 +46,8 @@ export default function TermsPage() {
         <h2>3. Subscription, billing, and cancellation</h2>
         <ul>
           <li>
-            <strong>Lockr Subscription:</strong> $29 weekly, $99 monthly, or $599 annually
-            — same features at every cadence. Billing recurs automatically at the cadence
+            <strong>Lockr Subscription:</strong> $29 weekly, $99 monthly, or $599 annually.
+            Same features at every cadence. Billing recurs automatically at the cadence
             you select.
           </li>
           <li>
@@ -71,7 +71,7 @@ export default function TermsPage() {
 
         <h2>5. Intellectual property</h2>
         <p>
-          All content — picks, reasoning, video, written material — is the property of
+          All content (picks, reasoning, video, written material) is the property of
           Lockr LLC unless otherwise noted, licensed to you for personal, non-commercial
           use during your active subscription.
         </p>

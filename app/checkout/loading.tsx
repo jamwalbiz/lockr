@@ -5,7 +5,7 @@ export default function Loading() {
         <div className="checkout-progress">
           <div className="checkout-progress-meta">
             <span className="checkout-progress-label">Loading…</span>
-            <span className="checkout-progress-pct">—</span>
+            <span className="checkout-progress-pct">–</span>
           </div>
           <div className="checkout-progress-track">
             <div className="checkout-progress-fill" style={{ width: "10%" }}></div>

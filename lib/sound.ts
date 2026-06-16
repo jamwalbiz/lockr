@@ -1,5 +1,5 @@
 // Brief click/confirmation chimes synthesized via Web Audio API.
-// No audio assets — tones generated in-browser, low volume by default.
+// No audio assets; tones generated in-browser, low volume by default.
 // All effects respect prefers-reduced-motion and degrade silently if
 // the browser doesn't support Web Audio (older mobile, etc.).
 //
@@ -9,7 +9,7 @@
 //   1. Triangle wave fundamental + sine harmonic an octave up (3:1
 //      amplitude). Pure sines feel hollow; sawtooth/square feel harsh.
 //      Triangle + harmonic = the "bell" character.
-//   2. Quick upward pitch bend on attack (~3% over 12ms) — that's the
+//   2. Quick upward pitch bend on attack (~3% over 12ms). That's the
 //      "ping" feel, vs. the dry "click" of a descending sweep.
 //   3. Lowpass at ~3kHz softens any high-frequency edge.
 //   4. Exponential decay (not linear). Real bells decay exponentially.
@@ -56,7 +56,7 @@ function playBell(
 ) {
   const t = ctx.currentTime + startOffset;
 
-  // Per-note master gain envelope — exponential decay = real bell character.
+  // Per-note master gain envelope: exponential decay = real bell character.
   const env = ctx.createGain();
   env.gain.setValueAtTime(0, t);
   env.gain.linearRampToValueAtTime(volume, t + 0.005); // 5ms attack

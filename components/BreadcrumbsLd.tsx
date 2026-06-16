@@ -1,4 +1,4 @@
-// Schema-only breadcrumbs — emits BreadcrumbList JSON-LD for SEO.
+// Schema-only breadcrumbs: emits BreadcrumbList JSON-LD for SEO.
 // We don't render visual breadcrumbs on the site; the design uses the nav.
 type Crumb = { name: string; url: string };
 

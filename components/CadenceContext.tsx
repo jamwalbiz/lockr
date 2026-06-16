@@ -15,7 +15,7 @@ const CadenceContext = createContext<CadenceCtx>({
 });
 
 export function CadenceProvider({ children }: { children: ReactNode }) {
-  // Default to "monthly" — matches the default selection in PricingCards.
+  // Default to "monthly"; matches the default selection in PricingCards.
   const [subscription, setSubscription] = useState<Cadence>("monthly");
   return (
     <CadenceContext.Provider value={{ subscription, setSubscription }}>

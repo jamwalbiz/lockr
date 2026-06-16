@@ -16,7 +16,7 @@ const inter = Inter({
   display: "swap",
 });
 
-// Display face for headlines — Archivo is a technical grotesque with real
+// Display face for headlines. Archivo is a technical grotesque with real
 // character (Omnibus-Type). Wide, confident, mechanical letterforms that
 // read like a precision instrument and pair cleanly with the mono data
 // layer. Distinct from the body Inter so headlines carry their own voice.
@@ -35,12 +35,12 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lockr — Where serious bettors get serious edges",
+  title: "Lockr: Where serious bettors get serious edges",
   description:
     "Daily picks across every sport, plus prediction-market plays on Kalshi and Polymarket. Every pick posted live with a timestamp before the event starts. Cancel any time.",
   metadataBase: new URL("https://joinlockr.com"),
   openGraph: {
-    title: "Lockr — Where serious bettors get serious edges",
+    title: "Lockr: Where serious bettors get serious edges",
     description:
       "Daily picks across every sport, plus prediction markets. Public track record. Cancel any time.",
     url: "https://joinlockr.com",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lockr — Where serious bettors get serious edges",
+    title: "Lockr: Where serious bettors get serious edges",
     description: "Daily picks across every sport, plus prediction markets.",
   },
 };
@@ -118,7 +118,7 @@ export default function RootLayout({
           <MobileCta />
           <SocialProofPopups />
         </CadenceProvider>
-        {/* Cookie-less pageview analytics — no-ops on localhost. */}
+        {/* Cookie-less pageview analytics; no-ops on localhost. */}
         <Analytics />
       </body>
     </html>

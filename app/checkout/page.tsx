@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { CheckoutFlow } from "./CheckoutFlow";
 
 export const metadata: Metadata = {
-  title: "Checkout — Lockr",
+  title: "Checkout | Lockr",
   description: "Subscribe to Lockr. Card, Apple Pay, Cash App, or bank transfer via Whop. Access is automatic after payment.",
   robots: { index: false, follow: false },
 };

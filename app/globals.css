@@ -2,7 +2,7 @@
 
 /* ------------------------------------------------------------------
    Lockr design tokens
-   Ported from lockr_marketing_site.html — the spec.
+   Ported from lockr_marketing_site.html - the spec.
    ------------------------------------------------------------------ */
 @theme {
   --color-bg: #0a0a0b;
@@ -61,7 +61,7 @@ input, textarea, select { font-family: inherit; }
 .shell { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 @media (max-width: 768px) { .shell { padding: 0 20px; } }
 
-/* Page wrapper (always visible — real Next.js routes now, no JS show/hide) */
+/* Page wrapper (always visible - real Next.js routes now, no JS show/hide) */
 .page { padding-top: 102px; }
 
 /* ------------------------------------------------------------------
@@ -85,7 +85,7 @@ input, textarea, select { font-family: inherit; }
 .btn-ghost:hover { color: var(--text); }
 .btn-lg { padding: 14px 24px; font-size: 15px; }
 
-/* Hamburger button — visible only on mobile */
+/* Hamburger button - visible only on mobile */
 .nav-hamburger { display: none; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 8px; transition: background 0.15s; }
 .nav-hamburger:hover { background: var(--bg-elevated); }
 .burger { position: relative; width: 22px; height: 16px; display: inline-block; }
@@ -114,7 +114,7 @@ input, textarea, select { font-family: inherit; }
 @media (max-width: 768px) { .mobile-menu-backdrop { display: block; } }
 
 /* ------------------------------------------------------------------
-   Activity ticker (top bar) — Bloomberg-style status, "LIVE" left label
+   Activity ticker (top bar) - Bloomberg-style status, "LIVE" left label
    ------------------------------------------------------------------ */
 .activity-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 101; background: #000; border-bottom: 1px solid var(--border); font-family: var(--font-jetbrains), 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-mute); overflow: hidden; height: 30px; display: flex; align-items: center; }
 .activity-live { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; padding: 0 14px; height: 30px; background: linear-gradient(90deg, #000 60%, transparent); color: var(--accent); font-weight: 700; letter-spacing: 0.1em; font-size: 10px; z-index: 1; position: relative; }
@@ -156,9 +156,13 @@ section { padding: 100px 0; }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
 h1.hero-title { font-family: var(--font-display), var(--font-inter), sans-serif; font-size: clamp(46px, 6.4vw, 88px); font-weight: 800; letter-spacing: -0.035em; line-height: 0.95; margin-bottom: 26px; display: flex; flex-direction: column; }
-.hero-title span { display: block; }
-.hero-title-accent { color: var(--accent); position: relative; width: -moz-fit-content; width: fit-content; }
-.hero-title-accent::after { content: ''; position: absolute; left: 0; bottom: 0.04em; height: 4px; width: 100%; background: var(--accent); border-radius: 2px; transform: scaleX(0); transform-origin: left; box-shadow: 0 0 10px rgba(0,255,133,0.32); animation: underlineDraw 0.75s 0.62s cubic-bezier(.2,.8,.2,1) forwards; }
+.hero-title > span { display: block; }
+.hero-title-accent { color: var(--accent); }
+/* The underline lives on an inline inner span so it tracks the actual rendered
+   glyph width. The display:block flex item ignores the tight negative letter-
+   spacing in its intrinsic size, which made fit-content overshoot the text. */
+.hero-title-accent-mark { position: relative; display: inline; white-space: nowrap; }
+.hero-title-accent-mark::after { content: ''; position: absolute; left: 0; bottom: 0.04em; height: 4px; width: 100%; background: var(--accent); border-radius: 2px; transform: scaleX(0); transform-origin: left; box-shadow: 0 0 10px rgba(0,255,133,0.32); animation: underlineDraw 0.75s 0.62s cubic-bezier(.2,.8,.2,1) forwards; }
 
 .hero-sub { font-size: clamp(16px, 1.4vw, 18.5px); color: var(--text-mute); line-height: 1.55; max-width: 480px; margin: 0 0 30px; }
 .hero-cta-row { display: flex; gap: 12px; justify-content: flex-start; margin-bottom: 26px; flex-wrap: wrap; }
@@ -167,7 +171,7 @@ h1.hero-title { font-family: var(--font-display), var(--font-inter), sans-serif;
 .hero-trust-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s ease-in-out infinite; }
 .hero-trust-sep { color: var(--text-dim); opacity: 0.5; }
 
-/* ── Terminal panel — the memorable element ── */
+/* ── Terminal panel - the memorable element ── */
 .hero-right { min-width: 0; }
 .terminal { position: relative; background: linear-gradient(180deg, #16161a 0%, #0d0d10 100%); border: 1px solid var(--border-strong); border-radius: 16px; overflow: hidden; box-shadow: 0 30px 70px -24px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,255,133,0.05), inset 0 1px 0 rgba(255,255,255,0.05); }
 .terminal::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(0,255,133,0.6), transparent); }
@@ -177,19 +181,19 @@ h1.hero-title { font-family: var(--font-display), var(--font-inter), sans-serif;
 .terminal-live { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); }
 .terminal-live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s ease-in-out infinite; }
 
-/* Ambient market-pulse strip — decorative texture, no data claim. */
+/* Ambient market-pulse strip - decorative texture, no data claim. */
 .terminal-pulse { position: relative; height: 60px; margin: 14px 18px 4px; }
 .terminal-pulse svg { width: 100%; height: 100%; display: block; }
 .terminal-area { fill: url(#pulseGrad); opacity: 0; animation: fadeIn 0.8s 1.4s ease-out forwards; }
 .terminal-line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; opacity: 0.75; filter: drop-shadow(0 0 5px rgba(0,255,133,0.45)); stroke-dasharray: 760; stroke-dashoffset: 760; animation: drawLine 1.7s 0.45s cubic-bezier(.4,0,.2,1) forwards; }
 .terminal-pt { fill: var(--accent); opacity: 0; filter: drop-shadow(0 0 6px var(--accent)); animation: fadeIn 0.4s 2s ease-out forwards; }
 
-/* Wedge statement — the positioning, plainly. */
+/* Wedge statement - the positioning, plainly. */
 .terminal-lead { padding: 6px 18px 16px; border-bottom: 1px solid var(--border); }
 .terminal-lead-title { font-family: var(--font-display), var(--font-inter), sans-serif; font-size: 25px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); line-height: 1.05; }
 .terminal-lead-sub { margin-top: 7px; font-family: var(--font-jetbrains), monospace; font-size: 11px; letter-spacing: 0.02em; color: var(--text-mute); line-height: 1.5; }
 
-/* Today's board — illustrative format (call + market), not results. */
+/* Today's board - illustrative format (call + market), not results. */
 .terminal-feed { padding: 4px 18px 8px; }
 .terminal-row { display: grid; grid-template-columns: 52px 1fr auto; gap: 12px; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--border); font-family: var(--font-jetbrains), monospace; font-size: 12px; }
 .terminal-row:last-child { border-bottom: none; }
@@ -214,7 +218,7 @@ h1.hero-title { font-family: var(--font-display), var(--font-inter), sans-serif;
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-rv, .terminal-line, .terminal-area, .terminal-pt { opacity: 1 !important; transform: none !important; stroke-dashoffset: 0 !important; animation: none !important; }
-  .hero-title-accent::after { transform: scaleX(1); animation: none; }
+  .hero-title-accent-mark::after { transform: scaleX(1); animation: none; }
 }
 
 /* ------------------------------------------------------------------
@@ -240,7 +244,7 @@ h1.hero-title { font-family: var(--font-display), var(--font-inter), sans-serif;
 @media (max-width: 768px) { .pillars { grid-template-columns: 1fr; } }
 
 /* ------------------------------------------------------------------
-   Tracker (Receipts) — static "by the numbers" only, no live data
+   Tracker (Receipts) - static "by the numbers" only, no live data
    ------------------------------------------------------------------ */
 .tracker-card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 16px; padding: 32px; }
 .tracker-grid { display: grid; grid-template-columns: 2fr 3fr; gap: 32px; align-items: center; }
@@ -398,7 +402,7 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .qual-list li:last-child { border-bottom: none; }
 .qual-card.yes .qual-list li { color: var(--text); }
 .qual-card.yes .qual-list li::before { content: '→'; color: var(--accent); flex-shrink: 0; font-weight: 700; font-family: var(--font-jetbrains), monospace; }
-.qual-card.no .qual-list li::before { content: '—'; color: var(--text-dim); flex-shrink: 0; font-weight: 700; font-family: var(--font-jetbrains), monospace; }
+.qual-card.no .qual-list li::before { content: '×'; color: var(--text-dim); flex-shrink: 0; font-weight: 700; font-family: var(--font-jetbrains), monospace; }
 @media (max-width: 768px) { .qual-grid { grid-template-columns: 1fr; } }
 
 /* ------------------------------------------------------------------
@@ -576,7 +580,7 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .about-hero { padding: 60px 0; display: grid; grid-template-columns: 3fr 2fr; gap: 64px; align-items: center; }
 .about-img { aspect-ratio: 4/5; background: linear-gradient(135deg, #1a1a1d 0%, #0a0a0b 100%); border-radius: 16px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; padding: 24px; position: relative; overflow: hidden; }
 /* Founder-name caption sits at the BOTTOM of the card, clear of the
-   Lockr logo backdrop centered behind it — layering the name over the
+   Lockr logo backdrop centered behind it - layering the name over the
    logo (which contains the LOCKR wordmark) collided into a muddy
    "JAIRO LOCKR TOVAR" mashup. */
 .about-img::before { content: 'JAIRO TOVAR · JT'; position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); font-family: var(--font-jetbrains), monospace; font-size: 13px; color: var(--text-mute); letter-spacing: 0.22em; z-index: 2; white-space: nowrap; }
@@ -587,7 +591,7 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .about-meta-stat .label { font-size: 11px; color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
 @media (max-width: 768px) { .about-hero { grid-template-columns: 1fr; gap: 40px; } }
 
-.method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 80px; }
+.method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .method-card { padding: 32px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px; }
 .method-icon { width: 48px; height: 48px; background: rgba(0,255,133,0.06); border: 1px solid rgba(0,255,133,0.18); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--accent); margin-bottom: 20px; }
 .method-card .num { font-family: var(--font-jetbrains), monospace; font-size: 14px; color: var(--accent); margin-bottom: 12px; }
@@ -630,7 +634,7 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .checkout-summary-row.total { border-top: 1px solid var(--border); padding-top: 16px; margin-top: 8px; font-weight: 600; font-size: 16px; }
 .checkout-summary-row.total .mono { color: var(--accent); }
 
-/* Whop embedded checkout container — the SDK renders an iframe inside.
+/* Whop embedded checkout container - the SDK renders an iframe inside.
    We give it a min-height so the loading fallback has room to breathe,
    plus a rounded background so the iframe edges blend with the card.
    The iframe itself owns its theming via the SDK's themeOptions prop. */
@@ -686,7 +690,7 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 }
 
 /* ------------------------------------------------------------------
-   Plain-English glossary strip — beginner hand-holding
+   Plain-English glossary strip - beginner hand-holding
    ------------------------------------------------------------------ */
 .glossary-strip { padding: 4px 0 8px; }
 .glossary-head {
@@ -745,7 +749,7 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .skip-link { position: absolute; top: -40px; left: 8px; background: var(--accent); color: #000; padding: 8px 14px; border-radius: 6px; z-index: 1000; font-weight: 600; font-size: 13px; transition: top 0.15s; }
 .skip-link:focus { top: 8px; outline: 2px solid var(--text); outline-offset: 2px; }
 
-/* Universal :focus-visible — readable keyboard focus on every interactive */
+/* Universal :focus-visible - readable keyboard focus on every interactive */
 *:focus { outline: none; }
 button:focus-visible,
 a:focus-visible,

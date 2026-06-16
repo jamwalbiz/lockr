@@ -11,7 +11,7 @@ export function ActivityTicker() {
 
   useEffect(() => {
     // Intentional one-time mount setup. Math.random must run client-side
-    // only — otherwise server + client would generate different items and
+    // only. Otherwise server + client would generate different items and
     // hydrate-mismatch.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setItems(generateTickerItems(40));

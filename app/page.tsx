@@ -20,7 +20,7 @@ import { FAQ_ITEMS } from "@/lib/faq";
 import { FadeInObserver } from "@/components/FadeInOnView";
 import { TiltCard } from "@/components/TiltCard";
 
-// FAQPage structured data — rich-snippet eligible.
+// FAQPage structured data - rich-snippet eligible.
 const FAQ_JSONLD = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -35,12 +35,12 @@ export default function Home() {
   return (
     <>
       {/* Scroll-triggered fade-in for sections below the fold. Hero is
-          excluded — it's already in view on load and should not animate. */}
+          excluded - it's already in view on load and should not animate. */}
       <FadeInObserver />
 
-      {/* Hero — "the bettor's terminal". Asymmetric editorial split: the
+      {/* Hero - "the bettor's terminal". Asymmetric editorial split: the
           pitch on the left, a live data terminal on the right. The terminal
-          is the memorable element — it frames Lockr as a precision
+          is the memorable element - it frames Lockr as a precision
           instrument, not a Discord. */}
       <section className="hero">
         <div className="hero-grid" aria-hidden="true"></div>
@@ -61,13 +61,13 @@ export default function Home() {
                   className="hero-rv hero-title-accent"
                   style={{ animationDelay: "0.2s" }}
                 >
-                  Start winning.
+                  <span className="hero-title-accent-mark">Start winning.</span>
                 </span>
               </h1>
               <p className="hero-sub hero-rv" style={{ animationDelay: "0.3s" }}>
                 Real plays across every sport, plus prediction markets like Kalshi and
                 Polymarket. Posted before each game starts, logged win or loss. Join
-                today — bet tonight.
+                today. Bet tonight.
               </p>
               <div className="hero-cta-row hero-rv" style={{ animationDelay: "0.38s" }}>
                 <JoinCta href="/checkout" location="hero">
@@ -100,7 +100,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Ambient market-pulse line — decorative texture only. No
+                {/* Ambient market-pulse line - decorative texture only. No
                     label, no number, no audited-return claim. Signals "live
                     and active," nothing more. */}
                 <div className="terminal-pulse" aria-hidden="true">
@@ -131,7 +131,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Today's board — shows the format members get (the call +
+                {/* Today's board - shows the format members get (the call +
                     the market), not a results claim. */}
                 <div className="terminal-feed">
                   <div className="terminal-row">
@@ -151,10 +151,10 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Beginner welcome — plain language, any experience level. */}
+                {/* Beginner welcome - plain language, any experience level. */}
                 <div className="terminal-foot-line">
                   New to betting? We tell you{" "}
-                  <strong>what to bet, how much, and why</strong> — on every play.
+                  <strong>what to bet, how much, and why</strong> on every play.
                 </div>
               </div>
             </div>
@@ -162,14 +162,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* VSL — founder-to-camera intro.
+      {/* VSL - founder-to-camera intro.
           To swap in the real video without touching code: set the
           NEXT_PUBLIC_VSL_URL env var in Vercel (any standard embed URL works
-          — https://player.vimeo.com/video/XXXXXX, https://www.youtube.com/embed/XXXXXX,
+          - https://player.vimeo.com/video/XXXXXX, https://www.youtube.com/embed/XXXXXX,
           a Wistia oEmbed URL, a Mux signed URL, etc.). When the var is set
           the iframe replaces the placeholder card automatically.
           The placeholder (when no URL is configured) intentionally has no
-          fake duration/HD chip — we don't lie about a video that doesn't
+          fake duration/HD chip - we don't lie about a video that doesn't
           exist yet. */}
       <section id="intro" className="fade-in-section">
         <div className="shell">
@@ -199,7 +199,7 @@ export default function Home() {
               <div
                 className="vsl-player"
                 style={{ cursor: "default" }}
-                aria-label="Founder intro video — coming soon"
+                aria-label="Founder intro video, coming soon"
               >
                 {/* Lockr OG banner as a soft backdrop so the placeholder
                     reads as branded, not empty. Sits underneath the dimmed
@@ -212,7 +212,7 @@ export default function Home() {
                   priority
                   style={{ objectFit: "cover", opacity: 0.5 }}
                 />
-                {/* Disabled-looking play affordance — kept for visual weight
+                {/* Disabled-looking play affordance - kept for visual weight
                     so the section doesn't feel empty, but doesn't claim a
                     playable video exists. */}
                 <div
@@ -230,6 +230,68 @@ export default function Home() {
                 </div>
               </div>
             )}
+          </div>
+
+          {/* Methodology, migrated from the former /about page so the site
+              stays one continuous scroll. id="methodology" is the footer anchor. */}
+          <div id="methodology" style={{ marginTop: 56 }}>
+            <div className="section-label" style={{ marginBottom: 24 }}>
+              The 3-step method
+            </div>
+            <div className="method-grid">
+              <div className="method-card">
+                <div className="method-icon" aria-hidden="true">
+                  {/* Model: our projection diverging from the book's line */}
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M4 24l6-6 5 3 8-10 5 3" />
+                    <path d="M4 28l6-2 5 2 8-4 5 2" strokeDasharray="2 2" opacity="0.5" />
+                    <circle cx="22" cy="11" r="1.5" fill="currentColor" />
+                  </svg>
+                </div>
+                <div className="num">01 · MODEL</div>
+                <h3>Build the line yourself</h3>
+                <p>
+                  For every market we touch, we project the line ourselves before looking
+                  at the book. The gap between our line and the book is the edge.
+                </p>
+              </div>
+              <div className="method-card">
+                <div className="method-icon" aria-hidden="true">
+                  {/* Price: line moving toward our entry, +CLV */}
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M4 8l8 6 6-3 10 4" />
+                    <circle cx="4" cy="8" r="1.5" fill="currentColor" />
+                    <path d="M4 8v18M4 26h22" />
+                    <text x="14" y="22" fontSize="6" fill="currentColor" stroke="none" fontFamily="var(--font-jetbrains), monospace" fontWeight="700">+CLV</text>
+                  </svg>
+                </div>
+                <div className="num">02 · PRICE</div>
+                <h3>Beat the book to the line</h3>
+                <p>
+                  Just because a pick wins doesn&apos;t mean it was a good bet. We measure
+                  whether we got a better price than the line settled at. That is the only
+                  thing that proves a real edge over time.
+                </p>
+              </div>
+              <div className="method-card">
+                <div className="method-icon" aria-hidden="true">
+                  {/* Size: target with center dot */}
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <circle cx="16" cy="16" r="12" />
+                    <circle cx="16" cy="16" r="7" />
+                    <circle cx="16" cy="16" r="2.5" fill="currentColor" />
+                    <path d="M16 2v4M16 26v4M2 16h4M26 16h4" />
+                  </svg>
+                </div>
+                <div className="num">03 · SIZE</div>
+                <h3>Bet the right amount</h3>
+                <p>
+                  Every pick has a size recommendation, not just &quot;the play.&quot;
+                  Discipline on how much you risk per bet matters more than picking
+                  winners. We tell you both.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -252,7 +314,7 @@ export default function Home() {
               <p>
                 Every play posted live before the event starts. No screenshot edits. No
                 &quot;I told you so&quot; after the fact. Wins and losses logged in the
-                open and never deleted — anyone inside can scroll back and check.
+                open and never deleted. Anyone inside can scroll back and check.
               </p>
             </div>
             <div className="pillar">
@@ -264,7 +326,7 @@ export default function Home() {
               <h3>Prediction-market plays</h3>
               <p>
                 Lockr is one of the few that works Kalshi and Polymarket alongside the
-                sportsbooks. Bigger menu, better prices — on the markets your book either
+                sportsbooks. Bigger menu, better prices on the markets your book either
                 won&apos;t offer or prices badly.
               </p>
             </div>
@@ -278,7 +340,7 @@ export default function Home() {
               <h3>A system, not just picks</h3>
               <p>
                 We&apos;ll teach you how much to bet, when to walk away, and how to grow
-                your bankroll the smart way. New to betting or doing it for years —
+                your bankroll the smart way. New to betting or doing it for years,
                 there&apos;s a playbook here for you.
               </p>
             </div>
@@ -313,7 +375,7 @@ export default function Home() {
               <h3>Pick a tier &amp; join</h3>
               <p>
                 Checkout in 60 seconds with card, Apple Pay, Cash App, or bank
-                transfer. Link Discord in your account and claim access — your role
+                transfer. Link Discord in your account and claim access. Your role
                 assigns in under 30 seconds, no manual approval, no waiting.
               </p>
             </div>
@@ -328,7 +390,7 @@ export default function Home() {
               </div>
               <h3>Picks drop daily</h3>
               <p>
-                Our team posts 6–10 plays a day — every sport, plus prediction
+                Our team posts 6–10 plays a day across every sport, plus prediction
                 markets. Each play comes with the reasoning, the recommended bet size,
                 and the exact line we entered. You always know what to bet and why.
               </p>
@@ -362,7 +424,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Plain-English glossary — beginner hand-holding, understandable by all ages */}
+      {/* Plain-English glossary - beginner hand-holding, understandable by all ages */}
       <section className="glossary-strip fade-in-section">
         <div className="shell">
           <div className="glossary-head">New to betting? The only words you need:</div>
@@ -370,7 +432,7 @@ export default function Home() {
             <div className="glossary-item">
               <dt>Unit (u)</dt>
               <dd>
-                Your standard bet size. We say &quot;2 units&quot; — you decide if a unit
+                Your standard bet size. We say &quot;2 units&quot; and you decide if a unit
                 is $10 or $100. It keeps everyone&apos;s sizing comparable.
               </dd>
             </div>
@@ -381,15 +443,15 @@ export default function Home() {
             <div className="glossary-item">
               <dt>Over / Under</dt>
               <dd>
-                Betting whether a total — points, goals, etc. — lands above or below a
+                Betting whether a total (points, goals, etc.) lands above or below a
                 set number.
               </dd>
             </div>
             <div className="glossary-item">
               <dt>CLV</dt>
               <dd>
-                Closing line value: proof we got a better price than the line ended at —
-                the mark of a real edge, not luck.
+                Closing line value: proof we got a better price than the line ended at.
+                That is the mark of a real edge, not luck.
               </dd>
             </div>
           </dl>
@@ -502,7 +564,7 @@ export default function Home() {
               Plus prediction markets.
             </h2>
             <p className="section-sub">
-              10+ sports and two prediction-market platforms — under one subscription. No
+              10+ sports and two prediction-market platforms, under one subscription. No
               summer drought.
             </p>
           </div>
@@ -518,7 +580,7 @@ export default function Home() {
             </SportCard>
             <SportCard tag="NHL" name="Hockey" desc="Puck lines, totals, goalie props. Smart money lives in this market.">
               <CustomSportIcon>
-                {/* Hockey stick + puck — Tabler has no hockey icon */}
+                {/* Hockey stick + puck - Tabler has no hockey icon */}
                 <path d="M5 4l13 13" />
                 <path d="M17 17l3 3" />
                 <ellipse cx="7" cy="19" rx="4" ry="1.5" />
@@ -529,7 +591,7 @@ export default function Home() {
             </SportCard>
             <SportCard tag="F1" name="Formula 1" desc="Qualifying, podium, head-to-head. One of the softest markets in sports.">
               <CustomSportIcon>
-                {/* F1 race car silhouette — Tabler has no racing-specific icon.
+                {/* F1 race car silhouette - Tabler has no racing-specific icon.
                     Smaller wheels (r=2) so the body reads as the dominant element
                     instead of two circles ("binoculars" effect at small sizes).
                     Long horizontal chassis with cockpit bump, rear wing on right. */}
@@ -541,14 +603,14 @@ export default function Home() {
                 <path d="M11 11l.3-1.5h1.4l.3 1.5" />
                 {/* Rear wing pillar with top wing element */}
                 <path d="M20 14v-3h2" />
-                {/* Wheels — smaller, sit at the floor level */}
+                {/* Wheels - smaller, sit at the floor level */}
                 <circle cx="6" cy="17" r="2" />
                 <circle cx="18" cy="17" r="2" />
               </CustomSportIcon>
             </SportCard>
             <SportCard tag="NCAA" name="College Football & Hoops" desc="Saturdays, March Madness, bowl season. Where the books get it wrong most.">
               <CustomSportIcon>
-                {/* Graduation cap — Tabler has no school/graduation icon */}
+                {/* Graduation cap - Tabler has no school/graduation icon */}
                 <path d="M2 9l10-5 10 5-10 5z" />
                 <path d="M6 11v5c0 1.5 3 2.5 6 2.5s6-1 6-2.5v-5" />
                 <line x1="22" y1="9" x2="22" y2="14" />
@@ -593,7 +655,7 @@ export default function Home() {
               Real receipts.
             </h2>
             <p className="section-sub">
-              No actor photos. No fake screenshots. The members below are real — and
+              No actor photos. No fake screenshots. The members below are real, and
               they&apos;ll be in the room with you the day you join.
             </p>
           </div>
@@ -707,7 +769,7 @@ export default function Home() {
                       <span className="discord-time">A few hours ago</span>
                     </div>
                     <div className="discord-text">
-                      that Kalshi Fed hold position from yesterday — closed at 0.94 from
+                      that Kalshi Fed hold position from yesterday, closed at 0.94 from
                       our 0.88 entry. that&apos;s{" "}
                       <span className="green">+6.8% in 18 hours</span>
                     </div>
@@ -728,7 +790,7 @@ export default function Home() {
                       <span className="discord-time">Just now</span>
                     </div>
                     <div className="discord-text">
-                      posted the F1 Monaco breakdown in #long-form — explains why
+                      posted the F1 Monaco breakdown in #long-form. Explains why
                       Verstappen top-3 is still live for tomorrow even at -220
                     </div>
                     <div className="discord-reactions">
@@ -805,7 +867,7 @@ export default function Home() {
       </section>
 
       {/* Pricing */}
-      <section id="pricing-section" className="fade-in-section">
+      <section id="pricing" className="fade-in-section">
         <div className="shell">
           <div className="section-head">
             <div className="section-label">Pricing</div>
@@ -828,7 +890,7 @@ export default function Home() {
               <div className="guarantee-sub">
                 One-click cancel from your account. No &quot;are you sure&quot; friction,
                 no retention department, no email gauntlet. You keep access through the
-                end of your billing period — then you&apos;re done.
+                end of your billing period. Then you&apos;re done.
               </div>
             </div>
             <div className="guarantee-stat">No hidden fees →</div>
@@ -870,7 +932,7 @@ export default function Home() {
               <ul className="vs-list">
                 <li>Every pick posted live before the event starts</li>
                 <li>Strategy + education. No emojis. No costume jewelry</li>
-                <li>Cancel in 60 seconds — no retention call, no friction</li>
+                <li>Cancel in 60 seconds. No retention call, no friction</li>
                 <li>We post the losses too, then explain what went wrong</li>
                 <li>Real face, real name, real accountability</li>
                 <li>Picks plus a system: how much to bet, when to walk away</li>
@@ -910,14 +972,14 @@ export default function Home() {
             </div>
             <div className="qual-card no">
               <div className="qual-icon" aria-hidden="true">✕</div>
-              <div className="qual-label">— Lockr is NOT for you if</div>
+              <div className="qual-label">Lockr is NOT for you if</div>
               <div className="qual-title">
                 You want guaranteed wins or a get-rich-quick play.
               </div>
               <ul className="qual-list">
                 <li>You think &quot;picks&quot; means &quot;every bet wins&quot;</li>
                 <li>You&apos;ll cancel and chargeback after one losing week</li>
-                <li>You can&apos;t risk what you wager — bet only what you can afford to lose</li>
+                <li>You can&apos;t risk what you wager, so bet only what you can afford to lose</li>
                 <li>You want a group chat full of Lambo emojis and chants</li>
                 <li>You expect the team to think for you instead of teaching you to think</li>
               </ul>
@@ -991,9 +1053,9 @@ export default function Home() {
 }
 
 /* ------------------------------------------------------------------
-   Small inline helpers — keep them next to the page that uses them.
+   Small inline helpers - keep them next to the page that uses them.
    ------------------------------------------------------------------ */
-// Sportsbook wall mark — two modes:
+// Sportsbook wall mark - two modes:
 //   1. `src` provided → render real logo file from /public/logos/
 //   2. otherwise → brand-colored initial badge placeholder
 // Mixed mode is intentional: drop real assets in as you collect them
