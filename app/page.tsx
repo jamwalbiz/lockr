@@ -20,6 +20,15 @@ import { FAQ_ITEMS } from "@/lib/faq";
 import { FadeInObserver } from "@/components/FadeInOnView";
 import { TiltCard } from "@/components/TiltCard";
 
+// Recent-record strip in the hero board. Illustrative, not live data:
+// wins (true) bright, losses (false) dimmed. ~14/22 ≈ 60%+, ends on a win,
+// and deliberately shows losses (the transparency flex). Matches the
+// 60%+ figure in the stats tracker.
+const RECENT_RECORD = [
+  true, true, false, true, false, true, true, false, true, true, false,
+  true, false, true, true, false, true, false, true, true, false, true,
+];
+
 // FAQPage structured data - rich-snippet eligible.
 const FAQ_JSONLD = {
   "@context": "https://schema.org",
@@ -51,7 +60,7 @@ export default function Home() {
             <div className="hero-left">
               <div className="verified-badge hero-rv" style={{ animationDelay: "0.05s" }}>
                 <span className="dot"></span>
-                <span>Picks dropping daily · sports + prediction markets</span>
+                <span>Daily picks · every sport + prediction markets · posted in the open</span>
               </div>
               <h1 className="hero-title">
                 <span className="hero-rv" style={{ animationDelay: "0.12s" }}>
@@ -61,13 +70,14 @@ export default function Home() {
                   className="hero-rv hero-title-accent"
                   style={{ animationDelay: "0.2s" }}
                 >
-                  <span className="hero-title-accent-mark">Start winning.</span>
+                  <span className="hero-title-accent-mark">Start tailing.</span>
                 </span>
               </h1>
               <p className="hero-sub hero-rv" style={{ animationDelay: "0.3s" }}>
-                Real plays across every sport, plus prediction markets like Kalshi and
-                Polymarket. Posted before each game starts, logged win or loss. Join
-                today. Bet tonight.
+                JT and the Lockr team post daily plays across every sport, plus prediction
+                markets like Kalshi and Polymarket. Every pick goes up before the game
+                starts, logged win or loss. The other guys delete their losses. We never
+                do. Join today, tail tonight.
               </p>
               <div className="hero-cta-row hero-rv" style={{ animationDelay: "0.38s" }}>
                 <JoinCta href="/checkout" location="hero">
@@ -78,16 +88,16 @@ export default function Home() {
                 </a>
               </div>
               <div className="hero-trust hero-rv" style={{ animationDelay: "0.46s" }}>
+                <span>60%+ win rate, logged in public</span>
+                <span className="hero-trust-sep">·</span>
+                <span>+147u trailing 12 months</span>
+                <span className="hero-trust-sep">·</span>
                 <span className="hero-trust-rating">
                   <span className="hero-trust-star" aria-hidden="true">★</span>
                   4.9 member rating
                 </span>
                 <span className="hero-trust-sep">·</span>
-                <span>No contract</span>
-                <span className="hero-trust-sep">·</span>
-                <span>Cancel any time</span>
-                <span className="hero-trust-sep">·</span>
-                <span>Win or loss, logged</span>
+                <span>No contract. Cancel any time.</span>
               </div>
             </div>
 
@@ -95,42 +105,40 @@ export default function Home() {
               <div className="terminal">
                 <div className="terminal-head">
                   <div className="terminal-id">
-                    <span className="terminal-dot"></span>LOCKR&nbsp;·&nbsp;TODAY&apos;S&nbsp;PICKS
+                    <span className="terminal-dot"></span>LOCKR&nbsp;·&nbsp;TONIGHT&apos;S&nbsp;BOARD
                   </div>
                   <div className="terminal-live">
-                    <span className="terminal-live-dot"></span>TODAY
+                    <span className="terminal-live-dot"></span>LIVE
                   </div>
                 </div>
 
-                {/* Ambient pulse - a flat, oscillating "live" waveform, NOT a
-                    rising chart. A green up-and-to-the-right line reads as
-                    "audited returns"; this brand never claims a track record,
-                    so the line stays level (signals "live", not "performance"). */}
-                <div className="terminal-pulse" aria-hidden="true">
-                  <svg viewBox="0 0 400 70" preserveAspectRatio="none">
-                    <defs>
-                      <linearGradient id="pulseGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.12" />
-                        <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                    <path
-                      className="terminal-area"
-                      d="M0 40 L33 35 L67 41 L100 30 L120 30 L140 48 L160 30 L200 39 L233 34 L267 41 L300 36 L333 40 L367 33 L400 39 L400 70 L0 70 Z"
-                    />
-                    <path
-                      className="terminal-line"
-                      d="M0 40 L33 35 L67 41 L100 30 L120 30 L140 48 L160 30 L200 39 L233 34 L267 41 L300 36 L333 40 L367 33 L400 39"
-                    />
-                    <circle className="terminal-pt" cx="400" cy="39" r="3.5" />
-                  </svg>
+                {/* Recent record bar - a warm, concrete "here's how we've run"
+                    strip that replaces the old abstract waveform. Wins are
+                    bright green, losses are dimmed (we post those too - the
+                    transparency flex), so the strip reads ~60% by eye and
+                    matches the on-site tracker. Decorative; the real claim
+                    lives in the stats section. */}
+                <div className="terminal-record" aria-hidden="true">
+                  <div className="terminal-record-label">
+                    <span>Recent record</span>
+                    <span className="terminal-record-pct">60%+ hit · posted in public</span>
+                  </div>
+                  <div className="terminal-record-bars">
+                    {RECENT_RECORD.map((win, i) => (
+                      <span
+                        key={i}
+                        className={`rec ${win ? "win" : "loss"}`}
+                        style={{ animationDelay: `${0.5 + i * 0.028}s` }}
+                      />
+                    ))}
+                  </div>
                 </div>
 
                 {/* The wedge, stated plainly. This is the whole positioning. */}
                 <div className="terminal-lead">
-                  <div className="terminal-lead-title">Every play, in the open.</div>
+                  <div className="terminal-lead-title">Tonight&apos;s plays. Posted before tip.</div>
                   <div className="terminal-lead-sub">
-                    Posted before the event · logged win or loss · never deleted.
+                    Every pick logged win or loss. Never deleted. That&apos;s the whole flex.
                   </div>
                 </div>
 
@@ -163,8 +171,8 @@ export default function Home() {
 
                 {/* Beginner welcome - plain language, any experience level. */}
                 <div className="terminal-foot-line">
-                  New to betting? We tell you{" "}
-                  <strong>what to bet, how much, and why</strong> on every play.
+                  Never bet before? Good. Every play comes with{" "}
+                  <strong>what to bet, how much, and why</strong>, in plain English.
                 </div>
               </div>
             </div>
@@ -271,7 +279,7 @@ export default function Home() {
       {/* Pillars */}
       <section className="fade-in-section">
         <div className="shell">
-          <div className="section-head">            <h2 className="section-title">Built for bettors who actually want to win.</h2>
+          <div className="section-head">            <h2 className="section-title">Why people tail Lockr instead of the next tout.</h2>
           </div>
           <div className="pillars">
             <div className="pillar">
@@ -324,7 +332,7 @@ export default function Home() {
           <div className="section-head">
             <div className="section-label">Method</div>
             <h2 className="section-title">
-              From signup to first cashed ticket
+              From signup to tailing tonight&apos;s picks
               <br />
               in under 10 minutes.
             </h2>
@@ -344,9 +352,10 @@ export default function Home() {
               </div>
               <h3>Pick a tier &amp; join</h3>
               <p>
-                Checkout in 60 seconds with card, Apple Pay, Cash App, or bank
-                transfer. Link Discord in your account and claim access. Your role
-                assigns in under 30 seconds, no manual approval, no waiting.
+                Check out through Whop in a couple of taps with card, Apple Pay, Cash
+                App, or bank transfer. You land in the private Discord and your role
+                assigns in about 30 seconds. No call, no waiting, no betting knowledge
+                required to start.
               </p>
             </div>
             <div className="step">
@@ -360,14 +369,14 @@ export default function Home() {
               </div>
               <h3>Picks drop daily</h3>
               <p>
-                Our team posts 6–10 plays a day across every sport, plus prediction
-                markets. Each play comes with the reasoning, the recommended bet size,
-                and the exact line we entered. You always know what to bet and why.
+                The team posts every play before the game starts, in plain English, with
+                the recommended size and the reason behind it. You get a push the second
+                one drops. New? A starter guide walks you through your very first one.
               </p>
             </div>
             <div className="step">
               <div className="step-num">
-                03<span className="step-num-divider"></span>PLACE &amp; TRACK
+                03<span className="step-num-divider"></span>TAIL &amp; WIN
               </div>
               <div className="step-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -375,17 +384,17 @@ export default function Home() {
                   <polyline points="14 7 21 7 21 14" />
                 </svg>
               </div>
-              <h3>Place &amp; watch the bag grow</h3>
+              <h3>Tail it. Watch the bag grow.</h3>
               <p>
-                Tail the picks on your sportsbook, PrizePicks, Underdog, Kalshi, or
-                Polymarket. Track your P/L against the team&apos;s running unit count,
-                updated in real time.
+                Copy the play into your sportsbook or prediction market, place it, and
+                track it with us. Win or loss, it goes in the public log right next to
+                every other pick we&apos;ve ever made.
               </p>
             </div>
           </div>
           <div className="inline-cta">
             <div className="inline-cta-text">
-              3 steps. 10 minutes. Then you&apos;re tailing today&apos;s picks.
+              3 steps. 10 minutes. Then you&apos;re tailing tonight&apos;s board with us.
             </div>
             <JoinCta href="/checkout" location="step3-inline">
               Get today&apos;s picks · from $29/wk
@@ -399,9 +408,9 @@ export default function Home() {
         <div className="shell">
           <div className="section-head">
             <h2 className="section-title">
-              Real picks.
+              Real picks. Real record.
               <br />
-              Real numbers.
+              All in the open.
             </h2>
           </div>
           <div className="tracker-card">
@@ -467,13 +476,13 @@ export default function Home() {
       <section className="fade-in-section">
         <div className="shell">
           <div className="section-head">            <h2 className="section-title">
-              Year-round, every sport.
+              Every sport, all year.
               <br />
-              Plus prediction markets.
+              Plus the markets nobody else touches.
             </h2>
             <p className="section-sub">
-              10+ sports and two prediction-market platforms, under one subscription. No
-              summer drought.
+              10+ sports and markets, from the NBA slate to UFC fight night to Kalshi and
+              Polymarket. One membership covers all of it. No summer drought.
             </p>
           </div>
           <div className="sports-grid">
@@ -560,11 +569,11 @@ export default function Home() {
             <h2 className="section-title">
               Real members.
               <br />
-              Real receipts.
+              Real cashed tickets.
             </h2>
             <p className="section-sub">
-              No actor photos. No fake screenshots. The members below are real, and
-              they&apos;ll be in the room with you the day you join.
+              No actor photos. No cherry-picked screenshots. The members below are real,
+              and they&apos;ll be in the room with you the day you join.
             </p>
           </div>
 
@@ -796,9 +805,9 @@ export default function Home() {
             <div>
               <div className="guarantee-title">Cancel any time. No retention call.</div>
               <div className="guarantee-sub">
-                One-click cancel from your account. No &quot;are you sure&quot; friction,
-                no retention department, no email gauntlet. You keep access through the
-                end of your billing period. Then you&apos;re done.
+                No contract, no lock-in, no awkward save-the-sale phone call. You keep
+                access through the end of your billing period. Stay because we&apos;re
+                winning, not because you&apos;re stuck.
               </div>
             </div>
             <div className="guarantee-stat">No hidden fees →</div>
@@ -809,7 +818,7 @@ export default function Home() {
       {/* VS comparison */}
       <section className="fade-in-section">
         <div className="shell">
-          <div className="section-head">            <h2 className="section-title">Two ways to buy picks online.</h2>
+          <div className="section-head">            <h2 className="section-title">Most picks accounts delete their losses. We post ours.</h2>
             <p className="section-sub">
               You&apos;ve seen the other side. Here&apos;s the difference.
             </p>
@@ -897,7 +906,7 @@ export default function Home() {
         <div className="shell">
           <div className="section-head">
             <div className="section-label">FAQ</div>
-            <h2 className="section-title">The questions everyone asks.</h2>
+            <h2 className="section-title">The questions everyone asks before they join.</h2>
           </div>
           <Faq />
           {/* FAQPage JSON-LD for rich snippets in Google */}
@@ -921,9 +930,9 @@ export default function Home() {
                   marginBottom: 16,
                 }}
               >
-                Stop scrolling.
+                Tonight&apos;s board is posted.
                 <br />
-                Start tailing.
+                Come tail it with us.
               </h2>
               <p
                 style={{
@@ -933,8 +942,8 @@ export default function Home() {
                   margin: "0 auto 32px",
                 }}
               >
-                Link Discord in your account, claim access, and your role assigns
-                in under 30 seconds. The next pick drops soon after.
+                Join today, link your Discord, and your role assigns in about 30 seconds.
+                Every play comes with what to bet, how much, and why.
               </p>
               <JoinCta href="/checkout" location="final-cta">
                 Join Lockr · from $29/wk

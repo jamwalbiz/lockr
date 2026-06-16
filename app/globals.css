@@ -206,12 +206,18 @@ h1.hero-title { font-family: var(--font-display), var(--font-inter), sans-serif;
 .terminal-live { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); }
 .terminal-live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s ease-in-out infinite; }
 
-/* Ambient market-pulse strip - decorative texture, no data claim. */
-.terminal-pulse { position: relative; height: 60px; margin: 14px 18px 4px; }
-.terminal-pulse svg { width: 100%; height: 100%; display: block; }
-.terminal-area { fill: url(#pulseGrad); opacity: 0; animation: fadeIn 0.8s 1.4s ease-out forwards; }
-.terminal-line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; opacity: 0.75; filter: drop-shadow(0 0 5px rgba(0,255,133,0.45)); stroke-dasharray: 760; stroke-dashoffset: 760; animation: drawLine 1.7s 0.45s cubic-bezier(.4,0,.2,1) forwards; }
-.terminal-pt { fill: var(--accent); opacity: 0; filter: drop-shadow(0 0 6px var(--accent)); animation: fadeIn 0.4s 2s ease-out forwards; }
+/* Recent-record strip - warm, concrete "here's how we've run" bars that
+   replaced the old abstract waveform. Wins bright, losses dimmed (we post
+   those too). Decorative; the real claim lives in the stats section. */
+.terminal-record { padding: 15px 18px 13px; }
+.terminal-record-label { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font-jetbrains), monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; }
+.terminal-record-pct { color: var(--accent); }
+.terminal-record-bars { display: flex; gap: 4px; align-items: stretch; height: 28px; }
+.terminal-record-bars .rec { flex: 1; border-radius: 2px; transform-origin: bottom; animation: recGrow 0.55s cubic-bezier(.2,.8,.2,1) backwards; }
+.terminal-record-bars .rec.win { background: linear-gradient(180deg, rgba(0,255,133,0.9), rgba(0,255,133,0.32)); box-shadow: 0 0 7px rgba(0,255,133,0.28); }
+.terminal-record-bars .rec.loss { background: rgba(245,244,241,0.09); }
+@keyframes recGrow { from { transform: scaleY(0.12); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .terminal-record-bars .rec { animation: none; } }
 
 /* Wedge statement - the positioning, plainly. */
 .terminal-lead { padding: 6px 18px 16px; border-bottom: 1px solid var(--border); }
@@ -587,7 +593,8 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .cadence-btn.active .cadence-save { color: rgba(0,0,0,0.65); }
 .pricing-card.gold .cadence-btn.active .cadence-save { color: rgba(0,0,0,0.7); }
 
-.price-tier { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-mute); margin-bottom: 12px; font-weight: 600; }
+.price-tier { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-mute); margin-bottom: 8px; font-weight: 600; }
+.price-desc { margin: 0 0 18px; font-size: 14px; line-height: 1.5; color: var(--text-mute); min-height: 42px; }
 .price-block { animation: priceFadeIn 0.22s ease-out; }
 @keyframes priceFadeIn {
   from { opacity: 0.5; transform: translateY(3px); }

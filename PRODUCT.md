@@ -12,7 +12,9 @@ Lockr is the intelligence brand for **sports betting + prediction markets**. The
 - Language must be understandable by **all ages and expertise** — a first-time bettor and a seven-day-a-week grinder both get it.
 
 ## Brand personality
-Serious, precise, transparent, unsentimental. A precision instrument, not a hype machine. The opposite of gold-Lambo tout culture. Confident but welcoming — never condescending to beginners.
+Warm, confident, plain-spoken, transparent. The energy of a winning teammate handing you the card, not a cold quant terminal. Benefit-first and beginner-welcoming — closer to the consumer warmth of TopPicks / GOAT, but on a premium-dark canvas (never gaudy gold-Lambo tout). We make a loud, specific claim (60%+ win rate, logged in public) and back it with the open record. "Tail" is the core verb.
+
+**Voice note (2026-06):** moved deliberately away from the cold AI-quant-terminal read (edgeterminal/buzr lane) toward warm consumer picks-brand voice. Transparency stays the wedge, but it's now framed as a flex ("the other guys delete their losses; we never do"), not a clinical disclosure. Win-rate figure is held at 60%+ to stay consistent with the on-site tracker.
 
 ## The wedge (core differentiator)
 **Transparency.** Most touts (e.g. TopPick/Umar's model) delete the group daily so the losing record vanishes. Lockr logs every play in public — win or loss, timestamped before the event, never deleted. Plus prediction markets, which most picks services don't touch.
@@ -27,7 +29,7 @@ Jairo Tovar ("JT") is the founder and credibility anchor (About page). The **bra
 
 ## Strategic design principles
 1. **Transparency made visual** — receipts, timestamps, "logged in public" are the hero, not flexed winnings.
-2. **Premium-technical, not hype** — dark, terminal-adjacent, mono data, restrained neon-green accent.
+2. **Premium-dark, warm-confident — not cold-quant** — keep the dark canvas, mono data, restrained neon-green accent, but the voice is human, benefit-first, and welcoming. Premium look, consumer warmth.
 3. **Welcoming precision** — sophisticated look, plain language. No jargon walls.
 4. **Same-day value** — "join today, bet tonight" is a real hook; surface it.
 5. **Elastic IA** — leave room for free content, blog, courses, tools; don't hard-code "Discord = the product."

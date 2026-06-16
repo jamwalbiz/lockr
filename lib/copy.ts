@@ -310,15 +310,15 @@ export const PRICING = {
 } as const;
 
 export const SUBSCRIPTION_FEATURES = [
-  "Daily picks across every sport + prediction markets",
-  "Plain-English reasoning + recommended size on every play",
-  "New to betting? A starter guide walks you through your first one",
-  "Members-only community",
-  "Live weekly Q&A with the team",
-  "Bankroll & sizing playbook",
-  "Q&A recordings pinned for replay",
-  "Push notifications when picks drop",
-  "Free promo codes for every recommended platform",
+  "Daily picks across every sport, plus prediction markets like Kalshi and Polymarket",
+  "Plain-English reasoning and a recommended size on every single play",
+  "New to betting? A starter guide walks you through placing your first one",
+  "Every pick posted before the event and logged win or loss, never deleted",
+  "Members-only Discord to tail and talk through the board",
+  "Live weekly Q&A with the team, recordings pinned for replay",
+  "The bankroll and sizing playbook that keeps you winning after you cancel",
+  "Push notifications the second a pick drops",
+  "Free promo codes for every platform we recommend",
 ];
 
 // Inner Circle status block. The fabricated "167 / 200 ACTIVE" counter
@@ -334,11 +334,11 @@ export const IC_STATUS = {
 
 export const INNERCIRCLE_FEATURES = [
   "Everything in the Lockr Subscription",
-  "Private IC-only channels",
-  "Edge ratings + confidence scores on every play",
-  "Custom research on request",
-  "Monthly 1-on-1 mentorship call to build your own system",
-  "Monthly mastermind with the IC cohort",
+  "Private IC-only channels with our strongest, highest-conviction plays",
+  "Edge ratings and confidence scores on every play, so you size with conviction",
+  "Custom research on request, run for your specific questions",
+  "A monthly 1-on-1 mentorship call to build your own winning system",
+  "A monthly mastermind with the rest of the IC cohort",
   "A direct line to the team: you're a partner, not a number",
-  "Personalized onboarding call when you join",
+  "A personalized onboarding call the day you join",
 ];
