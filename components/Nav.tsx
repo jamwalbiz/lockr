@@ -50,14 +50,19 @@ export function Nav() {
             <Link href="/" className={isHome ? "active" : ""}>
               Picks
             </Link>
-            <Link href={isHome ? "#how-it-works" : "/#how-it-works"}>How it works</Link>
+            <Link href={isHome ? "#method" : "/#method"}>Method</Link>
             <Link href={isHome ? "#pricing" : "/#pricing"}>Pricing</Link>
             <Link href={isHome ? "#faq" : "/#faq"}>FAQ</Link>
           </div>
           <div className="nav-cta">
-            <button className="btn btn-ghost nav-login" type="button">
+            <a
+              href="https://whop.com/orders"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-ghost nav-login"
+            >
               Log in
-            </button>
+            </a>
             <Link
               href="/checkout"
               className="btn btn-primary nav-join"
@@ -105,11 +110,11 @@ export function Nav() {
             Picks
           </Link>
           <Link
-            href={isHome ? "#how-it-works" : "/#how-it-works"}
+            href={isHome ? "#method" : "/#method"}
             className="mobile-link"
             onClick={closeMenu}
           >
-            How it works
+            Method
           </Link>
           <Link
             href={isHome ? "#pricing" : "/#pricing"}
@@ -133,14 +138,16 @@ export function Nav() {
             Apply for Inner Circle
           </Link>
           <div className="mobile-menu-cta">
-            <button
-              type="button"
+            <a
+              href="https://whop.com/orders"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn btn-secondary btn-lg"
               style={{ width: "100%", justifyContent: "center" }}
               onClick={closeMenu}
             >
               Log in
-            </button>
+            </a>
             <Link
               href="/checkout"
               className="btn btn-primary btn-lg"

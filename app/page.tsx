@@ -205,7 +205,9 @@ export default function Home() {
           exist yet. */}
       <section id="intro" className="fade-in-section">
         <div className="shell">
-          <div className="section-head">            <h2 className="section-title">How Lockr finds edges your book is missing.</h2>
+          <div className="section-head">
+            <div className="section-label">Watch the breakdown</div>
+            <h2 className="section-title">How Lockr finds edges your book is missing.</h2>
           </div>
           <div className="vsl-wrap">
             {process.env.NEXT_PUBLIC_VSL_URL ? (
@@ -267,7 +269,9 @@ export default function Home() {
       {/* Pillars */}
       <section className="fade-in-section">
         <div className="shell">
-          <div className="section-head">            <h2 className="section-title">Built for bettors who actually want to win.</h2>
+          <div className="section-head">
+            <div className="section-label">Why Lockr</div>
+            <h2 className="section-title">Built for bettors who actually want to win.</h2>
           </div>
           <div className="pillars">
             <div className="pillar">
@@ -315,10 +319,10 @@ export default function Home() {
       </section>
 
       {/* 3-Step Process */}
-      <section id="how-it-works" className="fade-in-section">
+      <section id="method" className="fade-in-section">
         <div className="shell">
           <div className="section-head">
-            <div className="section-label">How it works</div>
+            <div className="section-label">Method</div>
             <h2 className="section-title">
               From signup to first cashed ticket
               <br />
@@ -393,7 +397,9 @@ export default function Home() {
       {/* By the numbers (static, no live tracker per handoff decision) */}
       <section className="fade-in-section">
         <div className="shell">
-          <div className="section-head">            <h2 className="section-title">
+          <div className="section-head">
+            <div className="section-label">Receipts</div>
+            <h2 className="section-title">
               Real picks.
               <br />
               Real numbers.
@@ -461,7 +467,9 @@ export default function Home() {
       {/* Sports coverage grid */}
       <section className="fade-in-section">
         <div className="shell">
-          <div className="section-head">            <h2 className="section-title">
+          <div className="section-head">
+            <div className="section-label">Coverage</div>
+            <h2 className="section-title">
               Year-round, every sport.
               <br />
               Plus prediction markets.
@@ -804,7 +812,9 @@ export default function Home() {
       {/* VS comparison */}
       <section className="fade-in-section">
         <div className="shell">
-          <div className="section-head">            <h2 className="section-title">Two ways to buy picks online.</h2>
+          <div className="section-head">
+            <div className="section-label">Still skeptical?</div>
+            <h2 className="section-title">Two ways to buy picks online.</h2>
             <p className="section-sub">
               You&apos;ve seen the other side. Here&apos;s the difference.
             </p>
@@ -848,7 +858,9 @@ export default function Home() {
       {/* Disqualifier */}
       <section className="fade-in-section">
         <div className="shell">
-          <div className="section-head">            <h2 className="section-title">Is Lockr actually for you?</h2>
+          <div className="section-head">
+            <div className="section-label">Be honest</div>
+            <h2 className="section-title">Is Lockr actually for you?</h2>
             <p className="section-sub">
               We&apos;d rather not have your money than have you cancel angry in 3 weeks.
               Read this before you join.

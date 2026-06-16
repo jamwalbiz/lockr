@@ -16,7 +16,7 @@ export function Footer() {
           <div className="footer-col">
             <h3>Product</h3>
             <Link href="/">Picks</Link>
-            <Link href="/#how-it-works">How it works</Link>
+            <Link href="/#method">Method</Link>
             <Link href="/#pricing">Pricing</Link>
             <Link href="/checkout">Join Lockr</Link>
           </div>

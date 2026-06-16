@@ -81,7 +81,7 @@ export default function NotFound() {
           {[
             { href: "/", label: "Home", desc: "Daily picks + the rest" },
             { href: "/#pricing", label: "Pricing", desc: "$29/wk, $99/mo, $599/yr" },
-            { href: "/#how-it-works", label: "How it works", desc: "From signup to first cashed bet" },
+            { href: "/#method", label: "Method", desc: "From signup to first cashed bet" },
             { href: "/checkout?tier=innercircle&cadence=monthly", label: "Inner Circle", desc: "Application only · 33 spots open" },
             { href: "/#faq", label: "FAQ", desc: "The questions everyone asks" },
           ].map((it) => (
