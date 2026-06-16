@@ -199,50 +199,50 @@ section { padding: 100px 0; }
   background-repeat: no-repeat;
 }
 .hero-lightning::before {
-  background-image: linear-gradient(90deg, transparent 0%, rgba(0,255,133,0) 34%, rgba(0,255,133,0.16) 45%, rgba(0,255,133,0.50) 50%, rgba(0,255,133,0.16) 55%, rgba(0,255,133,0) 66%, transparent 100%);
-  background-size: 46% 2.2px;
+  background-image: linear-gradient(90deg, transparent 0%, rgba(0,255,133,0) 34%, rgba(0,255,133,0.20) 45%, rgba(0,255,133,0.62) 50%, rgba(0,255,133,0.20) 55%, rgba(0,255,133,0) 66%, transparent 100%);
+  background-size: 46% 2.6px;
   background-position: 64% 30%;
   filter: blur(2.5px);
   transform: rotate(-22deg) translate3d(-14%, 0, 0);
-  animation: beam-sweep-1 13s cubic-bezier(0.16, 0.84, 0.3, 1) infinite;
+  animation: beam-sweep-1 9s cubic-bezier(0.16, 0.84, 0.3, 1) infinite;
 }
 .hero-lightning::after {
-  background-image: linear-gradient(90deg, transparent 0%, rgba(0,255,133,0) 36%, rgba(0,255,133,0.12) 46%, rgba(0,255,133,0.38) 50%, rgba(0,255,133,0.12) 54%, rgba(0,255,133,0) 64%, transparent 100%);
-  background-size: 40% 1.6px;
+  background-image: linear-gradient(90deg, transparent 0%, rgba(0,255,133,0) 36%, rgba(0,255,133,0.15) 46%, rgba(0,255,133,0.48) 50%, rgba(0,255,133,0.15) 54%, rgba(0,255,133,0) 64%, transparent 100%);
+  background-size: 40% 1.9px;
   background-position: 60% 46%;
   filter: blur(1.8px);
   transform: rotate(-22deg) translate3d(-14%, 0, 0);
-  animation: beam-sweep-2 17s cubic-bezier(0.16, 0.84, 0.3, 1) infinite;
-  animation-delay: 5.5s;
+  animation: beam-sweep-2 12s cubic-bezier(0.16, 0.84, 0.3, 1) infinite;
+  animation-delay: 3.5s;
 }
 .hero-lightning > .beam {
-  background-image: linear-gradient(90deg, transparent 0%, rgba(0,255,133,0) 38%, rgba(0,255,133,0.09) 47%, rgba(0,255,133,0.28) 50%, rgba(0,255,133,0.09) 53%, rgba(0,255,133,0) 62%, transparent 100%);
-  background-size: 34% 3px;
+  background-image: linear-gradient(90deg, transparent 0%, rgba(0,255,133,0) 38%, rgba(0,255,133,0.11) 47%, rgba(0,255,133,0.36) 50%, rgba(0,255,133,0.11) 53%, rgba(0,255,133,0) 62%, transparent 100%);
+  background-size: 34% 3.4px;
   background-position: 70% 16%;
   filter: blur(4px);
   transform: rotate(-22deg) translate3d(-10%, 0, 0);
-  animation: beam-sweep-3 23s cubic-bezier(0.16, 0.84, 0.3, 1) infinite;
-  animation-delay: 11s;
+  animation: beam-sweep-3 16s cubic-bezier(0.16, 0.84, 0.3, 1) infinite;
+  animation-delay: 7s;
 }
 @keyframes beam-sweep-1 {
   0%   { opacity: 0;    transform: rotate(-22deg) translate3d(-16%, 0, 0); }
-  10%  { opacity: 0.95; transform: rotate(-22deg) translate3d(-4%,  0, 0); }
-  26%  { opacity: 0.7;  transform: rotate(-22deg) translate3d(6%,   0, 0); }
-  40%  { opacity: 0;    transform: rotate(-22deg) translate3d(16%,  0, 0); }
+  10%  { opacity: 1;    transform: rotate(-22deg) translate3d(-4%,  0, 0); }
+  28%  { opacity: 0.8;  transform: rotate(-22deg) translate3d(6%,   0, 0); }
+  44%  { opacity: 0;    transform: rotate(-22deg) translate3d(16%,  0, 0); }
   100% { opacity: 0;    transform: rotate(-22deg) translate3d(16%,  0, 0); }
 }
 @keyframes beam-sweep-2 {
   0%   { opacity: 0;    transform: rotate(-22deg) translate3d(-14%, 0, 0); }
-  9%   { opacity: 0.8;  transform: rotate(-22deg) translate3d(-3%,  0, 0); }
-  24%  { opacity: 0.55; transform: rotate(-22deg) translate3d(7%,   0, 0); }
-  38%  { opacity: 0;    transform: rotate(-22deg) translate3d(15%,  0, 0); }
+  9%   { opacity: 0.9;  transform: rotate(-22deg) translate3d(-3%,  0, 0); }
+  26%  { opacity: 0.62; transform: rotate(-22deg) translate3d(7%,   0, 0); }
+  42%  { opacity: 0;    transform: rotate(-22deg) translate3d(15%,  0, 0); }
   100% { opacity: 0;    transform: rotate(-22deg) translate3d(15%,  0, 0); }
 }
 @keyframes beam-sweep-3 {
   0%   { opacity: 0;    transform: rotate(-22deg) translate3d(-12%, 0, 0); }
-  12%  { opacity: 0.6;  transform: rotate(-22deg) translate3d(-2%,  0, 0); }
-  30%  { opacity: 0.4;  transform: rotate(-22deg) translate3d(8%,   0, 0); }
-  46%  { opacity: 0;    transform: rotate(-22deg) translate3d(16%,  0, 0); }
+  12%  { opacity: 0.72; transform: rotate(-22deg) translate3d(-2%,  0, 0); }
+  32%  { opacity: 0.5;  transform: rotate(-22deg) translate3d(8%,   0, 0); }
+  48%  { opacity: 0;    transform: rotate(-22deg) translate3d(16%,  0, 0); }
   100% { opacity: 0;    transform: rotate(-22deg) translate3d(16%,  0, 0); }
 }
 @media (max-width: 880px) {
