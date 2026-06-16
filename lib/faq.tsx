@@ -51,20 +51,45 @@ export const FAQ_ITEMS: Array<{ q: string; a: React.ReactNode; text: string }> =
     q: "New to betting? What do the key terms mean?",
     a: (
       <>
-        <strong>Units</strong> are how bettors measure profit and loss as a percentage of
-        bankroll, not in raw dollars. One unit usually equals 1–5% of your bankroll, so
-        &ldquo;+5u&rdquo; means the same growth whether you bet $50 or $5,000 per play. To{" "}
-        <strong>tail</strong> a pick just means to copy it on your own app.{" "}
-        <strong>Edges</strong> are bets where the math is on your side: your projection
-        of an outcome is meaningfully better than the price the sportsbook is offering,
-        and <strong>CLV</strong> (closing line value) is the proof we got a better price
-        than the line&apos;s closing number, which is what separates a real edge from luck.{" "}
-        <strong>Prediction markets</strong> (Kalshi, Polymarket) are regulated
-        event-contract platforms where you can take positions on outcomes your sportsbook
-        either won&apos;t price or prices badly. You don&apos;t need to know any of this
-        to follow the picks. Each play comes with the reasoning and recommended size
-        spelled out. Pick up the rest from JT&apos;s weekly Q&amp;As and the bankroll
-        playbook.
+        <dl className="faq-terms">
+          <div>
+            <dt>Unit (u)</dt>
+            <dd>
+              Your standard bet size, measured as a % of bankroll rather than raw
+              dollars. One unit is usually 1–5% of your bankroll, so &ldquo;+5u&rdquo;
+              means the same growth whether you bet $50 or $5,000.
+            </dd>
+          </div>
+          <div>
+            <dt>Tail</dt>
+            <dd>To copy a pick we post: see the play, place the same bet on your app.</dd>
+          </div>
+          <div>
+            <dt>Edge</dt>
+            <dd>
+              A bet where the math is on your side: our projection of the outcome is
+              meaningfully better than the price the book is offering.
+            </dd>
+          </div>
+          <div>
+            <dt>CLV</dt>
+            <dd>
+              Closing line value: proof we got in at a better number than where the line
+              closed. The mark of a real edge over luck.
+            </dd>
+          </div>
+          <div>
+            <dt>Prediction markets</dt>
+            <dd>
+              Regulated event-contract platforms (Kalshi, Polymarket) for positions your
+              sportsbook won&apos;t price or prices badly.
+            </dd>
+          </div>
+        </dl>
+        <p className="faq-terms-foot">
+          You don&apos;t need to know any of this to follow the picks. Every play comes
+          with the reasoning and recommended size spelled out.
+        </p>
       </>
     ),
     text: "Units are how bettors measure profit and loss as a percentage of bankroll, not in raw dollars. One unit usually equals 1–5% of your bankroll, so \"+5u\" means the same growth whether you bet $50 or $5,000 per play. To tail a pick just means to copy it on your own app. Edges are bets where the math is on your side: your projection of an outcome is meaningfully better than the price the sportsbook is offering, and CLV (closing line value) is the proof we got a better price than the line's closing number, which is what separates a real edge from luck. Prediction markets (Kalshi, Polymarket) are regulated event-contract platforms where you can take positions on outcomes your sportsbook either won't price or prices badly. You don't need to know any of this to follow the picks. Each play comes with the reasoning and recommended size spelled out. Pick up the rest from JT's weekly Q&As and the bankroll playbook.",

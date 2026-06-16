@@ -395,10 +395,9 @@ export default function Home() {
       </section>
 
       {/* By the numbers (static, no live tracker per handoff decision) */}
-      <section id="results" className="fade-in-section">
+      <section className="fade-in-section">
         <div className="shell">
           <div className="section-head">
-            <div className="section-label">Results</div>
             <h2 className="section-title">
               Real picks.
               <br />
@@ -553,10 +552,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials + bet slips + Discord embeds */}
-      <section className="fade-in-section">
+      {/* Testimonials + bet slips + Discord embeds (the "Results" nav target) */}
+      <section id="results" className="fade-in-section">
         <div className="shell">
-          <div className="section-head">            <h2 className="section-title">
+          <div className="section-head">
+            <div className="section-label">Results</div>
+            <h2 className="section-title">
               Real members.
               <br />
               Real receipts.

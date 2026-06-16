@@ -73,8 +73,13 @@ input, textarea, select { font-family: inherit; }
 .logo { font-weight: 700; letter-spacing: -0.02em; font-size: 22px; display: flex; align-items: center; gap: 8px; }
 .logo-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 1px; }
 .nav-links { display: flex; gap: 28px; }
-.nav-links a { font-size: 14px; color: var(--text-mute); font-weight: 500; transition: color 0.15s; padding-block: 11px; margin-block: -11px; }
+.nav-links a { position: relative; font-size: 14px; color: var(--text-mute); font-weight: 500; transition: color 0.15s; padding-block: 11px; margin-block: -11px; }
 .nav-links a:hover, .nav-links a.active { color: var(--text); }
+/* Green underline that expands from the left on hover / active (the Cyber-Serif
+   link-hover element, recolored from emerald to Lockr's accent). */
+.nav-links a::after { content: ''; position: absolute; left: 0; right: 0; bottom: 7px; height: 1.5px; background: var(--accent); border-radius: 2px; transform: scaleX(0); transform-origin: left; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+.nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) { .nav-links a::after { transition: none; } }
 .nav-cta { display: flex; align-items: center; gap: 10px; }
 .btn { padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
 .btn-primary { background: var(--accent); color: #000; position: relative; overflow: hidden; }
@@ -449,6 +454,12 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .slips-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 1100px; margin: 0 auto; }
 .slip { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px; padding: 18px 18px 14px; position: relative; overflow: hidden; }
 .slip:hover { border-color: var(--border-strong); }
+/* Green spotlight glow tracking the cursor across the receipt card (the
+   Cyber-Serif / satellite-card "spotlight cursor tracking" element, recolored
+   to Lockr's accent). --mx/--my come from TiltCard; clipped by overflow:hidden. */
+.slip::after { content: ''; position: absolute; inset: 0; background: radial-gradient(200px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 255, 133, 0.12), transparent 60%); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+.slip:hover::after { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .slip::after { transition: none; } }
 .slip::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--book-accent, var(--accent)); }
 .slip.prizepicks { --book-accent: #6f4ff2; }
 .slip.underdog { --book-accent: #ff3f3f; }
@@ -522,7 +533,7 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 /* ------------------------------------------------------------------
    Guarantee strip
    ------------------------------------------------------------------ */
-.guarantee { max-width: 1000px; margin: 48px auto 0; padding: 28px 32px; background: var(--bg-elevated); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 12px; display: grid; grid-template-columns: 48px 1fr auto; gap: 20px; align-items: center; }
+.guarantee { max-width: 1100px; margin: 48px auto 0; padding: 28px 32px; background: var(--bg-elevated); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 12px; display: grid; grid-template-columns: 48px 1fr auto; gap: 20px; align-items: center; }
 .guarantee-icon { width: 48px; height: 48px; background: rgba(0,255,133,0.08); border: 1px solid rgba(0,255,133,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--accent); }
 .guarantee-title { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 4px; }
 .guarantee-sub { font-size: 13px; color: var(--text-mute); line-height: 1.5; }
@@ -538,7 +549,7 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .pricing-card:hover { border-color: var(--border-strong); }
 .pricing-card.featured { border-color: var(--accent); background: linear-gradient(180deg, rgba(0,255,133,0.04) 0%, var(--bg-elevated) 50%); }
 .pricing-card.gold { border-color: rgba(201,167,106,0.5); background: linear-gradient(180deg, rgba(201,167,106,0.05) 0%, var(--bg-elevated) 50%); }
-.pricing-card.gold::before { content: 'APPLICATION ONLY'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--bg); color: var(--gold); border: 1px solid rgba(201,167,106,0.5); font-size: 10px; font-weight: 700; padding: 3px 12px; border-radius: 100px; letter-spacing: 0.08em; }
+.pricing-card.gold::before { content: 'APPLICATION ONLY'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--bg); color: var(--gold); border: 1px solid rgba(201,167,106,0.5); font-size: 10px; font-weight: 700; padding: 3px 12px; border-radius: 100px; letter-spacing: 0.08em; z-index: 2; }
 .pricing-card.gold .price-tier { color: var(--gold); }
 .pricing-card.gold .price-amount { color: var(--gold); }
 /* Slow gold "light beam" traveling around the Inner Circle card border to pull
@@ -609,9 +620,16 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .faq-q-icon { width: 24px; height: 24px; border: 1px solid var(--border-strong); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; font-size: 16px; }
 .faq-item.open .faq-q-icon { background: var(--accent); color: #000; border-color: var(--accent); transform: rotate(45deg); }
 .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-mute); font-size: 15px; line-height: 1.7; }
-.faq-item.open .faq-a { max-height: 600px; padding: 0 0 24px; }
+.faq-item.open .faq-a { max-height: 780px; padding: 0 0 24px; }
 .faq-a strong { color: var(--text); font-weight: 600; }
 .faq-a a { color: var(--accent); }
+/* Scannable term/definition layout for the "key terms" answer. */
+.faq-terms { display: grid; gap: 13px; margin: 0 0 14px; }
+.faq-terms > div { display: grid; grid-template-columns: 132px 1fr; gap: 16px; align-items: start; }
+.faq-terms dt { color: var(--text); font-weight: 600; font-family: var(--font-jetbrains), monospace; font-size: 13px; padding-top: 1px; }
+.faq-terms dd { margin: 0; }
+.faq-terms-foot { margin: 0; }
+@media (max-width: 560px) { .faq-terms > div { grid-template-columns: 1fr; gap: 3px; } }
 
 /* ------------------------------------------------------------------
    Final CTA
