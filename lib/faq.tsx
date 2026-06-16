@@ -13,6 +13,11 @@ export const FAQ_ITEMS: Array<{ q: string; a: React.ReactNode; text: string }> =
     text: "Lockr was founded by Jairo Tovar (JT), who started betting in college and turned it into a disciplined process: modeling lines, hunting value, and arbitraging between sportsbooks and prediction markets. From day one he posted every bet in public with a timestamp, win or loss, and never deleted a single one. Today Lockr runs as a small team built on that same rule, so the public track record speaks for itself.",
   },
   {
+    q: "How does Lockr actually find its edges?",
+    a: "Three steps on every market we touch. First we model the line ourselves before looking at the book, so the gap between our number and theirs is the edge. Then we price it: a pick only counts if we got in at a better number than where the line closed, which is what proves a real edge over luck. Finally we size it, telling you how many units to risk, because discipline on how much you bet matters more than picking winners. Model, price, size, on every play.",
+    text: "Three steps on every market we touch. First we model the line ourselves before looking at the book, so the gap between our number and theirs is the edge. Then we price it: a pick only counts if we got in at a better number than where the line closed, which is what proves a real edge over luck. Finally we size it, telling you how many units to risk, because discipline on how much you bet matters more than picking winners. Model, price, size, on every play.",
+  },
+  {
     q: "What happens after a losing week?",
     a: "JT posts a long-form breakdown of what went wrong: line moves, injury impacts, model adjustments. This is the deal: you'll lose weeks. The job is to win across volume. The discipline content is what separates the members who compound from the ones who churn after one bad stretch.",
     text: "JT posts a long-form breakdown of what went wrong: line moves, injury impacts, model adjustments. This is the deal: you'll lose weeks. The job is to win across volume. The discipline content is what separates the members who compound from the ones who churn after one bad stretch.",

@@ -162,6 +162,32 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Platform compatibility wall - placed high, right under the hero, as an
+          early familiarity/trust signal: "this works with the apps you already use". */}
+      <section className="fade-in-section">
+        <div className="shell">
+          <div className="books-label">
+            Works with every platform you already bet on
+          </div>
+          <div className="books-wall">
+            {/* All logos uniformly sourced from iTunes App Store icon CDN
+                (512x512 .jpg) for visual consistency on the wall. */}
+            <SportsbookMark name="PrizePicks" color="#6F4FF2" initials="PP" src="/logos/prizepicks.jpg" />
+            <SportsbookMark name="Underdog" color="#E03A3E" initials="UD" src="/logos/underdog.jpg" />
+            <SportsbookMark name="Sleeper" color="#15A4D5" initials="S" src="/logos/sleeper.jpg" />
+            <SportsbookMark name="Dabble" color="#1FBC74" initials="D" src="/logos/dabble.jpg" />
+            <SportsbookMark name="DraftKings" color="#1B9D62" initials="DK" src="/logos/draftkings.jpg" />
+            <SportsbookMark name="FanDuel" color="#0094E3" initials="FD" src="/logos/fanduel.jpg" />
+            <SportsbookMark name="Kalshi" color="#00C2A8" initials="K" src="/logos/kalshi.jpg" />
+            <SportsbookMark name="Polymarket" color="#1A66F0" initials="P" src="/logos/polymarket.jpg" />
+          </div>
+          <div className="books-note">
+            Free promo codes &amp; sign-up bonuses for every platform above are included
+            with every paid tier.
+          </div>
+        </div>
+      </section>
+
       {/* VSL - founder-to-camera intro.
           To swap in the real video without touching code: set the
           NEXT_PUBLIC_VSL_URL env var in Vercel (any standard embed URL works
@@ -230,68 +256,6 @@ export default function Home() {
                 </div>
               </div>
             )}
-          </div>
-
-          {/* Methodology, migrated from the former /about page so the site
-              stays one continuous scroll. id="methodology" is the footer anchor. */}
-          <div id="methodology" style={{ marginTop: 56 }}>
-            <div className="section-label" style={{ marginBottom: 24 }}>
-              The 3-step method
-            </div>
-            <div className="method-grid">
-              <div className="method-card">
-                <div className="method-icon" aria-hidden="true">
-                  {/* Model: our projection diverging from the book's line */}
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M4 24l6-6 5 3 8-10 5 3" />
-                    <path d="M4 28l6-2 5 2 8-4 5 2" strokeDasharray="2 2" opacity="0.5" />
-                    <circle cx="22" cy="11" r="1.5" fill="currentColor" />
-                  </svg>
-                </div>
-                <div className="num">01 · MODEL</div>
-                <h3>Build the line yourself</h3>
-                <p>
-                  For every market we touch, we project the line ourselves before looking
-                  at the book. The gap between our line and the book is the edge.
-                </p>
-              </div>
-              <div className="method-card">
-                <div className="method-icon" aria-hidden="true">
-                  {/* Price: line moving toward our entry, +CLV */}
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M4 8l8 6 6-3 10 4" />
-                    <circle cx="4" cy="8" r="1.5" fill="currentColor" />
-                    <path d="M4 8v18M4 26h22" />
-                    <text x="14" y="22" fontSize="6" fill="currentColor" stroke="none" fontFamily="var(--font-jetbrains), monospace" fontWeight="700">+CLV</text>
-                  </svg>
-                </div>
-                <div className="num">02 · PRICE</div>
-                <h3>Beat the book to the line</h3>
-                <p>
-                  Just because a pick wins doesn&apos;t mean it was a good bet. We measure
-                  whether we got a better price than the line settled at. That is the only
-                  thing that proves a real edge over time.
-                </p>
-              </div>
-              <div className="method-card">
-                <div className="method-icon" aria-hidden="true">
-                  {/* Size: target with center dot */}
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <circle cx="16" cy="16" r="12" />
-                    <circle cx="16" cy="16" r="7" />
-                    <circle cx="16" cy="16" r="2.5" fill="currentColor" />
-                    <path d="M16 2v4M16 26v4M2 16h4M26 16h4" />
-                  </svg>
-                </div>
-                <div className="num">03 · SIZE</div>
-                <h3>Bet the right amount</h3>
-                <p>
-                  Every pick has a size recommendation, not just &quot;the play.&quot;
-                  Discipline on how much you risk per bet matters more than picking
-                  winners. We tell you both.
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -420,31 +384,6 @@ export default function Home() {
             <JoinCta href="/checkout" location="step3-inline">
               Get today&apos;s picks · from $29/wk
             </JoinCta>
-          </div>
-        </div>
-      </section>
-
-      {/* Sportsbook logo wall */}
-      <section className="fade-in-section" style={{ paddingTop: 0 }}>
-        <div className="shell">
-          <div className="books-label">
-            Tail picks on every platform members already use
-          </div>
-          <div className="books-wall">
-            {/* All logos uniformly sourced from iTunes App Store icon CDN
-                (512x512 .jpg) for visual consistency on the wall. */}
-            <SportsbookMark name="PrizePicks" color="#6F4FF2" initials="PP" src="/logos/prizepicks.jpg" />
-            <SportsbookMark name="Underdog" color="#E03A3E" initials="UD" src="/logos/underdog.jpg" />
-            <SportsbookMark name="Sleeper" color="#15A4D5" initials="S" src="/logos/sleeper.jpg" />
-            <SportsbookMark name="Dabble" color="#1FBC74" initials="D" src="/logos/dabble.jpg" />
-            <SportsbookMark name="DraftKings" color="#1B9D62" initials="DK" src="/logos/draftkings.jpg" />
-            <SportsbookMark name="FanDuel" color="#0094E3" initials="FD" src="/logos/fanduel.jpg" />
-            <SportsbookMark name="Kalshi" color="#00C2A8" initials="K" src="/logos/kalshi.jpg" />
-            <SportsbookMark name="Polymarket" color="#1A66F0" initials="P" src="/logos/polymarket.jpg" />
-          </div>
-          <div className="books-note">
-            Free promo codes &amp; sign-up bonuses for every platform above are included
-            with every paid tier.
           </div>
         </div>
       </section>
