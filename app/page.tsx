@@ -166,6 +166,12 @@ export default function Home() {
           early familiarity/trust signal: "this works with the apps you already use". */}
       <section className="fade-in-section">
         <div className="shell">
+          <div className="trust-rating">
+            <span className="trust-rating-stars" aria-hidden="true">★★★★★</span>
+            <span className="trust-rating-label">
+              <strong>4.9</strong> average member rating
+            </span>
+          </div>
           <div className="books-label">
             Works with every platform you already bet on
           </div>
