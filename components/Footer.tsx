@@ -14,20 +14,20 @@ export function Footer() {
             </p>
           </div>
           <div className="footer-col">
-            <h4>Product</h4>
+            <h3>Product</h3>
             <Link href="/">Picks</Link>
             <Link href="/#how-it-works">How it works</Link>
             <Link href="/#pricing">Pricing</Link>
             <Link href="/checkout">Join Lockr</Link>
           </div>
           <div className="footer-col">
-            <h4>Company</h4>
+            <h3>Company</h3>
             <Link href="/#faq">About</Link>
             <Link href="/#methodology">Methodology</Link>
             <a href="mailto:hello@joinlockr.com">Contact</a>
           </div>
           <div className="footer-col">
-            <h4>Legal</h4>
+            <h3>Legal</h3>
             <Link href="/terms">Terms</Link>
             <Link href="/privacy">Privacy</Link>
             <Link href="/disclaimers">Disclaimers</Link>
