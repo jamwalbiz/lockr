@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Archivo } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { ActivityTicker } from "@/components/ActivityTicker";
@@ -16,10 +16,21 @@ const inter = Inter({
   display: "swap",
 });
 
+// Display face for headlines — Archivo is a technical grotesque with real
+// character (Omnibus-Type). Wide, confident, mechanical letterforms that
+// read like a precision instrument and pair cleanly with the mono data
+// layer. Distinct from the body Inter so headlines carry their own voice.
+const archivo = Archivo({
+  variable: "--font-display",
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800", "900"],
+  display: "swap",
+});
+
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -55,7 +66,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${inter.variable} ${archivo.variable} ${jetbrainsMono.variable}`}>
       <body>
         {/* Site-wide JSON-LD: Organization + WebSite */}
         <script

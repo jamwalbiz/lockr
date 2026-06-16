@@ -3,7 +3,7 @@ import { CheckoutFlow } from "./CheckoutFlow";
 
 export const metadata: Metadata = {
   title: "Checkout — Lockr",
-  description: "Subscribe to Lockr. Card, ACH, or Cash App via Whop. Discord access is automatic after payment.",
+  description: "Subscribe to Lockr. Card, Apple Pay, Cash App, or bank transfer via Whop. Access is automatic after payment.",
   robots: { index: false, follow: false },
 };
 

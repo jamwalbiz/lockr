@@ -48,7 +48,7 @@ export default function Error({
           margin: "0 auto 32px",
         }}
       >
-        Not your fault. Picks are still landing in Discord — try again, or head back home.
+        Not your fault. The plays are still landing on schedule — try again, or head back home.
       </p>
       {error.digest && (
         <div

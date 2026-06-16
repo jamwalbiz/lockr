@@ -5,7 +5,7 @@ import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
 export const metadata: Metadata = {
   title: "About — Lockr",
   description:
-    "I'm Jairo Tovar — JT. Most picks Discords fake the wins. I built Lockr to do the opposite: every pick logged, win or lose. Premium picks + intelligence for serious bettors.",
+    "Everyone shows you their wins. Lockr shows you everything — every play logged, win or loss, never deleted. The sports betting + prediction markets intelligence brand, founded by Jairo Tovar.",
 };
 
 export default function AboutPage() {
@@ -20,25 +20,26 @@ export default function AboutPage() {
       <div className="about-hero">
         <div className="about-text">
           <div className="section-label">About</div>
-          <h1>Most picks Discords fake the wins. I built one that can&apos;t.</h1>
+          <h1>Everyone shows you their wins. Lockr shows you everything.</h1>
           <p>
-            I&apos;m Jairo Tovar — most people call me JT. Most picks Discords are run by
-            people who&apos;ve gotten lucky a few times and screenshot the wins — or
-            people who just fake them outright. I&apos;m not interested in either
-            business.
+            I&apos;m Jairo Tovar — most people call me JT, and I founded Lockr. Most
+            betting services are run by people who&apos;ve gotten lucky a few times and
+            screenshot the wins — or people who just fake them outright. I wasn&apos;t
+            interested in building either one.
           </p>
           <p>
             I started betting in college and treated it like a hobby. Then I started
             treating it like a job — line movement, value, arbitrage between sportsbooks
             and prediction markets, the science of actually getting better prices than the
-            book. I built a process I could repeat, and I logged every bet in public
-            Discords with a timestamp. Win or lose, it all went up.
+            book. I built a process I could repeat, and I posted every bet in public with
+            a timestamp. Win or lose, it all went up — and stayed up.
           </p>
           <p>
-            Lockr is what I wish existed when I started: a premium picks + intelligence
-            service that respects your bankroll and your time. Built with a small team of
-            analysts who care about the craft. Just edges, plus the playbook for actually
-            using them.
+            Lockr is what I wish existed when I started: the intelligence brand for sports
+            betting and prediction markets, built with a small team that cares about the
+            craft. Real plays with the reasoning and the right size on every one — and
+            whether you&apos;ve bet for years or you&apos;re placing your first one, we
+            walk you through it. No hype. Just edges, in the open.
           </p>
           <div className="about-meta">
             <div className="about-meta-stat">

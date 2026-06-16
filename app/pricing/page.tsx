@@ -27,10 +27,12 @@ export default function PricingPage() {
             marginBottom: 16,
           }}
         >
-          Pick a tier.
+          Pick a tier. Bet tonight.
         </h1>
-        <p style={{ color: "var(--text-mute)", fontSize: 17 }}>
-          Cancel any time. No retention department. No &quot;are you sure.&quot;
+        <p style={{ color: "var(--text-mute)", fontSize: 17, maxWidth: 560 }}>
+          Join today and you&apos;re on today&apos;s plays within minutes — whether
+          you&apos;ve bet for years or you&apos;re placing your first one. Cancel any
+          time. No retention department. No &quot;are you sure.&quot;
         </p>
       </div>
       <PricingCards />

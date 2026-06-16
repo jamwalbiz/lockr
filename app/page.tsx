@@ -38,56 +38,125 @@ export default function Home() {
           excluded — it's already in view on load and should not animate. */}
       <FadeInObserver />
 
-      {/* Hero */}
+      {/* Hero — "the bettor's terminal". Asymmetric editorial split: the
+          pitch on the left, a live data terminal on the right. The terminal
+          is the memorable element — it frames Lockr as a precision
+          instrument, not a Discord. */}
       <section className="hero">
-        <div className="hero-grid"></div>
-        <div className="shell hero-inner">
-          <div className="verified-badge">
-            <span className="dot"></span>
-            <span>Picks dropping daily · sports + prediction markets</span>
-          </div>
-          <h1 className="hero-title">
-            Stop guessing.
-            <br />
-            <span className="underline">Start winning.</span>
-          </h1>
-          <p className="hero-sub">
-            Daily picks across every sport, plus prediction-market plays on Kalshi and
-            Polymarket. Whether you bet for fun on Sundays or grind seven days a week — JT
-            and the team post every pick live before the event starts, win or loss.
-          </p>
-          <div className="hero-cta-row">
-            <JoinCta href="/checkout" location="hero">
-              Get today&apos;s picks · $29/wk
-            </JoinCta>
-            <a href="#intro" className="btn btn-secondary btn-lg">
-              See how it works
-            </a>
-          </div>
-          <div className="stats-strip">
-            <div className="stat-cell">
-              <div className="stat-num positive mono">
-                <CountUp to={147} prefix="+" suffix="u" />
+        <div className="hero-grid" aria-hidden="true"></div>
+        <div className="hero-glow" aria-hidden="true"></div>
+        <div className="hero-grain" aria-hidden="true"></div>
+        <div className="shell">
+          <div className="hero-layout">
+            <div className="hero-left">
+              <div className="verified-badge hero-rv" style={{ animationDelay: "0.05s" }}>
+                <span className="dot"></span>
+                <span>Picks dropping daily · sports + prediction markets</span>
               </div>
-              <div className="stat-label">12-mo units won</div>
+              <h1 className="hero-title">
+                <span className="hero-rv" style={{ animationDelay: "0.12s" }}>
+                  Stop guessing.
+                </span>
+                <span
+                  className="hero-rv hero-title-accent"
+                  style={{ animationDelay: "0.2s" }}
+                >
+                  Start winning.
+                </span>
+              </h1>
+              <p className="hero-sub hero-rv" style={{ animationDelay: "0.3s" }}>
+                Real plays across every sport, plus prediction markets like Kalshi and
+                Polymarket. Posted before each game starts, logged win or loss. Join
+                today — bet tonight.
+              </p>
+              <div className="hero-cta-row hero-rv" style={{ animationDelay: "0.38s" }}>
+                <JoinCta href="/checkout" location="hero">
+                  Get today&apos;s picks · $29/wk
+                </JoinCta>
+                <a href="#intro" className="btn btn-secondary btn-lg">
+                  See how it works
+                </a>
+              </div>
+              <div className="hero-trust hero-rv" style={{ animationDelay: "0.46s" }}>
+                <span className="hero-trust-live">
+                  <span className="hero-trust-dot"></span>LIVE
+                </span>
+                <span>No contract</span>
+                <span className="hero-trust-sep">·</span>
+                <span>Cancel any time</span>
+                <span className="hero-trust-sep">·</span>
+                <span>Every pick timestamped</span>
+              </div>
             </div>
-            <div className="stat-cell">
-              <div className="stat-num mono">
-                <CountUp to={60} suffix="%+" />
+
+            <div className="hero-right hero-rv" style={{ animationDelay: "0.3s" }}>
+              <div className="terminal">
+                <div className="terminal-head">
+                  <div className="terminal-id">
+                    <span className="terminal-dot"></span>LOCKR&nbsp;·&nbsp;LIVE&nbsp;BOARD
+                  </div>
+                  <div className="terminal-live">
+                    <span className="terminal-live-dot"></span>TODAY
+                  </div>
+                </div>
+
+                {/* Ambient market-pulse line — decorative texture only. No
+                    label, no number, no audited-return claim. Signals "live
+                    and active," nothing more. */}
+                <div className="terminal-pulse" aria-hidden="true">
+                  <svg viewBox="0 0 400 70" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="pulseGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.16" />
+                        <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      className="terminal-area"
+                      d="M0 54 L36 48 L72 52 L108 38 L144 44 L180 28 L216 34 L252 20 L288 26 L324 12 L360 18 L400 6 L400 70 L0 70 Z"
+                    />
+                    <path
+                      className="terminal-line"
+                      d="M0 54 L36 48 L72 52 L108 38 L144 44 L180 28 L216 34 L252 20 L288 26 L324 12 L360 18 L400 6"
+                    />
+                    <circle className="terminal-pt" cx="400" cy="6" r="3.5" />
+                  </svg>
+                </div>
+
+                {/* The wedge, stated plainly. This is the whole positioning. */}
+                <div className="terminal-lead">
+                  <div className="terminal-lead-title">Every play, in the open.</div>
+                  <div className="terminal-lead-sub">
+                    Posted before the event · logged win or loss · never deleted.
+                  </div>
+                </div>
+
+                {/* Today's board — shows the format members get (the call +
+                    the market), not a results claim. */}
+                <div className="terminal-feed">
+                  <div className="terminal-row">
+                    <span className="t">NBA</span>
+                    <span className="mkt">Lakers / Nuggets</span>
+                    <span className="res">Over 224.5</span>
+                  </div>
+                  <div className="terminal-row">
+                    <span className="t">UFC</span>
+                    <span className="mkt">Main event</span>
+                    <span className="res">KO / TKO</span>
+                  </div>
+                  <div className="terminal-row">
+                    <span className="t">KALSHI</span>
+                    <span className="mkt">Fed rate decision</span>
+                    <span className="res">Yes</span>
+                  </div>
+                </div>
+
+                {/* Beginner welcome — plain language, any experience level. */}
+                <div className="terminal-foot-line">
+                  New to betting? We tell you{" "}
+                  <strong>what to bet, how much, and why</strong> — on every play.
+                </div>
               </div>
-              <div className="stat-label">Win rate</div>
-            </div>
-            <div className="stat-cell">
-              <div className="stat-num positive mono">
-                <CountUp to={4.9} decimals={1} suffix="★" />
-              </div>
-              <div className="stat-label">Member rating</div>
-            </div>
-            <div className="stat-cell">
-              <div className="stat-num mono">
-                <CountUp to={10} suffix="+" />
-              </div>
-              <div className="stat-label">Sports + markets</div>
             </div>
           </div>
         </div>
@@ -181,9 +250,9 @@ export default function Home() {
               </div>
               <h3>Public track record</h3>
               <p>
-                Every pick published live before the event starts. No screenshot edits. No
-                &quot;I told you so&quot; posted after the fact. Wins and losses logged in
-                Discord — members audit by being there.
+                Every play posted live before the event starts. No screenshot edits. No
+                &quot;I told you so&quot; after the fact. Wins and losses logged in the
+                open and never deleted — anyone inside can scroll back and check.
               </p>
             </div>
             <div className="pillar">
@@ -194,8 +263,8 @@ export default function Home() {
               </div>
               <h3>Prediction-market plays</h3>
               <p>
-                The first picks community that uses Kalshi and Polymarket alongside
-                sportsbooks. Bigger menu, better prices on the markets your book either
+                Lockr is one of the few that works Kalshi and Polymarket alongside the
+                sportsbooks. Bigger menu, better prices — on the markets your book either
                 won&apos;t offer or prices badly.
               </p>
             </div>
@@ -259,9 +328,9 @@ export default function Home() {
               </div>
               <h3>Picks drop daily</h3>
               <p>
-                Our team posts 6–10 plays per day in Discord — every sport, plus
-                prediction markets. Each pick has the reasoning, the recommended bet size,
-                and the line we entered.
+                Our team posts 6–10 plays a day — every sport, plus prediction
+                markets. Each play comes with the reasoning, the recommended bet size,
+                and the exact line we entered. You always know what to bet and why.
               </p>
             </div>
             <div className="step">
@@ -490,8 +559,8 @@ export default function Home() {
               Real receipts.
             </h2>
             <p className="section-sub">
-              No actor photos. No fake screenshots. The cohort below is hovering — and
-              they&apos;ll talk to you in the Discord.
+              No actor photos. No fake screenshots. The members below are real — and
+              they&apos;ll be in the room with you the day you join.
             </p>
           </div>
 
@@ -564,7 +633,7 @@ export default function Home() {
           {/* Discord embeds */}
           <div style={{ textAlign: "center", margin: "64px 0 32px" }}>
             <div className="section-label" style={{ color: "var(--text-mute)" }}>
-              Inside the Discord
+              Inside the room
             </div>
             <h3 style={{ fontSize: 26, fontWeight: 700, letterSpacing: "-0.02em" }}>
               Live from #wins-and-losses
@@ -746,7 +815,7 @@ export default function Home() {
           <div className="vs-section">
             <div className="vs-col them">
               <div className="vs-label">Tacky cappers</div>
-              <div className="vs-title">The picks Discord you&apos;ve already tried.</div>
+              <div className="vs-title">The picks service you&apos;ve already quit.</div>
               <ul className="vs-list">
                 <li>Screenshots edited after the fact</li>
                 <li>Lambo emojis. &quot;BANGER 🚨🚨🚨&quot; energy</li>
@@ -754,7 +823,7 @@ export default function Home() {
                 <li>Blocks you in the DMs after a losing week</li>
                 <li>Owner is anonymous behind a Bitmoji</li>
                 <li>Nobody mentions CLV or unit sizing</li>
-                <li>Discord goes dark in the summer</li>
+                <li>The group goes dark in the summer</li>
                 <li>Sells your email to 14 other touts</li>
               </ul>
             </div>
@@ -815,7 +884,7 @@ export default function Home() {
                 <li>You think &quot;picks&quot; means &quot;every bet wins&quot;</li>
                 <li>You&apos;ll cancel and chargeback after one losing week</li>
                 <li>You can&apos;t risk what you wager — bet only what you can afford to lose</li>
-                <li>You want a Discord full of Lambo emojis and group chants</li>
+                <li>You want a group chat full of Lambo emojis and chants</li>
                 <li>You expect the team to think for you instead of teaching you to think</li>
               </ul>
             </div>
@@ -877,7 +946,7 @@ export default function Home() {
                   color: "var(--text-dim)",
                 }}
               >
-                No contract. Cancel any time. Every pick logged in Discord.
+                No contract. Cancel any time. Every play logged in the open.
               </div>
             </div>
           </div>

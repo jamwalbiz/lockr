@@ -311,11 +311,12 @@ export const PRICING = {
 
 export const SUBSCRIPTION_FEATURES = [
   "Daily picks across every sport + prediction markets",
-  "Pick reasoning + recommended size on every play",
-  "Private Discord community",
+  "Plain-English reasoning + recommended size on every play",
+  "New to betting? A starter guide walks you through your first one",
+  "Members-only community",
   "Live weekly Q&A with the team",
   "Bankroll & sizing playbook",
-  "Q&A recordings pinned in Discord",
+  "Q&A recordings pinned for replay",
   "Push notifications when picks drop",
   "Free promo codes for every recommended platform",
 ];
@@ -333,10 +334,11 @@ export const IC_STATUS = {
 
 export const INNERCIRCLE_FEATURES = [
   "Everything in the Lockr Subscription",
-  "Private IC-only Discord channels",
-  "Edge ratings + confidence scores on every pick",
+  "Private IC-only channels",
+  "Edge ratings + confidence scores on every play",
   "Custom research on request",
-  "Monthly 1-on-1 team strategy call",
+  "Monthly 1-on-1 mentorship call — build your own system",
   "Monthly mastermind with the IC cohort",
+  "A direct line to the team — you're a partner, not a number",
   "Personalized onboarding call when you join",
 ];
