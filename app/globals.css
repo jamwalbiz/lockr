@@ -297,6 +297,10 @@ h1.hero-title { font-family: var(--font-display), var(--font-inter), sans-serif;
 .pick-cards { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 14px; }
 .pick-card {
   position: relative;
+  display: block;
+  text-decoration: none;
+  color: var(--text);
+  cursor: pointer;
   overflow: hidden;
   padding: 18px 20px;
   border-radius: 16px;
@@ -327,8 +331,10 @@ h1.hero-title { font-family: var(--font-display), var(--font-inter), sans-serif;
 .pick-card-match { margin-top: 12px; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
 .pick-card-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-top: 5px; }
 .pick-card-line { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--accent); }
-.pick-card-status { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; font-family: var(--font-jetbrains), monospace; font-size: 10px; letter-spacing: 0.06em; color: var(--text-mute); }
-.pick-card-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+/* The pick itself is the paid product: blur it behind the "Unlock" lock. */
+.pick-card-line.locked { filter: blur(7px); opacity: 0.72; user-select: none; }
+.pick-card-lock { display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0; font-family: var(--font-jetbrains), monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.pick-card:hover .pick-card-lock { text-shadow: 0 0 10px rgba(0,255,133,0.5); }
 
 /* Featured (top) card carries a slow green shimmer border - the "lightning". */
 .pick-card.featured { border-color: rgba(0, 255, 133, 0.18); }

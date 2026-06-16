@@ -1,9 +1,12 @@
 "use client";
 
+import { track } from "@vercel/analytics";
+
 // Hero visual: a small deck of "tonight's picks" cards (Betr / PrizePicks /
-// Polymarket-style), replacing the old terminal panel. Each card tracks the
-// cursor for a green spotlight glow; the top card carries a slow shimmer
-// border. All gated under prefers-reduced-motion via CSS.
+// Polymarket-style). The pick itself is the paid product, so it's LOCKED here:
+// the matchup shows, but the line is blurred behind an "Unlock" lock and the
+// whole card taps through to checkout (tease -> join). Each card tracks the
+// cursor for a green spotlight glow; the top card carries a slow shimmer border.
 const PICKS = [
   { sport: "NBA", time: "7:02p", match: "Lakers / Nuggets", line: "Over 224.5" },
   { sport: "UFC", time: "8:40p", match: "Main event", line: "KO / TKO" },
@@ -21,11 +24,14 @@ export function PickCards() {
   return (
     <div className="pick-cards">
       {PICKS.map((p, i) => (
-        <article
+        <a
           key={p.sport}
+          href="/checkout"
           className={`pick-card${i === 0 ? " featured" : ""}`}
           onMouseMove={onMove}
+          onClick={() => track("cta_click", { cta: "hero_pick_card", sport: p.sport })}
           style={{ animationDelay: `${0.34 + i * 0.1}s` }}
+          aria-label={`${p.sport} ${p.match} pick — members only, join to unlock`}
         >
           <div className="pick-card-meta">
             <span className="pick-card-sport">
@@ -36,10 +42,18 @@ export function PickCards() {
           </div>
           <div className="pick-card-match">{p.match}</div>
           <div className="pick-card-row">
-            <span className="pick-card-line">{p.line}</span>
-            <span className="pick-card-status">PENDING</span>
+            <span className="pick-card-line locked" aria-hidden="true">
+              {p.line}
+            </span>
+            <span className="pick-card-lock">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
+                <rect x="4" y="10.5" width="16" height="10.5" rx="2" />
+                <path d="M8 10.5V7a4 4 0 0 1 8 0v3.5" />
+              </svg>
+              Unlock
+            </span>
           </div>
-        </article>
+        </a>
       ))}
     </div>
   );
