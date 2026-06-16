@@ -35,7 +35,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lockr: Where serious bettors get serious edges",
+  // Browser-tab title is just the brand. The richer positioning line lives in
+  // the OpenGraph/Twitter titles below (social cards) and in the on-page h1.
+  title: "Lockr",
   description:
     "Daily picks across every sport, plus prediction-market plays on Kalshi and Polymarket. Every pick posted live with a timestamp before the event starts. Cancel any time.",
   metadataBase: new URL("https://joinlockr.com"),

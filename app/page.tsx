@@ -78,14 +78,16 @@ export default function Home() {
                 </a>
               </div>
               <div className="hero-trust hero-rv" style={{ animationDelay: "0.46s" }}>
-                <span className="hero-trust-live">
-                  <span className="hero-trust-dot"></span>LIVE
+                <span className="hero-trust-rating">
+                  <span className="hero-trust-star" aria-hidden="true">★</span>
+                  4.9 member rating
                 </span>
+                <span className="hero-trust-sep">·</span>
                 <span>No contract</span>
                 <span className="hero-trust-sep">·</span>
                 <span>Cancel any time</span>
                 <span className="hero-trust-sep">·</span>
-                <span>Every pick timestamped</span>
+                <span>Win or loss, logged</span>
               </div>
             </div>
 
@@ -93,33 +95,34 @@ export default function Home() {
               <div className="terminal">
                 <div className="terminal-head">
                   <div className="terminal-id">
-                    <span className="terminal-dot"></span>LOCKR&nbsp;·&nbsp;LIVE&nbsp;BOARD
+                    <span className="terminal-dot"></span>LOCKR&nbsp;·&nbsp;TODAY&apos;S&nbsp;PICKS
                   </div>
                   <div className="terminal-live">
                     <span className="terminal-live-dot"></span>TODAY
                   </div>
                 </div>
 
-                {/* Ambient market-pulse line - decorative texture only. No
-                    label, no number, no audited-return claim. Signals "live
-                    and active," nothing more. */}
+                {/* Ambient pulse - a flat, oscillating "live" waveform, NOT a
+                    rising chart. A green up-and-to-the-right line reads as
+                    "audited returns"; this brand never claims a track record,
+                    so the line stays level (signals "live", not "performance"). */}
                 <div className="terminal-pulse" aria-hidden="true">
                   <svg viewBox="0 0 400 70" preserveAspectRatio="none">
                     <defs>
                       <linearGradient id="pulseGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.16" />
+                        <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.12" />
                         <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
                       </linearGradient>
                     </defs>
                     <path
                       className="terminal-area"
-                      d="M0 54 L36 48 L72 52 L108 38 L144 44 L180 28 L216 34 L252 20 L288 26 L324 12 L360 18 L400 6 L400 70 L0 70 Z"
+                      d="M0 40 L33 35 L67 41 L100 30 L120 30 L140 48 L160 30 L200 39 L233 34 L267 41 L300 36 L333 40 L367 33 L400 39 L400 70 L0 70 Z"
                     />
                     <path
                       className="terminal-line"
-                      d="M0 54 L36 48 L72 52 L108 38 L144 44 L180 28 L216 34 L252 20 L288 26 L324 12 L360 18 L400 6"
+                      d="M0 40 L33 35 L67 41 L100 30 L120 30 L140 48 L160 30 L200 39 L233 34 L267 41 L300 36 L333 40 L367 33 L400 39"
                     />
-                    <circle className="terminal-pt" cx="400" cy="6" r="3.5" />
+                    <circle className="terminal-pt" cx="400" cy="39" r="3.5" />
                   </svg>
                 </div>
 
@@ -131,23 +134,31 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Today's board - shows the format members get (the call +
-                    the market), not a results claim. */}
+                {/* Today's board - illustrative format showing what a member
+                    sees: the call, the post-time (the wedge is "posted before
+                    the event"), and a status. One row is a settled LOSS in red
+                    on purpose - the whole point is that losses are never hidden. */}
                 <div className="terminal-feed">
                   <div className="terminal-row">
                     <span className="t">NBA</span>
-                    <span className="mkt">Lakers / Nuggets</span>
-                    <span className="res">Over 224.5</span>
+                    <span className="mkt">
+                      Lakers / Nuggets <em className="ln">Over 224.5</em>
+                    </span>
+                    <span className="terminal-stat pending">7:02p · PENDING</span>
                   </div>
                   <div className="terminal-row">
                     <span className="t">UFC</span>
-                    <span className="mkt">Main event</span>
-                    <span className="res">KO / TKO</span>
+                    <span className="mkt">
+                      Main event <em className="ln">KO / TKO</em>
+                    </span>
+                    <span className="terminal-stat pending">8:40p · PENDING</span>
                   </div>
                   <div className="terminal-row">
-                    <span className="t">KALSHI</span>
-                    <span className="mkt">Fed rate decision</span>
-                    <span className="res">Yes</span>
+                    <span className="t">NHL</span>
+                    <span className="mkt">
+                      Canes / Habs <em className="ln">Over 5.5</em>
+                    </span>
+                    <span className="terminal-stat lost">FINAL · LOST</span>
                   </div>
                 </div>
 
@@ -166,12 +177,6 @@ export default function Home() {
           early familiarity/trust signal: "this works with the apps you already use". */}
       <section className="fade-in-section">
         <div className="shell">
-          <div className="trust-rating">
-            <span className="trust-rating-stars" aria-hidden="true">★★★★★</span>
-            <span className="trust-rating-label">
-              <strong>4.9</strong> average member rating
-            </span>
-          </div>
           <div className="books-label">
             Works with every platform you already bet on
           </div>
@@ -205,9 +210,7 @@ export default function Home() {
           exist yet. */}
       <section id="intro" className="fade-in-section">
         <div className="shell">
-          <div className="section-head">
-            <div className="section-label">Watch the breakdown</div>
-            <h2 className="section-title">How Lockr finds edges your book is missing.</h2>
+          <div className="section-head">            <h2 className="section-title">How Lockr finds edges your book is missing.</h2>
           </div>
           <div className="vsl-wrap">
             {process.env.NEXT_PUBLIC_VSL_URL ? (
@@ -269,9 +272,7 @@ export default function Home() {
       {/* Pillars */}
       <section className="fade-in-section">
         <div className="shell">
-          <div className="section-head">
-            <div className="section-label">Why Lockr</div>
-            <h2 className="section-title">Built for bettors who actually want to win.</h2>
+          <div className="section-head">            <h2 className="section-title">Built for bettors who actually want to win.</h2>
           </div>
           <div className="pillars">
             <div className="pillar">
@@ -395,10 +396,10 @@ export default function Home() {
       </section>
 
       {/* By the numbers (static, no live tracker per handoff decision) */}
-      <section className="fade-in-section">
+      <section id="results" className="fade-in-section">
         <div className="shell">
           <div className="section-head">
-            <div className="section-label">Receipts</div>
+            <div className="section-label">Results</div>
             <h2 className="section-title">
               Real picks.
               <br />
@@ -467,9 +468,7 @@ export default function Home() {
       {/* Sports coverage grid */}
       <section className="fade-in-section">
         <div className="shell">
-          <div className="section-head">
-            <div className="section-label">Coverage</div>
-            <h2 className="section-title">
+          <div className="section-head">            <h2 className="section-title">
               Year-round, every sport.
               <br />
               Plus prediction markets.
@@ -558,9 +557,7 @@ export default function Home() {
       {/* Testimonials + bet slips + Discord embeds */}
       <section className="fade-in-section">
         <div className="shell">
-          <div className="section-head">
-            <div className="section-label">1,247 active members</div>
-            <h2 className="section-title">
+          <div className="section-head">            <h2 className="section-title">
               Real members.
               <br />
               Real receipts.
@@ -812,9 +809,7 @@ export default function Home() {
       {/* VS comparison */}
       <section className="fade-in-section">
         <div className="shell">
-          <div className="section-head">
-            <div className="section-label">Still skeptical?</div>
-            <h2 className="section-title">Two ways to buy picks online.</h2>
+          <div className="section-head">            <h2 className="section-title">Two ways to buy picks online.</h2>
             <p className="section-sub">
               You&apos;ve seen the other side. Here&apos;s the difference.
             </p>
@@ -858,9 +853,7 @@ export default function Home() {
       {/* Disqualifier */}
       <section className="fade-in-section">
         <div className="shell">
-          <div className="section-head">
-            <div className="section-label">Be honest</div>
-            <h2 className="section-title">Is Lockr actually for you?</h2>
+          <div className="section-head">            <h2 className="section-title">Is Lockr actually for you?</h2>
             <p className="section-sub">
               We&apos;d rather not have your money than have you cancel angry in 3 weeks.
               Read this before you join.
