@@ -135,9 +135,8 @@ export default function Home() {
                 </div>
 
                 {/* Today's board - illustrative format showing what a member
-                    sees: the call, the post-time (the wedge is "posted before
-                    the event"), and a status. One row is a settled LOSS in red
-                    on purpose - the whole point is that losses are never hidden. */}
+                    sees: the call, the market, and the post-time (the wedge is
+                    "posted before the event"). Tonight's slate, all PENDING. */}
                 <div className="terminal-feed">
                   <div className="terminal-row">
                     <span className="t">NBA</span>
@@ -158,7 +157,7 @@ export default function Home() {
                     <span className="mkt">
                       Canes / Habs <em className="ln">Over 5.5</em>
                     </span>
-                    <span className="terminal-stat lost">FINAL · LOST</span>
+                    <span className="terminal-stat pending">9:15p · PENDING</span>
                   </div>
                 </div>
 

@@ -50,6 +50,7 @@ export function Footer() {
           guarantee future results.
         </div>
       </div>
+      <div className="footer-wordmark" aria-hidden="true">LOCKR</div>
     </footer>
   );
 }
