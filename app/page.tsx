@@ -19,6 +19,7 @@ import { BET_SLIPS } from "@/lib/betslips";
 import { FAQ_ITEMS } from "@/lib/faq";
 import { FadeInObserver } from "@/components/FadeInOnView";
 import { ScrollProgress } from "@/components/ScrollProgress";
+import { PickCards } from "@/components/PickCards";
 import { TiltCard } from "@/components/TiltCard";
 
 // Platforms Lockr's picks work on - rendered as a calm marquee band.
@@ -56,10 +57,9 @@ export default function Home() {
       {/* Scroll-depth indicator for the long single-page funnel. */}
       <ScrollProgress />
 
-      {/* Hero - "the bettor's terminal". Asymmetric editorial split: the
-          pitch on the left, a live data terminal on the right. The terminal
-          is the memorable element - it frames Lockr as a precision
-          instrument, not a Discord. */}
+      {/* Hero - asymmetric split: the pitch on the left, a small deck of
+          tonight's pick cards on the right (Betr / PrizePicks-style). The
+          cards are the memorable element - they show what you actually get. */}
       <section className="hero">
         <div className="hero-grid" aria-hidden="true"></div>
         <div className="hero-glow" aria-hidden="true"></div>
@@ -107,49 +107,8 @@ export default function Home() {
             </div>
 
             <div className="hero-right hero-rv" style={{ animationDelay: "0.3s" }}>
-              <div className="terminal">
-                <div className="terminal-head">
-                  <div className="terminal-id">
-                    <span className="terminal-dot"></span>LOCKR&nbsp;·&nbsp;TODAY&apos;S&nbsp;PICKS
-                  </div>
-                  <div className="terminal-live">
-                    <span className="terminal-live-dot"></span>LIVE
-                  </div>
-                </div>
-
-                {/* Today's board - illustrative format showing what a member
-                    sees: the call, the market, and the post-time (the wedge is
-                    "posted before the event"). Tonight's slate, all PENDING. */}
-                <div className="terminal-feed">
-                  <div className="terminal-row">
-                    <span className="t">NBA</span>
-                    <span className="mkt">
-                      Lakers / Nuggets <em className="ln">Over 224.5</em>
-                    </span>
-                    <span className="terminal-stat pending">7:02p · PENDING</span>
-                  </div>
-                  <div className="terminal-row">
-                    <span className="t">UFC</span>
-                    <span className="mkt">
-                      Main event <em className="ln">KO / TKO</em>
-                    </span>
-                    <span className="terminal-stat pending">8:40p · PENDING</span>
-                  </div>
-                  <div className="terminal-row">
-                    <span className="t">NHL</span>
-                    <span className="mkt">
-                      Canes / Habs <em className="ln">Over 5.5</em>
-                    </span>
-                    <span className="terminal-stat pending">9:15p · PENDING</span>
-                  </div>
-                </div>
-
-                {/* Beginner welcome - plain language, any experience level. */}
-                <div className="terminal-foot-line">
-                  New to betting? Every pick says{" "}
-                  <strong>what to bet, how much, and why</strong>.
-                </div>
-              </div>
+              <div className="pick-glow" aria-hidden="true"></div>
+              <PickCards />
             </div>
           </div>
         </div>
@@ -779,7 +738,7 @@ export default function Home() {
               <span className="dot" aria-hidden="true"></span>72%+ win rate
             </span>
             <span className="trust-pill">
-              <span className="dot" aria-hidden="true"></span>Cancel anytime · no contract
+              <span className="dot" aria-hidden="true"></span>Cancel anytime
             </span>
           </div>
         </div>

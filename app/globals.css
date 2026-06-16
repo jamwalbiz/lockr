@@ -196,32 +196,66 @@ h1.hero-title { font-family: var(--font-display), var(--font-inter), sans-serif;
 .hero-trust-rating { display: inline-flex; align-items: center; gap: 5px; color: var(--text-mute); font-weight: 600; }
 .hero-trust-star { color: var(--gold); font-size: 13px; line-height: 1; }
 
-/* ── Terminal panel - the memorable element ── */
-.hero-right { min-width: 0; }
-.terminal { position: relative; background: linear-gradient(180deg, #16161a 0%, #0d0d10 100%); border: 1px solid var(--border-strong); border-radius: 16px; overflow: hidden; box-shadow: 0 30px 70px -24px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,255,133,0.05), inset 0 1px 0 rgba(255,255,255,0.05); }
-.terminal::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(0,255,133,0.6), transparent); }
-.terminal-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--border); font-family: var(--font-jetbrains), monospace; font-size: 11px; letter-spacing: 0.14em; color: var(--text-mute); }
-.terminal-id { display: inline-flex; align-items: center; gap: 9px; }
-.terminal-dot { width: 9px; height: 9px; border-radius: 2px; background: var(--accent); box-shadow: 0 0 10px rgba(0,255,133,0.7); }
-.terminal-live { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); }
-.terminal-live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s ease-in-out infinite; }
+/* ── Hero pick cards - "tonight's picks" deck (Betr / PrizePicks-style) ── */
+.hero-right { min-width: 0; position: relative; }
 
+/* Morphing green atmosphere behind the cards (Cyber-Serif glow, Lockr green). */
+.pick-glow { position: absolute; width: 360px; height: 360px; top: 4%; right: -8%; background: radial-gradient(circle, rgba(0,255,133,0.16), transparent 70%); filter: blur(80px); border-radius: 40% 60% 60% 40% / 70% 30% 70% 30%; animation: pick-glow-morph 9s ease-in-out infinite alternate; pointer-events: none; z-index: 0; }
+@keyframes pick-glow-morph {
+  from { border-radius: 40% 60% 60% 40% / 70% 30% 70% 30%; transform: translate(0, 0) scale(1); }
+  to   { border-radius: 62% 38% 44% 56% / 34% 66% 34% 66%; transform: translate(-22px, 18px) scale(1.08); }
+}
+@media (prefers-reduced-motion: reduce) { .pick-glow { animation: none; } }
 
-/* Today's board - illustrative format (call + market), not results. */
-.terminal-feed { padding: 4px 18px 8px; }
-.terminal-row { display: grid; grid-template-columns: 52px 1fr auto; gap: 12px; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--border); font-family: var(--font-jetbrains), monospace; font-size: 12px; }
-.terminal-row:last-child { border-bottom: none; }
-.terminal-row .t { color: var(--text-dim); font-size: 10px; letter-spacing: 0.06em; }
-.terminal-row .mkt { color: var(--text); letter-spacing: 0.01em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.terminal-row .mkt .ln { color: var(--accent); font-weight: 600; margin-left: 7px; }
-.terminal-stat { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; font-size: 10.5px; letter-spacing: 0.04em; }
-.terminal-stat::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 6px currentColor; }
-.terminal-stat.pending { color: var(--accent); }
-.terminal-stat.lost { color: var(--danger); }
+.pick-cards { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 14px; }
+.pick-card {
+  position: relative;
+  overflow: hidden;
+  padding: 18px 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 16px 40px -28px rgba(0, 0, 0, 0.9);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  animation: pick-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+.pick-card > * { position: relative; z-index: 1; }
+.pick-card:hover { transform: translateY(-3px); border-color: rgba(0, 255, 133, 0.32); }
+/* cursor spotlight - --mx/--my set by PickCards on mousemove */
+.pick-card::before {
+  content: ''; position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 255, 133, 0.13), transparent 60%);
+  opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+}
+.pick-card:hover::before { opacity: 1; }
+@keyframes pick-reveal { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .pick-card { animation: none; } .pick-card:hover { transform: none; } }
 
-/* Beginner welcome line. */
-.terminal-foot-line { padding: 13px 18px; border-top: 1px solid var(--border-strong); background: rgba(0,0,0,0.28); font-size: 12.5px; line-height: 1.5; color: var(--text-mute); }
-.terminal-foot-line strong { color: var(--text); font-weight: 600; }
+.pick-card-meta { display: flex; justify-content: space-between; align-items: center; font-family: var(--font-jetbrains), monospace; font-size: 11px; letter-spacing: 0.08em; }
+.pick-card-sport { display: inline-flex; align-items: center; gap: 7px; color: var(--text); font-weight: 600; }
+.pick-card-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px rgba(0, 255, 133, 0.6); }
+.pick-card-time { color: var(--text-dim); }
+.pick-card-match { margin-top: 12px; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
+.pick-card-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-top: 5px; }
+.pick-card-line { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--accent); }
+.pick-card-status { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; font-family: var(--font-jetbrains), monospace; font-size: 10px; letter-spacing: 0.06em; color: var(--text-mute); }
+.pick-card-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+
+/* Featured (top) card carries a slow green shimmer border - the "lightning". */
+.pick-card.featured { border-color: rgba(0, 255, 133, 0.18); }
+.pick-card.featured::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px;
+  background: linear-gradient(115deg, transparent 38%, rgba(0, 255, 133, 0.5) 50%, transparent 62%);
+  background-size: 250% 100%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  animation: pick-shimmer 5s linear infinite; pointer-events: none;
+}
+@keyframes pick-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -150% 0; } }
+@media (prefers-reduced-motion: reduce) { .pick-card.featured::after { animation: none; opacity: 0; } }
 
 /* ── Orchestrated load ── */
 .hero-rv { opacity: 0; transform: translateY(18px); animation: heroReveal 0.72s cubic-bezier(.2,.8,.2,1) forwards; }
