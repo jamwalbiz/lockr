@@ -776,7 +776,7 @@ export default function Home() {
               <span className="star" aria-hidden="true">★</span>4.9 member rating
             </span>
             <span className="trust-pill">
-              <span className="dot" aria-hidden="true"></span>72%+ win rate, logged
+              <span className="dot" aria-hidden="true"></span>72%+ win rate
             </span>
             <span className="trust-pill">
               <span className="dot" aria-hidden="true"></span>Cancel anytime · no contract
