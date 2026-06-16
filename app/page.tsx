@@ -21,11 +21,11 @@ import { FadeInObserver } from "@/components/FadeInOnView";
 import { TiltCard } from "@/components/TiltCard";
 
 // Recent-record strip in the hero board. Illustrative, not live data:
-// wins (true) bright, losses (false) dimmed. ~14/22 ≈ 60%+, ends on a win,
+// wins (true) bright, losses (false) dimmed. 16/22 ≈ 72%+, ends on a win,
 // and deliberately shows losses (the transparency flex). Matches the
-// 60%+ figure in the stats tracker.
+// 72%+ figure in the stats tracker.
 const RECENT_RECORD = [
-  true, true, false, true, false, true, true, false, true, true, false,
+  true, true, false, true, true, true, true, false, true, true, true,
   true, false, true, true, false, true, false, true, true, false, true,
 ];
 
@@ -88,7 +88,7 @@ export default function Home() {
                 </a>
               </div>
               <div className="hero-trust hero-rv" style={{ animationDelay: "0.46s" }}>
-                <span>60%+ win rate, logged in public</span>
+                <span>72%+ win rate, logged in public</span>
                 <span className="hero-trust-sep">·</span>
                 <span>+147u trailing 12 months</span>
                 <span className="hero-trust-sep">·</span>
@@ -115,13 +115,13 @@ export default function Home() {
                 {/* Recent record bar - a warm, concrete "here's how we've run"
                     strip that replaces the old abstract waveform. Wins are
                     bright green, losses are dimmed (we post those too - the
-                    transparency flex), so the strip reads ~60% by eye and
+                    transparency flex), so the strip reads ~72% by eye and
                     matches the on-site tracker. Decorative; the real claim
                     lives in the stats section. */}
                 <div className="terminal-record" aria-hidden="true">
                   <div className="terminal-record-label">
                     <span>Recent record</span>
-                    <span className="terminal-record-pct">60%+ hit · posted in public</span>
+                    <span className="terminal-record-pct">72%+ hit · posted in public</span>
                   </div>
                   <div className="terminal-record-bars">
                     {RECENT_RECORD.map((win, i) => (
@@ -424,7 +424,7 @@ export default function Home() {
               <div className="tracker-stats">
                 <div className="tracker-stat">
                   <div className="tracker-stat-num">
-                    <CountUp to={60} suffix="%+" />
+                    <CountUp to={72} suffix="%+" />
                   </div>
                   <div className="tracker-stat-label">Win rate</div>
                 </div>
