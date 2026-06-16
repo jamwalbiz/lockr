@@ -5,7 +5,7 @@ import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
 export const metadata: Metadata = {
   title: "About — Lockr",
   description:
-    "I'm Jairo Tovar — JT. I lost $40,000 the year I started betting. Then I built Lockr. Premium picks + intelligence for serious bettors.",
+    "I'm Jairo Tovar — JT. Most picks Discords fake the wins. I built Lockr to do the opposite: every pick logged, win or lose. Premium picks + intelligence for serious bettors.",
 };
 
 export default function AboutPage() {
@@ -20,7 +20,7 @@ export default function AboutPage() {
       <div className="about-hero">
         <div className="about-text">
           <div className="section-label">About</div>
-          <h1>I lost $40,000 the year I started betting. Then I built Lockr.</h1>
+          <h1>Most picks Discords fake the wins. I built one that can&apos;t.</h1>
           <p>
             I&apos;m Jairo Tovar — most people call me JT. Most picks Discords are run by
             people who&apos;ve gotten lucky a few times and screenshot the wins — or
@@ -28,11 +28,11 @@ export default function AboutPage() {
             business.
           </p>
           <p>
-            I started betting in college. Lost most of what I had. Spent years studying it
-            like a job — line movement, value, arbitrage between sportsbooks and
-            prediction markets, the science of actually getting better prices than the
-            book. Built a process I could repeat. Logged every bet I made in public
-            Discords with a timestamp. Posted everything, win or lose.
+            I started betting in college and treated it like a hobby. Then I started
+            treating it like a job — line movement, value, arbitrage between sportsbooks
+            and prediction markets, the science of actually getting better prices than the
+            book. I built a process I could repeat, and I logged every bet in public
+            Discords with a timestamp. Win or lose, it all went up.
           </p>
           <p>
             Lockr is what I wish existed when I started: a premium picks + intelligence

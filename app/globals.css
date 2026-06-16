@@ -314,7 +314,8 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .social-proof-avatar.gold { background: var(--gold); }
 .social-proof-avatar.blue { background: var(--blue); color: #fff; }
 .social-proof-text { flex: 1; }
-.social-proof-name { font-size: 13px; font-weight: 600; color: var(--text); }
+.social-proof-name { font-size: 13px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 6px; }
+.social-proof-flag { font-size: 14px; line-height: 1; }
 .social-proof-detail { font-size: 11px; color: var(--text-mute); margin-top: 2px; font-family: var(--font-jetbrains), monospace; }
 .social-proof-close { color: var(--text-dim); cursor: pointer; font-size: 16px; line-height: 1; padding: 4px; transition: color 0.1s; flex-shrink: 0; background: none; border: none; }
 .social-proof-close:hover { color: var(--text); }
@@ -519,7 +520,11 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
    ------------------------------------------------------------------ */
 .about-hero { padding: 60px 0; display: grid; grid-template-columns: 3fr 2fr; gap: 64px; align-items: center; }
 .about-img { aspect-ratio: 4/5; background: linear-gradient(135deg, #1a1a1d 0%, #0a0a0b 100%); border-radius: 16px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; padding: 24px; position: relative; overflow: hidden; }
-.about-img::before { content: 'JAIRO TOVAR · JT'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: var(--font-jetbrains), monospace; font-size: 14px; color: var(--text-dim); letter-spacing: 0.2em; z-index: 2; }
+/* Founder-name caption sits at the BOTTOM of the card, clear of the
+   Lockr logo backdrop centered behind it — layering the name over the
+   logo (which contains the LOCKR wordmark) collided into a muddy
+   "JAIRO LOCKR TOVAR" mashup. */
+.about-img::before { content: 'JAIRO TOVAR · JT'; position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); font-family: var(--font-jetbrains), monospace; font-size: 13px; color: var(--text-mute); letter-spacing: 0.22em; z-index: 2; white-space: nowrap; }
 .about-text h1 { font-size: clamp(36px, 5vw, 56px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 24px; }
 .about-text p { color: var(--text-mute); font-size: 16px; line-height: 1.7; margin-bottom: 16px; }
 .about-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--border); }

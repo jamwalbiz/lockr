@@ -19,7 +19,27 @@ export type SocialProofItem = {
   detail: string;
   avatar: string;
   tone: Tone;
+  flag: string;
 };
+
+// Flag pool for the social-proof popups — gives the feed a global feel
+// without straying from the US-bettor-demographic names. US-dominant
+// (it's the core market) with a believable international spread:
+// the English-speaking + Latin-American + a few European markets where
+// these names and sports betting both plausibly land. Repeated entries
+// bias the weighted distribution (US ≈ 40%).
+const MEMBER_FLAGS = [
+  "🇺🇸", "🇺🇸", "🇺🇸", "🇺🇸", "🇺🇸", "🇺🇸", "🇺🇸", "🇺🇸", "🇺🇸", "🇺🇸",
+  "🇨🇦", "🇨🇦", "🇨🇦",
+  "🇬🇧", "🇬🇧",
+  "🇦🇺", "🇦🇺",
+  "🇲🇽", "🇲🇽",
+  "🇧🇷",
+  "🇮🇪",
+  "🇩🇪",
+  "🇪🇸",
+  "🇳🇱",
+] as const;
 
 const FIRST_NAMES = [
   // JT's explicit picks
@@ -203,6 +223,7 @@ export function generateSocialProofItems(count: number = 30): SocialProofItem[] 
   const items: SocialProofItem[] = [];
   for (let i = 0; i < count; i++) {
     const name = randomName();
+    const flag = pick(MEMBER_FLAGS);
     const r = Math.random();
     if (r < 0.65) {
       items.push({
@@ -210,6 +231,7 @@ export function generateSocialProofItems(count: number = 30): SocialProofItem[] 
         detail: `CASHED ${pick(UNIT_WINS)} · ${pick(BET_CATEGORIES)}`,
         avatar: name.avatar,
         tone: "green",
+        flag,
       });
     } else if (r < 0.9) {
       const join = pick(JOIN_UPGRADE_ACTIONS);
@@ -218,6 +240,7 @@ export function generateSocialProofItems(count: number = 30): SocialProofItem[] 
         detail: join.action,
         avatar: name.avatar,
         tone: join.tone,
+        flag,
       });
     } else {
       items.push({
@@ -225,6 +248,7 @@ export function generateSocialProofItems(count: number = 30): SocialProofItem[] 
         detail: "APPLIED FOR ★ INNER CIRCLE",
         avatar: name.avatar,
         tone: "gold",
+        flag,
       });
     }
   }

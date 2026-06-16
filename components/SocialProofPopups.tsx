@@ -78,7 +78,14 @@ export function SocialProofPopups() {
         <div key={id} className={`social-proof ${visible ? "show" : ""}`}>
           <div className={`social-proof-avatar ${msg.tone}`}>{msg.avatar}</div>
           <div className="social-proof-text">
-            <div className="social-proof-name">{msg.name}</div>
+            <div className="social-proof-name">
+              {msg.name}
+              {msg.flag && (
+                <span className="social-proof-flag" aria-hidden="true">
+                  {msg.flag}
+                </span>
+              )}
+            </div>
             <div className="social-proof-detail">{msg.detail}</div>
           </div>
           <button
