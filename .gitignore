@@ -45,3 +45,6 @@ next-env.d.ts
 
 # claude code project-local config (uses global ~/.claude/launch.json instead)
 .claude/
+
+# impeccable design-skill critique snapshots (local tooling artifact)
+.impeccable/

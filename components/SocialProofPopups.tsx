@@ -55,8 +55,8 @@ export function SocialProofPopups() {
       }, 7000);
     }
 
-    const firstTimer = window.setTimeout(push, 4000);
-    const interval = window.setInterval(push, 12000);
+    const firstTimer = window.setTimeout(push, 6000);
+    const interval = window.setInterval(push, 18000);
     return () => {
       window.clearTimeout(firstTimer);
       window.clearInterval(interval);
