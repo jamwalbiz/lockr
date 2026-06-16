@@ -33,9 +33,6 @@ export function PricingCards() {
       {/* Lockr Subscription card */}
       <TiltCard className="pricing-card instant" maxTilt={4} scale={1.008}>
         <div className="price-tier">Lockr Subscription</div>
-        <p className="price-desc">
-          Daily picks in the open, for first-timers and grinders alike.
-        </p>
         <div className="cadence-toggle">
           <CadenceButton
             active={subCadence === "weekly"}
@@ -97,9 +94,6 @@ export function PricingCards() {
       {/* Inner Circle card */}
       <TiltCard className="pricing-card gold" maxTilt={4} scale={1.008}>
         <div className="price-tier">Inner Circle</div>
-        <p className="price-desc">
-          Not just a membership. A partnership with the team.
-        </p>
         <div className="cadence-toggle two-col">
           <CadenceButton
             active={icCadence === "monthly"}
