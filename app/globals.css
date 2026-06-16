@@ -351,7 +351,7 @@ h1.hero-title { font-family: var(--font-display), var(--font-inter), sans-serif;
 .mobile-cta-text { flex: 1; min-width: 0; }
 .mobile-cta-line1 { font-size: 11px; color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; line-height: 1.1; }
 .mobile-cta-line2 { font-size: 14px; color: var(--text); font-weight: 600; margin-top: 2px; }
-.mobile-cta-btn { flex-shrink: 0; padding: 11px 18px; background: var(--accent); color: #000; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; }
+.mobile-cta-btn { flex-shrink: 0; padding: 11px 18px; background: var(--accent); color: #000; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1); }
 @media (max-width: 768px) {
   .mobile-cta { display: block; }
   footer { padding-bottom: 90px; }
@@ -592,7 +592,7 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .price-cta { width: 100%; padding: 12px; border-radius: 8px; background: transparent; border: 1px solid var(--border-strong); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.15s; color: var(--text); }
 .price-cta:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
 .price-cta.primary { background: var(--accent); color: #000; border-color: var(--accent); }
-.price-cta.primary:hover { background: #00e677; }
+.price-cta.primary:hover { background: #00e677; transform: translateY(-1px); }
 
 .ic-mini { display: flex; flex-direction: column; align-items: center; gap: 4px; font-family: var(--font-jetbrains), monospace; font-size: 10px; color: var(--gold); margin: 12px 0 14px; padding: 8px 12px; background: rgba(201,167,106,0.08); border: 1px solid rgba(201,167,106,0.2); border-radius: 6px; font-weight: 600; letter-spacing: 0.04em; line-height: 1.3; }
 .ic-mini-line1 { display: flex; align-items: center; gap: 6px; }
@@ -769,6 +769,70 @@ html { scroll-behavior: smooth; scroll-padding-top: 120px; }
   .verified-badge .dot, .tracker-title .dot { animation: none !important; }
   .social-proof { transition: none !important; }
 }
+
+/* ------------------------------------------------------------------
+   Reference-adopted, re-skinned to Lockr green. Conversion plumbing only -
+   no new palette, font, or glass surface. Each reuses a shipped primitive.
+   ------------------------------------------------------------------ */
+
+/* A1 - scroll-depth indicator for the long homepage funnel. Flat accent
+   fill, no glow/gradient. Position indicator, so it stays under reduced-motion. */
+.scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 200; background: transparent; pointer-events: none; }
+.scroll-progress-fill { height: 100%; width: 0; background: var(--accent); }
+
+/* A3 - tactile press feedback on primary CTAs (press-only, no hover grow).
+   Placed after the :hover rules so :active wins while pressed. */
+.btn-primary:active, .price-cta.primary:active { transform: scale(0.97); }
+.mobile-cta-btn:active { transform: scale(0.96); }
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary:active, .price-cta.primary:active, .mobile-cta-btn:active { transform: none; }
+}
+
+/* A4 - trust pills at the pricing decision point. Reuses the exact
+   verified-badge token set (border --border-strong, fill, blur). */
+.trust-pills { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 22px; }
+.trust-pill { display: inline-flex; align-items: center; gap: 7px; padding: 6px 13px; border: 1px solid var(--border-strong); border-radius: 100px; font-size: 12px; color: var(--text-mute); background: rgba(20,20,22,0.5); backdrop-filter: blur(6px); }
+.trust-pill .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+.trust-pill .star { color: var(--gold); font-size: 12px; line-height: 1; }
+
+/* A5 - book/market logo wall as a calm slow marquee (reuses the marquee
+   engine). Tiles get a full border + radius since they're no longer in a grid. */
+.books-marquee { margin-bottom: 4px; }
+.books-marquee .marquee-track { animation-duration: 75s; gap: 14px; }
+.books-marquee .book-mark { flex-shrink: 0; min-width: 128px; padding: 18px 24px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-elevated); }
+.books-marquee .book-mark:hover { background: var(--bg-elevated-2); }
+
+/* A6 - one-shot coverage count beside the marquee. Mono caption, accent number. */
+.books-coverage { text-align: center; margin-top: 16px; font-family: var(--font-jetbrains), monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); }
+.books-coverage-num { color: var(--accent); font-weight: 700; }
+
+/* A7 - one-pass green border light-sweep on the $29 card (self-serve buy vs
+   the gold "apply" orbit). Same mask-composite edge trick as the gold beam,
+   but fired ONCE when the pricing section enters view. Never idles. */
+.pricing-card.instant::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(115deg, transparent 30%, rgba(0,255,133,0.55) 50%, transparent 70%);
+  background-size: 250% 100%;
+  background-position: 200% 0;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+}
+.fade-in-section.in-view .pricing-card.instant::after { animation: card-sweep 1.15s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards; }
+@keyframes card-sweep {
+  0%   { opacity: 0; background-position: 185% 0; }
+  12%  { opacity: 1; }
+  88%  { opacity: 1; }
+  100% { opacity: 0; background-position: -140% 0; }
+}
+@media (prefers-reduced-motion: reduce) { .fade-in-section.in-view .pricing-card.instant::after { animation: none; } }
 
 /* ------------------------------------------------------------------
    Utility

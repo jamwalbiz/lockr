@@ -18,7 +18,22 @@ import { TESTIMONIALS_ROW_1, TESTIMONIALS_ROW_2 } from "@/lib/testimonials";
 import { BET_SLIPS } from "@/lib/betslips";
 import { FAQ_ITEMS } from "@/lib/faq";
 import { FadeInObserver } from "@/components/FadeInOnView";
+import { ScrollProgress } from "@/components/ScrollProgress";
 import { TiltCard } from "@/components/TiltCard";
+
+// Platforms Lockr's picks work on - rendered as a calm marquee band.
+// All logos uniformly sourced from the iTunes App Store icon CDN
+// (512x512 .jpg) for visual consistency.
+const BOOKS = [
+  { name: "PrizePicks", color: "#6F4FF2", initials: "PP", src: "/logos/prizepicks.jpg" },
+  { name: "Underdog", color: "#E03A3E", initials: "UD", src: "/logos/underdog.jpg" },
+  { name: "Sleeper", color: "#15A4D5", initials: "S", src: "/logos/sleeper.jpg" },
+  { name: "Dabble", color: "#1FBC74", initials: "D", src: "/logos/dabble.jpg" },
+  { name: "DraftKings", color: "#1B9D62", initials: "DK", src: "/logos/draftkings.jpg" },
+  { name: "FanDuel", color: "#0094E3", initials: "FD", src: "/logos/fanduel.jpg" },
+  { name: "Kalshi", color: "#00C2A8", initials: "K", src: "/logos/kalshi.jpg" },
+  { name: "Polymarket", color: "#1A66F0", initials: "P", src: "/logos/polymarket.jpg" },
+];
 
 // FAQPage structured data - rich-snippet eligible.
 const FAQ_JSONLD = {
@@ -37,6 +52,9 @@ export default function Home() {
       {/* Scroll-triggered fade-in for sections below the fold. Hero is
           excluded - it's already in view on load and should not animate. */}
       <FadeInObserver />
+
+      {/* Scroll-depth indicator for the long single-page funnel. */}
+      <ScrollProgress />
 
       {/* Hero - "the bettor's terminal". Asymmetric editorial split: the
           pitch on the left, a live data terminal on the right. The terminal
@@ -147,21 +165,21 @@ export default function Home() {
           <div className="books-label">
             Works with every platform you already bet on
           </div>
-          <div className="books-wall">
-            {/* All logos uniformly sourced from iTunes App Store icon CDN
-                (512x512 .jpg) for visual consistency on the wall. */}
-            <SportsbookMark name="PrizePicks" color="#6F4FF2" initials="PP" src="/logos/prizepicks.jpg" />
-            <SportsbookMark name="Underdog" color="#E03A3E" initials="UD" src="/logos/underdog.jpg" />
-            <SportsbookMark name="Sleeper" color="#15A4D5" initials="S" src="/logos/sleeper.jpg" />
-            <SportsbookMark name="Dabble" color="#1FBC74" initials="D" src="/logos/dabble.jpg" />
-            <SportsbookMark name="DraftKings" color="#1B9D62" initials="DK" src="/logos/draftkings.jpg" />
-            <SportsbookMark name="FanDuel" color="#0094E3" initials="FD" src="/logos/fanduel.jpg" />
-            <SportsbookMark name="Kalshi" color="#00C2A8" initials="K" src="/logos/kalshi.jpg" />
-            <SportsbookMark name="Polymarket" color="#1A66F0" initials="P" src="/logos/polymarket.jpg" />
+          {/* Calm horizontal marquee (reuses the shipped marquee engine) - reads
+              "works with everything you use" without the static-grid stiffness.
+              BOOKS is rendered twice for a seamless loop. */}
+          <div className="marquee books-marquee">
+            <div className="marquee-track">
+              {[...BOOKS, ...BOOKS].map((b, i) => (
+                <SportsbookMark key={b.name + i} {...b} />
+              ))}
+            </div>
           </div>
-          <div className="books-note">
-            Free promo codes &amp; sign-up bonuses for every platform above are included
-            with every paid tier.
+          <div className="books-coverage">
+            <span className="books-coverage-num">
+              <CountUp to={8} suffix="+" />
+            </span>{" "}
+            books &amp; prediction markets supported · free promo codes on every tier
           </div>
         </div>
       </section>
@@ -754,6 +772,19 @@ export default function Home() {
             </h2>
           </div>
           <PricingCards />
+          {/* Last-second trust, concentrated at the buy point. Reuses the
+              verified-badge / hero-trust primitives, not new art. */}
+          <div className="trust-pills">
+            <span className="trust-pill">
+              <span className="star" aria-hidden="true">★</span>4.9 member rating
+            </span>
+            <span className="trust-pill">
+              <span className="dot" aria-hidden="true"></span>72%+ win rate, logged
+            </span>
+            <span className="trust-pill">
+              <span className="dot" aria-hidden="true"></span>Cancel anytime · no contract
+            </span>
+          </div>
           <div className="guarantee">
             <div className="guarantee-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
