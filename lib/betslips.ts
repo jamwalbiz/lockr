@@ -1,5 +1,5 @@
 export type BetSlip = {
-  book: "prizepicks" | "underdog" | "kalshi" | "polymarket" | "sleeper" | "draftkings";
+  book: "prizepicks" | "underdog" | "kalshi" | "polymarket" | "betr" | "draftkings";
   bookLabel: string;
   line: string;
   meta: string;
@@ -68,20 +68,20 @@ export const BET_SLIPS: BetSlip[] = [
     imageH: 986,
   },
   {
-    book: "sleeper",
-    bookLabel: "Sleeper",
-    line: "3-pick parlay · NBA player props",
-    meta: "SGA pts · Doncic ast · BOS spread",
-    result: "3/3 ✓",
-    payout: "+$144.50",
-    stake: "$25 → $169.50 · 5x",
+    book: "betr",
+    bookLabel: "Betr",
+    line: "J. Love + J. Brissett · Over rushing yds",
+    meta: "Perfect Play · 3x",
+    result: "2/2 ✓",
+    payout: "+$40.00",
+    stake: "$20 → $60 · 3x",
     handle: "@nia_w",
-    date: "05/22 · 10:08 PM",
-    clv: "+4.2%",
-    image: "/slips/sleeper-win.png",
-    imageAlt: "Sleeper 2-pick, $125 for $253.75, both legs won",
-    imageW: 1748,
-    imageH: 1040,
+    date: "10/18 · 6:29 PM",
+    clv: "+3.1%",
+    image: "/slips/betr-win.png",
+    imageAlt: "Betr Picks perfect play, $20 for $60, both legs won",
+    imageW: 1024,
+    imageH: 768,
   },
   {
     book: "polymarket",
