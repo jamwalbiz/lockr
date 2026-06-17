@@ -665,10 +665,20 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .slip:not(.slip-image) { display: flex; flex-direction: column; justify-content: center; }
 .slip.slip-image { padding: 0; background: #0a0a0b; }
 .slip-img { object-fit: cover; }
-/* Platform name, bottom-left of every card. White mono with a soft dark blur
-   halo (layered text-shadow) so it stays legible over any screenshot without a
-   heavy chip. Replaces the synthetic top book label. */
-.slip-platform { position: absolute; left: 15px; bottom: 13px; z-index: 3; font-family: var(--font-jetbrains), monospace; font-size: 12.5px; font-weight: 700; letter-spacing: 0.03em; color: #fff; text-shadow: 0 0 22px rgba(0, 0, 0, 0.95), 0 0 9px rgba(0, 0, 0, 0.9), 0 0 3px rgba(0, 0, 0, 0.9); }
+/* Platform name, bottom-left of every card: white mono text on a frosted chip
+   that actually blurs the screenshot behind it (purposeful blur over imagery).
+   Replaces the synthetic top book label. */
+.slip-platform {
+  position: absolute; left: 13px; bottom: 13px; z-index: 3;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.04em; color: #fff;
+  padding: 5px 12px; border-radius: 9px;
+  background: rgba(18, 18, 22, 0.3);
+  -webkit-backdrop-filter: blur(13px);
+  backdrop-filter: blur(13px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
 .slip:not(.slip-image) .slip-book { display: none; }
 .slip { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px; padding: 18px 18px 14px; position: relative; overflow: hidden; }
 .slip:hover { border-color: var(--border-strong); }
