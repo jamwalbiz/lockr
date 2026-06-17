@@ -294,11 +294,10 @@ export default function Home() {
                   <line x1="23" y1="11" x2="17" y2="11" />
                 </svg>
               </div>
-              <h3>Pick a tier &amp; join</h3>
+              <h3>Pick a tier, get in</h3>
               <p>
-                Checkout in 60 seconds with card, Apple Pay, Cash App, or bank
-                transfer. Link Discord in your account and claim access. Your role
-                assigns in under 30 seconds, no manual approval, no waiting.
+                Check out in 60 seconds with card, Apple Pay, Cash App, or bank.
+                Link Discord and you&apos;re in instantly. No approval, no waiting.
               </p>
             </div>
             <div className="step">
@@ -310,28 +309,27 @@ export default function Home() {
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                 </svg>
               </div>
-              <h3>Picks drop daily</h3>
+              <h3>Know what to bet, and why</h3>
               <p>
-                Our team posts 6–10 plays a day across every sport, plus prediction
-                markets. Each play comes with the reasoning, the recommended bet size,
-                and the exact line we entered. You always know what to bet and why.
+                The team posts 6–10 plays a day across sports and prediction markets,
+                each with the reasoning, a recommended size, and the exact line we took.
               </p>
             </div>
             <div className="step">
               <div className="step-num">
-                03<span className="step-num-divider"></span>PLACE &amp; TRACK
+                03<span className="step-num-divider"></span>TAIL &amp; TRACK
               </div>
               <div className="step-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <polyline points="3 17 9 11 13 15 21 7" />
-                  <polyline points="14 7 21 7 21 14" />
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
                 </svg>
               </div>
-              <h3>Place &amp; watch the bag grow</h3>
+              <h3>See every result, win or loss</h3>
               <p>
-                Tail the picks on your sportsbook, PrizePicks, Underdog, Kalshi, or
-                Polymarket. Track your P/L against the team&apos;s running unit count,
-                updated in real time.
+                Tail each play on whatever platform you use, PrizePicks, Underdog,
+                Kalshi, or Polymarket. Every result is logged in public before the
+                event and never deleted.
               </p>
             </div>
           </div>
