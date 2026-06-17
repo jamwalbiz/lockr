@@ -39,7 +39,7 @@ export const TESTIMONIALS_ROW_1: Testimonial[] = [
     name: "Ryan P.",
     initials: "RP",
     handle: "Monthly · 3 months",
-    body: "Won my Annual back in week 2 on the NFL playoffs alone. The CLV breakdowns are the real money.",
+    body: "Won my Annual back in week 2 on the NFL playoffs alone. The breakdowns on why each play has an edge are the real money.",
     pl: "+19.6u",
   },
   {

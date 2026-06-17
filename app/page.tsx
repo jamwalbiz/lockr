@@ -108,15 +108,21 @@ export default function Home() {
                   See how it works
                 </a>
               </div>
-              <div className="hero-trust hero-rv" style={{ animationDelay: "0.46s" }}>
-                <span>72%+ win rate</span>
-                <span className="hero-trust-sep">·</span>
-                <span className="hero-trust-rating">
-                  <span className="hero-trust-star" aria-hidden="true">★</span>
-                  4.9 member rating
-                </span>
-                <span className="hero-trust-sep">·</span>
-                <span>Cancel any time</span>
+              <div className="hero-stats hero-rv" style={{ animationDelay: "0.46s" }}>
+                <div className="hero-stat">
+                  <span className="hero-stat-fig">72%+</span>
+                  <span className="hero-stat-label">Win rate</span>
+                </div>
+                <div className="hero-stat">
+                  <span className="hero-stat-fig">
+                    4.9<span className="hero-stat-star" aria-hidden="true">★</span>
+                  </span>
+                  <span className="hero-stat-label">Member rating</span>
+                </div>
+                <div className="hero-stat">
+                  <span className="hero-stat-fig">Cancel</span>
+                  <span className="hero-stat-label">Any time</span>
+                </div>
               </div>
             </div>
 
@@ -522,13 +528,13 @@ export default function Home() {
           <div className="section-head">
             <div className="section-label">Results</div>
             <h2 className="section-title">
-              Real members.
+              On the record.
               <br />
-              Real receipts.
+              Win or loss.
             </h2>
             <p className="section-sub">
-              No actor photos. No fake screenshots. The members below are real, and
-              they&apos;ll be in the room with you the day you join.
+              A sample of member results below. Every pick is posted in public before the
+              event, win or loss, and never deleted, so the record speaks for itself.
             </p>
           </div>
 
@@ -570,9 +576,6 @@ export default function Home() {
                 <div className="slip-head">
                   <div className="slip-book">{slip.bookLabel}</div>
                   <div className="slip-badges">
-                    <div className="slip-clv" title="Closing-line value">
-                      CLV {slip.clv}
-                    </div>
                     <div className="slip-status">WIN</div>
                   </div>
                 </div>
@@ -1038,7 +1041,7 @@ function TestimonialCard({ t }: { t: import("@/lib/testimonials").Testimonial })
       </div>
       <p className="marquee-body">&ldquo;{t.body}&rdquo;</p>
       <div className="marquee-result">
-        <span>P/L</span>
+        <span>Profit</span>
         <span>{t.pl}</span>
       </div>
     </div>
