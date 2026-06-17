@@ -124,8 +124,8 @@ export default function Home() {
                   <span className="hero-stat-label">Member rating</span>
                 </div>
                 <div className="hero-stat">
-                  <span className="hero-stat-fig">6&ndash;10</span>
-                  <span className="hero-stat-label">Plays a day</span>
+                  <span className="hero-stat-fig">Cancel</span>
+                  <span className="hero-stat-label">Any time</span>
                 </div>
               </div>
             </div>
