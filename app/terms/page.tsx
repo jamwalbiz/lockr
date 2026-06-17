@@ -88,8 +88,7 @@ export default function TermsPage() {
         <p>
           Disputes are resolved by binding arbitration in Wyoming under the rules of the
           American Arbitration Association. You waive any right to participate in a class
-          action.{" "}
-          <em>(Specific arbitration clause and class-action waiver pending legal review.)</em>
+          action.
         </p>
 
         <h2>8. Changes to these terms</h2>

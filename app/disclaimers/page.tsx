@@ -30,10 +30,9 @@ export default function DisclaimersPage() {
 
         <h2>No guarantees</h2>
         <p>
-          No outcome is guaranteed. Past performance (including the trailing
-          12-month unit count, win rate, and ROI shown on this site) does not predict
-          future results. Sports outcomes and prediction-market resolutions are inherently
-          uncertain.
+          No outcome is guaranteed. Past performance, including any win rate, member
+          results, or other figures shown on this site, does not predict future results.
+          Sports outcomes and prediction-market resolutions are inherently uncertain.
         </p>
 
         <h2>Your responsibility</h2>

@@ -15,7 +15,9 @@ function isAllowed(target: EventTarget | null): boolean {
   const el = target as HTMLElement | null;
   if (!el || typeof el.closest !== "function") return false;
   return Boolean(
-    el.closest('input, textarea, select, [contenteditable="true"], [data-allow-select]')
+    el.closest(
+      'input, textarea, select, [contenteditable="true"], [data-allow-select], .legal-page'
+    )
   );
 }
 

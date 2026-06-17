@@ -52,7 +52,7 @@ body { overflow-x: hidden; }
 /* Content guard (deterrence only): discourage casual copying of the picks.
    Form fields and anything marked [data-allow-select] stay selectable. */
 body { -webkit-user-select: none; -moz-user-select: none; user-select: none; -webkit-touch-callout: none; }
-input, textarea, select, [contenteditable="true"], [data-allow-select] { -webkit-user-select: text; -moz-user-select: text; user-select: text; }
+input, textarea, select, [contenteditable="true"], [data-allow-select], .legal-page { -webkit-user-select: text; -moz-user-select: text; user-select: text; -webkit-touch-callout: default; }
 img, svg { -webkit-user-drag: none; user-select: none; }
 .mono { font-family: var(--font-jetbrains), 'JetBrains Mono', monospace; font-feature-settings: 'zero', 'ss01'; }
 a { color: inherit; text-decoration: none; }
