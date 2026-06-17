@@ -21,15 +21,25 @@ function AnchorScroll() {
     if (!lenis) return;
     const onClick = (e: MouseEvent) => {
       if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey) return;
-      const a = (e.target as HTMLElement | null)?.closest?.('a[href^="#"]') as
+      const a = (e.target as HTMLElement | null)?.closest?.("a[href]") as
         | HTMLAnchorElement
         | null;
-      const id = a?.getAttribute("href");
-      if (!id || id === "#") return;
-      const target = document.querySelector(id);
+      const href = a?.getAttribute("href");
+      if (!href) return;
+      // Smooth-scroll same-page hash links: "#faq" (nav) and "/#faq" (footer),
+      // but only when we're already on that page. Everything else navigates.
+      let hash = "";
+      if (href.startsWith("#")) hash = href;
+      else if (href.startsWith("/#") && window.location.pathname === "/")
+        hash = href.slice(1);
+      if (!hash || hash === "#") return;
+      const target = document.querySelector(hash) as HTMLElement | null;
       if (!target) return;
       e.preventDefault();
-      lenis.scrollTo(target as HTMLElement, { offset: -90, duration: 1.1 });
+      // Compute an exact Y (deterministic) rather than passing the element +
+      // offset, which Lenis skews when the target has scroll-margin.
+      const y = target.getBoundingClientRect().top + window.scrollY - 96;
+      lenis.scrollTo(y, { duration: 1.1 });
     };
     document.addEventListener("click", onClick);
     return () => document.removeEventListener("click", onClick);

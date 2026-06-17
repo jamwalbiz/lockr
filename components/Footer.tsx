@@ -16,14 +16,14 @@ export function Footer() {
           <div className="footer-col">
             <h3>Product</h3>
             <Link href="/">Picks</Link>
-            <Link href="/#method">Method</Link>
-            <Link href="/#pricing">Pricing</Link>
+            <a href="/#method">Method</a>
+            <a href="/#pricing">Pricing</a>
             <Link href="/checkout">Join Lockr</Link>
           </div>
           <div className="footer-col">
             <h3>Company</h3>
-            <Link href="/#faq">About</Link>
-            <Link href="/#faq">FAQ</Link>
+            <a href="/#faq">About</a>
+            <a href="/#faq">FAQ</a>
             <a href="mailto:hello@joinlockr.com">Contact</a>
           </div>
           <div className="footer-col">

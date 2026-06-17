@@ -573,10 +573,20 @@ export default function Home() {
             {BET_SLIPS.map((slip) => (
               <TiltCard
                 key={slip.handle + slip.date}
-                className={`slip ${slip.book}`}
+                className={`slip ${slip.book}${slip.image ? " slip-image" : ""}`}
                 maxTilt={5}
                 scale={1.015}
               >
+                {slip.image ? (
+                  <Image
+                    src={slip.image}
+                    alt={slip.imageAlt ?? `${slip.bookLabel} winning bet slip`}
+                    width={slip.imageW ?? 1320}
+                    height={slip.imageH ?? 989}
+                    className="slip-img"
+                  />
+                ) : (
+                  <>
                 <div className="slip-head">
                   <div className="slip-book">{slip.bookLabel}</div>
                   <div className="slip-badges">
@@ -601,6 +611,8 @@ export default function Home() {
                     <div className="slip-member-date">{slip.date}</div>
                   </div>
                 </div>
+                  </>
+                )}
               </TiltCard>
             ))}
           </div>

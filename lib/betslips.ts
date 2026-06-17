@@ -10,6 +10,12 @@ export type BetSlip = {
   date: string;
   /** Closing-line value vs entry. Persona-B sharp signal. Plausible range ~ +1..+12%. */
   clv: string;
+  /** When set, the card renders this real bet-slip screenshot instead of the
+   *  synthetic layout. Path under /public, with natural pixel dimensions. */
+  image?: string;
+  imageAlt?: string;
+  imageW?: number;
+  imageH?: number;
 };
 
 export const BET_SLIPS: BetSlip[] = [
@@ -24,6 +30,10 @@ export const BET_SLIPS: BetSlip[] = [
     handle: "@jordan_k",
     date: "05/24 · 9:42 PM",
     clv: "+6.5%",
+    image: "/slips/prizepicks-win.png",
+    imageAlt: "PrizePicks 2-pick power play, $5,000 to win $11,000, marked Win",
+    imageW: 1320,
+    imageH: 989,
   },
   {
     book: "underdog",

@@ -658,7 +658,11 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 /* ------------------------------------------------------------------
    Bet slips
    ------------------------------------------------------------------ */
-.slips-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 1100px; margin: 0 auto; }
+.slips-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 1100px; margin: 0 auto; align-items: start; }
+/* Real bet-slip screenshot cards: image fills the card edge-to-edge (the card's
+   overflow:hidden + radius frame it), no synthetic padding/chrome. */
+.slip.slip-image { padding: 0; }
+.slip-img { display: block; width: 100%; height: auto; }
 .slip { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px; padding: 18px 18px 14px; position: relative; overflow: hidden; }
 .slip:hover { border-color: var(--border-strong); }
 /* Green spotlight glow tracking the cursor across the receipt card (the
@@ -980,6 +984,9 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 .lenis.lenis-stopped { overflow: hidden; }
+/* Anchor targets clear the fixed activity bar + nav on native hash jumps
+   (cross-page links, reduced-motion). The Lenis path uses scrollTo offset. */
+section[id] { scroll-margin-top: 96px; }
 
 /* ------------------------------------------------------------------
    Magnetic CTA wrapper (components/Magnetic.tsx). Transform set inline on
