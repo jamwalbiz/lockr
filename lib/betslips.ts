@@ -110,5 +110,9 @@ export const BET_SLIPS: BetSlip[] = [
     handle: "@sam_h",
     date: "05/20 · 11:47 AM",
     clv: "+6.4%",
+    image: "/slips/draftkings-win.png",
+    imageAlt: "DraftKings 5-pick parlay won, paid $541.43",
+    imageW: 1024,
+    imageH: 768,
   },
 ];
