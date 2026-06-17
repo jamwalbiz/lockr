@@ -2,6 +2,7 @@ import Image from "next/image";
 import { CountUp } from "@/components/CountUp";
 import { JoinCta } from "@/components/JoinCta";
 import { Magnetic } from "@/components/Magnetic";
+import { PRICING } from "@/lib/copy";
 import {
   IconBallAmericanFootball,
   IconBallBasketball,
@@ -164,7 +165,12 @@ export default function Home() {
           exist yet. */}
       <section id="intro" className="fade-in-section">
         <div className="shell">
-          <div className="section-head">            <h2 className="section-title">How Lockr finds edges your book is missing.</h2>
+          <div className="section-head head-wide">
+            <h2 className="section-title">
+              How Lockr finds edges
+              <br />
+              your book is missing.
+            </h2>
           </div>
           <div className="vsl-wrap">
             {process.env.NEXT_PUBLIC_VSL_URL ? (
@@ -226,7 +232,12 @@ export default function Home() {
       {/* Pillars */}
       <section className="fade-in-section">
         <div className="shell">
-          <div className="section-head">            <h2 className="section-title">Built for bettors who actually want to win.</h2>
+          <div className="section-head head-wide">
+            <h2 className="section-title">
+              Built for bettors who
+              <br />
+              actually want to win.
+            </h2>
           </div>
           <div className="pillars">
             <div className="pillar">
@@ -541,7 +552,7 @@ export default function Home() {
 
           {/* Bet slips */}
           <div style={{ textAlign: "center", margin: "64px 0 32px" }}>
-            <div className="section-label" style={{ color: "var(--text-mute)" }}>
+            <div className="mini-kicker">
               Cashed
             </div>
             <h3 style={{ fontSize: 26, fontWeight: 700, letterSpacing: "-0.02em" }}>
@@ -589,7 +600,7 @@ export default function Home() {
 
           {/* Discord embeds */}
           <div style={{ textAlign: "center", margin: "64px 0 32px" }}>
-            <div className="section-label" style={{ color: "var(--text-mute)" }}>
+            <div className="mini-kicker">
               Inside the room
             </div>
             <h3 style={{ fontSize: 26, fontWeight: 700, letterSpacing: "-0.02em" }}>
@@ -735,10 +746,24 @@ export default function Home() {
             <h2 className="section-title">
               Pick a tier.
               <br />
-              Bet tonight.
+              Bet <span className="t-accent">tonight</span>.
             </h2>
           </div>
-          <PricingCards />
+          <div className="pricing-stage">
+            <div className="price-rail">
+              <div className="price-rail-kicker">Entry price</div>
+              <div className="price-rail-figure">
+                <span className="cur">$</span>
+                {PRICING.subscription.weekly.price.replace(/[^0-9]/g, "")}
+                <span className="per">/wk</span>
+              </div>
+              <p className="price-rail-foot">
+                <strong>One price, both tiers below.</strong> Cancel any time, no
+                contract.
+              </p>
+            </div>
+            <PricingCards />
+          </div>
           {/* Last-second trust, concentrated at the buy point. Reuses the
               verified-badge / hero-trust primitives, not new art. */}
           <div className="trust-pills">
@@ -759,7 +784,12 @@ export default function Home() {
           on mobile, color-coded so the contrast survives single-column. */}
       <section className="fade-in-section">
         <div className="shell">
-          <div className="section-head">            <h2 className="section-title">The other guys hope you never compare.</h2>
+          <div className="section-head head-wide">
+            <h2 className="section-title">
+              The other guys hope
+              <br />
+              you never compare.
+            </h2>
             <p className="section-sub">
               You&apos;ve seen the other side. Here&apos;s the difference.
             </p>
@@ -795,7 +825,8 @@ export default function Home() {
       {/* Disqualifier */}
       <section className="fade-in-section">
         <div className="shell">
-          <div className="section-head">            <h2 className="section-title">Is Lockr actually for you?</h2>
+          <div className="section-head head-wide">
+            <h2 className="section-title">Is Lockr actually for you?</h2>
             <p className="section-sub">
               We&apos;d rather not have your money than have you cancel angry in 3 weeks.
               Read this before you join.
