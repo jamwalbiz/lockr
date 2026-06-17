@@ -27,7 +27,7 @@ export function PickCards() {
         <a
           key={p.sport}
           href="/checkout"
-          className={`pick-card${i === 0 ? " featured" : ""}`}
+          className="pick-card"
           onMouseMove={onMove}
           onClick={() => track("cta_click", { cta: "hero_pick_card", sport: p.sport })}
           style={{ animationDelay: `${0.34 + i * 0.1}s` }}

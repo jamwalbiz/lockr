@@ -99,6 +99,30 @@ input, textarea, select { font-family: inherit; }
 }
 .btn-primary:hover::after { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .btn-primary::after { transition: none; } }
+/* CTA shine - a diagonal gloss streak that sweeps across the primary buy
+   buttons every few seconds (moved here from the hero pick cards). */
+.btn-primary::before, .price-cta.primary::before, .mobile-cta-btn::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  bottom: -30%;
+  left: 0;
+  width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transform: translateX(-220%) skewX(-20deg);
+  animation: cta-shine 5s ease-in-out infinite;
+  pointer-events: none;
+}
+.price-cta.primary::before { animation-delay: 2s; }
+.mobile-cta-btn::before { animation-delay: 1s; }
+@keyframes cta-shine {
+  0%   { transform: translateX(-220%) skewX(-20deg); }
+  16%  { transform: translateX(340%) skewX(-20deg); }
+  100% { transform: translateX(340%) skewX(-20deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary::before, .price-cta.primary::before, .mobile-cta-btn::before { animation: none; opacity: 0; }
+}
 .btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--border-strong); }
 .btn-secondary:hover { background: var(--bg-elevated); }
 .btn-ghost { color: var(--text-mute); }
@@ -336,19 +360,6 @@ h1.hero-title { font-family: var(--font-display), var(--font-inter), sans-serif;
 .pick-card-lock { display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0; font-family: var(--font-jetbrains), monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
 .pick-card:hover .pick-card-lock { text-shadow: 0 0 10px rgba(0,255,133,0.5); }
 
-/* Featured (top) card carries a slow green shimmer border - the "lightning". */
-.pick-card.featured { border-color: rgba(0, 255, 133, 0.18); }
-.pick-card.featured::after {
-  content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px;
-  background: linear-gradient(115deg, transparent 38%, rgba(0, 255, 133, 0.5) 50%, transparent 62%);
-  background-size: 250% 100%;
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude;
-  animation: pick-shimmer 5s linear infinite; pointer-events: none;
-}
-@keyframes pick-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -150% 0; } }
-@media (prefers-reduced-motion: reduce) { .pick-card.featured::after { animation: none; opacity: 0; } }
 
 /* ── Orchestrated load ── */
 .hero-rv { opacity: 0; transform: translateY(18px); animation: heroReveal 0.72s cubic-bezier(.2,.8,.2,1) forwards; }
@@ -501,7 +512,7 @@ h1.hero-title { font-family: var(--font-display), var(--font-inter), sans-serif;
 .mobile-cta-text { flex: 1; min-width: 0; }
 .mobile-cta-line1 { font-size: 11px; color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; line-height: 1.1; }
 .mobile-cta-line2 { font-size: 14px; color: var(--text); font-weight: 600; margin-top: 2px; }
-.mobile-cta-btn { flex-shrink: 0; padding: 11px 18px; background: var(--accent); color: #000; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1); }
+.mobile-cta-btn { flex-shrink: 0; padding: 11px 18px; background: var(--accent); color: #000; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; }
 @media (max-width: 768px) {
   .mobile-cta { display: block; }
   footer { padding-bottom: 90px; }
@@ -735,7 +746,7 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .price-features li::before { content: '✓'; color: var(--accent); flex-shrink: 0; font-weight: 700; }
 .price-cta { width: 100%; padding: 12px; border-radius: 8px; background: transparent; border: 1px solid var(--border-strong); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.15s; color: var(--text); }
 .price-cta:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
-.price-cta.primary { background: var(--accent); color: #000; border-color: var(--accent); }
+.price-cta.primary { background: var(--accent); color: #000; border-color: var(--accent); position: relative; overflow: hidden; }
 .price-cta.primary:hover { background: #00e677; transform: translateY(-1px); }
 
 .ic-mini { display: flex; flex-direction: column; align-items: center; gap: 4px; font-family: var(--font-jetbrains), monospace; font-size: 10px; color: var(--gold); margin: 12px 0 14px; padding: 8px 12px; background: rgba(201,167,106,0.08); border: 1px solid rgba(201,167,106,0.2); border-radius: 6px; font-weight: 600; letter-spacing: 0.04em; line-height: 1.3; }
