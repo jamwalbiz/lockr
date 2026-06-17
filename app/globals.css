@@ -680,15 +680,19 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
 }
 .slip:not(.slip-image) .slip-book { display: none; }
-.slip { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px; padding: 18px 18px 14px; position: relative; overflow: hidden; }
-.slip:hover { border-color: var(--border-strong); }
+.slip { background: var(--bg-elevated); border: 1px solid rgba(0, 255, 133, 0.16); border-radius: 12px; padding: 18px 18px 14px; position: relative; overflow: hidden; }
+.slip:hover { border-color: rgba(0, 255, 133, 0.45); }
+/* Brand-green wash unifying every platform screenshot into Lockr's world.
+   Additive (screen) glow rising from the chip, so it greens the dark
+   backgrounds without washing out the slip content. */
+.slip-tint { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(135% 115% at 50% 116%, rgba(0, 255, 133, 0.26), rgba(0, 255, 133, 0.07) 46%, transparent 76%); mix-blend-mode: screen; }
 /* Green spotlight glow tracking the cursor across the receipt card (the
    Cyber-Serif / satellite-card "spotlight cursor tracking" element, recolored
    to Lockr's accent). --mx/--my come from TiltCard; clipped by overflow:hidden. */
-.slip::after { content: ''; position: absolute; inset: 0; background: radial-gradient(200px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 255, 133, 0.12), transparent 60%); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+.slip::after { content: ''; position: absolute; inset: 0; z-index: 2; background: radial-gradient(200px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 255, 133, 0.16), transparent 60%); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; mix-blend-mode: screen; }
 .slip:hover::after { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .slip::after { transition: none; } }
-.slip::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--book-accent, var(--accent)); }
+.slip::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; z-index: 2; background: var(--accent); box-shadow: 0 0 12px rgba(0, 255, 133, 0.55); }
 .slip.prizepicks { --book-accent: #6f4ff2; }
 .slip.underdog { --book-accent: #ff3f3f; }
 .slip.kalshi { --book-accent: #00c2a8; }

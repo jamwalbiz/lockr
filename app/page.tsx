@@ -613,6 +613,7 @@ export default function Home() {
                 </div>
                   </>
                 )}
+                <span className="slip-tint" aria-hidden="true" />
                 <span className="slip-platform" aria-hidden="true">
                   {slip.bookLabel}
                 </span>
