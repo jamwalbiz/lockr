@@ -92,8 +92,9 @@ export default function Home() {
                 </span>
               </h1>
               <p className="hero-sub hero-rv" style={{ animationDelay: "0.3s" }}>
-                Daily plays across every sport, plus prediction markets like Kalshi and
-                Polymarket. Every pick posted before the game, win or loss.
+                The best daily plays across every sport and prediction market, Kalshi and
+                Polymarket included. Posted before the line moves and hitting 72%+. You
+                just tail.
               </p>
               <div className="hero-cta-row hero-rv" style={{ animationDelay: "0.38s" }}>
                 <JoinCta href="/checkout" location="hero">
@@ -244,9 +245,9 @@ export default function Home() {
                   <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4.5L6 21l1.5-7.5L2 9h7z" />
                 </svg>
               </div>
-              <h3>Prediction markets, not just books</h3>
+              <h3>Prediction markets</h3>
               <p>
-                Almost no picks service touches Kalshi or Polymarket. We work them right
+                Almost nobody else covers Kalshi or Polymarket. We work them right
                 alongside the sportsbooks, where the lines are softest and the edges are
                 biggest. It&apos;s where the smart money is moving, and you&apos;re early.
               </p>
@@ -418,13 +419,13 @@ export default function Home() {
       <section className="fade-in-section">
         <div className="shell">
           <div className="section-head">            <h2 className="section-title">
-              Year-round, every sport.
+              Every sport and
               <br />
-              Plus prediction markets.
+              prediction market.
             </h2>
             <p className="section-sub">
-              10+ sports plus Kalshi and Polymarket, the prediction markets almost no
-              other service covers. One subscription, year-round. No summer drought.
+              10+ sports and the prediction markets almost nobody else covers, Kalshi and
+              Polymarket. One subscription, year-round, no summer drought.
             </p>
           </div>
           <div className="sports-grid">
@@ -780,7 +781,7 @@ export default function Home() {
             <div className="vs-col us">
               <div className="vs-label">★ Lockr</div>
               <div className="vs-title">
-                The picks service serious bettors stay subscribed to.
+                The one serious bettors actually stay subscribed to.
               </div>
               <ul className="vs-list">
                 <li>Every pick posted live before the event starts</li>

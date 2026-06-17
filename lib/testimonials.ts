@@ -46,7 +46,7 @@ export const TESTIMONIALS_ROW_1: Testimonial[] = [
     name: "Lauren F.",
     initials: "LF",
     handle: "Member · 6 months",
-    body: "First picks service that didn't make me feel like I was getting hustled. The transparency is wild.",
+    body: "First one of these that didn't make me feel like I was getting hustled. The transparency is wild.",
     pl: "+14.2u",
   },
 ];
