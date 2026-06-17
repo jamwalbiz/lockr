@@ -276,7 +276,7 @@ export default function Home() {
           <div className="section-head">
             <div className="section-label">Method</div>
             <h2 className="section-title">
-              From signup to first cashed ticket
+              From signup to your first play
               <br />
               in under 10 minutes.
             </h2>
@@ -539,10 +539,10 @@ export default function Home() {
           {/* Bet slips */}
           <div style={{ textAlign: "center", margin: "64px 0 32px" }}>
             <div className="section-label" style={{ color: "var(--text-mute)" }}>
-              Real wins · last 7 days
+              Cashed
             </div>
             <h3 style={{ fontSize: 26, fontWeight: 700, letterSpacing: "-0.02em" }}>
-              Member bet slips from this week.
+              Every play logged in public. Here are the wins.
             </h3>
           </div>
           <div className="slips-grid">
@@ -803,13 +803,13 @@ export default function Home() {
               <div className="qual-icon" aria-hidden="true">✓</div>
               <div className="qual-label">★ Lockr is for you if</div>
               <div className="qual-title">
-                You bet, you take it seriously, and you want to compound.
+                You bet seriously and you want a real edge.
               </div>
               <ul className="qual-list">
-                <li>You bet at least once a week and want to win more than you lose</li>
-                <li>You&apos;re open to learning a system, not just copying picks blindly</li>
-                <li>You understand losing weeks happen and you don&apos;t blame the messenger</li>
-                <li>You want a method you can keep using even after you cancel</li>
+                <li>You bet most weeks and you want to get sharper at it</li>
+                <li>You want to understand the play, not just copy a number</li>
+                <li>You think in seasons, not single nights</li>
+                <li>You want every call logged in the open, win or loss</li>
               </ul>
             </div>
             <div className="qual-card no">
@@ -819,10 +819,10 @@ export default function Home() {
                 You want guaranteed wins or a get-rich-quick play.
               </div>
               <ul className="qual-list">
-                <li>You think &quot;picks&quot; means &quot;every bet wins&quot;</li>
-                <li>You&apos;d want a refund after a single losing week</li>
-                <li>You can only bet money you can&apos;t afford to lose</li>
-                <li>You expect the team to think for you instead of teaching you to think</li>
+                <li>You think &quot;picks&quot; means every bet cashes</li>
+                <li>You&apos;d bail the first time things go cold</li>
+                <li>You want someone to bet for you, not show you how</li>
+                <li>You&apos;re chasing money you&apos;d be better off keeping</li>
               </ul>
             </div>
           </div>

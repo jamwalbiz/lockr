@@ -8,6 +8,7 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { MobileCta } from "@/components/MobileCta";
 import { SocialProofPopups } from "@/components/SocialProofPopups";
+import { ContentGuard } from "@/components/ContentGuard";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -120,6 +121,8 @@ export default function RootLayout({
           <MobileCta />
           <SocialProofPopups />
         </CadenceProvider>
+        {/* Deterrent against casual copying of the picks (not real security). */}
+        <ContentGuard />
         {/* Cookie-less pageview analytics; no-ops on localhost. */}
         <Analytics />
       </body>
