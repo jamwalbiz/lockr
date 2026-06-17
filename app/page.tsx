@@ -20,6 +20,7 @@ import { TESTIMONIALS_ROW_1, TESTIMONIALS_ROW_2 } from "@/lib/testimonials";
 import { BET_SLIPS } from "@/lib/betslips";
 import { FAQ_ITEMS } from "@/lib/faq";
 import { FadeInObserver } from "@/components/FadeInOnView";
+import { Cinematic } from "@/components/Cinematic";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { SpotlightObserver } from "@/components/SpotlightObserver";
 import { PickCards } from "@/components/PickCards";
@@ -56,6 +57,9 @@ export default function Home() {
       {/* Scroll-triggered fade-in for sections below the fold. Hero is
           excluded - it's already in view on load and should not animate. */}
       <FadeInObserver />
+
+      {/* GSAP cinematic scroll layer (title wipes, hero depth, footer rise). */}
+      <Cinematic />
 
       {/* Scroll-depth indicator for the long single-page funnel. */}
       <ScrollProgress />
