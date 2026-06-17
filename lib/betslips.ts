@@ -78,6 +78,10 @@ export const BET_SLIPS: BetSlip[] = [
     handle: "@nia_w",
     date: "05/22 · 10:08 PM",
     clv: "+4.2%",
+    image: "/slips/sleeper-win.png",
+    imageAlt: "Sleeper 2-pick, $125 for $253.75, both legs won",
+    imageW: 1748,
+    imageH: 1040,
   },
   {
     book: "polymarket",
