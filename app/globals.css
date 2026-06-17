@@ -507,7 +507,7 @@ h1.hero-title { font-family: var(--font-display), var(--font-inter), sans-serif;
 /* ------------------------------------------------------------------
    Mobile sticky CTA
    ------------------------------------------------------------------ */
-.mobile-cta { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 198; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: rgba(10, 10, 11, 0.92); backdrop-filter: blur(20px); border-top: 1px solid var(--border-strong); }
+.mobile-cta { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 198; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: rgba(10, 10, 11, 0.97); border-top: 1px solid var(--border-strong); }
 .mobile-cta-inner { display: flex; align-items: center; gap: 10px; }
 .mobile-cta-text { flex: 1; min-width: 0; }
 .mobile-cta-line1 { font-size: 11px; color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; line-height: 1.1; }
@@ -516,7 +516,6 @@ h1.hero-title { font-family: var(--font-display), var(--font-inter), sans-serif;
 @media (max-width: 768px) {
   .mobile-cta { display: block; }
   footer { padding-bottom: 90px; }
-  .social-proof-stack { bottom: 84px; }
 }
 
 /* ------------------------------------------------------------------
@@ -953,7 +952,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 120px; }
 /* A5 - book/market logo wall as a calm slow marquee (reuses the marquee
    engine). Tiles get a full border + radius since they're no longer in a grid. */
 .books-marquee { margin-bottom: 4px; }
-.books-marquee .marquee-track { animation-duration: 75s; gap: 14px; }
+.books-marquee .marquee-track { animation-duration: 42s; gap: 14px; }
 .books-marquee .book-mark { flex-shrink: 0; min-width: 128px; padding: 18px 24px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-elevated); }
 .books-marquee .book-mark:hover { background: var(--bg-elevated-2); }
 
@@ -995,3 +994,26 @@ html { scroll-behavior: smooth; scroll-padding-top: 120px; }
 .text-center { text-align: center; }
 .text-accent { color: var(--accent); }
 .text-mute { color: var(--text-mute); }
+
+/* ------------------------------------------------------------------
+   Mobile optimization (social = the biggest traffic source).
+   Placed last so it wins the cascade. Drops the heaviest GPU effects
+   on phones and fixes the social-proof / sticky-CTA overlap.
+   ------------------------------------------------------------------ */
+@media (max-width: 768px) {
+  /* Perf: backdrop-blur on the glass cards is expensive while the lightning
+     animates behind them. Swap to a near-solid dark surface on phones. */
+  .pick-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(22, 22, 26, 0.92);
+  }
+  /* Perf: kill the large animated blur blob behind the hero deck. */
+  .pick-glow { display: none; }
+  /* Bigger, easier hamburger tap target. */
+  .nav-hamburger { width: 44px; height: 44px; }
+  /* Lift the social-proof popups clear of the sticky CTA bar (was overlapping)
+     and keep them compact so they don't swallow the screen. */
+  .social-proof-stack { bottom: 88px; left: 14px; right: 14px; }
+  .social-proof { max-width: 300px; }
+}

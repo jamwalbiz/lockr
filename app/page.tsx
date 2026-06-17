@@ -78,7 +78,7 @@ export default function Home() {
             <div className="hero-left">
               <div className="verified-badge hero-rv" style={{ animationDelay: "0.05s" }}>
                 <span className="dot"></span>
-                <span>Daily picks · sports + prediction markets</span>
+                <span>Today&apos;s best plays · sports + prediction markets</span>
               </div>
               <h1 className="hero-title">
                 <span className="hero-rv" style={{ animationDelay: "0.12s" }}>
@@ -92,8 +92,9 @@ export default function Home() {
                 </span>
               </h1>
               <p className="hero-sub hero-rv" style={{ animationDelay: "0.3s" }}>
-                Daily plays across every sport, plus prediction markets like Kalshi and
-                Polymarket. Every pick posted before the game, win or loss.
+                Not random picks. Our sharpest plays across every sport plus Kalshi and
+                Polymarket, hitting 72%+ and posted before the line moves. Tail the
+                winners.
               </p>
               <div className="hero-cta-row hero-rv" style={{ animationDelay: "0.38s" }}>
                 <JoinCta href="/checkout" location="hero">
