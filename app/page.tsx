@@ -765,24 +765,26 @@ export default function Home() {
                 <span className="per">/wk</span>
               </div>
               <p className="price-rail-foot">
-                <strong>One price, both tiers below.</strong> Cancel any time, no
-                contract.
+                <strong>One price, both tiers below.</strong>
               </p>
+              {/* Proof concentrated at the buy point, consolidated into the rail
+                  (was a disconnected row of glass pills below the stage). */}
+              <ul className="price-rail-proof">
+                <li>
+                  <span className="star" aria-hidden="true">★</span>
+                  <span className="v">4.9</span> member rating
+                </li>
+                <li>
+                  <span className="dot" aria-hidden="true"></span>
+                  <span className="v">72%+</span> win rate
+                </li>
+                <li>
+                  <span className="dot" aria-hidden="true"></span>
+                  Cancel any time, no contract
+                </li>
+              </ul>
             </div>
             <PricingCards />
-          </div>
-          {/* Last-second trust, concentrated at the buy point. Reuses the
-              verified-badge / hero-trust primitives, not new art. */}
-          <div className="trust-pills">
-            <span className="trust-pill">
-              <span className="star" aria-hidden="true">★</span>4.9 member rating
-            </span>
-            <span className="trust-pill">
-              <span className="dot" aria-hidden="true"></span>72%+ win rate
-            </span>
-            <span className="trust-pill">
-              <span className="dot" aria-hidden="true"></span>Cancel anytime
-            </span>
           </div>
         </div>
       </section>
