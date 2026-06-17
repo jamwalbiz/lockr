@@ -754,46 +754,39 @@ export default function Home() {
         </div>
       </section>
 
-      {/* VS comparison */}
+      {/* VS comparison - paired rows that interleave (them, us, them, us...)
+          on mobile, color-coded so the contrast survives single-column. */}
       <section className="fade-in-section">
         <div className="shell">
-          <div className="section-head">            <h2 className="section-title">Two ways to buy picks online.</h2>
+          <div className="section-head">            <h2 className="section-title">The other guys hope you never compare.</h2>
             <p className="section-sub">
               You&apos;ve seen the other side. Here&apos;s the difference.
             </p>
           </div>
-          <div className="vs-section">
-            <div className="vs-col them">
+          <div className="vs-grid">
+            <div className="vs-head them">
               <div className="vs-label">The other guys</div>
-              <div className="vs-title">The picks service you&apos;ve already quit.</div>
-              <ul className="vs-list">
-                <li>Screenshots edited after the fact</li>
-                <li>Lambo emojis. &quot;BANGER 🚨🚨🚨&quot; energy</li>
-                <li>Lifetime $9.99 every week for &quot;first 5 spots&quot;</li>
-                <li>Blocks you in the DMs after a losing week</li>
-                <li>Owner is anonymous behind a Bitmoji</li>
-                <li>Nobody mentions CLV or unit sizing</li>
-                <li>The group goes dark in the summer</li>
-                <li>Sells your email to a dozen other lists</li>
-              </ul>
+              <div className="vs-title">The group you&apos;ve already quit.</div>
             </div>
-            <div className="vs-divider">VS</div>
-            <div className="vs-col us">
+            <div className="vs-head us">
               <div className="vs-label">★ Lockr</div>
-              <div className="vs-title">
-                The one serious bettors actually stay subscribed to.
-              </div>
-              <ul className="vs-list">
-                <li>Every pick posted live before the event starts</li>
-                <li>Strategy + education. No emojis. No costume jewelry</li>
-                <li>Cancel in 60 seconds. No retention call, no friction</li>
-                <li>We post the losses too, then explain what went wrong</li>
-                <li>Real face, real name, real accountability</li>
-                <li>Picks plus a system: how much to bet, when to walk away</li>
-                <li>Year-round across 10+ sports + prediction markets</li>
-                <li>Your email never leaves Lockr&apos;s database</li>
-              </ul>
+              <div className="vs-title">The one serious bettors actually stay subscribed to.</div>
             </div>
+
+            <div className="vs-row them">Deletes the losing picks so the record stays clean</div>
+            <div className="vs-row us">We post the losses too, then explain what went wrong</div>
+
+            <div className="vs-row them">Screenshots edited after the fact</div>
+            <div className="vs-row us">Every pick posted live, before the event starts</div>
+
+            <div className="vs-row them">Blocks you in the DMs after a losing week</div>
+            <div className="vs-row us">Cancel in 60 seconds. No retention call</div>
+
+            <div className="vs-row them">Anonymous owner behind a Bitmoji</div>
+            <div className="vs-row us">Real face, real name, real accountability</div>
+
+            <div className="vs-row them">Sells your email to a dozen other lists</div>
+            <div className="vs-row us">Your email never leaves Lockr</div>
           </div>
         </div>
       </section>
@@ -819,7 +812,6 @@ export default function Home() {
                 <li>You&apos;re open to learning a system, not just copying picks blindly</li>
                 <li>You understand losing weeks happen and you don&apos;t blame the messenger</li>
                 <li>You want a method you can keep using even after you cancel</li>
-                <li>You want one place for picks across every sport plus Kalshi and Polymarket</li>
               </ul>
             </div>
             <div className="qual-card no">
@@ -830,9 +822,8 @@ export default function Home() {
               </div>
               <ul className="qual-list">
                 <li>You think &quot;picks&quot; means &quot;every bet wins&quot;</li>
-                <li>You&apos;ll cancel and chargeback after one losing week</li>
-                <li>You can&apos;t risk what you wager, so bet only what you can afford to lose</li>
-                <li>You want a group chat full of Lambo emojis and chants</li>
+                <li>You&apos;d want a refund after a single losing week</li>
+                <li>You can only bet money you can&apos;t afford to lose</li>
                 <li>You expect the team to think for you instead of teaching you to think</li>
               </ul>
             </div>
