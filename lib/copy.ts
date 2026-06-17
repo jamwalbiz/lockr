@@ -309,6 +309,13 @@ export const PRICING = {
   },
 } as const;
 
+// One-line positioning under each tier name (the "who it's for" hook the
+// cards were missing). Kept tight; the full sell lives in the feature list.
+export const SUBSCRIPTION_DESC =
+  "Our most popular plan. Daily picks for first-timers and seven-day-a-week grinders alike.";
+export const INNERCIRCLE_DESC =
+  "Our top tier. Not just picks, a partnership with the team.";
+
 export const SUBSCRIPTION_FEATURES = [
   "Daily picks across every sport + prediction markets",
   "Plain-English reasoning + recommended size on every play",

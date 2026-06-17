@@ -10,6 +10,8 @@ import {
   PRICING,
   SUBSCRIPTION_FEATURES,
   INNERCIRCLE_FEATURES,
+  SUBSCRIPTION_DESC,
+  INNERCIRCLE_DESC,
   IC_STATUS,
 } from "@/lib/copy";
 
@@ -33,6 +35,7 @@ export function PricingCards() {
       {/* Lockr Subscription card */}
       <TiltCard className="pricing-card instant" maxTilt={4} scale={1.008}>
         <div className="price-tier">Lockr Subscription</div>
+        <p className="price-desc">{SUBSCRIPTION_DESC}</p>
         <div className="cadence-toggle">
           <CadenceButton
             active={subCadence === "weekly"}
@@ -94,6 +97,7 @@ export function PricingCards() {
       {/* Inner Circle card */}
       <TiltCard className="pricing-card gold" maxTilt={4} scale={1.008}>
         <div className="price-tier">Inner Circle</div>
+        <p className="price-desc">{INNERCIRCLE_DESC}</p>
         <div className="cadence-toggle two-col">
           <CadenceButton
             active={icCadence === "monthly"}

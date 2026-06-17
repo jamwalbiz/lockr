@@ -735,7 +735,9 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .cadence-btn.active .cadence-save { color: rgba(0,0,0,0.65); }
 .pricing-card.gold .cadence-btn.active .cadence-save { color: rgba(0,0,0,0.7); }
 
-.price-tier { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-mute); margin-bottom: 12px; font-weight: 600; }
+.price-tier { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-mute); margin-bottom: 8px; font-weight: 600; }
+.price-desc { margin: 0 0 18px; font-size: 13.5px; line-height: 1.5; color: var(--text-mute); min-height: 40px; }
+@media (max-width: 600px) { .price-desc { min-height: 0; } }
 .price-block { animation: priceFadeIn 0.22s ease-out; }
 @keyframes priceFadeIn {
   from { opacity: 0.5; transform: translateY(3px); }
