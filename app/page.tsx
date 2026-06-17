@@ -771,16 +771,18 @@ export default function Home() {
                   (was a disconnected row of glass pills below the stage). */}
               <ul className="price-rail-proof">
                 <li>
-                  <span className="star" aria-hidden="true">★</span>
-                  <span className="v">4.9</span> member rating
+                  <span className="k">Member rating</span>
+                  <span className="v">
+                    4.9<span className="star" aria-hidden="true">★</span>
+                  </span>
                 </li>
                 <li>
-                  <span className="dot" aria-hidden="true"></span>
-                  <span className="v">72%+</span> win rate
+                  <span className="k">Win rate</span>
+                  <span className="v">72%+</span>
                 </li>
                 <li>
-                  <span className="dot" aria-hidden="true"></span>
-                  Cancel any time, no contract
+                  <span className="k">Cancellation</span>
+                  <span className="v">Any time</span>
                 </li>
               </ul>
             </div>
