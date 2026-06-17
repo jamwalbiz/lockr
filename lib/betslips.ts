@@ -48,8 +48,8 @@ export const BET_SLIPS: BetSlip[] = [
     clv: "+2.7%",
     image: "/slips/underdog-win.png",
     imageAlt: "Underdog 8-pick entries marked Won, with profit boosts",
-    imageW: 1079,
-    imageH: 934,
+    imageW: 1024,
+    imageH: 768,
   },
   {
     book: "kalshi",
