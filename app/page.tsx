@@ -244,11 +244,11 @@ export default function Home() {
                   <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4.5L6 21l1.5-7.5L2 9h7z" />
                 </svg>
               </div>
-              <h3>Prediction-market plays</h3>
+              <h3>Prediction markets, not just books</h3>
               <p>
-                Lockr is one of the few that works Kalshi and Polymarket alongside the
-                sportsbooks. Bigger menu, better prices on the markets your book either
-                won&apos;t offer or prices badly.
+                Almost no picks service touches Kalshi or Polymarket. We work them right
+                alongside the sportsbooks, where the lines are softest and the edges are
+                biggest. It&apos;s where the smart money is moving, and you&apos;re early.
               </p>
             </div>
             <div className="pillar">
@@ -423,8 +423,8 @@ export default function Home() {
               Plus prediction markets.
             </h2>
             <p className="section-sub">
-              10+ sports and two prediction-market platforms, under one subscription. No
-              summer drought.
+              10+ sports plus Kalshi and Polymarket, the prediction markets almost no
+              other service covers. One subscription, year-round. No summer drought.
             </p>
           </div>
           <div className="sports-grid">

@@ -99,26 +99,29 @@ input, textarea, select { font-family: inherit; }
 }
 .btn-primary:hover::after { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .btn-primary::after { transition: none; } }
-/* CTA shine - a diagonal gloss streak that sweeps across the primary buy
-   buttons every few seconds (moved here from the hero pick cards). */
+/* CTA shimmer border - a light edge that travels around the primary buy
+   buttons (the effect JT liked, moved onto the CTAs). Bright/light so it
+   reads on the green fill; masked to the 1.6px border ring only. */
 .btn-primary::before, .price-cta.primary::before, .mobile-cta-btn::before {
   content: '';
   position: absolute;
-  top: -30%;
-  bottom: -30%;
-  left: 0;
-  width: 45%;
-  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.5), transparent);
-  transform: translateX(-220%) skewX(-20deg);
-  animation: cta-shine 5s ease-in-out infinite;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.6px;
+  background: linear-gradient(115deg, transparent 30%, rgba(235, 255, 245, 0.95) 50%, transparent 70%);
+  background-size: 250% 100%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: cta-shimmer 3.6s linear infinite;
   pointer-events: none;
 }
-.price-cta.primary::before { animation-delay: 2s; }
-.mobile-cta-btn::before { animation-delay: 1s; }
-@keyframes cta-shine {
-  0%   { transform: translateX(-220%) skewX(-20deg); }
-  16%  { transform: translateX(340%) skewX(-20deg); }
-  100% { transform: translateX(340%) skewX(-20deg); }
+.price-cta.primary::before { animation-delay: 1.6s; }
+.mobile-cta-btn::before { animation-delay: 0.8s; }
+@keyframes cta-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -150% 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .btn-primary::before, .price-cta.primary::before, .mobile-cta-btn::before { animation: none; opacity: 0; }
