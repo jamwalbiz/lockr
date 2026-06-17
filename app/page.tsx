@@ -807,8 +807,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* VS comparison - paired rows that interleave (them, us, them, us...)
-          on mobile, color-coded so the contrast survives single-column. */}
+      {/* VS comparison - each them/us is a .vs-pair: side-by-side on desktop,
+          and on mobile each pair collapses into one bound contrast card (them
+          claim above the Lockr answer) so the pairing survives single-column. */}
       <section className="fade-in-section">
         <div className="shell">
           <div className="section-head head-wide">
@@ -822,29 +823,37 @@ export default function Home() {
             </p>
           </div>
           <div className="vs-grid">
-            <div className="vs-head them">
-              <div className="vs-label">The other guys</div>
-              <div className="vs-title">The group you&apos;ve already quit.</div>
+            <div className="vs-heads">
+              <div className="vs-head them">
+                <div className="vs-label">The other guys</div>
+                <div className="vs-title">The group you&apos;ve already quit.</div>
+              </div>
+              <div className="vs-head us">
+                <div className="vs-label">★ Lockr</div>
+                <div className="vs-title">The one serious bettors actually stay subscribed to.</div>
+              </div>
             </div>
-            <div className="vs-head us">
-              <div className="vs-label">★ Lockr</div>
-              <div className="vs-title">The one serious bettors actually stay subscribed to.</div>
+
+            <div className="vs-pair">
+              <div className="vs-row them">Deletes the losing picks so the record stays clean</div>
+              <div className="vs-row us">We post the losses too, then explain what went wrong</div>
             </div>
-
-            <div className="vs-row them">Deletes the losing picks so the record stays clean</div>
-            <div className="vs-row us">We post the losses too, then explain what went wrong</div>
-
-            <div className="vs-row them">Screenshots edited after the fact</div>
-            <div className="vs-row us">Every pick posted live, before the event starts</div>
-
-            <div className="vs-row them">Blocks you in the DMs after a losing week</div>
-            <div className="vs-row us">Cancel in 60 seconds. No retention call</div>
-
-            <div className="vs-row them">Anonymous owner behind a Bitmoji</div>
-            <div className="vs-row us">Real face, real name, real accountability</div>
-
-            <div className="vs-row them">Sells your email to a dozen other lists</div>
-            <div className="vs-row us">Your email never leaves Lockr</div>
+            <div className="vs-pair">
+              <div className="vs-row them">Screenshots edited after the fact</div>
+              <div className="vs-row us">Every pick posted live, before the event starts</div>
+            </div>
+            <div className="vs-pair">
+              <div className="vs-row them">Blocks you in the DMs after a losing week</div>
+              <div className="vs-row us">Cancel in 60 seconds. No retention call</div>
+            </div>
+            <div className="vs-pair">
+              <div className="vs-row them">Anonymous owner behind a Bitmoji</div>
+              <div className="vs-row us">Real face, real name, real accountability</div>
+            </div>
+            <div className="vs-pair">
+              <div className="vs-row them">Sells your email to a dozen other lists</div>
+              <div className="vs-row us">Your email never leaves Lockr</div>
+            </div>
           </div>
         </div>
       </section>

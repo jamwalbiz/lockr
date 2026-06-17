@@ -549,7 +549,9 @@ h1.hero-title { font-family: var(--font-display), var(--font-inter), sans-serif;
 /* VS comparison - paired rows. Desktop: 2 columns (them | us). Mobile: 1
    column so the rows interleave (them, us, them, us...), color-coded so the
    contrast survives single-column instead of becoming a wall of negatives. */
-.vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; align-items: stretch; max-width: 1100px; margin: 0 auto; }
+.vs-grid { display: flex; flex-direction: column; gap: 10px; max-width: 1100px; margin: 0 auto; }
+.vs-heads { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.vs-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: stretch; }
 .vs-head { padding: 0 2px 10px; }
 .vs-label { font-size: 11px; color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; margin-bottom: 8px; }
 .vs-head.us .vs-label { color: var(--accent); }
@@ -560,7 +562,17 @@ h1.hero-title { font-family: var(--font-display), var(--font-inter), sans-serif;
 .vs-row.them::before { content: '✕'; color: var(--danger); background: rgba(255, 77, 77, 0.1); }
 .vs-row.us { background: rgba(0, 255, 133, 0.05); border: 1px solid rgba(0, 255, 133, 0.16); color: var(--text); }
 .vs-row.us::before { content: '✓'; color: var(--accent); background: rgba(0, 255, 133, 0.1); }
-@media (max-width: 640px) { .vs-grid { grid-template-columns: 1fr; gap: 8px; } .vs-head { padding-bottom: 4px; } }
+@media (max-width: 640px) {
+  /* Bind each them/us into one contrast card so the comparison reads top-to-
+     bottom on a single column (the floating heads + alternating pills lost the
+     pairing). Them claim (✕, red) sits directly above the Lockr answer (✓). */
+  .vs-grid { gap: 12px; }
+  .vs-heads { display: none; }
+  .vs-pair { grid-template-columns: 1fr; gap: 0; border: 1px solid var(--border-strong); border-radius: 12px; overflow: hidden; }
+  .vs-pair .vs-row { border-radius: 0; border: none; }
+  .vs-pair .vs-row.them { background: rgba(255, 77, 77, 0.05); border-bottom: 1px solid var(--border); }
+  .vs-pair .vs-row.us { background: rgba(0, 255, 133, 0.06); }
+}
 
 /* ------------------------------------------------------------------
    Mobile sticky CTA
