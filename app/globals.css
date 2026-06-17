@@ -315,9 +315,11 @@ h1.hero-title { font-family: var(--font-display), var(--font-inter), sans-serif;
 
 /* Morphing green atmosphere behind the cards (Cyber-Serif glow, Lockr green). */
 .pick-glow { position: absolute; width: 360px; height: 360px; top: 4%; right: -8%; background: radial-gradient(circle, rgba(0,255,133,0.16), transparent 70%); filter: blur(80px); border-radius: 40% 60% 60% 40% / 70% 30% 70% 30%; animation: pick-glow-morph 9s ease-in-out infinite alternate; pointer-events: none; z-index: 0; }
+/* transform-only (the border-radius morph forced a per-frame re-paint of the
+   80px blur). The blur layer is now cached and just composited. */
 @keyframes pick-glow-morph {
-  from { border-radius: 40% 60% 60% 40% / 70% 30% 70% 30%; transform: translate(0, 0) scale(1); }
-  to   { border-radius: 62% 38% 44% 56% / 34% 66% 34% 66%; transform: translate(-22px, 18px) scale(1.08); }
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(-22px, 18px) scale(1.08); }
 }
 @media (prefers-reduced-motion: reduce) { .pick-glow { animation: none; } }
 
@@ -332,9 +334,9 @@ h1.hero-title { font-family: var(--font-display), var(--font-inter), sans-serif;
   padding: 18px 20px;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.09);
-  background: rgba(255, 255, 255, 0.025);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  /* Solid surface (no backdrop-filter): blurring the animated lightning behind
+     3 cards every frame was the hero lag. A near-solid card looks the same. */
+  background: rgba(22, 22, 26, 0.9);
   box-shadow: 0 16px 40px -28px rgba(0, 0, 0, 0.9);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
   animation: pick-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
@@ -963,33 +965,29 @@ html { scroll-behavior: smooth; scroll-padding-top: 120px; }
 .books-coverage { text-align: center; margin-top: 16px; font-family: var(--font-jetbrains), monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); }
 .books-coverage-num { color: var(--accent); font-weight: 700; }
 
-/* A7 - one-pass green border light-sweep on the $29 card (self-serve buy vs
-   the gold "apply" orbit). Same mask-composite edge trick as the gold beam,
-   but fired ONCE when the pricing section enters view. Never idles. */
+/* Continuous green border shimmer on the $29 card (parallels the IC gold
+   beam, so both cards visibly shimmer - green = self-serve buy, gold = apply).
+   Same mask-composite edge trick. */
 .pricing-card.instant::after {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
   padding: 1.5px;
-  background: linear-gradient(115deg, transparent 30%, rgba(0,255,133,0.55) 50%, transparent 70%);
+  background: linear-gradient(115deg, transparent 32%, rgba(0,255,133,0.6) 50%, transparent 68%);
   background-size: 250% 100%;
-  background-position: 200% 0;
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  opacity: 0;
+  animation: card-sweep 4.5s linear infinite;
   pointer-events: none;
 }
-.fade-in-section.in-view .pricing-card.instant::after { animation: card-sweep 1.15s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards; }
 @keyframes card-sweep {
-  0%   { opacity: 0; background-position: 185% 0; }
-  12%  { opacity: 1; }
-  88%  { opacity: 1; }
-  100% { opacity: 0; background-position: -140% 0; }
+  0%   { background-position: 200% 0; }
+  100% { background-position: -150% 0; }
 }
-@media (prefers-reduced-motion: reduce) { .fade-in-section.in-view .pricing-card.instant::after { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .pricing-card.instant::after { animation: none; opacity: 0; } }
 
 /* ------------------------------------------------------------------
    Utility
@@ -1004,13 +1002,6 @@ html { scroll-behavior: smooth; scroll-padding-top: 120px; }
    on phones and fixes the social-proof / sticky-CTA overlap.
    ------------------------------------------------------------------ */
 @media (max-width: 768px) {
-  /* Perf: backdrop-blur on the glass cards is expensive while the lightning
-     animates behind them. Swap to a near-solid dark surface on phones. */
-  .pick-card {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    background: rgba(22, 22, 26, 0.92);
-  }
   /* Perf: kill the large animated blur blob behind the hero deck. */
   .pick-glow { display: none; }
   /* Bigger, easier hamburger tap target. */
