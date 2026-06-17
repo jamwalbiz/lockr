@@ -92,9 +92,9 @@ export default function Home() {
                 </span>
               </h1>
               <p className="hero-sub hero-rv" style={{ animationDelay: "0.3s" }}>
-                The best daily plays across every sport and prediction market, Kalshi and
-                Polymarket included. Posted before the line moves and hitting 72%+. You
-                just tail.
+                Every day, the best plays across sports and prediction markets. We call
+                them before the line moves, so you&apos;re on the winning number. You just
+                tail.
               </p>
               <div className="hero-cta-row hero-rv" style={{ animationDelay: "0.38s" }}>
                 <JoinCta href="/checkout" location="hero">
