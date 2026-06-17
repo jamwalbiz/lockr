@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { feedbackClick } from "@/lib/sound";
+import { Magnetic } from "@/components/Magnetic";
 
 export function Nav() {
   const pathname = usePathname();
@@ -64,21 +65,23 @@ export function Nav() {
             >
               Log in
             </a>
-            <Link
-              href="/checkout"
-              className="btn btn-primary nav-join"
-              onMouseMove={(e) => {
-                const r = e.currentTarget.getBoundingClientRect();
-                e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
-                e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
-              }}
-              onClick={() => {
-                feedbackClick();
-                track("cta_click", { cta: "join", location: "nav" });
-              }}
-            >
-              Join Lockr
-            </Link>
+            <Magnetic strength={0.4}>
+              <Link
+                href="/checkout"
+                className="btn btn-primary nav-join"
+                onMouseMove={(e) => {
+                  const r = e.currentTarget.getBoundingClientRect();
+                  e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+                  e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+                }}
+                onClick={() => {
+                  feedbackClick();
+                  track("cta_click", { cta: "join", location: "nav" });
+                }}
+              >
+                Join Lockr
+              </Link>
+            </Magnetic>
             <button
               type="button"
               className="nav-hamburger"

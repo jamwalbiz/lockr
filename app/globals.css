@@ -156,7 +156,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 /* Mobile slide-down menu */
-.mobile-menu { display: none; position: fixed; top: 30px; left: 0; right: 0; z-index: 199; background: var(--bg); border-bottom: 1px solid var(--border); padding: 24px 20px calc(32px + env(safe-area-inset-bottom)); max-height: calc(100dvh - 30px); overflow-y: auto; transform: translateY(-12px); opacity: 0; transition: transform 0.2s ease, opacity 0.2s ease; }
+.mobile-menu { display: none; position: fixed; top: 30px; left: 0; right: 0; z-index: 199; background: var(--bg); border-bottom: 1px solid var(--border); padding: 24px 20px calc(32px + env(safe-area-inset-bottom)); max-height: calc(100dvh - 30px); overflow-y: auto; transform: translateY(-12px); opacity: 0; transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1); }
 .mobile-menu.open { display: block; transform: translateY(0); opacity: 1; }
 .mobile-menu-inner { display: flex; flex-direction: column; gap: 4px; max-width: 1200px; margin: 0 auto; }
 .mobile-link { display: block; padding: 16px 8px; font-size: 17px; font-weight: 500; color: var(--text); border-bottom: 1px solid var(--border); transition: color 0.15s; }
@@ -773,7 +773,7 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .faq-q:hover { color: var(--accent); }
 .faq-q-icon { width: 24px; height: 24px; border: 1px solid var(--border-strong); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; font-size: 16px; }
 .faq-item.open .faq-q-icon { background: var(--accent); color: #000; border-color: var(--accent); transform: rotate(45deg); }
-.faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-mute); font-size: 15px; line-height: 1.7; }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.4s cubic-bezier(0.16, 1, 0.3, 1); color: var(--text-mute); font-size: 15px; line-height: 1.7; }
 .faq-item.open .faq-a { max-height: 780px; padding: 0 0 24px; }
 .faq-a strong { color: var(--text); font-weight: 600; }
 .faq-a a { color: var(--accent); }
@@ -891,6 +891,53 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
     opacity: 1;
     transform: none;
   }
+}
+
+/* ------------------------------------------------------------------
+   Lenis smooth scroll (components/SmoothScroll.tsx). No iframe rule on
+   purpose: the Whop checkout iframe must stay clickable.
+   ------------------------------------------------------------------ */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* ------------------------------------------------------------------
+   Magnetic CTA wrapper (components/Magnetic.tsx). Transform set inline on
+   move; this transition springs it back on leave.
+   ------------------------------------------------------------------ */
+.magnetic { display: inline-flex; transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform; }
+
+/* ------------------------------------------------------------------
+   Method section: sequential cascade. Overrides the block fade for #method
+   only so the 3-step "how it works" reveals as a real sequence (head, then
+   each step, then the inline CTA) instead of sliding up as one slab like the
+   other sections. This is the deliberate break from the uniform reveal.
+   ------------------------------------------------------------------ */
+#method.fade-in-section { opacity: 1; transform: none; transition: none; }
+#method .section-head,
+#method .steps-grid > .step,
+#method .inline-cta {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+#method.in-view .section-head { opacity: 1; transform: none; }
+#method.in-view .steps-grid > .step:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.12s; }
+#method.in-view .steps-grid > .step:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.24s; }
+#method.in-view .steps-grid > .step:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.36s; }
+#method.in-view .inline-cta { opacity: 1; transform: none; transition-delay: 0.48s; }
+@media (prefers-reduced-motion: reduce) {
+  #method .section-head,
+  #method .steps-grid > .step,
+  #method .inline-cta { opacity: 1; transform: none; transition: none; }
+}
+@media (scripting: none) {
+  #method .section-head,
+  #method .steps-grid > .step,
+  #method .inline-cta { opacity: 1; transform: none; }
 }
 
 

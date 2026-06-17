@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { CountUp } from "@/components/CountUp";
 import { JoinCta } from "@/components/JoinCta";
+import { Magnetic } from "@/components/Magnetic";
 import {
   IconBallAmericanFootball,
   IconBallBasketball,
@@ -97,9 +98,11 @@ export default function Home() {
                 tail.
               </p>
               <div className="hero-cta-row hero-rv" style={{ animationDelay: "0.38s" }}>
-                <JoinCta href="/checkout" location="hero">
-                  Get today&apos;s picks · $29/wk
-                </JoinCta>
+                <Magnetic strength={0.35}>
+                  <JoinCta href="/checkout" location="hero">
+                    Get today&apos;s picks · $29/wk
+                  </JoinCta>
+                </Magnetic>
                 <a href="#intro" className="btn btn-secondary btn-lg">
                   See how it works
                 </a>
@@ -873,9 +876,11 @@ export default function Home() {
                 Link Discord in your account, claim access, and your role assigns
                 in under 30 seconds. The next pick drops soon after.
               </p>
-              <JoinCta href="/checkout" location="final-cta">
-                Join Lockr · from $29/wk
-              </JoinCta>
+              <Magnetic strength={0.35}>
+                <JoinCta href="/checkout" location="final-cta">
+                  Join Lockr · from $29/wk
+                </JoinCta>
+              </Magnetic>
               <div
                 style={{
                   marginTop: 16,
