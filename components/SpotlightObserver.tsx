@@ -8,7 +8,7 @@ import { useEffect } from "react";
 // One listener for the whole page; cheap (closest + setProperty).
 export function SpotlightObserver() {
   useEffect(() => {
-    const SEL = ".pillar, .sport-card";
+    const SEL = ".pillar, .sport-card, .step";
     const onMove = (e: PointerEvent) => {
       const card = (e.target as HTMLElement | null)?.closest?.(SEL) as HTMLElement | null;
       if (!card) return;
