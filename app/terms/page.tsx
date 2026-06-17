@@ -20,10 +20,9 @@ export default function TermsPage() {
         <div className="updated">Last updated: May 27, 2026</div>
 
         <p>
-          These terms govern your use of Lockr (operated by Lockr LLC, a Wyoming limited
-          liability company) and the services delivered at joinlockr.com and through our
-          private Discord community. By creating an account or paying for a subscription,
-          you agree to these terms.
+          These terms govern your use of Lockr (operated by Lockr LLC) and the services
+          delivered at joinlockr.com and through our private Discord community. By creating
+          an account or paying for a subscription, you agree to these terms.
         </p>
 
         <h2>1. What Lockr is</h2>
@@ -84,20 +83,13 @@ export default function TermsPage() {
           event giving rise to the claim.
         </p>
 
-        <h2>7. Dispute resolution</h2>
-        <p>
-          Disputes are resolved by binding arbitration in Wyoming under the rules of the
-          American Arbitration Association. You waive any right to participate in a class
-          action.
-        </p>
-
-        <h2>8. Changes to these terms</h2>
+        <h2>7. Changes to these terms</h2>
         <p>
           We may update these terms from time to time. Material changes will be announced
           in the Discord and by email at least 14 days before they take effect.
         </p>
 
-        <h2>9. Contact</h2>
+        <h2>8. Contact</h2>
         <p>
           Questions? Reach us at{" "}
           <a href="mailto:hello@joinlockr.com">hello@joinlockr.com</a>.
