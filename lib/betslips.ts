@@ -94,6 +94,10 @@ export const BET_SLIPS: BetSlip[] = [
     handle: "@amir_m",
     date: "05/21 · 4:33 PM",
     clv: "+10.4%",
+    image: "/slips/polymarket-win.png",
+    imageAlt: "Polymarket Portland position up $181.41",
+    imageW: 1024,
+    imageH: 768,
   },
   {
     book: "draftkings",
