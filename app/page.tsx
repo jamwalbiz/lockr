@@ -581,8 +581,8 @@ export default function Home() {
                   <Image
                     src={slip.image}
                     alt={slip.imageAlt ?? `${slip.bookLabel} winning bet slip`}
-                    width={slip.imageW ?? 1320}
-                    height={slip.imageH ?? 989}
+                    fill
+                    sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 360px"
                     className="slip-img"
                   />
                 ) : (

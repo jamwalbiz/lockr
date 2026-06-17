@@ -46,6 +46,10 @@ export const BET_SLIPS: BetSlip[] = [
     handle: "@ethan_k",
     date: "05/23 · 11:18 PM",
     clv: "+2.7%",
+    image: "/slips/underdog-win.png",
+    imageAlt: "Underdog 8-pick entries marked Won, with profit boosts",
+    imageW: 1079,
+    imageH: 934,
   },
   {
     book: "kalshi",
