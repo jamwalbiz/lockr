@@ -613,6 +613,9 @@ export default function Home() {
                 </div>
                   </>
                 )}
+                <span className="slip-platform" aria-hidden="true">
+                  {slip.bookLabel}
+                </span>
               </TiltCard>
             ))}
           </div>

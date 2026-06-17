@@ -62,6 +62,10 @@ export const BET_SLIPS: BetSlip[] = [
     handle: "@devonm",
     date: "05/23 · 2:14 PM",
     clv: "+6.8%",
+    image: "/slips/kalshi-win.png",
+    imageAlt: "Kalshi combo, 3 predictions paid $6,703, all legs won",
+    imageW: 1334,
+    imageH: 986,
   },
   {
     book: "sleeper",
