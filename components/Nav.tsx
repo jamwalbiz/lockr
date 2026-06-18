@@ -52,7 +52,7 @@ export function Nav() {
               Picks
             </Link>
             <a href={isHome ? "#method" : "/#method"}>Method</a>
-            <Link href="/results">Results</Link>
+            <a href={isHome ? "#results" : "/#results"}>Results</a>
             <a href={isHome ? "#pricing" : "/#pricing"}>Pricing</a>
             <a href={isHome ? "#faq" : "/#faq"}>FAQ</a>
             <Link href="/markets">Markets</Link>
@@ -127,9 +127,13 @@ export function Nav() {
           >
             Method
           </a>
-          <Link href="/results" className="mobile-link" onClick={closeMenu}>
+          <a
+            href={isHome ? "#results" : "/#results"}
+            className="mobile-link"
+            onClick={closeMenu}
+          >
             Results
-          </Link>
+          </a>
           <a
             href={isHome ? "#pricing" : "/#pricing"}
             className="mobile-link"

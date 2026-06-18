@@ -16,7 +16,7 @@ export function Footer() {
           <div className="footer-col">
             <h3>Product</h3>
             <Link href="/">Picks</Link>
-            <Link href="/results">Track record</Link>
+            <a href="/#method">Method</a>
             <Link href="/markets">Live markets</Link>
             <a href="/#pricing">Pricing</a>
             <Link href="/checkout">Join Lockr</Link>
