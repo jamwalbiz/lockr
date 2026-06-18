@@ -25,11 +25,17 @@ export function HeroScrollCue() {
   }, []);
 
   function next() {
-    const sections = Array.from(document.querySelectorAll("section"));
-    const target = sections.find((s) => s.getBoundingClientRect().top > 72);
-    const y = target
-      ? target.getBoundingClientRect().top + window.scrollY - 80
-      : document.documentElement.scrollHeight;
+    const HEADER = 80; // gap left below the sticky nav
+    const cur = window.scrollY;
+    // Each section's aligned scroll position (absolute), in document order.
+    // Pick the first one strictly below where we are now, so every click
+    // advances exactly one section regardless of where the boundary sits in
+    // the viewport (the old top > 72 test skipped sections near a boundary).
+    const targets = Array.from(document.querySelectorAll("section")).map((s) =>
+      Math.round(s.getBoundingClientRect().top + cur - HEADER),
+    );
+    const next = targets.find((t) => t > cur + 8);
+    const y = Math.max(0, next ?? document.documentElement.scrollHeight);
     if (lenis) lenis.scrollTo(y, { duration: 1.0 });
     else window.scrollTo({ top: y, behavior: "smooth" });
   }
