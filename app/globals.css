@@ -1541,14 +1541,14 @@ html { scroll-behavior: smooth; scroll-padding-top: 96px; }
 .studio-leg-add:hover { color: var(--accent); border-color: var(--accent); }
 
 /* Inside Lockr — daily-experience product mockups */
-.inside-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 20px; align-items: start; }
+.inside-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 20px; align-items: stretch; }
 @media (max-width: 880px) { .inside-grid { grid-template-columns: 1fr; } }
 .inside-feed, .inside-card { background: #15151a; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
 /* Live auto-scrolling room feed (transform-only vertical marquee) */
-.inside-feed { display: flex; flex-direction: column; height: 720px; }
+.inside-feed { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; height: 100%; }
 @media (max-width: 880px) { .inside-feed { height: 520px; } }
 .room-stream { position: relative; flex: 1; min-height: 0; overflow: hidden; -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 9%, #000 90%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 9%, #000 90%, transparent 100%); }
-.room-track { display: flex; flex-direction: column; padding: 4px 16px; animation: roomScroll 42s linear infinite; }
+.room-track { position: absolute; top: 0; left: 0; right: 0; display: flex; flex-direction: column; padding: 4px 16px; animation: roomScroll 42s linear infinite; }
 .room-stream:hover .room-track { animation-play-state: paused; }
 @keyframes roomScroll { from { transform: translateY(0); } to { transform: translateY(-50%); } }
 .room-msg { display: flex; gap: 11px; align-items: flex-start; padding: 11px 0; border-top: 1px solid rgba(245,244,241,0.045); }

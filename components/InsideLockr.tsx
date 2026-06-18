@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 
 // "Inside Lockr" — the daily membership experience. The centerpiece is a live,
 // auto-scrolling "#the-room" feed (Lockr drops the play, members tail / post
@@ -22,14 +21,14 @@ type Msg = {
 
 const ROOM: Msg[] = [
   { lockr: true, name: "Lockr", time: "6:54p", tag: "PLAY", tagClass: "play", text: "NBA · Brunson Over 26.5 · 2u · posted before the line moved" },
-  { name: "marcus_t", av: "c1", init: "M", time: "6:55p", tag: "tailed", tagClass: "ok", text: "in for 2u, let's go" },
-  { name: "dani", av: "c2", init: "D", time: "6:56p", text: "love that the reason's right there in the post" },
+  { name: "marcus_t", av: "c1", init: "M", time: "6:55p", tag: "tailed", tagClass: "ok", text: "tailed. number was still -110 when I got in, sportsbook moved it 20 mins later" },
+  { name: "dani", av: "c2", init: "D", time: "6:56p", text: "the why is right there in the post. first time I actually understand a play instead of copying blind" },
   { lockr: true, name: "Lockr", time: "7:12p", tag: "PLAY", tagClass: "play", text: "Kalshi · Rate decision · Yes 58¢ · 1u" },
-  { name: "kev", av: "c3", init: "K", time: "7:13p", text: "first Kalshi play ever. way simpler than I thought" },
-  { name: "ro", av: "c4", init: "R", time: "earlier", tag: "+1.6u", tagClass: "win", text: "UFC KO / TKO from last night cashed" },
-  { creator: true, name: "JT", av: "c2", init: "JT", time: "earlier", text: "logged the misses too. that's the whole point. keep tailing the process" },
-  { name: "amara", av: "c5", init: "A", time: "earlier", text: "green this week. the recommended size keeps me disciplined" },
-  { name: "sam", av: "c3", init: "S", time: "earlier", text: "started small and just copying. up a bit, learning a ton" },
+  { name: "kev", av: "c3", init: "K", time: "7:13p", text: "first prediction-market trade of my life and it's already green. way simpler than I thought" },
+  { name: "ro", av: "c4", init: "R", time: "earlier", tag: "+1.6u", tagClass: "win", text: "UFC KO/TKO from last night just cashed. 3 for 4 on the week now" },
+  { creator: true, name: "JT", av: "c2", init: "JT", time: "earlier", text: "posted the one that lost too, with the full breakdown. nothing gets deleted here, that's the deal" },
+  { name: "amara", av: "c5", init: "A", time: "earlier", text: "month in, up small and steady. the recommended size is what keeps me out of trouble" },
+  { name: "sam", av: "c3", init: "S", time: "earlier", text: "started with $50 just tailing. green and actually learning why. didn't expect that" },
 ];
 
 const MOVERS = [
@@ -116,11 +115,10 @@ export function InsideLockr() {
           <div className="inside-side">
             <div className="inside-card">
               <div className="inside-card-tag">// the card that drops</div>
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src="/brand/inside-slip.png"
                 alt="The Lockr play card that drops with every pick"
-                width={1000}
-                height={600}
                 className="inside-slip"
               />
             </div>
