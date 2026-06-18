@@ -20,65 +20,103 @@ export async function GET(req: Request) {
   const units = (sp.get("units") || "2").slice(0, 5);
   const time = (sp.get("time") || "").slice(0, 16);
   const conf = Math.max(1, Math.min(3, Number(sp.get("conf")) || 2));
-  const tone = sp.get("tone") === "blue" ? BLUE : ACCENT;
-  const pips = [12, 19, 26];
+  const isBlue = sp.get("tone") === "blue";
+  const tone = isBlue ? BLUE : ACCENT;
+  const glow = isBlue ? "rgba(74,158,255,0.16)" : "rgba(0,255,133,0.15)";
+  const pips = [14, 22, 30];
 
   return new ImageResponse(
     (
       <div
         style={{
+          position: "relative",
           width: "100%",
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          background: "linear-gradient(140deg, #16161b 0%, #0a0a0c 60%)",
-          padding: 64,
+          padding: 60,
           fontFamily: "sans-serif",
+          backgroundColor: "#0a0a0c",
+          // base gradient + 56px grid + tone-matched radial glow (top-right)
+          backgroundImage: `radial-gradient(circle at 84% 6%, ${glow}, rgba(0,0,0,0) 52%), repeating-linear-gradient(0deg, rgba(245,244,241,0.045) 0px, rgba(245,244,241,0.045) 1px, rgba(0,0,0,0) 1px, rgba(0,0,0,0) 56px), repeating-linear-gradient(90deg, rgba(245,244,241,0.045) 0px, rgba(245,244,241,0.045) 1px, rgba(0,0,0,0) 1px, rgba(0,0,0,0) 56px), linear-gradient(140deg, #17171c 0%, #0a0a0c 62%)`,
         }}
       >
+        {/* giant faded league watermark, anchored bottom-right to balance the void */}
         <div
           style={{
+            position: "absolute",
+            right: -10,
+            bottom: -40,
             display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+            fontSize: 230,
+            fontWeight: 800,
+            color: tone,
+            opacity: 0.06,
+            letterSpacing: -8,
           }}
         >
+          {league}
+        </div>
+        {/* hairline inset frame */}
+        <div
+          style={{
+            position: "absolute",
+            top: 22,
+            left: 22,
+            right: 22,
+            bottom: 22,
+            borderRadius: 22,
+            border: "1px solid rgba(245,244,241,0.09)",
+          }}
+        />
+
+        {/* header: brand mark + time + LOGGED proof chip */}
+        <div
+          style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
+        >
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <div
-              style={{ width: 18, height: 18, borderRadius: 5, background: ACCENT }}
-            />
-            <div
-              style={{
-                fontSize: 32,
-                fontWeight: 800,
-                color: INK,
-                letterSpacing: 2,
-              }}
-            >
+            <div style={{ width: 18, height: 18, borderRadius: 5, background: ACCENT }} />
+            <div style={{ fontSize: 30, fontWeight: 800, color: INK, letterSpacing: 2 }}>
               LOCKR
             </div>
           </div>
-          <div style={{ fontSize: 26, color: MUTE }}>{time}</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            {time ? <div style={{ fontSize: 24, color: MUTE }}>{time}</div> : null}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 9,
+                border: `1px solid ${tone}`,
+                borderRadius: 999,
+                padding: "7px 16px",
+              }}
+            >
+              <div style={{ width: 9, height: 9, borderRadius: 5, background: tone }} />
+              <div style={{ fontSize: 18, fontWeight: 700, color: tone, letterSpacing: 2 }}>
+                LOGGED
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 76 }}>
+        {/* body: league, market, the pick as hero */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 62 }}>
           <div style={{ width: 13, height: 13, borderRadius: 7, background: tone }} />
-          <div
-            style={{ fontSize: 27, fontWeight: 700, color: INK, letterSpacing: 3 }}
-          >
+          <div style={{ fontSize: 26, fontWeight: 700, color: INK, letterSpacing: 3 }}>
             {league}
           </div>
         </div>
-        <div style={{ display: "flex", fontSize: 31, color: MUTE, marginTop: 20 }}>
+        <div style={{ display: "flex", fontSize: 30, color: MUTE, marginTop: 18 }}>
           {market}
         </div>
         <div
           style={{
             display: "flex",
-            fontSize: 100,
+            fontSize: 96,
             fontWeight: 800,
             color: tone,
-            marginTop: 10,
+            marginTop: 8,
             letterSpacing: -3,
             lineHeight: 1,
           }}
@@ -88,12 +126,12 @@ export async function GET(req: Request) {
 
         <div style={{ flex: 1, display: "flex" }} />
 
+        {/* footer: hairline rule, then confidence/units left, odds + TAIL chip right */}
         <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-end",
-          }}
+          style={{ display: "flex", height: 1, background: "rgba(245,244,241,0.1)", marginBottom: 26 }}
+        />
+        <div
+          style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
         >
           <div style={{ display: "flex", alignItems: "flex-end", gap: 8 }}>
             {pips.map((h, i) => (
@@ -104,20 +142,32 @@ export async function GET(req: Request) {
                   height: h,
                   borderRadius: 3,
                   background: tone,
-                  opacity: i + 1 <= conf ? 0.95 : 0.22,
+                  opacity: i + 1 <= conf ? 0.95 : 0.2,
                 }}
               />
             ))}
-            <div style={{ fontSize: 26, color: MUTE, marginLeft: 18 }}>
+            <div style={{ display: "flex", fontSize: 25, color: MUTE, marginLeft: 16 }}>
               {`${units}u`}
             </div>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
-            <div style={{ fontSize: 32, color: INK, fontWeight: 700 }}>{odds}</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+            <div style={{ display: "flex", fontSize: 30, color: INK, fontWeight: 700 }}>
+              {odds}
+            </div>
             <div
-              style={{ fontSize: 24, color: MUTE, fontWeight: 700, letterSpacing: 2 }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                border: `1px solid ${tone}`,
+                borderRadius: 11,
+                padding: "9px 18px",
+                color: tone,
+                fontSize: 22,
+                fontWeight: 800,
+                letterSpacing: 2,
+              }}
             >
-              TAIL
+              {`TAIL →`}
             </div>
           </div>
         </div>
