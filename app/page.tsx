@@ -26,6 +26,7 @@ import { ScrollProgress } from "@/components/ScrollProgress";
 import { SpotlightObserver } from "@/components/SpotlightObserver";
 import { PickCards } from "@/components/PickCards";
 import { TiltCard } from "@/components/TiltCard";
+import VslPlayer from "@/components/VslPlayer";
 
 // Platforms Lockr's picks work on - rendered as a calm marquee band.
 // All logos uniformly sourced from the iTunes App Store icon CDN
@@ -170,15 +171,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* VSL - founder-to-camera intro.
-          To swap in the real video without touching code: set the
-          NEXT_PUBLIC_VSL_URL env var in Vercel (any standard embed URL works
-          - https://player.vimeo.com/video/XXXXXX, https://www.youtube.com/embed/XXXXXX,
-          a Wistia oEmbed URL, a Mux signed URL, etc.). When the var is set
-          the iframe replaces the placeholder card automatically.
-          The placeholder (when no URL is configured) intentionally has no
-          fake duration/HD chip - we don't lie about a video that doesn't
-          exist yet. */}
+      {/* VSL - self-hosted motion-graphic explainer rendered with Remotion
+          (source lives in /video, output committed to /public/lockr-vsl.mp4).
+          <VslPlayer> plays it muted on scroll-into-view and ends on the CTA card.
+          To override with a hosted cut (e.g. a voiceover version on Vimeo/YouTube/Mux)
+          without touching code, set NEXT_PUBLIC_VSL_URL in Vercel - any standard
+          embed URL works and the iframe takes over automatically. */}
       <section id="intro" className="fade-in-section">
         <div className="shell">
           <div className="section-head head-wide">
@@ -207,39 +205,7 @@ export default function Home() {
                 ></iframe>
               </div>
             ) : (
-              <div
-                className="vsl-player"
-                style={{ cursor: "default" }}
-                aria-label="Founder intro video, coming soon"
-              >
-                {/* Lockr OG banner as a soft backdrop so the placeholder
-                    reads as branded, not empty. Sits underneath the dimmed
-                    play button and JT · INTRO / COMING SOON overlay. */}
-                <Image
-                  src="/brand/lockr-og-1200x630.png"
-                  alt=""
-                  fill
-                  sizes="(max-width: 920px) 100vw, 920px"
-                  priority
-                  style={{ objectFit: "cover", opacity: 0.5 }}
-                />
-                {/* Disabled-looking play affordance - kept for visual weight
-                    so the section doesn't feel empty, but doesn't claim a
-                    playable video exists. */}
-                <div
-                  className="vsl-play"
-                  style={{ opacity: 0.45, cursor: "default", pointerEvents: "none" }}
-                  aria-hidden="true"
-                >
-                  <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
-                <div className="vsl-overlay">
-                  <div className="vsl-meta">JT · INTRO</div>
-                  <div className="vsl-meta">COMING SOON</div>
-                </div>
-              </div>
+              <VslPlayer />
             )}
           </div>
         </div>

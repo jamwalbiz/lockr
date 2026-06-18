@@ -521,6 +521,11 @@ h1.hero-title { font-family: var(--font-display), var(--font-sans), sans-serif; 
 .vsl-play svg { fill: #000; margin-left: 4px; }
 .vsl-overlay { position: absolute; bottom: 16px; left: 16px; right: 16px; display: flex; justify-content: space-between; align-items: center; z-index: 2; font-size: 12px; color: var(--text-mute); }
 .vsl-meta { display: flex; gap: 16px; font-family: var(--font-jetbrains), monospace; }
+/* Self-hosted motion-graphic VSL (Remotion render) */
+.vsl-native { cursor: pointer; }
+.vsl-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 10px; background: #000; }
+.vsl-sound-hint { position: absolute; top: 14px; right: 14px; z-index: 3; display: flex; align-items: center; gap: 6px; padding: 6px 11px; border-radius: 999px; background: rgba(0,0,0,0.55); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.12); color: var(--text); font-size: 11px; font-weight: 600; letter-spacing: 0.02em; pointer-events: none; }
+.vsl-sound-hint svg { color: var(--accent); }
 
 /* ------------------------------------------------------------------
    Pillars

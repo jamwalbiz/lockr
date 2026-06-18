@@ -1,0 +1,5 @@
+# Remotion VSL project — commit the source, never the deps or render artifacts.
+# The rendered MP4 ships from /public/lockr-vsl.mp4 (committed there), not from here.
+node_modules/
+out/
+.cache/
