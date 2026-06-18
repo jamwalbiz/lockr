@@ -1,52 +1,35 @@
 import Link from "next/link";
 import Image from "next/image";
 
-// "Inside Lockr" — shows the daily membership experience as product mockups
-// (the play dropping in Discord before the line moves, the real slip card, the
-// live markets board, what's included). Counters competitors that visualize
-// their product; stays on-brand (dark + green, plain English, no hype, no fake
-// value-stack pricing).
+// "Inside Lockr" — the daily membership experience. The centerpiece is a live,
+// auto-scrolling "#the-room" feed (Lockr drops the play, members tail / post
+// results / react), each message with its own avatar, beside the actual slip
+// card and the live markets board. On-brand (dark + green, plain English, no
+// hype, no fabricated dollar claims). Motion is a transform-only vertical
+// marquee that pauses on hover and goes still under prefers-reduced-motion.
 
-type Play = {
-  tag: string;
-  market: string;
-  pick: string;
-  odds: string;
-  units: string;
+type Msg = {
+  lockr?: boolean;
+  creator?: boolean;
+  name: string;
+  av?: string;
+  init?: string;
   time: string;
-  tone: "green" | "blue";
-  why: string;
-  tails: number;
-  fire: number;
-  slip?: boolean;
+  tag?: string;
+  tagClass?: string;
+  text: string;
 };
 
-const PLAYS: Play[] = [
-  {
-    tag: "NBA",
-    market: "Player points",
-    pick: "Brunson Over 26.5",
-    odds: "−110",
-    units: "2u",
-    time: "6:54p ET",
-    tone: "green",
-    why: "His minutes are up and he's facing a defense that gives up points to guards. We're in before the number climbs.",
-    tails: 42,
-    fire: 14,
-    slip: true,
-  },
-  {
-    tag: "Kalshi",
-    market: "Rate decision",
-    pick: "Yes · 58¢",
-    odds: "+140",
-    units: "1u",
-    time: "7:12p ET",
-    tone: "blue",
-    why: "The market is slow to catch up to what most people already expect. Small, clean spot.",
-    tails: 23,
-    fire: 8,
-  },
+const ROOM: Msg[] = [
+  { lockr: true, name: "Lockr", time: "6:54p", tag: "PLAY", tagClass: "play", text: "NBA · Brunson Over 26.5 · 2u · posted before the line moved" },
+  { name: "marcus_t", av: "c1", init: "M", time: "6:55p", tag: "tailed", tagClass: "ok", text: "in for 2u, let's go" },
+  { name: "dani", av: "c2", init: "D", time: "6:56p", text: "love that the reason's right there in the post" },
+  { lockr: true, name: "Lockr", time: "7:12p", tag: "PLAY", tagClass: "play", text: "Kalshi · Rate decision · Yes 58¢ · 1u" },
+  { name: "kev", av: "c3", init: "K", time: "7:13p", text: "first Kalshi play ever. way simpler than I thought" },
+  { name: "ro", av: "c4", init: "R", time: "earlier", tag: "+1.6u", tagClass: "win", text: "UFC KO / TKO from last night cashed" },
+  { creator: true, name: "JT", av: "c2", init: "JT", time: "earlier", text: "logged the misses too. that's the whole point. keep tailing the process" },
+  { name: "amara", av: "c5", init: "A", time: "earlier", text: "green this week. the recommended size keeps me disciplined" },
+  { name: "sam", av: "c3", init: "S", time: "earlier", text: "started small and just copying. up a bit, learning a ton" },
 ];
 
 const MOVERS = [
@@ -57,13 +40,33 @@ const MOVERS = [
   { src: "Polymarket", q: "Lakers make the playoffs", pct: "71%", dir: "up" as const, d: "+2" },
 ];
 
-const INCLUDED = [
-  "Plays across every major sport, plus Kalshi and Polymarket",
-  "A timestamp before the line moves, so the price is on your side",
-  "A clear reason and a recommended size on every play",
-  "A members room where wins and losses both stay on the record",
-  "Beginner-friendly. Start small and just copy the play.",
-];
+function Message({ m }: { m: Msg }) {
+  return (
+    <div className="room-msg">
+      {m.lockr ? (
+        <span className="room-av room-av-lockr" aria-hidden="true" />
+      ) : (
+        <span className={`room-av ${m.av}`} aria-hidden="true">
+          {m.init}
+        </span>
+      )}
+      <div className="room-body">
+        <div className="room-name-row">
+          <span className={`room-name${m.lockr ? " lockr" : ""}`}>{m.name}</span>
+          {m.lockr && (
+            <span className="room-verified" aria-hidden="true">
+              ✓
+            </span>
+          )}
+          {m.creator && <span className="room-creator">CREATOR</span>}
+          <span className="room-time">{m.time}</span>
+          {m.tag && <span className={`room-tag ${m.tagClass ?? ""}`}>{m.tag}</span>}
+        </div>
+        <div className="room-text">{m.text}</div>
+      </div>
+    </div>
+  );
+}
 
 export function InsideLockr() {
   return (
@@ -77,85 +80,51 @@ export function InsideLockr() {
           </h2>
           <p className="section-sub">
             Every day, the plays drop in the members Discord, posted before the line
-            moves. The reasoning and the size come with each one. You just copy it.
+            moves. The room copies them, posts the wins and the losses, and JT breaks
+            down the misses too. You just tail it.
           </p>
         </div>
 
         <div className="inside-grid">
-          {/* The drop feed */}
+          {/* The live room feed */}
           <div className="inside-feed">
             <div className="inside-feed-head">
               <span className="inside-feed-mark" aria-hidden="true" />
               <span className="inside-feed-server">Lockr</span>
               <span className="inside-feed-sep" aria-hidden="true">/</span>
               <span className="inside-hash">#</span>
-              <span className="inside-channel">todays-plays</span>
+              <span className="inside-channel">the-room</span>
               <span className="inside-live" aria-label="Live channel">
                 <span className="inside-live-dot" aria-hidden="true" />
                 live
               </span>
             </div>
-            <div className="inside-msgs">
-              {PLAYS.map((p) => (
-                <div key={p.tag} className="inside-msg">
-                  <div className={`inside-av ${p.tone}`} aria-hidden="true" />
-                  <div className="inside-msg-body">
-                    <div className="inside-name-row">
-                      <span className="inside-name">Lockr</span>
-                      <span className="inside-verified" aria-hidden="true">
-                        ✓
-                      </span>
-                      <span className="inside-time">{p.time}</span>
-                    </div>
-                    <div className="inside-leg">
-                      <span className={`inside-leg-dot ${p.tone}`} aria-hidden="true" />
-                      {p.tag} · {p.market}
-                    </div>
-                    <div className={`inside-play ${p.tone}`}>{p.pick}</div>
-                    <div className="inside-meta">
-                      <span className="inside-chip">size {p.units}</span>
-                      <span className="inside-chip">{p.odds}</span>
-                      <span className="inside-chip ok">before the line moved</span>
-                    </div>
-                    <div className="inside-why">{p.why}</div>
-                    {p.slip && (
-                      <Image
-                        src="/brand/inside-slip.png"
-                        alt="The Lockr play card that drops with every pick"
-                        width={1000}
-                        height={600}
-                        className="inside-slip"
-                      />
-                    )}
-                    <div className="inside-tail">
-                      <span className="inside-tail-avs" aria-hidden="true">
-                        <span className="inside-tav g" />
-                        <span className="inside-tav b" />
-                        <span className="inside-tav o" />
-                      </span>
-                      <span className="inside-tail-count">{p.tails} members tailed</span>
-                      <span className="inside-react">🔥 {p.fire}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="inside-typing" aria-hidden="true">
-              <span className="inside-typing-dots">
-                <i />
-                <i />
-                <i />
-              </span>
-              members are typing
+            <div className="room-stream">
+              <div className="room-track">
+                {[...ROOM, ...ROOM].map((m, i) => (
+                  <Message key={i} m={m} />
+                ))}
+              </div>
             </div>
             <div className="inside-input">
-              <span className="inside-input-text">Message #todays-plays</span>
+              <span className="inside-input-text">Message #the-room</span>
               <span className="inside-input-send" aria-hidden="true">↵</span>
             </div>
           </div>
 
-          {/* Side column: live markets + what's included */}
+          {/* Side column: the card + live markets */}
           <div className="inside-side">
+            <div className="inside-card">
+              <div className="inside-card-tag">// the card that drops</div>
+              <Image
+                src="/brand/inside-slip.png"
+                alt="The Lockr play card that drops with every pick"
+                width={1000}
+                height={600}
+                className="inside-slip"
+              />
+            </div>
+
             <div className="inside-card">
               <div className="inside-card-tag">// live markets</div>
               <p className="inside-card-sub">
@@ -176,20 +145,6 @@ export function InsideLockr() {
                   </div>
                 ))}
               </div>
-            </div>
-
-            <div className="inside-card">
-              <div className="inside-card-tag">// every membership includes</div>
-              <ul className="inside-list">
-                {INCLUDED.map((x) => (
-                  <li key={x}>
-                    <span className="inside-check" aria-hidden="true">
-                      ✓
-                    </span>
-                    {x}
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         </div>
