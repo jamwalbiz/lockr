@@ -27,6 +27,7 @@ import { SpotlightObserver } from "@/components/SpotlightObserver";
 import { PickCards } from "@/components/PickCards";
 import { TiltCard } from "@/components/TiltCard";
 import VslPlayer from "@/components/VslPlayer";
+import { InsideLockr } from "@/components/InsideLockr";
 
 // Platforms Lockr's picks work on - rendered as a calm marquee band.
 // All logos uniformly sourced from the iTunes App Store icon CDN
@@ -497,6 +498,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Inside Lockr — what the daily experience looks like (delivery), before
+          the #results proof section */}
+      <InsideLockr />
 
       {/* Testimonials + bet slips + Discord embeds (the "Results" nav target) */}
       <section id="results" className="fade-in-section">
