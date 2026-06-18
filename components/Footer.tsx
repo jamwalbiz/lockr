@@ -10,7 +10,7 @@ export function Footer() {
               <span className="logo-dot"></span>LOCKR
             </div>
             <p>
-              Where serious bettors get serious edges. Built by JT and the Lockr team.
+              Where serious bettors get serious edges. Built by the Lockr team.
             </p>
           </div>
           <div className="footer-col">
