@@ -444,12 +444,18 @@ h1.hero-title { font-family: var(--font-display), var(--font-sans), sans-serif; 
   /* Phone: a compact, fanned proof point. The fan is spread a little so each
      card's sport tag reads, not a tight pile, but it stays small enough that the
      hero (with side-by-side CTAs) still lands above the fold. */
-  .play-deck { width: 240px; height: 222px; margin: 0 auto; }
-  .play-slot { width: 206px; }
+  /* Compact the card itself so a 3-card fan does not run tall, then size the
+     deck box to fully CONTAIN the lowest card (the box was shorter than its
+     cards, so the bottom card was overlapping the subhead). */
+  .play-deck { width: 240px; height: 248px; margin: 0 auto; }
+  .play-slot { width: 208px; }
   .play-slot:nth-child(2) { transform: translate(27px, 62px) rotate(3deg); }
-  .play-slot:nth-child(3) { transform: translate(9px, 124px) rotate(8deg); }
-  .play-card { padding: 13px 15px 11px; }
-  .play-line { font-size: 21px; }
+  .play-slot:nth-child(3) { transform: translate(10px, 124px) rotate(8deg); }
+  .play-card { padding: 11px 14px 10px; }
+  .play-top { font-size: 10px; }
+  .play-market { margin-top: 6px; font-size: 11px; }
+  .play-line { font-size: 19px; margin-top: 1px; }
+  .play-foot { margin-top: 8px; }
 }
 
 
@@ -489,6 +495,12 @@ h1.hero-title { font-family: var(--font-display), var(--font-sans), sans-serif; 
   .hero-cta-row { flex-wrap: nowrap; gap: 10px; justify-content: center; }
   .hero-cta-row .magnetic { display: inline-flex; }
   .hero-cta-row .btn-lg { padding: 13px 14px; font-size: 13.5px; white-space: nowrap; }
+}
+@media (max-width: 640px) and (max-height: 700px) {
+  /* Short phones (e.g. iPhone SE): the deck can't shrink below its cards, so
+     buy the CTA headroom from the top padding and gaps instead. */
+  .hero { padding-top: 12px; }
+  .hero-layout { gap: 20px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-rv, .terminal-line, .terminal-area, .terminal-pt { opacity: 1 !important; transform: none !important; stroke-dashoffset: 0 !important; animation: none !important; }

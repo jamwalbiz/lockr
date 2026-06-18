@@ -98,9 +98,9 @@ export default function Home() {
                 </span>
               </h1>
               <p className="hero-sub hero-rv" style={{ animationDelay: "0.3s" }}>
-                Every day, the best plays across sports and prediction markets. We call
-                them before the line moves, so you&apos;re on the winning number. You just
-                tail.
+                Every day, the best plays across sports and prediction markets. We
+                post them before the odds move, so you get the better price. You
+                just copy the play.
               </p>
               <div className="hero-cta-row hero-rv" style={{ animationDelay: "0.38s" }}>
                 <Magnetic strength={0.35}>
