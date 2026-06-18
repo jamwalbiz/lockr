@@ -864,8 +864,8 @@ export default function Home() {
           <div className="section-head head-wide">
             <h2 className="section-title">Is Lockr actually for you?</h2>
             <p className="section-sub">
-              We&apos;d rather not have your money than have you cancel angry in 3 weeks.
-              Read this before you join.
+              Lockr is not for everyone, and that is on purpose. We would rather you
+              sit it out than join and cancel angry in three weeks. Read this first.
             </p>
           </div>
           <div className="qual-grid">

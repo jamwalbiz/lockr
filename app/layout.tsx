@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, IBM_Plex_Mono, Archivo } from "next/font/google";
+import { Inter, Archivo } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { CadenceProvider } from "@/components/CadenceContext";
@@ -25,18 +25,6 @@ const archivo = Archivo({
   variable: "--font-display",
   subsets: ["latin"],
   weight: ["500", "600", "700", "800", "900"],
-  display: "swap",
-});
-
-// The data/terminal layer: every stat, label, price, and "// LABEL" tag, plus
-// the "WORKS WITH EVERY PLATFORM" line. IBM Plex Mono reads like a financial
-// terminal, with more character than the default dev monos, which carries the
-// "ledger" identity. The CSS var keeps its --font-jetbrains name for
-// back-compat with the existing mono references.
-const plexMono = IBM_Plex_Mono({
-  variable: "--font-jetbrains",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -74,7 +62,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${archivo.variable} ${plexMono.variable}`}>
+    <html lang="en" className={`${inter.variable} ${archivo.variable}`}>
       <body>
         {/* Site-wide JSON-LD: Organization + WebSite */}
         <script

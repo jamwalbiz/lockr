@@ -22,10 +22,10 @@ export function Footer() {
           </div>
           <div className="footer-col">
             <h3>Company</h3>
-            <Link href="/blog">Blog</Link>
             <a href="/#faq">About</a>
             <a href="/#faq">FAQ</a>
             <a href="mailto:hello@joinlockr.com">Contact</a>
+            <Link href="/blog">Blog</Link>
           </div>
           <div className="footer-col">
             <h3>Legal</h3>
