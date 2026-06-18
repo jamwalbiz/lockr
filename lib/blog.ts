@@ -18,11 +18,13 @@ export type PostMeta = {
   slug: string;
   title: string;
   description: string;
-  date: string; // ISO yyyy-mm-dd
+  date: string; // ISO yyyy-mm-dd (published)
+  updated: string; // ISO yyyy-mm-dd (last meaningful edit; defaults to date)
   category: string;
   keywords: string[];
   readMinutes: number;
   author: string;
+  featured: boolean; // pin to the top of the feed (timely flagship posts)
   faq: FaqItem[];
 };
 
@@ -57,10 +59,12 @@ export function getPost(slug: string): Post | null {
     title: String(data.title ?? slug),
     description: String(data.description ?? ""),
     date: coerceDate(data.date),
+    updated: data.updated ? coerceDate(data.updated) : coerceDate(data.date),
     category: String(data.category ?? "Guide"),
     keywords: Array.isArray(data.keywords) ? data.keywords.map(String) : [],
     readMinutes: Number(data.readMinutes ?? 5),
     author: String(data.author ?? "JT, Lockr"),
+    featured: Boolean(data.featured),
     faq: Array.isArray(data.faq)
       ? data.faq.map((f: { q?: unknown; a?: unknown }) => ({
           q: String(f.q ?? ""),
@@ -77,6 +81,32 @@ export function getAllPostMeta(): PostMeta[] {
   return listSlugs()
     .map((slug) => getPost(slug))
     .filter((p): p is Post => Boolean(p))
-    .sort((a, b) => (a.date < b.date ? 1 : -1))
+    .sort(
+      (a, b) =>
+        (b.featured ? 1 : 0) - (a.featured ? 1 : 0) ||
+        (a.date < b.date ? 1 : -1),
+    )
     .map(({ bodyMarkdown: _b, bodyHtml: _h, ...meta }) => meta);
+}
+
+/**
+ * Related posts for internal linking: same category scores highest, then shared
+ * keywords, with recency as the tiebreak. Builds the topical cluster that helps
+ * both SEO authority and on-site retention.
+ */
+export function getRelatedPosts(slug: string, limit = 3): PostMeta[] {
+  const all = getAllPostMeta();
+  const current = all.find((p) => p.slug === slug);
+  if (!current) return all.filter((p) => p.slug !== slug).slice(0, limit);
+  const kw = new Set(current.keywords.map((k) => k.toLowerCase()));
+  return all
+    .filter((p) => p.slug !== slug)
+    .map((p) => {
+      let score = p.category === current.category ? 3 : 0;
+      for (const k of p.keywords) if (kw.has(k.toLowerCase())) score += 1;
+      return { p, score };
+    })
+    .sort((a, b) => b.score - a.score || (a.p.date < b.p.date ? 1 : -1))
+    .slice(0, limit)
+    .map((x) => x.p);
 }

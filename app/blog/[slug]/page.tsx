@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
-import { getAllSlugs, getPost } from "@/lib/blog";
+import { getAllSlugs, getPost, getRelatedPosts } from "@/lib/blog";
 
 const BASE = "https://joinlockr.com";
 
@@ -60,6 +60,8 @@ export default async function BlogPost({
   if (!post) notFound();
 
   const url = `${BASE}/blog/${slug}`;
+  const related = getRelatedPosts(slug, 3);
+  const showUpdated = post.updated > post.date;
 
   const articleLd = {
     "@context": "https://schema.org",
@@ -67,7 +69,7 @@ export default async function BlogPost({
     headline: post.title,
     description: post.description,
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: post.updated,
     author: { "@type": "Person", name: post.author },
     publisher: {
       "@type": "Organization",
@@ -124,6 +126,7 @@ export default async function BlogPost({
         <h1 className="blog-article-title">{post.title}</h1>
         <div className="blog-article-byline">
           By {post.author} · {formatDate(post.date)}
+          {showUpdated ? ` · Updated ${formatDate(post.updated)}` : ""}
         </div>
 
         <div
@@ -159,6 +162,25 @@ export default async function BlogPost({
             only what you can afford to lose. 21+ where applicable. 1-800-GAMBLER.
           </p>
         </aside>
+
+        {related.length > 0 && (
+          <nav className="blog-related" aria-label="Related guides">
+            <div className="blog-related-label">Keep reading</div>
+            <ul>
+              {related.map((r) => (
+                <li key={r.slug}>
+                  <Link href={`/blog/${r.slug}`} className="blog-related-link">
+                    <span className="blog-related-cat">{r.category}</span>
+                    <span className="blog-related-title">{r.title}</span>
+                    <span className="blog-related-arrow" aria-hidden="true">
+                      &rarr;
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
       </article>
     </div>
   );
