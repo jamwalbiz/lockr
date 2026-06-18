@@ -43,7 +43,8 @@
 html, body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-sans), 'Hanken Grotesk', sans-serif;
+  font-family: var(--font-sans), 'Inter', sans-serif;
+  font-feature-settings: 'cv11', 'ss01';
   -webkit-font-smoothing: antialiased;
 }
 body { overflow-x: hidden; }
@@ -52,7 +53,7 @@ body { overflow-x: hidden; }
 body { -webkit-user-select: none; -moz-user-select: none; user-select: none; -webkit-touch-callout: none; }
 input, textarea, select, [contenteditable="true"], [data-allow-select], .legal-page { -webkit-user-select: text; -moz-user-select: text; user-select: text; -webkit-touch-callout: default; }
 img, svg { -webkit-user-drag: none; user-select: none; }
-.mono { font-family: var(--font-jetbrains), 'JetBrains Mono', monospace; font-feature-settings: 'zero', 'ss01'; }
+.mono { font-family: var(--font-jetbrains), 'IBM Plex Mono', monospace; font-feature-settings: 'zero', 'ss01'; }
 a { color: inherit; text-decoration: none; }
 button { background: none; border: none; color: inherit; cursor: pointer; font-family: inherit; padding: 0; }
 input, textarea, select { font-family: inherit; }
@@ -500,7 +501,7 @@ h1.hero-title { font-family: var(--font-display), var(--font-sans), sans-serif; 
    Discord embeds
    ------------------------------------------------------------------ */
 .discord-wrap { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 1100px; margin: 0 auto; }
-.discord { background: #2b2d31; border: 1px solid #1e1f22; border-radius: 12px; overflow: hidden; font-family: 'gg sans', var(--font-sans), 'Hanken Grotesk', sans-serif; }
+.discord { background: #2b2d31; border: 1px solid #1e1f22; border-radius: 12px; overflow: hidden; font-family: 'gg sans', var(--font-sans), 'Inter', sans-serif; }
 .discord-channel-bar { padding: 12px 16px; background: #2b2d31; border-bottom: 1px solid #1e1f22; display: flex; align-items: center; gap: 8px; color: #b5bac1; font-size: 13px; font-weight: 600; }
 .discord-hash { color: #80848e; font-size: 18px; font-weight: 400; }
 .discord-msgs { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
@@ -593,7 +594,7 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .footer-bottom { display: flex; justify-content: space-between; padding-top: 24px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-dim); flex-wrap: wrap; gap: 16px; }
 .footer-disclaimer { font-size: 11px; color: var(--text-dim); line-height: 1.5; max-width: 700px; }
 /* Giant outline brand wordmark bleeding off the footer bottom - pure flourish. */
-.footer-wordmark { font-family: var(--font-display), var(--font-sans), sans-serif; font-weight: 800; font-size: clamp(72px, 19vw, 300px); line-height: 0.78; letter-spacing: -0.04em; text-align: center; -webkit-text-stroke: 1px rgba(245, 244, 241, 0.07); color: transparent; user-select: none; pointer-events: none; overflow: hidden; margin: 44px 0 -0.12em; }
+.footer-wordmark { font-family: var(--font-display), var(--font-sans), sans-serif; font-weight: 900; font-size: clamp(72px, 19vw, 300px); line-height: 0.78; letter-spacing: -0.04em; text-align: center; -webkit-text-stroke: 1px rgba(245, 244, 241, 0.07); color: transparent; user-select: none; pointer-events: none; overflow: hidden; margin: 44px 0 -0.12em; }
 @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-capture { grid-template-columns: 1fr; } .footer-capture-form { flex-direction: column; } .footer-capture-form input { min-width: 0; width: 100%; } .footer-capture-form button { width: 100%; } }
 
 /* ------------------------------------------------------------------
@@ -726,7 +727,7 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 .book-mark:hover { color: var(--text); background: var(--bg-elevated-2); }
 .book-mark svg { transition: transform 0.2s; }
 .book-mark:hover svg { transform: scale(1.08); }
-.book-mark-name { font-family: var(--font-sans), 'Hanken Grotesk', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: -0.01em; text-align: center; line-height: 1.1; }
+.book-mark-name { font-family: var(--font-sans), 'Inter', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: -0.01em; text-align: center; line-height: 1.1; }
 .book-mark-img { object-fit: contain; border-radius: 10px; }
 .books-note { text-align: center; margin-top: 16px; font-size: 12px; color: var(--text-dim); }
 @media (max-width: 900px) { .books-wall { grid-template-columns: repeat(4, 1fr); } .book-mark { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); } .book-mark:nth-child(4n) { border-right: none; } .book-mark:nth-last-child(-n+4) { border-bottom: none; } }

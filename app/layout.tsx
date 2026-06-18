@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Hanken_Grotesk, JetBrains_Mono, Bricolage_Grotesque } from "next/font/google";
+import { Inter, IBM_Plex_Mono, Archivo } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { CadenceProvider } from "@/components/CadenceContext";
@@ -10,29 +10,30 @@ import { SocialProofPopups } from "@/components/SocialProofPopups";
 import { ContentGuard } from "@/components/ContentGuard";
 import { SmoothScroll } from "@/components/SmoothScroll";
 
-// Body text. Hanken Grotesk — a warm, humanist grotesque with subtle character
-// in the terminals and a true italic. Reads cleanly at small sizes and carries
-// far more personality than Inter/system defaults, which is the look we're
-// moving away from. Workhorse for all running copy.
-const hanken = Hanken_Grotesk({
+// Body text. Inter is the workhorse for all running copy.
+const inter = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
-// Display face for headlines. Bricolage Grotesque — a contemporary grotesque
-// with deliberate quirks (flared joints, irregular widths) that give the
-// monumental titles a distinct, designed voice instead of a generic geometric
-// sans. Pairs on a character axis with the neutral Hanken body + mono data layer.
-const bricolage = Bricolage_Grotesque({
+// Display face for headlines. Archivo is a technical grotesque with real
+// character. Wide, confident, mechanical letterforms that read like a
+// precision instrument and pair cleanly with the mono data layer.
+const archivo = Archivo({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["500", "600", "700", "800", "900"],
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+// The data/terminal layer: every stat, label, price, and "// LABEL" tag, plus
+// the "WORKS WITH EVERY PLATFORM" line. IBM Plex Mono reads like a financial
+// terminal, with more character than the default dev monos, which carries the
+// "ledger" identity. The CSS var keeps its --font-jetbrains name for
+// back-compat with the existing mono references.
+const plexMono = IBM_Plex_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -73,7 +74,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${hanken.variable} ${bricolage.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${inter.variable} ${archivo.variable} ${plexMono.variable}`}>
       <body>
         {/* Site-wide JSON-LD: Organization + WebSite */}
         <script
