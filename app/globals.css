@@ -444,10 +444,10 @@ h1.hero-title { font-family: var(--font-display), var(--font-sans), sans-serif; 
   /* Phone: a compact, fanned proof point. The fan is spread a little so each
      card's sport tag reads, not a tight pile, but it stays small enough that the
      hero (with side-by-side CTAs) still lands above the fold. */
-  .play-deck { width: 248px; height: 246px; margin: 0 auto; }
-  .play-slot { width: 214px; }
-  .play-slot:nth-child(2) { transform: translate(28px, 68px) rotate(3deg); }
-  .play-slot:nth-child(3) { transform: translate(10px, 136px) rotate(8deg); }
+  .play-deck { width: 240px; height: 222px; margin: 0 auto; }
+  .play-slot { width: 206px; }
+  .play-slot:nth-child(2) { transform: translate(27px, 62px) rotate(3deg); }
+  .play-slot:nth-child(3) { transform: translate(9px, 124px) rotate(8deg); }
   .play-card { padding: 13px 15px 11px; }
   .play-line { font-size: 21px; }
 }
@@ -476,12 +476,12 @@ h1.hero-title { font-family: var(--font-display), var(--font-sans), sans-serif; 
   .hero-title-accent { margin-left: 0; }
 }
 @media (max-width: 640px) {
-  /* Phone fit: pull the hero up under the nav, drop the eyebrow line, and put the
-     two CTAs side by side. The reclaimed button-row height pays for real breathing
-     room (gap 22) so the headline, deck, subhead, and CTAs stop crowding each
-     other, while still landing above the sticky join bar. */
-  .hero { padding-top: 18px; }
-  .hero-layout { gap: 22px; }
+  /* Phone fit: drop the eyebrow, side-by-side CTAs, and let the vertical rhythm
+     scale with viewport height. With the sticky bar hidden on landing the hero
+     owns the whole screen, so the gaps open up generously on tall phones (up to
+     38px) while still collapsing enough to keep the CTA on-screen on short ones. */
+  .hero { padding-top: clamp(14px, 3vh, 34px); }
+  .hero-layout { gap: clamp(18px, 4.4vh, 38px); }
   .verified-badge { display: none; }
   .hero-sub { font-size: 15px; line-height: 1.5; }
   .cta-label-full { display: none; }
