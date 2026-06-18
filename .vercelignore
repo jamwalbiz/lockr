@@ -1,0 +1,4 @@
+# The Remotion VSL project is a separate build that must never run on Vercel.
+# Its rendered output ships from /public/lockr-vsl.mp4 (committed); the source
+# here would otherwise fail Vercel's type-check (remotion isn't a root dep).
+video
