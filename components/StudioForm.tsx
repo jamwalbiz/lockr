@@ -2,10 +2,11 @@
 
 import { useMemo, useState } from "react";
 
+type Leg = { tag: string; pick: string };
 type Play = {
   league: string;
   market: string;
-  legs: string[];
+  legs: Leg[];
   odds: string;
   units: string;
   time: string;
@@ -18,7 +19,7 @@ type StrKey = Exclude<keyof Play, "legs">;
 const DEFAULTS: Play = {
   league: "NBA",
   market: "Game total",
-  legs: ["Over 224.5"],
+  legs: [{ tag: "", pick: "Over 224.5" }],
   odds: "-110",
   units: "2",
   time: "7:02p",
@@ -26,8 +27,9 @@ const DEFAULTS: Play = {
   tone: "green",
 };
 
-// Internal slip-card tool. Enter a play (straight or parlay), watch the branded
-// card render live, then post it to the members Discord. Password-gated server-side.
+// Internal slip-card tool. Enter a play (straight or parlay, single- or
+// mixed-league), watch the branded card render live, then post it to the
+// members Discord. Password-gated server-side.
 export function StudioForm() {
   const [f, setF] = useState<Play>(DEFAULTS);
   const [password, setPassword] = useState("");
@@ -36,8 +38,10 @@ export function StudioForm() {
   );
   const [msg, setMsg] = useState("");
 
-  const legCount = f.legs.filter((l) => l.trim()).length;
+  const cleanLegs = f.legs.filter((l) => l.pick.trim());
+  const legCount = cleanLegs.length;
   const isParlay = legCount >= 2;
+  const showTags = f.legs.length >= 2; // parlay layout exposes a per-leg league tag
 
   const previewUrl = useMemo(() => {
     const qs = new URLSearchParams();
@@ -48,15 +52,25 @@ export function StudioForm() {
     qs.set("time", f.time);
     qs.set("conf", f.conf);
     qs.set("tone", f.tone);
-    f.legs.filter((l) => l.trim()).forEach((l) => qs.append("legs", l));
+    f.legs
+      .filter((l) => l.pick.trim())
+      .forEach((l) => {
+        qs.append("legs", l.pick);
+        qs.append("legtags", l.tag);
+      });
     return `/api/slip?${qs.toString()}`;
   }, [f]);
 
   const up = (k: StrKey, v: string) => setF((s) => ({ ...s, [k]: v }));
-  const setLeg = (i: number, v: string) =>
-    setF((s) => ({ ...s, legs: s.legs.map((l, j) => (j === i ? v : l)) }));
+  const setLeg = (i: number, field: keyof Leg, v: string) =>
+    setF((s) => ({
+      ...s,
+      legs: s.legs.map((l, j) => (j === i ? { ...l, [field]: v } : l)),
+    }));
   const addLeg = () =>
-    setF((s) => (s.legs.length >= 6 ? s : { ...s, legs: [...s.legs, ""] }));
+    setF((s) =>
+      s.legs.length >= 6 ? s : { ...s, legs: [...s.legs, { tag: "", pick: "" }] },
+    );
   const removeLeg = (i: number) =>
     setF((s) =>
       s.legs.length <= 1 ? s : { ...s, legs: s.legs.filter((_, j) => j !== i) },
@@ -73,7 +87,7 @@ export function StudioForm() {
       const res = await fetch("/api/slip/post", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...f, legs: f.legs.filter((l) => l.trim()), password }),
+        body: JSON.stringify({ ...f, legs: cleanLegs, password }),
       });
       const d = (await res.json()) as { ok?: boolean; error?: string };
       if (res.ok && d.ok) {
@@ -122,17 +136,27 @@ export function StudioForm() {
           </Field>
         )}
 
-        {/* Legs: 1 = straight, 2+ = parlay (card switches automatically) */}
+        {/* Legs: 1 = straight, 2+ = parlay. In parlay mode each leg gets an
+            optional league tag so mixed-league parlays render cleanly. */}
         <div className="studio-field">
           <span className="studio-field-label">
             {isParlay ? `Legs · ${legCount}-leg parlay` : "Pick"}
           </span>
           {f.legs.map((leg, i) => (
             <div key={i} className="studio-leg">
+              {showTags && (
+                <input
+                  className="studio-input studio-leg-tag"
+                  value={leg.tag}
+                  onChange={(e) => setLeg(i, "tag", e.target.value)}
+                  placeholder="NBA"
+                  aria-label={`Leg ${i + 1} league`}
+                />
+              )}
               <input
                 className="studio-input"
-                value={leg}
-                onChange={(e) => setLeg(i, e.target.value)}
+                value={leg.pick}
+                onChange={(e) => setLeg(i, "pick", e.target.value)}
                 placeholder={i === 0 ? "e.g. Celtics ML" : `Leg ${i + 1}`}
               />
               {f.legs.length > 1 && (
@@ -151,6 +175,12 @@ export function StudioForm() {
             <button type="button" className="studio-leg-add" onClick={addLeg}>
               + Add leg (parlay)
             </button>
+          )}
+          {showTags && (
+            <span className="studio-hint">
+              Tag each leg with its league (NBA, NFL…) for mixed parlays. Leave
+              blank if they share one.
+            </span>
           )}
         </div>
 

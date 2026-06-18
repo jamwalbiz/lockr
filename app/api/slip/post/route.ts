@@ -51,19 +51,30 @@ export async function POST(req: Request) {
   }
 
   const str = (k: string): string => (typeof body[k] === "string" ? (body[k] as string) : "");
-  const legs = Array.isArray(body.legs)
-    ? (body.legs as unknown[]).filter(
-        (l): l is string => typeof l === "string" && l.trim().length > 0,
-      )
-    : str("pick")
-      ? [str("pick")]
-      : [];
+  const toLeg = (l: unknown): { tag: string; pick: string } => {
+    if (typeof l === "string") return { tag: "", pick: l };
+    if (l && typeof l === "object") {
+      const o = l as Record<string, unknown>;
+      return {
+        tag: typeof o.tag === "string" ? o.tag : "",
+        pick: typeof o.pick === "string" ? o.pick : "",
+      };
+    }
+    return { tag: "", pick: "" };
+  };
+  const legs = (Array.isArray(body.legs) ? (body.legs as unknown[]).map(toLeg) : []).filter(
+    (l) => l.pick.trim(),
+  );
+  if (legs.length === 0 && str("pick")) legs.push({ tag: "", pick: str("pick") });
 
   const qs = new URLSearchParams();
   for (const k of ["league", "market", "odds", "units", "time", "conf", "tone"]) {
     if (str(k)) qs.set(k, str(k));
   }
-  legs.forEach((l) => qs.append("legs", l));
+  legs.forEach((l) => {
+    qs.append("legs", l.pick);
+    qs.append("legtags", l.tag);
+  });
   const slipUrl = `${BASE}/api/slip?${qs.toString()}`;
 
   const isParlay = legs.length >= 2;
@@ -71,8 +82,8 @@ export async function POST(req: Request) {
     ? `**${str("league") || "Parlay"} parlay · ${legs.length} legs**`
     : `**${str("league")} · ${str("market")}**`;
   const lines = isParlay
-    ? legs.map((l, i) => `${i + 1}. ${l}`).join("\n")
-    : legs[0] || "";
+    ? legs.map((l, i) => `${i + 1}. ${l.tag ? `${l.tag} ` : ""}${l.pick}`).join("\n")
+    : legs[0]?.pick || "";
   const desc = `${head}\n${lines}\n${str("odds")}  ·  ${str("units")}u`;
 
   try {

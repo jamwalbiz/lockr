@@ -15,10 +15,15 @@ export async function GET(req: Request) {
   const sp = new URL(req.url).searchParams;
   const league = (sp.get("league") || "NBA").toUpperCase().slice(0, 18);
   const market = (sp.get("market") || "Game total").slice(0, 40);
-  // Legs: repeated ?legs= params. Falls back to ?pick= for older slip URLs.
-  const legParams = sp.getAll("legs").map((s) => s.slice(0, 46)).filter(Boolean);
+  // Legs: parallel ?legs= (pick) and ?legtags= (optional league per leg).
+  // Falls back to ?pick= for older slip URLs.
+  const legPicks = sp.getAll("legs").map((s) => s.slice(0, 46));
+  const legTags = sp.getAll("legtags");
   const pickParam = (sp.get("pick") || "").slice(0, 32);
-  const legs = legParams.length ? legParams : pickParam ? [pickParam] : ["Over 224.5"];
+  const legSource = legPicks.length ? legPicks : pickParam ? [pickParam] : ["Over 224.5"];
+  const legs = legSource
+    .map((pick, i) => ({ pick, tag: (legTags[i] || "").toUpperCase().slice(0, 14) }))
+    .filter((l) => l.pick);
   const isParlay = legs.length >= 2;
   const parlayTag = !league || league === "PARLAY" ? "PARLAY" : `${league} PARLAY`;
   const legFont = legs.length <= 2 ? 50 : legs.length === 3 ? 42 : legs.length === 4 ? 36 : 30;
@@ -120,7 +125,7 @@ export async function GET(req: Request) {
             </div>
             <div style={{ display: "flex", flexDirection: "column", marginTop: 26, gap: 18 }}>
               {legs.map((leg, i) => (
-                <div key={i} style={{ display: "flex", alignItems: "center", gap: 18 }}>
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: 16 }}>
                   <div
                     style={{
                       display: "flex",
@@ -137,6 +142,19 @@ export async function GET(req: Request) {
                   >
                     {String(i + 1)}
                   </div>
+                  {leg.tag ? (
+                    <div
+                      style={{
+                        display: "flex",
+                        fontSize: 21,
+                        fontWeight: 700,
+                        color: tone,
+                        letterSpacing: 1,
+                      }}
+                    >
+                      {leg.tag}
+                    </div>
+                  ) : null}
                   <div
                     style={{
                       display: "flex",
@@ -147,7 +165,7 @@ export async function GET(req: Request) {
                       lineHeight: 1,
                     }}
                   >
-                    {leg}
+                    {leg.pick}
                   </div>
                 </div>
               ))}
@@ -175,7 +193,7 @@ export async function GET(req: Request) {
                 lineHeight: 1,
               }}
             >
-              {legs[0]}
+              {legs[0].pick}
             </div>
           </div>
         )}
