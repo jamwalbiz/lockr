@@ -15,7 +15,13 @@ export async function GET(req: Request) {
   const sp = new URL(req.url).searchParams;
   const league = (sp.get("league") || "NBA").toUpperCase().slice(0, 18);
   const market = (sp.get("market") || "Game total").slice(0, 40);
-  const pick = (sp.get("pick") || "Over 224.5").slice(0, 32);
+  // Legs: repeated ?legs= params. Falls back to ?pick= for older slip URLs.
+  const legParams = sp.getAll("legs").map((s) => s.slice(0, 46)).filter(Boolean);
+  const pickParam = (sp.get("pick") || "").slice(0, 32);
+  const legs = legParams.length ? legParams : pickParam ? [pickParam] : ["Over 224.5"];
+  const isParlay = legs.length >= 2;
+  const parlayTag = !league || league === "PARLAY" ? "PARLAY" : `${league} PARLAY`;
+  const legFont = legs.length <= 2 ? 50 : legs.length === 3 ? 42 : legs.length === 4 ? 36 : 30;
   const odds = (sp.get("odds") || "-110").slice(0, 12);
   const units = (sp.get("units") || "2").slice(0, 5);
   const time = (sp.get("time") || "").slice(0, 16);
@@ -100,29 +106,79 @@ export async function GET(req: Request) {
           </div>
         </div>
 
-        {/* body: league, market, the pick as hero */}
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 62 }}>
-          <div style={{ width: 13, height: 13, borderRadius: 7, background: tone }} />
-          <div style={{ fontSize: 26, fontWeight: 700, color: INK, letterSpacing: 3 }}>
-            {league}
+        {/* body: parlay = stacked legs; straight = single hero pick */}
+        {isParlay ? (
+          <div style={{ display: "flex", flexDirection: "column", marginTop: 54 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ width: 13, height: 13, borderRadius: 7, background: tone }} />
+              <div style={{ fontSize: 26, fontWeight: 700, color: INK, letterSpacing: 3 }}>
+                {parlayTag}
+              </div>
+              <div style={{ fontSize: 22, color: MUTE, marginLeft: 4 }}>
+                {`· ${legs.length} legs`}
+              </div>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", marginTop: 26, gap: 18 }}>
+              {legs.map((leg, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: 18 }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: 38,
+                      height: 38,
+                      borderRadius: 9,
+                      border: `1px solid ${tone}`,
+                      color: tone,
+                      fontSize: 20,
+                      fontWeight: 800,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {String(i + 1)}
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      fontSize: legFont,
+                      fontWeight: 800,
+                      color: INK,
+                      letterSpacing: -1,
+                      lineHeight: 1,
+                    }}
+                  >
+                    {leg}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-        <div style={{ display: "flex", fontSize: 30, color: MUTE, marginTop: 18 }}>
-          {market}
-        </div>
-        <div
-          style={{
-            display: "flex",
-            fontSize: 96,
-            fontWeight: 800,
-            color: tone,
-            marginTop: 8,
-            letterSpacing: -3,
-            lineHeight: 1,
-          }}
-        >
-          {pick}
-        </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", marginTop: 62 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ width: 13, height: 13, borderRadius: 7, background: tone }} />
+              <div style={{ fontSize: 26, fontWeight: 700, color: INK, letterSpacing: 3 }}>
+                {league}
+              </div>
+            </div>
+            <div style={{ display: "flex", fontSize: 30, color: MUTE, marginTop: 18 }}>
+              {market}
+            </div>
+            <div
+              style={{
+                display: "flex",
+                fontSize: 96,
+                fontWeight: 800,
+                color: tone,
+                marginTop: 8,
+                letterSpacing: -3,
+                lineHeight: 1,
+              }}
+            >
+              {legs[0]}
+            </div>
+          </div>
+        )}
 
         <div style={{ flex: 1, display: "flex" }} />
 

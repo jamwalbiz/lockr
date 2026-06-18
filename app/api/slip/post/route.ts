@@ -20,9 +20,9 @@ export const runtime = "nodejs";
 const BASE = "https://joinlockr.com";
 
 export async function POST(req: Request) {
-  let body: Record<string, string> = {};
+  let body: Record<string, unknown> = {};
   try {
-    body = (await req.json()) as Record<string, string>;
+    body = (await req.json()) as Record<string, unknown>;
   } catch {
     return NextResponse.json({ ok: false, error: "Bad request" }, { status: 400 });
   }
@@ -50,12 +50,30 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "Wrong password." }, { status: 401 });
   }
 
-  const fields = ["league", "market", "pick", "odds", "units", "time", "conf", "tone"];
+  const str = (k: string): string => (typeof body[k] === "string" ? (body[k] as string) : "");
+  const legs = Array.isArray(body.legs)
+    ? (body.legs as unknown[]).filter(
+        (l): l is string => typeof l === "string" && l.trim().length > 0,
+      )
+    : str("pick")
+      ? [str("pick")]
+      : [];
+
   const qs = new URLSearchParams();
-  for (const f of fields) if (body[f]) qs.set(f, body[f]);
+  for (const k of ["league", "market", "odds", "units", "time", "conf", "tone"]) {
+    if (str(k)) qs.set(k, str(k));
+  }
+  legs.forEach((l) => qs.append("legs", l));
   const slipUrl = `${BASE}/api/slip?${qs.toString()}`;
 
-  const desc = `**${body.league || ""} · ${body.market || ""}**\n${body.pick || ""}  ·  ${body.odds || ""}  ·  ${body.units || ""}u`;
+  const isParlay = legs.length >= 2;
+  const head = isParlay
+    ? `**${str("league") || "Parlay"} parlay · ${legs.length} legs**`
+    : `**${str("league")} · ${str("market")}**`;
+  const lines = isParlay
+    ? legs.map((l, i) => `${i + 1}. ${l}`).join("\n")
+    : legs[0] || "";
+  const desc = `${head}\n${lines}\n${str("odds")}  ·  ${str("units")}u`;
 
   try {
     const res = await fetch(webhook, {
@@ -65,7 +83,7 @@ export async function POST(req: Request) {
         username: "Lockr",
         embeds: [
           {
-            color: 0x00ff85,
+            color: isMarket ? 0x4a9eff : 0x00ff85,
             description: desc,
             image: { url: slipUrl },
           },

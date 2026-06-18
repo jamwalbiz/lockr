@@ -1530,6 +1530,12 @@ html { scroll-behavior: smooth; scroll-padding-top: 96px; }
 .studio-post { margin-top: 10px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px; }
 .studio-dest { margin: -8px 0 2px; font-size: 12px; color: var(--text-mute); }
 .studio-dest strong { color: var(--text); font-weight: 600; }
+.studio-leg { display: flex; gap: 8px; align-items: center; }
+.studio-leg .studio-input { flex: 1; }
+.studio-leg-x { flex: none; width: 40px; height: 40px; border: 1px solid var(--border); background: transparent; color: var(--text-mute); border-radius: 9px; font-size: 20px; line-height: 1; cursor: pointer; transition: color 0.15s, border-color 0.15s; }
+.studio-leg-x:hover { color: var(--danger); border-color: var(--danger); }
+.studio-leg-add { align-self: flex-start; background: transparent; border: 1px dashed var(--border); color: var(--text-mute); font-size: 12px; padding: 7px 13px; border-radius: 9px; cursor: pointer; transition: color 0.15s, border-color 0.15s; }
+.studio-leg-add:hover { color: var(--accent); border-color: var(--accent); }
 .studio-btn { width: 100%; justify-content: center; }
 .studio-msg { font-size: 13px; margin: 0; }
 .studio-msg.ok { color: var(--accent); }
