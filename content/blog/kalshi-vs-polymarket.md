@@ -46,6 +46,8 @@ YES and NO contracts price probability through one simple rule: the price of a c
 
 Here is why that works. Every contract pays $1 if it hits and $0 if it misses. So if you buy YES at 40 cents and it hits, you collect $1, a 60-cent profit on a 40-cent stake. If it misses, you lose the 40 cents. A rational crowd will only push the price to 40 cents if they collectively believe the event is about 40 percent likely. Move the price up and the implied odds go up with it. This is the same information a sportsbook gives you through American odds or decimals. The packaging is different. The meaning is the same: what is the probability, and is the price worth it.
 
+> The price is the market's best guess at the odds. Your only job is to decide whether it is wrong.
+
 ## How does a bettor actually read a prediction market?
 
 Reading a prediction market comes down to three quick reads. First, the price as a probability. Convert the cents straight to a percentage and ask whether that feels too high or too low versus your own view. Second, the spread between the buy and sell price, which tells you how liquid and tight the market is. Third, the volume, which tells you how much money actually backs that price.

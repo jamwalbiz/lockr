@@ -1216,6 +1216,41 @@ html { scroll-behavior: smooth; scroll-padding-top: 96px; }
 .blog-cta .btn { display: inline-flex; margin-bottom: 8px; }
 .blog-cta-fine { font-size: 12px; color: var(--text-dim); margin: 34px auto 0; padding-top: 22px; border-top: 1px solid var(--border); max-width: 54ch; line-height: 1.5; }
 
+/* ------------------------------------------------------------------
+   Blog: editorial / awwwards pass - typography, composition, motion
+   ------------------------------------------------------------------ */
+/* Index: interactive cards + a dominant featured first post (asymmetry). */
+.blog-list { gap: 18px; }
+.blog-card { position: relative; overflow: hidden; transition: border-color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+.blog-card::after { content: ''; position: absolute; inset: 0; background: radial-gradient(560px circle at 50% -20%, rgba(0, 255, 133, 0.07), transparent 58%); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+.blog-card:hover::after { opacity: 1; }
+.blog-card:hover { transform: translateY(-3px); }
+.blog-card-cta { display: inline-flex; align-items: center; gap: 6px; transition: gap 0.22s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease; }
+.blog-card:hover .blog-card-cta { gap: 12px; color: var(--text); }
+.blog-list > li:first-child .blog-card { padding: 38px 40px; background: linear-gradient(155deg, rgba(0, 255, 133, 0.055), var(--bg-elevated) 55%); border-color: rgba(0, 255, 133, 0.22); }
+.blog-list > li:first-child .blog-card-title { font-size: clamp(28px, 4.2vw, 42px); }
+.blog-list > li:first-child .blog-card-desc { font-size: 17px; max-width: 58ch; }
+
+/* Article: monumental title, standfirst lead, accent section markers, pull quotes. */
+.blog-article-title { font-size: clamp(36px, 6.8vw, 64px); }
+.blog-shell .prose { font-size: 18px; line-height: 1.78; }
+.prose > p:first-of-type { font-size: 21px; line-height: 1.62; color: var(--text); }
+.prose h2::before { content: ''; display: block; width: 34px; height: 2px; background: var(--accent); border-radius: 2px; margin-bottom: 20px; }
+.prose blockquote { border: 0; padding: 0.1em 0; margin: 1.8em 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.prose blockquote p { font-family: var(--font-display), sans-serif; font-size: clamp(23px, 3.2vw, 30px); font-weight: 600; line-height: 1.3; letter-spacing: -0.015em; color: var(--text); margin: 0.7em 0; max-width: 24ch; }
+
+@keyframes blog-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: no-preference) {
+  .blog-list > li { opacity: 0; animation: blog-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .blog-list > li:nth-child(2) { animation-delay: 0.09s; }
+  .blog-list > li:nth-child(3) { animation-delay: 0.17s; }
+  .blog-list > li:nth-child(n + 4) { animation-delay: 0.24s; }
+  .blog-back, .blog-article-meta, .blog-article-title, .blog-article-byline { opacity: 0; animation: blog-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .blog-article-meta { animation-delay: 0.08s; }
+  .blog-article-title { animation-delay: 0.15s; }
+  .blog-article-byline { animation-delay: 0.23s; }
+}
+
 @media (max-width: 640px) {
   .blog-card { padding: 22px; }
   .blog-cta { padding: 28px 20px; }

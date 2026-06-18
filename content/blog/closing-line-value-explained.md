@@ -36,6 +36,8 @@ The closing line matters because it is the sharpest, most efficient price a mark
 
 That is exactly why beating it is meaningful. If you can repeatedly get a better price than where the market ends up, you are finding value that the smartest money has not fully priced yet. You are early, not lucky. One bet proves nothing. A run of plays that beat the close starts to say something real about your edge.
 
+> A bet can lose and still be a good bet. Beating the closing line is how you tell the difference.
+
 ## How do you calculate CLV? A worked example
 
 You calculate CLV by comparing your odds to the closing odds and converting the gap into either a percentage or a points difference. The cleanest way is to compare implied probabilities. Here is a simple worked example using round numbers, not real results.

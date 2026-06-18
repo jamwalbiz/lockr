@@ -37,6 +37,8 @@ Here is the honest version of the workflow:
 
 Tailing works best when you think of the poster as a teammate handing you a card, not an oracle handing you a sure thing. You still get to decide whether to play it, and for how much.
 
+> Tailing is not outsourcing the thinking. It is borrowing the read, then sizing it like your own money.
+
 ## What is bankroll and unit sizing?
 
 Your bankroll is the total amount of money you have set aside for betting and prediction markets, separate from rent, bills, and savings. A unit is one standard bet size, usually a small fixed percentage of that bankroll. Many disciplined bettors keep a single unit somewhere between 1 and 3 percent of their bankroll, so one play never threatens the whole account.
