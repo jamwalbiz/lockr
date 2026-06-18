@@ -90,9 +90,9 @@ export function InsideLockr() {
               <span className="inside-feed-sep" aria-hidden="true">/</span>
               <span className="inside-hash">#</span>
               <span className="inside-channel">todays-plays</span>
-              <span className="inside-online">
-                <span className="inside-dot" aria-hidden="true" />
-                1,284 online
+              <span className="inside-live" aria-label="Live channel">
+                <span className="inside-live-dot" aria-hidden="true" />
+                live
               </span>
             </div>
             <div className="inside-msgs">
@@ -139,6 +139,14 @@ export function InsideLockr() {
                   </div>
                 </div>
               ))}
+            </div>
+            <div className="inside-typing" aria-hidden="true">
+              <span className="inside-typing-dots">
+                <i />
+                <i />
+                <i />
+              </span>
+              members are typing
             </div>
             <div className="inside-input">
               <span className="inside-input-text">Message #todays-plays</span>
