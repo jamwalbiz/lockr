@@ -47,12 +47,11 @@ app/
   opengraph-image.tsx      # 1200×630 OG card
   robots.ts
   sitemap.ts
-  layout.tsx               # site chrome (nav, ticker, footer, popups)
+  layout.tsx               # site chrome (nav, footer, popups)
   globals.css              # design tokens + ported component styles
 
 components/
   Nav.tsx                  # nav + mobile hamburger + scroll state
-  ActivityTicker.tsx       # top "LIVE" ticker
   Footer.tsx               # footer + newsletter capture
   MobileCta.tsx            # sticky bottom CTA (≤768px only)
   LanguageToggle.tsx       # 8-locale UI (translation pipeline deferred)

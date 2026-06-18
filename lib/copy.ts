@@ -1,7 +1,7 @@
-// Activity-ticker + social-proof data, generated combinatorially each page
-// visit so refresh ≠ refresh. Names are not real members. If JT ever wants
-// to flip this to live data, the Whop webhook → our backend → ticker pipe
-// is the path. For now it stays synthesized.
+// Social-proof popup data, generated combinatorially each page visit so
+// refresh ≠ refresh. Names are not real members. If JT ever wants to flip
+// this to live data, the Whop webhook → our backend is the path. For now it
+// stays synthesized.
 //
 // Name pool tuned to JT's demographic call:
 //   - Drop K last-initials (was a too-obvious repeating pattern)
@@ -13,7 +13,6 @@
 
 type Tone = "green" | "gold" | "blue";
 
-export type TickerItem = { tone: Tone; text: string };
 export type SocialProofItem = {
   name: string;
   detail: string;
@@ -88,27 +87,6 @@ const UNIT_WINS = [
   "+1.82u", "+2.05u", "+2.18u", "+2.41u", "+2.76u", "+3.10u",
 ] as const;
 
-// JT activity, heavily weighted in the ticker. Per JT: "the more we flood
-// my name the more it becomes common."
-const JT_PICK_CATEGORIES = [
-  "NBA PROP", "UFC METHOD", "F1 PODIUM", "KALSHI HEDGE",
-  "NFL TOTAL", "MLB OVER", "POLYMARKET POSITION", "NHL PUCK LINE",
-  "SOCCER ML", "TENNIS H2H", "NBA PARLAY", "UFC ROUND PROP",
-] as const;
-
-const JT_LONGFORMS = [
-  "NBA BREAKDOWN", "BANKROLL PLAYBOOK", "BEAT THE LINE 101", "KALSHI 101",
-  "UFC METHOD GUIDE", "F1 QUALIFYING GUIDE", "POLYMARKET HEDGE GUIDE",
-  "MLB MODEL UPDATE", "WEEKLY RECAP", "MONTHLY UNIT REVIEW",
-] as const;
-
-const JT_OTHER = [
-  "JT REPLIED · IC DM",
-  "JT DROPPED · STRATEGY THREAD",
-  "JT ANSWERED · WEEKLY Q&A",
-  "JT POSTED · MEMBER SHOUTOUT",
-] as const;
-
 const JOIN_UPGRADE_ACTIONS: ReadonlyArray<{ tone: Tone; action: string }> = [
   { tone: "blue", action: "JOINED LOCKR · WEEKLY" },
   { tone: "blue", action: "JOINED LOCKR · MONTHLY" },
@@ -136,86 +114,7 @@ function randomName(): { display: string; avatar: string } {
   };
 }
 
-// Ticker mix:
-//   • 30% JT picks
-//   • 12% JT long-form
-//   • 5%  JT other
-//   • 35% member wins
-//   • 18% joins / upgrades
-// Means ~47% of items mention JT: heavy personal-brand surface.
-//
-// Anti-clustering: pure per-slot random gave streaks (e.g., 4× "JT POSTED"
-// in a row). Two constraints layered on top of the weighted random:
-//   1. No same broad-type (jt | member-win | join) more than 2× consecutive
-//   2. No exact-text repeat within a 4-item sliding window
-type Category = "jt" | "member" | "join";
-
-function makeRandomCandidate(): { cat: Category; item: TickerItem } {
-  const r = Math.random();
-  if (r < 0.3) {
-    return {
-      cat: "jt",
-      item: { tone: "green", text: `JT POSTED NEW PICK · ${pick(JT_PICK_CATEGORIES)}` },
-    };
-  }
-  if (r < 0.42) {
-    return {
-      cat: "jt",
-      item: { tone: "gold", text: `JT POSTED LONG-FORM · ${pick(JT_LONGFORMS)}` },
-    };
-  }
-  if (r < 0.47) {
-    return { cat: "jt", item: { tone: "gold", text: pick(JT_OTHER) } };
-  }
-  if (r < 0.82) {
-    const name = randomName();
-    return {
-      cat: "member",
-      item: {
-        tone: "green",
-        text: `${name.display.toUpperCase()} CASHED ${pick(UNIT_WINS)} · ${pick(BET_CATEGORIES)}`,
-      },
-    };
-  }
-  const name = randomName();
-  const join = pick(JOIN_UPGRADE_ACTIONS);
-  return {
-    cat: "join",
-    item: { tone: join.tone, text: `${name.display.toUpperCase()} ${join.action}` },
-  };
-}
-
-export function generateTickerItems(count: number = 40): TickerItem[] {
-  const items: TickerItem[] = [];
-  const recentTexts: string[] = [];
-  const RECENT_WINDOW = 4;
-  let lastCat: Category | null = null;
-  let consecutiveSameCat = 0;
-
-  for (let i = 0; i < count; i++) {
-    let candidate = makeRandomCandidate();
-    for (let attempt = 0; attempt < 8; attempt++) {
-      const sameCatStreakWouldExceed =
-        candidate.cat === lastCat && consecutiveSameCat >= 1;
-      const textRepeats = recentTexts.includes(candidate.item.text);
-      if (!sameCatStreakWouldExceed && !textRepeats) break;
-      candidate = makeRandomCandidate();
-    }
-
-    items.push(candidate.item);
-    if (candidate.cat === lastCat) {
-      consecutiveSameCat++;
-    } else {
-      lastCat = candidate.cat;
-      consecutiveSameCat = 0;
-    }
-    recentTexts.push(candidate.item.text);
-    if (recentTexts.length > RECENT_WINDOW) recentTexts.shift();
-  }
-  return items;
-}
-
-// Social-proof popups are member-focused (JT activity goes in the ticker).
+// Social-proof popups are member-focused.
 //   • 65% wins
 //   • 25% joins / upgrades
 //   • 10% IC applications

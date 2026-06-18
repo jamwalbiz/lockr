@@ -67,12 +67,12 @@ input, textarea, select { font-family: inherit; }
 @media (max-width: 768px) { .shell { padding: 0 20px; } }
 
 /* Page wrapper (always visible - real Next.js routes now, no JS show/hide) */
-.page { padding-top: 102px; }
+.page { padding-top: 74px; }
 
 /* ------------------------------------------------------------------
    Nav
    ------------------------------------------------------------------ */
-.nav { position: fixed; top: 30px; left: 0; right: 0; z-index: 100; backdrop-filter: blur(20px); background: rgba(10, 10, 11, 0.55); border-bottom: 1px solid transparent; transition: background 0.2s ease, border-color 0.2s ease; }
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; backdrop-filter: blur(20px); background: rgba(10, 10, 11, 0.55); border-bottom: 1px solid transparent; transition: background 0.2s ease, border-color 0.2s ease; }
 .nav.scrolled { background: rgba(10, 10, 11, 0.88); border-bottom-color: var(--border); }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; max-width: 1200px; margin: 0 auto; }
 .logo { font-weight: 700; letter-spacing: -0.02em; font-size: 22px; display: flex; align-items: center; gap: 8px; }
@@ -156,7 +156,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 /* Mobile slide-down menu */
-.mobile-menu { display: none; position: fixed; top: 30px; left: 0; right: 0; z-index: 199; background: var(--bg); border-bottom: 1px solid var(--border); padding: 24px 20px calc(32px + env(safe-area-inset-bottom)); max-height: calc(100dvh - 30px); overflow-y: auto; transform: translateY(-12px); opacity: 0; transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1); }
+.mobile-menu { display: none; position: fixed; top: 74px; left: 0; right: 0; z-index: 199; background: var(--bg); border-bottom: 1px solid var(--border); padding: 24px 20px calc(32px + env(safe-area-inset-bottom)); max-height: calc(100dvh - 74px); overflow-y: auto; transform: translateY(-12px); opacity: 0; transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1); }
 .mobile-menu.open { display: block; transform: translateY(0); opacity: 1; }
 .mobile-menu-inner { display: flex; flex-direction: column; gap: 4px; max-width: 1200px; margin: 0 auto; }
 .mobile-link { display: block; padding: 16px 8px; font-size: 17px; font-weight: 500; color: var(--text); border-bottom: 1px solid var(--border); transition: color 0.15s; }
@@ -165,21 +165,6 @@ input, textarea, select { font-family: inherit; }
 .mobile-menu-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); z-index: 198; }
 @media (max-width: 768px) { .mobile-menu-backdrop { display: block; } }
 
-/* ------------------------------------------------------------------
-   Activity ticker (top bar) - Bloomberg-style status, "LIVE" left label
-   ------------------------------------------------------------------ */
-.activity-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 101; background: #000; border-bottom: 1px solid var(--border); font-family: var(--font-jetbrains), 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-mute); overflow: hidden; height: 30px; display: flex; align-items: center; }
-.activity-live { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; padding: 0 14px; height: 30px; background: linear-gradient(90deg, #000 60%, transparent); color: var(--accent); font-weight: 700; letter-spacing: 0.1em; font-size: 10px; z-index: 1; position: relative; }
-/* Right-edge fade so the scrolling ticker dissolves out instead of hard-cutting
-   (the left edge is covered by the LIVE label's gradient). */
-.activity-bar::after { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 56px; background: linear-gradient(90deg, transparent, #000); pointer-events: none; z-index: 1; }
-.activity-live-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; }
-.activity-track { display: flex; gap: 32px; padding: 8px 0; animation: scroll-x 180s linear infinite; width: max-content; white-space: nowrap; }
-.activity-item { display: inline-flex; align-items: center; gap: 8px; }
-.activity-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
-.activity-dot.green { background: var(--accent); }
-.activity-dot.gold { background: var(--gold); }
-.activity-dot.blue { background: var(--blue); }
 
 /* ------------------------------------------------------------------
    Sections
@@ -1017,8 +1002,8 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 .lenis.lenis-stopped { overflow: hidden; }
-/* Anchor targets clear the fixed activity bar + nav on native hash jumps
-   (cross-page links, reduced-motion). The Lenis path uses scrollTo offset. */
+/* Anchor targets clear the fixed nav on native hash jumps (cross-page links,
+   reduced-motion). The Lenis path uses the matching scrollTo offset. */
 section[id] { scroll-margin-top: 96px; }
 
 /* ------------------------------------------------------------------
@@ -1092,11 +1077,11 @@ select:focus-visible,
   border-radius: 6px;
 }
 
-/* Smooth scroll for in-page anchors; offset for fixed nav (30px ticker + ~72px nav) */
-html { scroll-behavior: smooth; scroll-padding-top: 120px; }
+/* Smooth scroll for in-page anchors; offset clears the fixed nav (~77px) */
+html { scroll-behavior: smooth; scroll-padding-top: 96px; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .marquee-track, .activity-track { animation-duration: 0s !important; animation-play-state: paused !important; }
+  .marquee-track { animation-duration: 0s !important; animation-play-state: paused !important; }
   .verified-badge .dot, .tracker-title .dot { animation: none !important; }
   .social-proof { transition: none !important; }
 }

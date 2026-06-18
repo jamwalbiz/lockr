@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono, Archivo } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
-import { ActivityTicker } from "@/components/ActivityTicker";
 import { CadenceProvider } from "@/components/CadenceContext";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
@@ -114,7 +113,6 @@ export default function RootLayout({
         </a>
         <SmoothScroll>
           <CadenceProvider>
-            <ActivityTicker />
             <Nav />
             <main id="main" className="page">
               {children}
