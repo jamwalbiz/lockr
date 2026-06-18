@@ -16,6 +16,8 @@ type Play = {
   time: string;
   tone: "green" | "blue";
   why: string;
+  tails: number;
+  fire: number;
   slip?: boolean;
 };
 
@@ -29,6 +31,8 @@ const PLAYS: Play[] = [
     time: "6:54p ET",
     tone: "green",
     why: "His minutes are up and he's facing a defense that gives up points to guards. We're in before the number climbs.",
+    tails: 42,
+    fire: 14,
     slip: true,
   },
   {
@@ -40,6 +44,8 @@ const PLAYS: Play[] = [
     time: "7:12p ET",
     tone: "blue",
     why: "The market is slow to catch up to what most people already expect. Small, clean spot.",
+    tails: 23,
+    fire: 8,
   },
 ];
 
@@ -79,13 +85,15 @@ export function InsideLockr() {
           {/* The drop feed */}
           <div className="inside-feed">
             <div className="inside-feed-head">
+              <span className="inside-feed-mark" aria-hidden="true" />
+              <span className="inside-feed-server">Lockr</span>
+              <span className="inside-feed-sep" aria-hidden="true">/</span>
               <span className="inside-hash">#</span>
               <span className="inside-channel">todays-plays</span>
-              <span className="inside-live">
+              <span className="inside-online">
                 <span className="inside-dot" aria-hidden="true" />
-                live
+                1,284 online
               </span>
-              <span className="inside-lock">members only</span>
             </div>
             <div className="inside-msgs">
               {PLAYS.map((p) => (
@@ -119,9 +127,22 @@ export function InsideLockr() {
                         className="inside-slip"
                       />
                     )}
+                    <div className="inside-tail">
+                      <span className="inside-tail-avs" aria-hidden="true">
+                        <span className="inside-tav g" />
+                        <span className="inside-tav b" />
+                        <span className="inside-tav o" />
+                      </span>
+                      <span className="inside-tail-count">{p.tails} members tailed</span>
+                      <span className="inside-react">🔥 {p.fire}</span>
+                    </div>
                   </div>
                 </div>
               ))}
+            </div>
+            <div className="inside-input">
+              <span className="inside-input-text">Message #todays-plays</span>
+              <span className="inside-input-send" aria-hidden="true">↵</span>
             </div>
           </div>
 

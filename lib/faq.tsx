@@ -29,8 +29,8 @@ export const FAQ_ITEMS: Array<{ q: string; a: React.ReactNode; text: string }> =
   },
   {
     q: "What's the deal with prediction markets?",
-    a: "Kalshi and Polymarket let you take positions on events your sportsbook either won't price or prices badly. We show you when there's a real edge, and when those markets give you a clean hedge against a position your book takes you out of.",
-    text: "Kalshi and Polymarket let you take positions on events your sportsbook either won't price or prices badly. We show you when there's a real edge, and when those markets give you a clean hedge against a position your book takes you out of.",
+    a: "Kalshi and Polymarket are regulated markets for real-world outcomes, from games to the economy. The big difference from a sportsbook: there's no house setting the line against you. The price is just what the crowd thinks will happen, so when the crowd gets it wrong, that's a real opening. We flag the ones worth a position, and when one is a clean way to cover a bet your book limited you on.",
+    text: "Kalshi and Polymarket are regulated markets for real-world outcomes, from games to the economy. The big difference from a sportsbook: there's no house setting the line against you. The price is just what the crowd thinks will happen, so when the crowd gets it wrong, that's a real opening. We flag the ones worth a position, and when one is a clean way to cover a bet your book limited you on.",
   },
   {
     q: "How do I get into the Discord?",

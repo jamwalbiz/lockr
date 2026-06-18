@@ -624,9 +624,13 @@ export default function Home() {
                       SGA over 31.5 hit at the buzzer 😤 JT called this one before line
                       moved to -130
                     </div>
-                    <div className="discord-img-embed">
-                      [ image: bet slip · SGA 33 PTS · +1.82u ]
-                    </div>
+                    <Image
+                      src="/brand/discord-slip.png"
+                      alt="SGA over 31.5 bet slip, posted before the line moved"
+                      width={1000}
+                      height={600}
+                      className="discord-slip-img"
+                    />
                     <div className="discord-reactions">
                       <span className="discord-react">🔥 14</span>
                       <span className="discord-react">💰 9</span>
@@ -757,6 +761,13 @@ export default function Home() {
                 {PRICING.subscription.weekly.price.replace(/[^0-9]/g, "")}
                 <span className="per">/wk</span>
               </div>
+              <p className="price-rail-anchor">
+                About $
+                {Math.round(
+                  Number(PRICING.subscription.weekly.price.replace(/[^0-9]/g, "")) / 7,
+                )}{" "}
+                a day for the plays, the reasoning, and the room.
+              </p>
               <p className="price-rail-foot">
                 <strong>One price, both tiers below.</strong>
               </p>
