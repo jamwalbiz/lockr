@@ -72,6 +72,19 @@ export function StudioForm() {
   return (
     <div className="studio">
       <div className="studio-form">
+        <Field label="Slip type">
+          <select
+            className="studio-input"
+            value={f.tone}
+            onChange={(e) => up("tone", e.target.value)}
+          >
+            <option value="green">Sports · green · #sports-picks</option>
+            <option value="blue">Prediction market · blue · #prediction-markets</option>
+          </select>
+        </Field>
+        <p className="studio-dest">
+          Recolors the card and posts to <strong>{dest}</strong>.
+        </p>
         <Field label="League / event">
           <input
             className="studio-input"
@@ -116,29 +129,17 @@ export function StudioForm() {
             />
           </Field>
         </div>
-        <div className="studio-row">
-          <Field label="Confidence">
-            <select
-              className="studio-input"
-              value={f.conf}
-              onChange={(e) => up("conf", e.target.value)}
-            >
-              <option value="1">1 / Lean</option>
-              <option value="2">2 / Solid</option>
-              <option value="3">3 / Strong</option>
-            </select>
-          </Field>
-          <Field label="Type / channel">
-            <select
-              className="studio-input"
-              value={f.tone}
-              onChange={(e) => up("tone", e.target.value)}
-            >
-              <option value="green">Sports · green · #sports-picks</option>
-              <option value="blue">Prediction market · blue · #prediction-markets</option>
-            </select>
-          </Field>
-        </div>
+        <Field label="Confidence">
+          <select
+            className="studio-input"
+            value={f.conf}
+            onChange={(e) => up("conf", e.target.value)}
+          >
+            <option value="1">1 / Lean</option>
+            <option value="2">2 / Solid</option>
+            <option value="3">3 / Strong</option>
+          </select>
+        </Field>
 
         <div className="studio-post">
           <Field label="Studio password">
@@ -150,9 +151,6 @@ export function StudioForm() {
               placeholder="required to post"
             />
           </Field>
-          <p className="studio-dest">
-            Posts to <strong>{dest}</strong>
-          </p>
           <button
             type="button"
             className="btn btn-primary btn-lg studio-btn"
