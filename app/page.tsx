@@ -105,11 +105,15 @@ export default function Home() {
               <div className="hero-cta-row hero-rv" style={{ animationDelay: "0.38s" }}>
                 <Magnetic strength={0.35}>
                   <JoinCta href="/checkout" location="hero">
-                    Get today&apos;s picks · $29/wk
+                    <span className="cta-label-full">
+                      Get today&apos;s picks · $29/wk
+                    </span>
+                    <span className="cta-label-sm">Today&apos;s picks · $29/wk</span>
                   </JoinCta>
                 </Magnetic>
                 <a href="#intro" className="btn btn-secondary btn-lg">
-                  See how it works
+                  <span className="cta-label-full">See how it works</span>
+                  <span className="cta-label-sm">How it works</span>
                 </a>
               </div>
               <div className="hero-stats hero-rv" style={{ animationDelay: "0.46s" }}>

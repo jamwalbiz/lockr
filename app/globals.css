@@ -336,6 +336,7 @@ h1.hero-title { font-family: var(--font-display), var(--font-sans), sans-serif; 
 
 .hero-sub { font-size: clamp(16px, 1.4vw, 18.5px); color: var(--text-mute); line-height: 1.55; max-width: 460px; margin: 0 0 30px; }
 .hero-cta-row { display: flex; gap: 12px; justify-content: flex-start; margin-bottom: 26px; flex-wrap: wrap; }
+.cta-label-sm { display: none; }
 /* Hero proof strip — a 3-up mini-stat block on a hairline (figures get real
    weight; no longer a flat mono row that echoed the top eyebrow). */
 .hero-stats { display: flex; gap: clamp(22px, 3vw, 40px); padding-top: 20px; border-top: 1px solid var(--border); flex-wrap: wrap; }
@@ -440,13 +441,13 @@ h1.hero-title { font-family: var(--font-display), var(--font-sans), sans-serif; 
   .play-line { font-size: 24px; }
 }
 @media (max-width: 640px) {
-  /* Phone: land the whole hero with the CTA above the fold. Tighten the top
-     gap, drop the eyebrow, and shrink the deck so it reads as a compact,
-     fanned proof point rather than the dominant block. */
-  .play-deck { width: 234px; height: 216px; margin: 0 auto; }
-  .play-slot { width: 202px; }
-  .play-slot:nth-child(2) { transform: translate(26px, 56px) rotate(3deg); }
-  .play-slot:nth-child(3) { transform: translate(9px, 112px) rotate(8deg); }
+  /* Phone: a compact, fanned proof point. The fan is spread a little so each
+     card's sport tag reads, not a tight pile, but it stays small enough that the
+     hero (with side-by-side CTAs) still lands above the fold. */
+  .play-deck { width: 248px; height: 246px; margin: 0 auto; }
+  .play-slot { width: 214px; }
+  .play-slot:nth-child(2) { transform: translate(28px, 68px) rotate(3deg); }
+  .play-slot:nth-child(3) { transform: translate(10px, 136px) rotate(8deg); }
   .play-card { padding: 13px 15px 11px; }
   .play-line { font-size: 21px; }
 }
@@ -475,13 +476,19 @@ h1.hero-title { font-family: var(--font-display), var(--font-sans), sans-serif; 
   .hero-title-accent { margin-left: 0; }
 }
 @media (max-width: 640px) {
-  /* Phone fit: pull the hero up under the nav, drop the eyebrow line, and tighten
-     the rhythm so the headline, deck, subhead, and BOTH CTA buttons land on the
-     first screen above the sticky join bar. */
+  /* Phone fit: pull the hero up under the nav, drop the eyebrow line, and put the
+     two CTAs side by side. The reclaimed button-row height pays for real breathing
+     room (gap 22) so the headline, deck, subhead, and CTAs stop crowding each
+     other, while still landing above the sticky join bar. */
   .hero { padding-top: 18px; }
-  .hero-layout { gap: 15px; }
+  .hero-layout { gap: 22px; }
   .verified-badge { display: none; }
   .hero-sub { font-size: 15px; line-height: 1.5; }
+  .cta-label-full { display: none; }
+  .cta-label-sm { display: inline; }
+  .hero-cta-row { flex-wrap: nowrap; gap: 10px; justify-content: center; }
+  .hero-cta-row .magnetic { display: inline-flex; }
+  .hero-cta-row .btn-lg { padding: 13px 14px; font-size: 13.5px; white-space: nowrap; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-rv, .terminal-line, .terminal-area, .terminal-pt { opacity: 1 !important; transform: none !important; stroke-dashoffset: 0 !important; animation: none !important; }
