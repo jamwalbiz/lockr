@@ -58,7 +58,7 @@ export default async function MarketsPage() {
         <p className="section-sub">
           The most active prediction markets on Polymarket and Kalshi this hour,
           with live implied odds. Prediction markets sit level with the
-          sportsbooks at Lockr, and these are the boards JT reads before posting
+          sportsbooks at Lockr, and these are the boards we read before posting
           plays. Refreshed automatically.
         </p>
       </header>
