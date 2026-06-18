@@ -15,6 +15,7 @@ import {
   IconChartCandle,
 } from "@tabler/icons-react";
 import { PricingCards } from "@/components/PricingCards";
+import { LeadMagnetBand } from "@/components/LeadMagnetBand";
 import { Faq } from "@/components/Faq";
 import { TESTIMONIALS_ROW_1, TESTIMONIALS_ROW_2 } from "@/lib/testimonials";
 import { BET_SLIPS } from "@/lib/betslips";
@@ -918,6 +919,8 @@ export default function Home() {
           />
         </div>
       </section>
+
+      <LeadMagnetBand location="home" />
 
       {/* Final CTA */}
       <section className="fade-in-section">
