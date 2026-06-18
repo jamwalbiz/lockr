@@ -1,61 +1,71 @@
 "use client";
 
 import { track } from "@vercel/analytics";
+import type { CSSProperties } from "react";
 
-// Hero visual: a small deck of "tonight's plays" cards (Betr / PrizePicks /
-// Polymarket-style). The pick is the paid product, so it's LOCKED here. We show
-// the SIGNAL (what kind of edge is live and where) and blur the SELECTION (the
-// actual side / number / market). No real matchups are named, so nothing goes
-// stale out of season. One card is a prediction market so sports and markets
-// read co-equal. Each card tracks the cursor for a green spotlight glow; the
-// top card carries a slow shimmer border, and the whole card taps to checkout.
-const PICKS = [
-  { tag: "NBA", type: "Game total", time: "7:02p", veil: "Over 224.5" },
-  { tag: "Kalshi", type: "Prediction market", time: "Today", veil: "Yes · 61¢" },
-  { tag: "UFC", type: "Method of victory", time: "8:40p", veil: "KO / TKO" },
-];
+// Hero showcase: a fanned deck of 3 sample play cards that shows what a Lockr
+// play looks like across sports AND a prediction market (co-equal). These are
+// illustrative: a market type plus a sample line, with NO real game named, so
+// nothing goes stale, nothing is a live actionable pick, and nothing claims a
+// result. Each card carries a moving shimmer sheen, a cursor-tracked green glow
+// and a 3D tilt on hover, and taps through to checkout.
+const PLAYS = [
+  { tag: "NBA", market: "Game total", play: "Over 224.5", time: "7:02p", tone: "green" },
+  { tag: "Kalshi", market: "Prediction market", play: "Yes · 61¢", time: "Today", tone: "blue" },
+  { tag: "UFC", market: "Method of victory", play: "KO / TKO", time: "8:40p", tone: "green" },
+] as const;
 
 export function PickCards() {
   function onMove(e: React.MouseEvent<HTMLElement>) {
     const el = e.currentTarget;
     const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
     el.style.setProperty("--mx", `${e.clientX - r.left}px`);
     el.style.setProperty("--my", `${e.clientY - r.top}px`);
+    el.style.setProperty("--ry", `${(px - 0.5) * 11}deg`);
+    el.style.setProperty("--rx", `${(0.5 - py) * 11}deg`);
+  }
+  function onLeave(e: React.MouseEvent<HTMLElement>) {
+    const el = e.currentTarget;
+    el.style.setProperty("--rx", "0deg");
+    el.style.setProperty("--ry", "0deg");
   }
 
   return (
-    <div className="pick-cards">
-      {PICKS.map((p, i) => (
-        <a
-          key={p.tag}
-          href="/checkout"
-          className="pick-card"
-          onMouseMove={onMove}
-          onClick={() => track("cta_click", { cta: "hero_pick_card", sport: p.tag })}
-          style={{ animationDelay: `${0.34 + i * 0.1}s` }}
-          aria-label={`${p.tag} ${p.type} — members only, join to unlock`}
-        >
-          <div className="pick-card-meta">
-            <span className="pick-card-sport">
-              <span className="pick-card-dot" aria-hidden="true"></span>
-              {p.tag}
-            </span>
-            <span className="pick-card-time">{p.time}</span>
-          </div>
-          <div className="pick-card-match">{p.type}</div>
-          <div className="pick-card-row">
-            <span className="pick-card-line locked" aria-hidden="true">
-              {p.veil}
-            </span>
-            <span className="pick-card-lock">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
-                <rect x="4" y="10.5" width="16" height="10.5" rx="2" />
-                <path d="M8 10.5V7a4 4 0 0 1 8 0v3.5" />
-              </svg>
-              Unlock
-            </span>
-          </div>
-        </a>
+    <div className="play-deck">
+      {PLAYS.map((p) => (
+        <div className="play-slot" key={p.tag}>
+          <a
+            href="/checkout"
+            className={`play-card tone-${p.tone}`}
+            onMouseMove={onMove}
+            onMouseLeave={onLeave}
+            onClick={() =>
+              track("cta_click", { cta: "hero_play_card", sport: p.tag })
+            }
+            aria-label={`${p.tag}, ${p.market}. Sample play. Join Lockr to tail the live ones.`}
+          >
+            <span className="play-sheen" aria-hidden="true" />
+            <div className="play-top">
+              <span className="play-sport">
+                <span className="play-dot" aria-hidden="true" />
+                {p.tag}
+              </span>
+              <span className="play-time">{p.time}</span>
+            </div>
+            <div className="play-market">{p.market}</div>
+            <div className="play-line">{p.play}</div>
+            <div className="play-foot">
+              <span className="play-conf" aria-hidden="true">
+                <i style={{ "--h": "7px" } as CSSProperties} />
+                <i style={{ "--h": "10px" } as CSSProperties} />
+                <i style={{ "--h": "13px" } as CSSProperties} />
+              </span>
+              <span className="play-tail">Tail &rarr;</span>
+            </div>
+          </a>
+        </div>
       ))}
     </div>
   );
