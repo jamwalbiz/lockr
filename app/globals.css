@@ -433,17 +433,22 @@ h1.hero-title { font-family: var(--font-display), var(--font-sans), sans-serif; 
 /* Mobile: keep the fan, just scale it down to fit a phone width (a flat stack
    read as off). Cards narrow + offsets tighten; the rotations stay. */
 @media (max-width: 920px) {
-  .play-deck { width: 300px; height: 332px; margin: 4px auto 0; }
-  .play-slot { width: 256px; }
-  .play-slot:nth-child(2) { transform: translate(38px, 92px) rotate(3deg); }
-  .play-slot:nth-child(3) { transform: translate(13px, 184px) rotate(8deg); }
-  .play-line { font-size: 25px; }
+  .play-deck { width: 280px; height: 296px; margin: 4px auto 0; }
+  .play-slot { width: 240px; }
+  .play-slot:nth-child(2) { transform: translate(36px, 82px) rotate(3deg); }
+  .play-slot:nth-child(3) { transform: translate(12px, 164px) rotate(8deg); }
+  .play-line { font-size: 24px; }
 }
-@media (max-width: 380px) {
-  .play-deck { width: 270px; height: 312px; }
-  .play-slot { width: 232px; }
-  .play-slot:nth-child(2) { transform: translate(32px, 86px) rotate(3deg); }
-  .play-slot:nth-child(3) { transform: translate(11px, 172px) rotate(8deg); }
+@media (max-width: 640px) {
+  /* Phone: land the whole hero with the CTA above the fold. Tighten the top
+     gap, drop the eyebrow, and shrink the deck so it reads as a compact,
+     fanned proof point rather than the dominant block. */
+  .play-deck { width: 234px; height: 216px; margin: 0 auto; }
+  .play-slot { width: 202px; }
+  .play-slot:nth-child(2) { transform: translate(26px, 56px) rotate(3deg); }
+  .play-slot:nth-child(3) { transform: translate(9px, 112px) rotate(8deg); }
+  .play-card { padding: 13px 15px 11px; }
+  .play-line { font-size: 21px; }
 }
 
 
@@ -468,6 +473,15 @@ h1.hero-title { font-family: var(--font-display), var(--font-sans), sans-serif; 
   .hero-cta-row { order: 5; margin: 0; }
   .hero-stats { order: 6; }
   .hero-title-accent { margin-left: 0; }
+}
+@media (max-width: 640px) {
+  /* Phone fit: pull the hero up under the nav, drop the eyebrow line, and tighten
+     the rhythm so the headline, deck, subhead, and BOTH CTA buttons land on the
+     first screen above the sticky join bar. */
+  .hero { padding-top: 18px; }
+  .hero-layout { gap: 15px; }
+  .verified-badge { display: none; }
+  .hero-sub { font-size: 15px; line-height: 1.5; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-rv, .terminal-line, .terminal-area, .terminal-pt { opacity: 1 !important; transform: none !important; stroke-dashoffset: 0 !important; animation: none !important; }
@@ -948,8 +962,8 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 /* ------------------------------------------------------------------
    Final CTA
    ------------------------------------------------------------------ */
-.final-cta { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 24px; padding: 80px 40px; text-align: center; position: relative; overflow: hidden; }
-.final-cta::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(245,244,241,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(245,244,241,0.02) 1px, transparent 1px); background-size: 40px 40px; }
+.final-cta { background: radial-gradient(ellipse 85% 78% at 50% -12%, rgba(0,255,133,0.12), transparent 60%), linear-gradient(180deg, var(--bg-elevated), var(--bg) 94%); border: 1px solid rgba(0,255,133,0.16); border-radius: 24px; padding: 80px 40px; text-align: center; position: relative; overflow: hidden; }
+.final-cta::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(245,244,241,0.022) 1px, transparent 1px), linear-gradient(90deg, rgba(245,244,241,0.022) 1px, transparent 1px); background-size: 44px 44px; mask-image: radial-gradient(ellipse 92% 82% at 50% 0%, black 18%, transparent 76%); -webkit-mask-image: radial-gradient(ellipse 92% 82% at 50% 0%, black 18%, transparent 76%); pointer-events: none; }
 .final-cta-content { position: relative; }
 
 /* ------------------------------------------------------------------
