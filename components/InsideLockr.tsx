@@ -21,14 +21,14 @@ type Msg = {
 
 const ROOM: Msg[] = [
   { lockr: true, name: "Lockr", time: "6:54p", tag: "PLAY", tagClass: "play", text: "NBA · Brunson Over 26.5 · 2u · posted before the line moved" },
-  { name: "marcus_t", av: "c1", init: "M", time: "6:55p", tag: "tailed", tagClass: "ok", text: "in at -110. book moved it to -130 about 20 mins later. that's the whole edge" },
-  { name: "dani", av: "c2", init: "D", time: "6:56p", text: "first play I actually understood instead of blind-copying. the why changes everything" },
+  { name: "marcus_t", av: "c1", init: "M", time: "6:55p", tag: "tailed", tagClass: "ok", text: "in at -110, book moved it to -130 by the time I refreshed. that's the edge 🎯" },
+  { name: "dani", av: "c2", init: "D", time: "6:56p", text: "+3.4u on the week and I can finally explain every one of them 📈" },
   { lockr: true, name: "Lockr", time: "7:12p", tag: "PLAY", tagClass: "play", text: "Kalshi · Rate decision · Yes 58¢ · 1u" },
-  { name: "kev", av: "c3", init: "K", time: "7:13p", text: "my first prediction-market trade ever and it's already green 🟢 way less scary than it looked" },
-  { name: "ro", av: "c4", init: "R", time: "earlier", tag: "+1.6u", tagClass: "win", text: "UFC KO from last night cashed. 4 of 5 on the week now 🔥" },
-  { creator: true, name: "JT", av: "c2", init: "JT", time: "earlier", text: "the play that missed Tuesday is still pinned up top with the full breakdown. nothing gets deleted here" },
-  { name: "amara", av: "c5", init: "A", time: "earlier", text: "month in and up steady. @JT the unit sizing is the part nobody else actually teaches" },
-  { name: "sam", av: "c3", init: "S", time: "earlier", text: "started with $50 just to test it. green and finally learning why. didn't expect that part" },
+  { name: "kev", av: "c3", init: "K", time: "7:13p", text: "first prediction-market trade ever just settled green 📊 didn't even feel like gambling" },
+  { name: "ro", av: "c4", init: "R", time: "earlier", tag: "+1.6u", tagClass: "win", text: "that UFC KO from last night cashed. 4 of 5 this week 🥊" },
+  { name: "amara", av: "c5", init: "A", time: "earlier", text: "pulled my first cashout today. small, but it's real money in my account 💸" },
+  { creator: true, name: "JT", av: "c2", init: "JT", time: "earlier", text: "the play that missed Tuesday is still pinned up top with the full breakdown 📌 nothing gets deleted here" },
+  { name: "sam", av: "c3", init: "S", time: "earlier", text: "month one done, up steady and not stressed. the unit sizing kept me out of trouble ✅" },
 ];
 
 const MOVERS = [
