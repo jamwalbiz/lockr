@@ -51,10 +51,6 @@ export function Nav() {
             <Link href="/" className={isHome ? "active" : ""}>
               Picks
             </Link>
-            <a href={isHome ? "#method" : "/#method"}>Method</a>
-            <a href={isHome ? "#results" : "/#results"}>Results</a>
-            <a href={isHome ? "#pricing" : "/#pricing"}>Pricing</a>
-            <a href={isHome ? "#faq" : "/#faq"}>FAQ</a>
             <Link href="/markets">Markets</Link>
             <Link href="/blog">Blog</Link>
           </div>
@@ -120,34 +116,6 @@ export function Nav() {
           <Link href="/" className="mobile-link" onClick={closeMenu}>
             Picks
           </Link>
-          <a
-            href={isHome ? "#method" : "/#method"}
-            className="mobile-link"
-            onClick={closeMenu}
-          >
-            Method
-          </a>
-          <a
-            href={isHome ? "#results" : "/#results"}
-            className="mobile-link"
-            onClick={closeMenu}
-          >
-            Results
-          </a>
-          <a
-            href={isHome ? "#pricing" : "/#pricing"}
-            className="mobile-link"
-            onClick={closeMenu}
-          >
-            Pricing
-          </a>
-          <a
-            href={isHome ? "#faq" : "/#faq"}
-            className="mobile-link"
-            onClick={closeMenu}
-          >
-            FAQ
-          </a>
           <Link href="/markets" className="mobile-link" onClick={closeMenu}>
             Markets
           </Link>

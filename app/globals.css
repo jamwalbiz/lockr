@@ -1498,3 +1498,38 @@ html { scroll-behavior: smooth; scroll-padding-top: 96px; }
   .email-capture { flex-direction: column; }
   .ec-btn { width: 100%; }
 }
+
+/* Hero scroll-down cue (desktop only; nav no longer offers in-page jumps) */
+.hero-scroll-cue { position: absolute; left: calc(50% - 20px); bottom: 20px; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border-strong); background: rgba(12, 12, 14, 0.5); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2; animation: heroCueBounce 2.2s ease-in-out infinite; transition: border-color 0.2s ease, background 0.2s ease; }
+.hero-scroll-cue:hover { border-color: rgba(0, 255, 133, 0.5); background: rgba(0, 255, 133, 0.08); }
+.hero-scroll-chevron { width: 10px; height: 10px; margin-top: -3px; border-right: 2px solid var(--text-mute); border-bottom: 2px solid var(--text-mute); transform: rotate(45deg); transition: border-color 0.2s ease; }
+.hero-scroll-cue:hover .hero-scroll-chevron { border-color: var(--accent); }
+@keyframes heroCueBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+@media (max-width: 920px) { .hero-scroll-cue { display: none; } }
+@media (prefers-reduced-motion: reduce) { .hero-scroll-cue { animation: none; } }
+
+/* Slip studio (/studio) - internal pick-posting tool */
+.studio-shell { max-width: 1060px; margin: 0 auto; padding-top: 56px; padding-bottom: 100px; }
+.studio-head { margin-bottom: 32px; }
+.studio-title { font-family: var(--font-display), sans-serif; font-size: clamp(30px, 5vw, 46px); font-weight: 800; letter-spacing: -0.03em; margin: 10px 0 8px; }
+.studio-sub { color: var(--text-mute); font-size: 16px; max-width: 56ch; line-height: 1.6; }
+.studio { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start; }
+.studio-form { display: flex; flex-direction: column; gap: 15px; }
+.studio-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 12px; }
+.studio-field { display: flex; flex-direction: column; gap: 6px; }
+.studio-field-label { font-family: var(--font-jetbrains), monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim); }
+.studio-input { width: 100%; padding: 11px 13px; border-radius: 9px; border: 1px solid var(--border-strong); background: var(--bg-elevated); color: var(--text); font-size: 14px; font-family: inherit; }
+.studio-input:focus { outline: none; border-color: rgba(0, 255, 133, 0.45); }
+.studio-post { margin-top: 10px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px; }
+.studio-btn { width: 100%; justify-content: center; }
+.studio-msg { font-size: 13px; margin: 0; }
+.studio-msg.ok { color: var(--accent); }
+.studio-msg.err { color: var(--danger); }
+.studio-preview { position: sticky; top: 90px; }
+.studio-preview-label { font-family: var(--font-jetbrains), monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim); margin-bottom: 10px; }
+.studio-img { width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--border); display: block; background: var(--bg-elevated); }
+.studio-open { display: inline-block; margin-top: 10px; font-size: 13px; color: var(--accent); }
+@media (max-width: 820px) {
+  .studio { grid-template-columns: 1fr; gap: 26px; }
+  .studio-preview { position: static; order: -1; }
+}

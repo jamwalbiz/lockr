@@ -15,6 +15,7 @@ import {
   IconChartCandle,
 } from "@tabler/icons-react";
 import { PricingCards } from "@/components/PricingCards";
+import { HeroScrollCue } from "@/components/HeroScrollCue";
 import { Faq } from "@/components/Faq";
 import { TESTIMONIALS_ROW_1, TESTIMONIALS_ROW_2 } from "@/lib/testimonials";
 import { BET_SLIPS } from "@/lib/betslips";
@@ -140,6 +141,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <HeroScrollCue />
       </section>
 
       {/* Platform compatibility wall - placed high, right under the hero, as an
