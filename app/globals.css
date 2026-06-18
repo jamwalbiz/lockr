@@ -736,6 +736,83 @@ footer { border-top: 1px solid var(--border); padding: 64px 0 32px; margin-top: 
 @media (max-width: 768px) { .qual-grid { grid-template-columns: 1fr; } .qual-card.no { order: 1; } .qual-card.yes { order: 2; } }
 
 /* ------------------------------------------------------------------
+   Step mockups — each #method step carries a small product mock under
+   its copy so the flow shows, not just tells. Pure CSS/markup so it
+   stays crisp and themeable, and differentiates the three cards.
+   ------------------------------------------------------------------ */
+.step-mock { margin-top: 22px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-elevated); padding: 12px 14px; }
+.step-mock-row { display: flex; align-items: center; gap: 9px; font-size: 12.5px; }
+.step-mock-row + .step-mock-row { margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--border); }
+.step-mock-check { width: 18px; height: 18px; border-radius: 5px; background: rgba(0,255,133,0.1); border: 1px solid rgba(0,255,133,0.3); color: var(--accent); display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.step-mock-label { color: var(--text); font-weight: 500; }
+.step-mock-chip { margin-left: auto; font-family: var(--font-jetbrains), monospace; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; background: rgba(0,255,133,0.08); border: 1px solid rgba(0,255,133,0.2); color: var(--accent); white-space: nowrap; }
+.step-mock-chip.blue { background: rgba(74,158,255,0.08); border-color: rgba(74,158,255,0.25); color: var(--blue); }
+.step-mock-pick-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.step-mock-pick-name { font-weight: 600; color: var(--text); font-size: 13.5px; }
+.step-mock-pick-tag { font-family: var(--font-jetbrains), monospace; font-size: 10px; letter-spacing: 0.06em; color: var(--text-dim); text-transform: uppercase; white-space: nowrap; }
+.step-mock-pick-meta { margin-top: 6px; font-family: var(--font-jetbrains), monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.01em; }
+.step-mock-pick-why { margin-top: 7px; color: var(--text-mute); font-size: 12px; line-height: 1.45; }
+.step-mock-res-line { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.step-mock-res-name { color: var(--text); font-size: 13px; }
+.step-mock-win { font-family: var(--font-jetbrains), monospace; font-size: 11px; font-weight: 700; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.step-mock-win::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+.step-mock-foot { margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--text-mute); line-height: 1.45; }
+
+/* ------------------------------------------------------------------
+   Persona cards — "wherever you're starting from". A progression
+   (new → weekend → serious) shown by a 3-segment level meter, so the
+   three cards read as steps up, not an identical card grid.
+   ------------------------------------------------------------------ */
+.persona-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 1100px; margin: 0 auto; }
+.persona-card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 16px; padding: 28px; display: flex; flex-direction: column; }
+.persona-card.mid { border-color: rgba(0,255,133,0.22); background: linear-gradient(180deg, rgba(0,255,133,0.04), var(--bg-elevated)); }
+.persona-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.persona-label { font-family: var(--font-jetbrains), monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-mute); }
+.persona-card.mid .persona-label { color: var(--accent); }
+.persona-meter { display: flex; gap: 4px; flex-shrink: 0; }
+.persona-seg { width: 16px; height: 4px; border-radius: 2px; background: var(--border-strong); }
+.persona-seg.on { background: var(--accent); }
+.persona-name { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 14px; line-height: 1.3; }
+.persona-you { font-size: 14px; color: var(--text-mute); line-height: 1.55; margin-bottom: 20px; }
+.persona-get-label { font-family: var(--font-jetbrains), monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; padding-top: 16px; border-top: 1px solid var(--border); margin-top: auto; }
+.persona-get { font-size: 14px; color: var(--text); line-height: 1.55; }
+@media (max-width: 880px) { .persona-grid { grid-template-columns: 1fr; } }
+
+/* ------------------------------------------------------------------
+   Value stack — itemized "what's included" with honest if-sold-
+   separately values, a real total, then the real price. Reads like a
+   receipt, which fits the brand (Lockr is about what's on the record).
+   ------------------------------------------------------------------ */
+.stack-panel { max-width: 800px; margin: 0 auto; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.stack-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 18px 28px; border-bottom: 1px solid var(--border); }
+.stack-head-title { font-size: 13px; font-weight: 600; color: var(--text); letter-spacing: 0.01em; }
+.stack-head-note { font-family: var(--font-jetbrains), monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); white-space: nowrap; }
+.stack-item { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding: 16px 28px; border-bottom: 1px solid var(--border); }
+.stack-item-name { font-size: 15px; font-weight: 600; color: var(--text); letter-spacing: -0.005em; }
+.stack-item-desc { font-size: 13px; color: var(--text-mute); line-height: 1.45; margin-top: 4px; max-width: 48ch; }
+.stack-item-val { font-family: var(--font-jetbrains), monospace; font-size: 14px; color: var(--text-mute); white-space: nowrap; }
+.stack-item-val .u { color: var(--text-dim); }
+.stack-item-val.cash { color: var(--accent); }
+.stack-foot { padding: 22px 28px 26px; background: rgba(0,255,133,0.03); }
+.stack-total { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding-bottom: 18px; border-bottom: 1px dashed var(--border-strong); }
+.stack-total-label { font-size: 14px; color: var(--text-mute); }
+.stack-total-val { font-family: var(--font-jetbrains), monospace; font-size: 17px; color: var(--text-dim); text-decoration: line-through; }
+.stack-pay { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-top: 20px; }
+.stack-pay-label { font-family: var(--font-jetbrains), monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
+.stack-pay-fig { font-family: var(--font-jetbrains), monospace; font-size: clamp(40px, 6vw, 58px); font-weight: 600; line-height: 0.86; letter-spacing: -0.03em; color: var(--text); display: flex; align-items: flex-start; gap: 3px; }
+.stack-pay-fig .cur { font-size: 0.42em; color: var(--accent); margin-top: 0.2em; }
+.stack-pay-fig .per { font-size: 0.26em; color: var(--text-mute); align-self: flex-end; margin-bottom: 0.5em; letter-spacing: 0.04em; text-transform: uppercase; }
+.stack-pay-sub { font-size: 13px; color: var(--text-mute); margin-top: 10px; }
+.stack-cta { flex-shrink: 0; padding-bottom: 4px; }
+.stack-honest { max-width: 800px; margin: 18px auto 0; text-align: center; font-size: 12.5px; color: var(--text-dim); line-height: 1.55; }
+@media (max-width: 600px) {
+  .stack-head, .stack-item, .stack-foot { padding-left: 20px; padding-right: 20px; }
+  .stack-item { flex-direction: column; gap: 6px; }
+  .stack-pay { flex-direction: column; align-items: stretch; gap: 20px; }
+  .stack-cta { padding-bottom: 0; }
+}
+
+/* ------------------------------------------------------------------
    3-step process
    ------------------------------------------------------------------ */
 .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; position: relative; }

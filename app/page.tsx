@@ -296,6 +296,18 @@ export default function Home() {
                 Check out in 60 seconds with card, Apple Pay, Cash App, or bank.
                 Link Discord and you&apos;re in instantly. No approval, no waiting.
               </p>
+              <div className="step-mock" aria-hidden="true">
+                <div className="step-mock-row">
+                  <span className="step-mock-check">✓</span>
+                  <span className="step-mock-label">Discord access · role assigned</span>
+                  <span className="step-mock-chip">Member</span>
+                </div>
+                <div className="step-mock-row">
+                  <span className="step-mock-check">✓</span>
+                  <span className="step-mock-label">Pick alerts · on</span>
+                  <span className="step-mock-chip blue">~30 sec</span>
+                </div>
+              </div>
             </div>
             <div className="step">
               <div className="step-num">
@@ -311,6 +323,16 @@ export default function Home() {
                 The team posts 6–10 plays a day across sports and prediction markets,
                 each with the reasoning, a recommended size, and the exact line we took.
               </p>
+              <div className="step-mock" aria-hidden="true">
+                <div className="step-mock-pick-top">
+                  <span className="step-mock-pick-name">Brunson Over 26.5</span>
+                  <span className="step-mock-pick-tag">NBA · 2u</span>
+                </div>
+                <div className="step-mock-pick-meta">-110 · posted 6:54p, before the move</div>
+                <div className="step-mock-pick-why">
+                  Why: usage climbs with Towns out, and the line had not caught up yet.
+                </div>
+              </div>
             </div>
             <div className="step">
               <div className="step-num">
@@ -328,6 +350,15 @@ export default function Home() {
                 Kalshi, or Polymarket. Every result is logged in public before the
                 event and never deleted.
               </p>
+              <div className="step-mock" aria-hidden="true">
+                <div className="step-mock-res-line">
+                  <span className="step-mock-res-name">Brunson Over 26.5</span>
+                  <span className="step-mock-win">Cashed +1.6u</span>
+                </div>
+                <div className="step-mock-foot">
+                  And if it had lost, it stays up too, with the breakdown.
+                </div>
+              </div>
             </div>
           </div>
           <div className="inline-cta">
@@ -601,6 +632,141 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Value stack — everything included, honest if-sold-separately values,
+          a real total, then the real price. Sits right before pricing so the
+          number lands as a payoff, not a cold ask. */}
+      <section className="fade-in-section">
+        <div className="shell">
+          <div className="section-head">
+            <div className="section-label">What&apos;s included</div>
+            <h2 className="section-title">
+              Everything you get
+              <br />
+              for $29 a week.
+            </h2>
+            <p className="section-sub">
+              Most people stitch this together from five different places. With
+              Lockr it&apos;s one membership. Here&apos;s the whole thing, and what
+              each piece would cost on its own.
+            </p>
+          </div>
+          <div className="stack-panel">
+            <div className="stack-head">
+              <span className="stack-head-title">What&apos;s included</span>
+              <span className="stack-head-note">If bought separately</span>
+            </div>
+            <div className="stack-item">
+              <div className="stack-item-main">
+                <div className="stack-item-name">
+                  Daily plays, every sport + prediction markets
+                </div>
+                <div className="stack-item-desc">
+                  6–10 a day, posted before the line moves so you get the better number.
+                </div>
+              </div>
+              <div className="stack-item-val">
+                $129<span className="u">/mo</span>
+              </div>
+            </div>
+            <div className="stack-item">
+              <div className="stack-item-main">
+                <div className="stack-item-name">
+                  The reasoning + recommended size on every play
+                </div>
+                <div className="stack-item-desc">
+                  Why it&apos;s a play and how much to risk, in plain English. Not just a number.
+                </div>
+              </div>
+              <div className="stack-item-val">
+                $49<span className="u">/mo</span>
+              </div>
+            </div>
+            <div className="stack-item">
+              <div className="stack-item-main">
+                <div className="stack-item-name">Live Kalshi + Polymarket board</div>
+                <div className="stack-item-desc">
+                  The prediction markets almost nobody else covers, read right next to the books.
+                </div>
+              </div>
+              <div className="stack-item-val">
+                $29<span className="u">/mo</span>
+              </div>
+            </div>
+            <div className="stack-item">
+              <div className="stack-item-main">
+                <div className="stack-item-name">Weekly live Q&amp;A with the team</div>
+                <div className="stack-item-desc">
+                  Bring your bets and your questions. Every session pinned to rewatch.
+                </div>
+              </div>
+              <div className="stack-item-val">
+                $59<span className="u">/mo</span>
+              </div>
+            </div>
+            <div className="stack-item">
+              <div className="stack-item-main">
+                <div className="stack-item-name">The bankroll &amp; sizing playbook</div>
+                <div className="stack-item-desc">
+                  How much to bet, when to walk away, how to grow it. Plus a starter
+                  guide if you&apos;re new.
+                </div>
+              </div>
+              <div className="stack-item-val">
+                $39<span className="u">/mo</span>
+              </div>
+            </div>
+            <div className="stack-item">
+              <div className="stack-item-main">
+                <div className="stack-item-name">The members room</div>
+                <div className="stack-item-desc">
+                  Daily community where every win and loss goes on the record and stays there.
+                </div>
+              </div>
+              <div className="stack-item-val">
+                $25<span className="u">/mo</span>
+              </div>
+            </div>
+            <div className="stack-item">
+              <div className="stack-item-main">
+                <div className="stack-item-name">
+                  Free promo codes on every platform you bet
+                </div>
+                <div className="stack-item-desc">
+                  Deposit matches and boosts across all 8 books and markets we recommend.
+                </div>
+              </div>
+              <div className="stack-item-val cash">Real cash back</div>
+            </div>
+            <div className="stack-foot">
+              <div className="stack-total">
+                <span className="stack-total-label">Add it up, bought piece by piece</span>
+                <span className="stack-total-val">~$330/mo</span>
+              </div>
+              <div className="stack-pay">
+                <div className="stack-pay-left">
+                  <div className="stack-pay-label">Members pay</div>
+                  <div className="stack-pay-fig">
+                    <span className="cur">$</span>99<span className="per">/mo</span>
+                  </div>
+                  <div className="stack-pay-sub">Or $29 a week to start. Cancel any time.</div>
+                </div>
+                <div className="stack-cta">
+                  <JoinCta href="/checkout" location="value-stack">
+                    Get today&apos;s picks
+                  </JoinCta>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p className="stack-honest">
+            Those values are what comparable picks services, coaching calls, and
+            betting courses charge on their own. We&apos;re not inflating them, and
+            we&apos;re not promising profit. You&apos;re paying for the work and the
+            access, not a guarantee.
+          </p>
+        </div>
+      </section>
+
       {/* Pricing */}
       <section id="pricing" className="fade-in-section">
         <div className="shell">
@@ -700,6 +866,96 @@ export default function Home() {
             <div className="vs-pair">
               <div className="vs-row them">Sells your email to a dozen other lists</div>
               <div className="vs-row us">Your email never leaves Lockr</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Personas — "wherever you're starting from". Inclusive (it fits you at
+          any level), then the honest disqualifier right after filters who it's
+          NOT for. Together they're more honest than a pure "this is for
+          everyone" pitch. */}
+      <section className="fade-in-section">
+        <div className="shell">
+          <div className="section-head head-wide">
+            <h2 className="section-title">
+              Wherever you&apos;re starting
+              <br />
+              from, the plays are the same.
+            </h2>
+            <p className="section-sub">
+              New to betting or years deep, everyone gets the same picks. What
+              changes is how much we walk you through them.
+            </p>
+          </div>
+          <div className="persona-grid">
+            <div className="persona-card">
+              <div className="persona-top">
+                <span className="persona-label">New to betting</span>
+                <span className="persona-meter" aria-hidden="true">
+                  <span className="persona-seg on" />
+                  <span className="persona-seg" />
+                  <span className="persona-seg" />
+                </span>
+              </div>
+              <div className="persona-name">
+                You&apos;ve placed a few bets and want to learn without torching your money.
+              </div>
+              <div className="persona-you">
+                Most of what you&apos;ve seen is guys yelling locks with no reasoning.
+                You want to actually understand what you&apos;re doing.
+              </div>
+              <div className="persona-get-label">What you get</div>
+              <div className="persona-get">
+                A starter guide, the reasoning behind every play in plain English,
+                and small recommended sizes, so you learn by tailing instead of guessing.
+              </div>
+            </div>
+            <div className="persona-card mid">
+              <div className="persona-top">
+                <span className="persona-label">Weekend bettor</span>
+                <span className="persona-meter" aria-hidden="true">
+                  <span className="persona-seg on" />
+                  <span className="persona-seg on" />
+                  <span className="persona-seg" />
+                </span>
+              </div>
+              <div className="persona-name">
+                You bet most weekends, but you&apos;re tired of running on vibes and
+                group-chat screenshots.
+              </div>
+              <div className="persona-you">
+                Some weeks you do fine, then give it all back the next. You want a
+                process instead of a gut feeling.
+              </div>
+              <div className="persona-get-label">What you get</div>
+              <div className="persona-get">
+                A daily shortlist you can trust, the better number before the line
+                moves, and a system that replaces the guesswork.
+              </div>
+            </div>
+            <div className="persona-card">
+              <div className="persona-top">
+                <span className="persona-label">Serious bettor</span>
+                <span className="persona-meter" aria-hidden="true">
+                  <span className="persona-seg on" />
+                  <span className="persona-seg on" />
+                  <span className="persona-seg on" />
+                </span>
+              </div>
+              <div className="persona-name">
+                You already shop lines and track your closing value. You want
+                coverage you can&apos;t build alone.
+              </div>
+              <div className="persona-you">
+                You know the math. What you don&apos;t have is the time to model
+                every market yourself, every night.
+              </div>
+              <div className="persona-get-label">What you get</div>
+              <div className="persona-get">
+                Prediction-market edges most services skip, the live Kalshi and
+                Polymarket board, and a second set of sharp eyes on every slate.
+              </div>
             </div>
           </div>
         </div>
