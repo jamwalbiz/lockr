@@ -308,7 +308,7 @@ export default function Home() {
               </div>
               <h3>Know what to bet, and why</h3>
               <p>
-                The team posts 6–10 plays a day across sports and prediction markets,
+                The team posts the day&apos;s plays across sports and prediction markets,
                 each with the reasoning, a recommended size, and the exact line we took.
               </p>
             </div>
