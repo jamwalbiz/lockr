@@ -294,7 +294,8 @@ export default function Home() {
               <h3>Pick a tier, get in</h3>
               <p>
                 Check out in 60 seconds with card, Apple Pay, Cash App, or bank.
-                Link Discord and you&apos;re in instantly. No approval, no waiting.
+                Link your Discord and you&apos;re in instantly. No application, no
+                approval, no waiting around.
               </p>
             </div>
             <div className="step">
