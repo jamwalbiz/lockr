@@ -39,9 +39,10 @@ export function StudioForm() {
   const [msg, setMsg] = useState("");
 
   const cleanLegs = f.legs.filter((l) => l.pick.trim());
-  const legCount = cleanLegs.length;
-  const isParlay = legCount >= 2;
-  const showTags = f.legs.length >= 2; // parlay layout exposes a per-leg league tag
+  // A second leg row means we're building a parlay; the form switches layout
+  // immediately (hides League/Market, shows per-leg tags). The card still
+  // renders from the legs that actually have a pick.
+  const isParlay = f.legs.length >= 2;
 
   const previewUrl = useMemo(() => {
     const qs = new URLSearchParams();
@@ -119,13 +120,15 @@ export function StudioForm() {
         <p className="studio-dest">
           Recolors the card and posts to <strong>{dest}</strong>.
         </p>
-        <Field label="League / event">
-          <input
-            className="studio-input"
-            value={f.league}
-            onChange={(e) => up("league", e.target.value)}
-          />
-        </Field>
+        {!isParlay && (
+          <Field label="League / event">
+            <input
+              className="studio-input"
+              value={f.league}
+              onChange={(e) => up("league", e.target.value)}
+            />
+          </Field>
+        )}
         {!isParlay && (
           <Field label="Market">
             <input
@@ -140,11 +143,11 @@ export function StudioForm() {
             optional league tag so mixed-league parlays render cleanly. */}
         <div className="studio-field">
           <span className="studio-field-label">
-            {isParlay ? `Legs · ${legCount}-leg parlay` : "Pick"}
+            {isParlay ? "Legs · parlay" : "Pick"}
           </span>
           {f.legs.map((leg, i) => (
             <div key={i} className="studio-leg">
-              {showTags && (
+              {isParlay && (
                 <input
                   className="studio-input studio-leg-tag"
                   value={leg.tag}
@@ -176,10 +179,10 @@ export function StudioForm() {
               + Add leg (parlay)
             </button>
           )}
-          {showTags && (
+          {isParlay && (
             <span className="studio-hint">
-              Tag each leg with its league (NBA, NFL…) for mixed parlays. Leave
-              blank if they share one.
+              The card titles itself from these tags: all the same → “NBA
+              PARLAY”, different → “MIXED PARLAY”, blank → “PARLAY”.
             </span>
           )}
         </div>

@@ -78,8 +78,18 @@ export async function POST(req: Request) {
   const slipUrl = `${BASE}/api/slip?${qs.toString()}`;
 
   const isParlay = legs.length >= 2;
+  // Parlay label derives from the leg tags (same as the card): all same league,
+  // different -> Mixed, untagged -> generic.
+  const ptags = legs.map((l) => l.tag).filter(Boolean);
+  const puniq = Array.from(new Set(ptags));
+  const plabel =
+    puniq.length >= 2
+      ? "Mixed"
+      : ptags.length === legs.length && puniq.length === 1
+        ? puniq[0]
+        : "";
   const head = isParlay
-    ? `**${str("league") || "Parlay"} parlay · ${legs.length} legs**`
+    ? `**${plabel ? `${plabel} ` : ""}parlay · ${legs.length} legs**`
     : `**${str("league")} · ${str("market")}**`;
   const lines = isParlay
     ? legs.map((l, i) => `${i + 1}. ${l.tag ? `${l.tag} ` : ""}${l.pick}`).join("\n")

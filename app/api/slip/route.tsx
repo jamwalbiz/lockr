@@ -25,7 +25,18 @@ export async function GET(req: Request) {
     .map((pick, i) => ({ pick, tag: (legTags[i] || "").toUpperCase().slice(0, 14) }))
     .filter((l) => l.pick);
   const isParlay = legs.length >= 2;
-  const parlayTag = !league || league === "PARLAY" ? "PARLAY" : `${league} PARLAY`;
+  // Parlay label derives from the leg tags (not a single league field): all legs
+  // the same league -> that league; different leagues -> MIXED; untagged -> PARLAY.
+  const legTagVals = legs.map((l) => l.tag).filter(Boolean);
+  const uniqTags = Array.from(new Set(legTagVals));
+  const parlayLabel =
+    uniqTags.length >= 2
+      ? "MIXED"
+      : legTagVals.length === legs.length && uniqTags.length === 1
+        ? uniqTags[0]
+        : "";
+  const parlayTag = parlayLabel ? `${parlayLabel} PARLAY` : "PARLAY";
+  const watermark = isParlay ? parlayLabel || "PARLAY" : league;
   const legFont = legs.length <= 2 ? 50 : legs.length === 3 ? 42 : legs.length === 4 ? 36 : 30;
   const odds = (sp.get("odds") || "-110").slice(0, 12);
   const units = (sp.get("units") || "2").slice(0, 5);
@@ -66,7 +77,7 @@ export async function GET(req: Request) {
             letterSpacing: -8,
           }}
         >
-          {league}
+          {watermark}
         </div>
         {/* hairline inset frame */}
         <div
