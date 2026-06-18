@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
 import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Terms of Service | Lockr",
   description: "Lockr Terms of Service. Education and entertainment service. Subscription, cancellation, and acceptable use.",
-};
+  path: "/terms",
+});
 
 export default function TermsPage() {
   return (

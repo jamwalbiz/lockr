@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
 import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Responsible Gaming | Lockr",
   description:
     "Resources and help lines for problem gambling. 1-800-GAMBLER. ncpgambling.org.",
-};
+  path: "/responsible-gaming",
+});
 
 export default function ResponsibleGamingPage() {
   return (

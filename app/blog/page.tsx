@@ -1,19 +1,20 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
 import { getAllPostMeta } from "@/lib/blog";
+import { pageMeta } from "@/lib/seo";
 
 const BASE = "https://joinlockr.com";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "The Edge — sports & prediction market news, analysis, strategy | Lockr",
   description:
     "News, analysis, and plain-English strategy across sports betting and prediction markets like Kalshi and Polymarket. Fresh reads as the games and the lines move.",
-  alternates: {
-    canonical: `${BASE}/blog`,
-    types: { "application/rss+xml": `${BASE}/feed.xml` },
-  },
-};
+  path: "/blog",
+  ogTitle: "The Edge — sports & prediction-market analysis from Lockr",
+  ogDescription:
+    "News, analysis, and plain-English strategy across sports betting and prediction markets. Fresh reads as the lines move.",
+  rss: `${BASE}/feed.xml`,
+});
 
 export default function BlogIndex() {
   const posts = getAllPostMeta();

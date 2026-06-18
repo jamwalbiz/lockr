@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
 import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Disclaimers | Lockr",
   description:
     "Lockr is an education and entertainment service. Picks are opinions, not advice. Bet only what you can afford to lose.",
-};
+  path: "/disclaimers",
+});
 
 export default function DisclaimersPage() {
   return (

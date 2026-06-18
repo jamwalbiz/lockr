@@ -1,17 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
 import { getAllPostMeta } from "@/lib/blog";
+import { pageMeta } from "@/lib/seo";
 
 const BASE = "https://joinlockr.com";
 const INSTAGRAM = "https://www.instagram.com/joinlockr";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "JT (Jairo Tovar), founder of Lockr",
   description:
     "Jairo Tovar, who goes by JT, is the founder of Lockr. He posts the day's best plays across sports and prediction markets, in the open, before the line moves.",
-  alternates: { canonical: `${BASE}/about/jt` },
-};
+  path: "/about/jt",
+});
 
 const personLd = {
   "@context": "https://schema.org",

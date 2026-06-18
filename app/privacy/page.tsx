@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
 import { BreadcrumbsLd } from "@/components/BreadcrumbsLd";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Privacy Policy | Lockr",
   description: "How Lockr collects, uses, and protects your personal information.",
-};
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return (
