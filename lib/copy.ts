@@ -97,8 +97,8 @@ const JOIN_UPGRADE_ACTIONS: ReadonlyArray<{ tone: Tone; action: string }> = [
   { tone: "blue", action: "UPGRADED WEEKLY → MONTHLY" },
   { tone: "blue", action: "UPGRADED MONTHLY → ANNUAL" },
   { tone: "blue", action: "UPGRADED WEEKLY → ANNUAL" },
-  { tone: "gold", action: "JOINED ★ INNER CIRCLE" },
-  { tone: "gold", action: "APPLIED FOR ★ INNER CIRCLE" },
+  { tone: "gold", action: "JOINED INNER CIRCLE" },
+  { tone: "gold", action: "APPLIED FOR INNER CIRCLE" },
 ];
 
 function pick<T>(arr: ReadonlyArray<T>): T {
@@ -144,7 +144,7 @@ export function generateSocialProofItems(count: number = 30): SocialProofItem[] 
     } else {
       items.push({
         name: name.display,
-        detail: "APPLIED FOR ★ INNER CIRCLE",
+        detail: "APPLIED FOR INNER CIRCLE",
         avatar: name.avatar,
         tone: "gold",
         flag,

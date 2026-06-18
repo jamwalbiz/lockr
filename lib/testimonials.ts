@@ -17,7 +17,7 @@ export const TESTIMONIALS_ROW_1: Testimonial[] = [
   {
     name: "Mike S.",
     initials: "MS",
-    handle: "★ Inner Circle · 4mo",
+    handle: "Inner Circle · 4mo",
     body: "The Kalshi hedges alone paid for Inner Circle 4× over. Nobody else is doing prediction markets right.",
     pl: "+62.1u",
   },
@@ -62,7 +62,7 @@ export const TESTIMONIALS_ROW_2: Testimonial[] = [
   {
     name: "Ethan K.",
     initials: "EK",
-    handle: "★ Inner Circle · 5mo",
+    handle: "Inner Circle · 5mo",
     body: "Model output for prop research is unreal. Saves me 5 hours of homework per week, easy.",
     pl: "+58.3u",
   },
@@ -90,7 +90,7 @@ export const TESTIMONIALS_ROW_2: Testimonial[] = [
   {
     name: "Amir M.",
     initials: "AM",
-    handle: "★ Inner Circle · 6mo",
+    handle: "Inner Circle · 6mo",
     body: "Direct DM with JT. Custom prop research on request. This is a Bloomberg terminal in a Discord.",
     pl: "+71.8u",
   },

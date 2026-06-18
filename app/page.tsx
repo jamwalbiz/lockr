@@ -709,7 +709,7 @@ export default function Home() {
                   <div className="discord-body">
                     <div className="discord-name-row">
                       <span className="discord-name">ethan</span>
-                      <span className="discord-ic-tag">★ INNER CIRCLE</span>
+                      <span className="discord-ic-tag">INNER CIRCLE</span>
                       <span className="discord-time">Yesterday</span>
                     </div>
                     <div className="discord-text">
@@ -727,7 +727,7 @@ export default function Home() {
                   <div className="discord-body">
                     <div className="discord-name-row">
                       <span className="discord-name">amir</span>
-                      <span className="discord-ic-tag">★ INNER CIRCLE</span>
+                      <span className="discord-ic-tag">INNER CIRCLE</span>
                       <span className="discord-time">Yesterday</span>
                     </div>
                     <div className="discord-text">
