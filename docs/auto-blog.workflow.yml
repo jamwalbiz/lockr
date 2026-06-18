@@ -1,0 +1,49 @@
+name: Auto blog post (The Edge)
+
+# Generates a fresh, compliance-reviewed sports / prediction-market post and
+# commits it. Vercel redeploys on the push. Runs on GitHub's servers, so it
+# does not depend on anyone's machine being on.
+#
+# SETUP: add a repository secret named ANTHROPIC_API_KEY
+#   (repo Settings -> Secrets and variables -> Actions -> New repository secret).
+# PAUSE: disable this workflow in the repo Actions tab, or comment out the
+#   schedule below.
+# REVIEW BEFORE PUBLISH: instead of pushing to main, change the final step to
+#   open a pull request (e.g. peter-evans/create-pull-request) so JT merges it.
+
+on:
+  schedule:
+    - cron: "17 14 * * 1,3,5" # Mon/Wed/Fri ~14:17 UTC (off-minute on purpose)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: auto-blog
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Generate a post
+        id: gen
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/generate-blog-post.mjs
+      - name: Commit and push
+        run: |
+          git config user.name "lockr-bot"
+          git config user.email "hello@joinlockr.com"
+          git add content/blog
+          if git diff --staged --quiet; then
+            echo "No new post to commit."
+          else
+            git commit -m "The Edge: new post (${{ steps.gen.outputs.slug }})"
+            git push
+          fi

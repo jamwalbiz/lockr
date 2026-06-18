@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Archivo } from "next/font/google";
+import { Hanken_Grotesk, Archivo } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { CadenceProvider } from "@/components/CadenceContext";
@@ -10,8 +10,11 @@ import { SocialProofPopups } from "@/components/SocialProofPopups";
 import { ContentGuard } from "@/components/ContentGuard";
 import { SmoothScroll } from "@/components/SmoothScroll";
 
-// Body text. Inter is the workhorse for all running copy.
-const inter = Inter({
+// Body text. Hanken Grotesk - a humanist grotesque with warmth and real
+// character in the terminals, far from the generic Inter/system default. Highly
+// readable for long-form blog copy, and a clean humanist-vs-technical contrast
+// against the Archivo display face. Workhorse for all running copy + data labels.
+const hanken = Hanken_Grotesk({
   variable: "--font-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
@@ -62,7 +65,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${archivo.variable}`}>
+    <html lang="en" className={`${hanken.variable} ${archivo.variable}`}>
       <body>
         {/* Site-wide JSON-LD: Organization + WebSite */}
         <script

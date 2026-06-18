@@ -6,9 +6,9 @@ import { getAllPostMeta } from "@/lib/blog";
 const BASE = "https://joinlockr.com";
 
 export const metadata: Metadata = {
-  title: "The Edge — sports betting & prediction market guides | Lockr",
+  title: "The Edge — sports & prediction market news, analysis, strategy | Lockr",
   description:
-    "Plain-English guides to sports betting and prediction markets (Kalshi, Polymarket): tailing, closing line value, bankroll, and how sharp bettors actually think.",
+    "News, analysis, and plain-English strategy across sports betting and prediction markets like Kalshi and Polymarket. Fresh reads as the games and the lines move.",
   alternates: {
     canonical: `${BASE}/blog`,
     types: { "application/rss+xml": `${BASE}/feed.xml` },
@@ -27,10 +27,11 @@ export default function BlogIndex() {
       />
       <header className="section-head head-wide">
         <div className="section-label">The Edge</div>
-        <h1 className="section-title">Get sharper every week.</h1>
+        <h1 className="section-title">Where the games meet the markets.</h1>
         <p className="section-sub">
-          Plain-English breakdowns of sports betting and prediction markets. No
-          jargon, no hype. Just how the edges actually work, and how to use them.
+          News, analysis, and plain-English strategy across sports betting and
+          prediction markets like Kalshi and Polymarket. Fresh reads as the games
+          and the lines move.
         </p>
       </header>
 
