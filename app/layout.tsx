@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono, Archivo } from "next/font/google";
+import { Hanken_Grotesk, JetBrains_Mono, Bricolage_Grotesque } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { CadenceProvider } from "@/components/CadenceContext";
@@ -10,21 +10,25 @@ import { SocialProofPopups } from "@/components/SocialProofPopups";
 import { ContentGuard } from "@/components/ContentGuard";
 import { SmoothScroll } from "@/components/SmoothScroll";
 
-const inter = Inter({
-  variable: "--font-inter",
+// Body text. Hanken Grotesk — a warm, humanist grotesque with subtle character
+// in the terminals and a true italic. Reads cleanly at small sizes and carries
+// far more personality than Inter/system defaults, which is the look we're
+// moving away from. Workhorse for all running copy.
+const hanken = Hanken_Grotesk({
+  variable: "--font-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
-// Display face for headlines. Archivo is a technical grotesque with real
-// character (Omnibus-Type). Wide, confident, mechanical letterforms that
-// read like a precision instrument and pair cleanly with the mono data
-// layer. Distinct from the body Inter so headlines carry their own voice.
-const archivo = Archivo({
+// Display face for headlines. Bricolage Grotesque — a contemporary grotesque
+// with deliberate quirks (flared joints, irregular widths) that give the
+// monumental titles a distinct, designed voice instead of a generic geometric
+// sans. Pairs on a character axis with the neutral Hanken body + mono data layer.
+const bricolage = Bricolage_Grotesque({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800", "900"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -69,7 +73,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${archivo.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${hanken.variable} ${bricolage.variable} ${jetbrainsMono.variable}`}>
       <body>
         {/* Site-wide JSON-LD: Organization + WebSite */}
         <script
