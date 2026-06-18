@@ -11,7 +11,7 @@ import type { CSSProperties } from "react";
 // and a 3D tilt on hover, and taps through to checkout.
 const PLAYS = [
   { tag: "NBA", market: "Game total", play: "Over 224.5", time: "7:02p", tone: "green" },
-  { tag: "Kalshi", market: "Prediction market", play: "Yes · 61¢", time: "Today", tone: "blue" },
+  { tag: "Polymarket", market: "Prediction market", play: "Yes · 61¢", time: "Today", tone: "blue" },
   { tag: "UFC", market: "Method of victory", play: "KO / TKO", time: "8:40p", tone: "green" },
 ] as const;
 
