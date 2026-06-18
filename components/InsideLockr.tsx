@@ -21,14 +21,14 @@ type Msg = {
 
 const ROOM: Msg[] = [
   { lockr: true, name: "Lockr", time: "6:54p", tag: "PLAY", tagClass: "play", text: "NBA · Brunson Over 26.5 · 2u · posted before the line moved" },
-  { name: "marcus_t", av: "c1", init: "M", time: "6:55p", tag: "tailed", tagClass: "ok", text: "tailed. number was still -110 when I got in, sportsbook moved it 20 mins later" },
-  { name: "dani", av: "c2", init: "D", time: "6:56p", text: "the why is right there in the post. first time I actually understand a play instead of copying blind" },
+  { name: "marcus_t", av: "c1", init: "M", time: "6:55p", tag: "tailed", tagClass: "ok", text: "in at -110. book moved it to -130 about 20 mins later. that's the whole edge" },
+  { name: "dani", av: "c2", init: "D", time: "6:56p", text: "first play I actually understood instead of blind-copying. the why changes everything" },
   { lockr: true, name: "Lockr", time: "7:12p", tag: "PLAY", tagClass: "play", text: "Kalshi · Rate decision · Yes 58¢ · 1u" },
-  { name: "kev", av: "c3", init: "K", time: "7:13p", text: "first prediction-market trade of my life and it's already green. way simpler than I thought" },
-  { name: "ro", av: "c4", init: "R", time: "earlier", tag: "+1.6u", tagClass: "win", text: "UFC KO/TKO from last night just cashed. 3 for 4 on the week now" },
-  { creator: true, name: "JT", av: "c2", init: "JT", time: "earlier", text: "posted the one that lost too, with the full breakdown. nothing gets deleted here, that's the deal" },
-  { name: "amara", av: "c5", init: "A", time: "earlier", text: "month in, up small and steady. the recommended size is what keeps me out of trouble" },
-  { name: "sam", av: "c3", init: "S", time: "earlier", text: "started with $50 just tailing. green and actually learning why. didn't expect that" },
+  { name: "kev", av: "c3", init: "K", time: "7:13p", text: "my first prediction-market trade ever and it's already green 🟢 way less scary than it looked" },
+  { name: "ro", av: "c4", init: "R", time: "earlier", tag: "+1.6u", tagClass: "win", text: "UFC KO from last night cashed. 4 of 5 on the week now 🔥" },
+  { creator: true, name: "JT", av: "c2", init: "JT", time: "earlier", text: "the play that missed Tuesday is still pinned up top with the full breakdown. nothing gets deleted here" },
+  { name: "amara", av: "c5", init: "A", time: "earlier", text: "month in and up steady. @JT the unit sizing is the part nobody else actually teaches" },
+  { name: "sam", av: "c3", init: "S", time: "earlier", text: "started with $50 just to test it. green and finally learning why. didn't expect that part" },
 ];
 
 const MOVERS = [
