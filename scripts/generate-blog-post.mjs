@@ -24,12 +24,22 @@ if (!API_KEY) {
 const MODEL = process.env.BLOG_MODEL || "claude-sonnet-4-6";
 const BLOG_DIR = path.join(process.cwd(), "content/blog");
 
-const existingSlugs = fs.existsSync(BLOG_DIR)
-  ? fs
-      .readdirSync(BLOG_DIR)
-      .filter((f) => f.endsWith(".md"))
-      .map((f) => f.replace(/\.md$/, ""))
+const existingFiles = fs.existsSync(BLOG_DIR)
+  ? fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith(".md"))
   : [];
+const existingSlugs = existingFiles.map((f) => f.replace(/\.md$/, ""));
+
+// Pull the human title + category of every existing post so the model can see
+// what's already been covered. Slugs alone read as cryptic; titles make the
+// "don't repeat a topic" instruction actually bite, which matters now that we
+// publish several times a day.
+const existingPosts = existingFiles.map((f) => {
+  const raw = fs.readFileSync(path.join(BLOG_DIR, f), "utf8");
+  const title = (raw.match(/^title:\s*["']?(.+?)["']?\s*$/m) || [])[1] || f;
+  const category = (raw.match(/^category:\s*["']?(.+?)["']?\s*$/m) || [])[1] || "";
+  return { title, category };
+});
+const existingTitles = existingPosts.map((p) => p.title);
 
 const today = new Date().toISOString().slice(0, 10);
 
@@ -53,7 +63,12 @@ const prompt = `${BRAND}
 
 Write ONE complete blog post for The Edge, today (${today}).
 
-Pick a fresh, genuinely useful sports-betting or prediction-market topic that is timely or evergreen. Use web search to ground anything factual. Do NOT repeat any of these existing slugs or their topics: ${existingSlugs.join(", ") || "(none yet)"}.
+Pick a fresh, genuinely useful sports-betting or prediction-market topic that is timely or evergreen. Use web search to ground anything factual.
+
+We publish several posts a day, so VARIETY MATTERS. Do NOT repeat, paraphrase, or closely overlap any of these already-published titles, and pick a different angle and category from the most recent ones:
+${existingTitles.map((t) => `- ${t}`).join("\n") || "- (none yet)"}
+
+Lean toward whatever is genuinely in the news right now (a specific game, matchup, election market, economic print, or league storyline) so multiple posts in the same day stay distinct. If you cover an evergreen concept, take an angle none of the above already takes.
 
 Requirements:
 - 700 to 1300 words. Lead with a direct, quotable answer in the first 2-3 sentences (so AI search engines can cite it).

@@ -455,9 +455,18 @@ h1.hero-title { font-family: var(--font-display), var(--font-sans), sans-serif; 
 @keyframes underlineDraw { to { transform: scaleX(1); } }
 
 @media (max-width: 920px) {
-  .hero-layout { grid-template-columns: 1fr; gap: 40px; }
-  .hero-sub { max-width: 560px; }
-  h1.hero-title { font-size: clamp(42px, 11vw, 68px); line-height: 0.94; }
+  /* Stack the hero, and slot the pick deck right under the headline and above
+     the subhead, so the product visual is the first thing after the hook.
+     display:contents flattens .hero-left so its children + the deck become
+     orderable siblings of the same flex column. */
+  .hero-layout { display: flex; flex-direction: column; gap: 26px; }
+  .hero-left { display: contents; }
+  .verified-badge { order: 1; margin: 0; }
+  h1.hero-title { order: 2; margin: 0; font-size: clamp(42px, 11vw, 68px); line-height: 0.94; }
+  .hero-right { order: 3; margin: 0; }
+  .hero-sub { order: 4; margin: 0; max-width: 560px; }
+  .hero-cta-row { order: 5; margin: 0; }
+  .hero-stats { order: 6; }
   .hero-title-accent { margin-left: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -495,10 +504,10 @@ h1.hero-title { font-family: var(--font-display), var(--font-sans), sans-serif; 
    separated and left-hung. The transparency pillar (first) leads in accent.
    No longer 3 identical cards. */
 .pillars { display: flex; flex-direction: column; border-top: 1px solid var(--border); }
-.pillar { display: grid; grid-template-columns: 44px minmax(170px, 0.7fr) 1.5fr; gap: clamp(20px, 4vw, 56px); align-items: start; padding: 30px 0; border-bottom: 1px solid var(--border); }
+.pillar { display: grid; grid-template-columns: 44px minmax(170px, 0.7fr) 1.5fr; gap: clamp(20px, 4vw, 56px); align-items: center; padding: 30px 0; border-bottom: 1px solid var(--border); }
 .pillar-icon { width: 44px; height: 44px; background: rgba(0,255,133,0.08); border: 1px solid rgba(0,255,133,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0; color: var(--accent); }
-.pillar h3 { font-size: clamp(20px, 2.1vw, 26px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin: 0; align-self: start; padding-top: 7px; }
-.pillar p { color: var(--text-mute); font-size: 15px; line-height: 1.6; margin: 0; align-self: start; padding-top: 3px; max-width: 60ch; }
+.pillar h3 { font-size: clamp(20px, 2.1vw, 26px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin: 0; }
+.pillar p { color: var(--text-mute); font-size: 15px; line-height: 1.6; margin: 0; max-width: 60ch; }
 .pillar:first-child h3 { color: var(--accent); }
 .pillars .pillar::before { display: none; }
 @media (max-width: 768px) { .pillar { grid-template-columns: 40px 1fr; gap: 12px 18px; padding: 24px 0; } .pillar h3 { align-self: center; } .pillar p { grid-column: 1 / -1; align-self: start; } }

@@ -13,7 +13,10 @@ name: Auto blog post (The Edge)
 
 on:
   schedule:
-    - cron: "17 14 * * 1,3,5" # Mon/Wed/Fri ~14:17 UTC (off-minute on purpose)
+    # 3 posts every day, spread across the day (UTC ~13:13 / 18:13 / 23:13,
+    # i.e. roughly morning / midday / late-afternoon US time). Off-minute on
+    # purpose: scheduled jobs on the hour are the most delayed/dropped.
+    - cron: "13 13,18,23 * * *"
   workflow_dispatch: {}
 
 permissions:
