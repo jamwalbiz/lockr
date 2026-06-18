@@ -42,6 +42,9 @@ export function StudioForm() {
 
   const up = (k: keyof Play, v: string) => setF((s) => ({ ...s, [k]: v }));
 
+  // Slips route by type: blue accent -> #prediction-markets, else #sports-picks.
+  const dest = f.tone === "blue" ? "#prediction-markets" : "#sports-picks";
+
   async function post() {
     if (state === "posting") return;
     setState("posting");
@@ -55,7 +58,7 @@ export function StudioForm() {
       const d = (await res.json()) as { ok?: boolean; error?: string };
       if (res.ok && d.ok) {
         setState("done");
-        setMsg("Posted to the members Discord.");
+        setMsg(`Posted to ${dest}.`);
       } else {
         setState("error");
         setMsg(d.error || "Failed to post.");
@@ -125,14 +128,14 @@ export function StudioForm() {
               <option value="3">3 / Strong</option>
             </select>
           </Field>
-          <Field label="Accent">
+          <Field label="Type / channel">
             <select
               className="studio-input"
               value={f.tone}
               onChange={(e) => up("tone", e.target.value)}
             >
-              <option value="green">Green (sports)</option>
-              <option value="blue">Blue (prediction market)</option>
+              <option value="green">Sports · green · #sports-picks</option>
+              <option value="blue">Prediction market · blue · #prediction-markets</option>
             </select>
           </Field>
         </div>
@@ -147,13 +150,16 @@ export function StudioForm() {
               placeholder="required to post"
             />
           </Field>
+          <p className="studio-dest">
+            Posts to <strong>{dest}</strong>
+          </p>
           <button
             type="button"
             className="btn btn-primary btn-lg studio-btn"
             onClick={post}
             disabled={state === "posting"}
           >
-            {state === "posting" ? "Posting..." : "Post to Discord"}
+            {state === "posting" ? "Posting..." : `Post to ${dest}`}
           </button>
           {msg && (
             <p className={`studio-msg ${state === "error" ? "err" : "ok"}`}>{msg}</p>

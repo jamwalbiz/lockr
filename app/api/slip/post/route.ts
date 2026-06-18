@@ -1,13 +1,20 @@
 import { NextResponse } from "next/server";
 
-// Posts a slip card to the members Discord channel via webhook. Password-gated
-// (STUDIO_PASSWORD) so only JT can post. The slip image is embedded by URL
-// (Discord fetches it from /api/slip), so no file upload is needed.
+// Posts a slip card to the right members Discord channel via webhook, routed by
+// play type: tone "blue" = prediction market -> #prediction-markets, anything
+// else = sports -> #sports-picks. Password-gated (STUDIO_PASSWORD) so only JT can
+// post. The slip image is embedded by URL (Discord fetches it from /api/slip), so
+// no file upload is needed.
 //
 // JT setup:
-//   1. In the members Discord channel: Edit Channel -> Integrations -> Webhooks
-//      -> New Webhook -> Copy URL.
-//   2. Add env vars in Vercel: DISCORD_WEBHOOK_URL and STUDIO_PASSWORD, redeploy.
+//   1. In EACH members channel (#sports-picks and #prediction-markets):
+//      Edit Channel -> Integrations -> Webhooks -> New Webhook -> Copy URL.
+//   2. Add env vars in Vercel, then redeploy:
+//        DISCORD_WEBHOOK_SPORTS   = #sports-picks webhook
+//        DISCORD_WEBHOOK_MARKETS  = #prediction-markets webhook
+//        STUDIO_PASSWORD          = your post password
+//      (DISCORD_WEBHOOK_URL still works as a single-channel fallback for either
+//       type if a type-specific webhook isn't set.)
 export const runtime = "nodejs";
 
 const BASE = "https://joinlockr.com";
@@ -21,14 +28,20 @@ export async function POST(req: Request) {
   }
 
   const password = process.env.STUDIO_PASSWORD;
-  const webhook = process.env.DISCORD_WEBHOOK_URL;
+  // Route by play type: blue accent = prediction market, else sports. Each maps
+  // to its own channel webhook; DISCORD_WEBHOOK_URL is a single-channel fallback.
+  const isMarket = body.tone === "blue";
+  const fallback = process.env.DISCORD_WEBHOOK_URL;
+  const webhook = isMarket
+    ? process.env.DISCORD_WEBHOOK_MARKETS || fallback
+    : process.env.DISCORD_WEBHOOK_SPORTS || fallback;
 
   if (!password || !webhook) {
+    const missing = isMarket ? "DISCORD_WEBHOOK_MARKETS" : "DISCORD_WEBHOOK_SPORTS";
     return NextResponse.json(
       {
         ok: false,
-        error:
-          "Posting is not configured yet. Set STUDIO_PASSWORD and DISCORD_WEBHOOK_URL.",
+        error: `Posting is not configured yet. Set STUDIO_PASSWORD and ${missing} (or DISCORD_WEBHOOK_URL).`,
       },
       { status: 503 },
     );
