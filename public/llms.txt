@@ -4,7 +4,11 @@
 
 ## How Lockr works
 - [Home](https://joinlockr.com/): What you get, how tailing works, the method, and the daily cadence across sports and prediction markets.
+- [Live markets](https://joinlockr.com/markets): An auto-updating board of the most active prediction markets right now on Polymarket and Kalshi, with live implied odds. Refreshed roughly every 30 minutes. Shown for information only and may be delayed.
 - [Pricing](https://joinlockr.com/#pricing): Subscription is $29 per week, $99 per month, or $599 per year, with the same features at every cadence. Inner Circle is $499 per month, application only, capped at 200 members. Billed through Whop.
+
+## Who runs Lockr
+- [Jairo Tovar (JT), founder](https://joinlockr.com/about/jt): Lockr's founder. He posts the day's best plays across sports and prediction markets, in the open, before the line moves. Treats Kalshi and Polymarket as equal ground with the sportsbooks.
 
 ## Guides (The Edge)
 - [Blog](https://joinlockr.com/blog): Plain-English guides on sports betting and prediction markets, bankroll discipline, and how to read a market.

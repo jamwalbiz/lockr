@@ -17,6 +17,7 @@ export function Footer() {
             <h3>Product</h3>
             <Link href="/">Picks</Link>
             <a href="/#method">Method</a>
+            <Link href="/markets">Live markets</Link>
             <a href="/#pricing">Pricing</a>
             <Link href="/checkout">Join Lockr</Link>
           </div>

@@ -70,7 +70,12 @@ export default async function BlogPost({
     description: post.description,
     datePublished: post.date,
     dateModified: post.updated,
-    author: { "@type": "Person", name: post.author },
+    author: {
+      "@type": "Person",
+      name: "Jairo Tovar",
+      alternateName: "JT",
+      url: `${BASE}/about/jt`,
+    },
     publisher: {
       "@type": "Organization",
       name: "Lockr",
@@ -125,7 +130,11 @@ export default async function BlogPost({
         </div>
         <h1 className="blog-article-title">{post.title}</h1>
         <div className="blog-article-byline">
-          By {post.author} · {formatDate(post.date)}
+          By{" "}
+          <Link href="/about/jt" className="blog-byline-author">
+            {post.author}
+          </Link>{" "}
+          · {formatDate(post.date)}
           {showUpdated ? ` · Updated ${formatDate(post.updated)}` : ""}
         </div>
 

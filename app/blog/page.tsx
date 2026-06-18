@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default function BlogIndex() {
   const posts = getAllPostMeta();
   return (
-    <div className="shell blog-shell">
+    <div className="shell blog-index">
       <BreadcrumbsLd
         trail={[
           { name: "Home", url: `${BASE}/` },
@@ -38,21 +38,56 @@ export default function BlogIndex() {
       {posts.length === 0 ? (
         <p className="blog-empty">New guides are dropping soon.</p>
       ) : (
-        <ul className="blog-list">
-          {posts.map((p) => (
-            <li key={p.slug}>
-              <Link href={`/blog/${p.slug}`} className="blog-card">
-                <div className="blog-card-meta">
-                  <span className="blog-card-cat">{p.category}</span>
-                  <span className="blog-card-read">{p.readMinutes} min read</span>
-                </div>
-                <h2 className="blog-card-title">{p.title}</h2>
-                <p className="blog-card-desc">{p.description}</p>
-                <span className="blog-card-cta">Read the guide →</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <>
+          {(() => {
+            const [lead, ...rest] = posts;
+            return (
+              <>
+                <Link
+                  href={`/blog/${lead.slug}`}
+                  className="blog-lead"
+                  aria-label={lead.title}
+                >
+                  <div className="blog-lead-body">
+                    <div className="blog-card-meta">
+                      <span className="blog-card-cat">{lead.category}</span>
+                      {lead.featured && (
+                        <span className="blog-lead-flag">Featured</span>
+                      )}
+                      <span className="blog-card-read">
+                        {lead.readMinutes} min read
+                      </span>
+                    </div>
+                    <h2 className="blog-lead-title">{lead.title}</h2>
+                    <p className="blog-lead-desc">{lead.description}</p>
+                    <span className="blog-card-cta">Read the breakdown →</span>
+                  </div>
+                  <span className="blog-lead-glow" aria-hidden="true" />
+                </Link>
+
+                {rest.length > 0 && (
+                  <ul className="blog-grid">
+                    {rest.map((p) => (
+                      <li key={p.slug}>
+                        <Link href={`/blog/${p.slug}`} className="blog-card">
+                          <div className="blog-card-meta">
+                            <span className="blog-card-cat">{p.category}</span>
+                            <span className="blog-card-read">
+                              {p.readMinutes} min
+                            </span>
+                          </div>
+                          <h3 className="blog-card-title">{p.title}</h3>
+                          <p className="blog-card-desc">{p.description}</p>
+                          <span className="blog-card-cta">Read →</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </>
+            );
+          })()}
+        </>
       )}
     </div>
   );

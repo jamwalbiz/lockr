@@ -55,6 +55,7 @@ export function Nav() {
             <a href={isHome ? "#results" : "/#results"}>Results</a>
             <a href={isHome ? "#pricing" : "/#pricing"}>Pricing</a>
             <a href={isHome ? "#faq" : "/#faq"}>FAQ</a>
+            <Link href="/markets">Markets</Link>
             <Link href="/blog">Blog</Link>
           </div>
           <div className="nav-cta">
@@ -147,6 +148,9 @@ export function Nav() {
           >
             FAQ
           </a>
+          <Link href="/markets" className="mobile-link" onClick={closeMenu}>
+            Markets
+          </Link>
           <Link href="/blog" className="mobile-link" onClick={closeMenu}>
             Blog
           </Link>
