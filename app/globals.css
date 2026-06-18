@@ -360,11 +360,11 @@ h1.hero-title { font-family: var(--font-display), var(--font-sans), sans-serif; 
 /* Hero showcase: a fanned deck of 3 sample play cards. The slot owns the fan
    position + base rotation; the card inside does the 3D hover tilt, so the two
    transforms never fight. Moving shimmer sheen + cursor glow + tilt on hover. */
-.play-deck { position: relative; z-index: 1; height: 348px; }
-.play-slot { position: absolute; left: 0; top: 0; width: 288px; opacity: 0; animation: play-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.play-deck { position: relative; z-index: 1; height: 364px; width: 336px; margin: 0 auto; }
+.play-slot { position: absolute; left: 0; top: 0; width: 290px; opacity: 0; animation: play-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 .play-slot:nth-child(1) { transform: translate(0, 0) rotate(-6deg); z-index: 1; animation-delay: 0.34s; }
-.play-slot:nth-child(2) { transform: translate(44px, 94px) rotate(3deg); z-index: 2; animation-delay: 0.45s; }
-.play-slot:nth-child(3) { transform: translate(14px, 188px) rotate(8deg); z-index: 3; animation-delay: 0.56s; }
+.play-slot:nth-child(2) { transform: translate(46px, 102px) rotate(3deg); z-index: 2; animation-delay: 0.45s; }
+.play-slot:nth-child(3) { transform: translate(16px, 204px) rotate(8deg); z-index: 3; animation-delay: 0.56s; }
 .play-slot:has(.play-card:hover) { z-index: 12; }
 @keyframes play-in { to { opacity: 1; } }
 
@@ -430,10 +430,20 @@ h1.hero-title { font-family: var(--font-display), var(--font-sans), sans-serif; 
   .play-card { transition: border-color 0.2s ease; }
   .play-card:hover { transform: perspective(780px) translateY(-4px); }
 }
+/* Mobile: keep the fan, just scale it down to fit a phone width (a flat stack
+   read as off). Cards narrow + offsets tighten; the rotations stay. */
 @media (max-width: 920px) {
-  .play-deck { height: auto; display: flex; flex-direction: column; gap: 12px; max-width: 360px; }
-  .play-slot { position: static; width: 100%; transform: none !important; }
-  .play-card:hover { transform: translateY(-4px) scale(1.01); }
+  .play-deck { width: 300px; height: 332px; margin: 4px auto 0; }
+  .play-slot { width: 256px; }
+  .play-slot:nth-child(2) { transform: translate(38px, 92px) rotate(3deg); }
+  .play-slot:nth-child(3) { transform: translate(13px, 184px) rotate(8deg); }
+  .play-line { font-size: 25px; }
+}
+@media (max-width: 380px) {
+  .play-deck { width: 270px; height: 312px; }
+  .play-slot { width: 232px; }
+  .play-slot:nth-child(2) { transform: translate(32px, 86px) rotate(3deg); }
+  .play-slot:nth-child(3) { transform: translate(11px, 172px) rotate(8deg); }
 }
 
 
