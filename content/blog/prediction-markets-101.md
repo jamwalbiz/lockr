@@ -6,7 +6,7 @@ updated: "2026-06-18"
 category: "Explainer"
 author: "JT, founder of Lockr"
 readMinutes: 8
-featured: true
+featured: false
 keywords: ["prediction markets", "Kalshi", "Polymarket", "how prediction markets work", "implied probability", "YES and NO contracts", "prediction market betting", "Kalshi vs Polymarket"]
 faq:
   - q: "Are prediction markets the same as sports betting?"
