@@ -13,10 +13,12 @@ name: Auto blog post (The Edge)
 
 on:
   schedule:
-    # 3 posts every day, spread across the day (UTC ~13:13 / 18:13 / 23:13,
-    # i.e. roughly morning / midday / late-afternoon US time). Off-minute on
-    # purpose: scheduled jobs on the hour are the most delayed/dropped.
-    - cron: "13 13,18,23 * * *"
+    # ONE post per day (~9:27am ET). Data-driven posts win on originality, not
+    # volume, so quality + one strong daily post beats 3 commodity explainers
+    # (and keeps the API spend low). Off-minute on purpose: on-the-hour jobs are
+    # the most delayed/dropped. NOTE: this workflow is currently disabled in the
+    # Actions tab; re-enable it there when you want the data-driven blog live.
+    - cron: "27 14 * * *"
   workflow_dispatch: {}
 
 permissions:

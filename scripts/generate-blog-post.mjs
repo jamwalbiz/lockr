@@ -1,7 +1,10 @@
 // Auto-feed generator for The Edge (Lockr's blog).
 //
-// Generates ONE high-quality, compliance-reviewed post about a current sports
-// or prediction-market topic and writes it to content/blog/<slug>.md. Run by
+// Generates ONE high-quality, compliance-reviewed post BUILT ON the day's real
+// Polymarket/Kalshi market data (via intel-sources.mjs, the same live signal the
+// @joinlockr feed uses) and writes it to content/blog/<slug>.md. Original,
+// data-grounded posts are the ones that rank + get cited by AI search engines;
+// it falls back to an evergreen explainer only if the live data fetch fails. Run by
 // the .github/workflows/auto-blog.yml schedule (GitHub Actions), which commits
 // + pushes the result so Vercel redeploys. Can also be run locally:
 //
@@ -14,6 +17,7 @@
 // instead of pushing to main (see the workflow file).
 import fs from "node:fs";
 import path from "node:path";
+import { buildSourceBrief } from "./intel-sources.mjs";
 
 const API_KEY = process.env.ANTHROPIC_API_KEY;
 if (!API_KEY) {
@@ -59,25 +63,8 @@ COMPLIANCE / HONESTY (YMYL gambling content):
 - No "you will win" framing. Weave in responsible-gambling framing where natural (bet only what you can afford to lose, 21+ and jurisdiction-dependent, 1-800-GAMBLER).
 `;
 
-const prompt = `${BRAND}
-
-Write ONE complete blog post for The Edge, today (${today}).
-
-Pick a fresh, genuinely useful sports-betting or prediction-market topic that is timely or evergreen. Use web search to ground anything factual.
-
-We publish several posts a day, so VARIETY MATTERS. Do NOT repeat, paraphrase, or closely overlap any of these already-published titles, and pick a different angle and category from the most recent ones:
-${existingTitles.map((t) => `- ${t}`).join("\n") || "- (none yet)"}
-
-Lean toward whatever is genuinely in the news right now (a specific game, matchup, election market, economic print, or league storyline) so multiple posts in the same day stay distinct. If you cover an evergreen concept, take an angle none of the above already takes.
-
-Requirements:
-- 700 to 1300 words. Lead with a direct, quotable answer in the first 2-3 sentences (so AI search engines can cite it).
-- Question-led H2 headings. Include exactly one sharp pull-quote as a "> " blockquote.
-- Cite real sources inline as markdown links wherever you state a fact or number.
-- Brand voice. No em dashes. No fabricated data.
-- Before you finalize, self-review against every hard rule and compliance point above and fix any violation.
-
-Output ONLY the complete markdown file, nothing else. It must start with YAML frontmatter in exactly this shape, then a blank line, then the body:
+// Shared output contract (parsed downstream — keep the frontmatter shape exact).
+const OUTPUT_SPEC = `Output ONLY the complete markdown file, nothing else. It must start with YAML frontmatter in exactly this shape, then a blank line, then the body:
 
 ---
 title: "..."
@@ -96,6 +83,67 @@ faq:
 ---
 
 (body markdown here)`;
+
+const DEDUP = `Do NOT repeat, paraphrase, or closely overlap any already-published title below. Take a fresh angle and category:
+${existingTitles.map((t) => `- ${t}`).join("\n") || "- (none yet)"}`;
+
+// Fallback prompt (only used if the live data fetch fails): an evergreen explainer.
+const genericPrompt = `${BRAND}
+
+Write ONE complete blog post for The Edge, today (${today}).
+
+Pick a fresh, genuinely useful sports-betting or prediction-market topic that is timely or evergreen. Use web search to ground anything factual. Lean toward whatever is genuinely in the news right now (a specific game, matchup, election market, economic print, or league storyline).
+
+${DEDUP}
+
+Requirements:
+- 700 to 1300 words. Lead with a direct, quotable answer in the first 2-3 sentences (so AI search engines can cite it).
+- Question-led H2 headings. Include exactly one sharp pull-quote as a "> " blockquote.
+- Cite real sources inline as markdown links wherever you state a fact or number.
+- Brand voice. No em dashes. No fabricated data.
+- Before you finalize, self-review against every hard rule and compliance point above and fix any violation.
+
+${OUTPUT_SPEC}`;
+
+// Pull the day's real prediction-market signal (same module the @joinlockr feed
+// uses). Posts built on this original, current data are what actually rank and get
+// cited by AI search engines, vs commodity "what is a parlay" explainers.
+let brief = null;
+try {
+  brief = await buildSourceBrief();
+  console.log(
+    brief.text
+      ? `Live signal: ${brief.poly.length} Polymarket / ${brief.kalshi.length} Kalshi / ${brief.news.length} news.`
+      : "Live signal empty; using evergreen fallback.",
+  );
+} catch (err) {
+  console.warn("Live signal failed; using evergreen fallback:", String(err).slice(0, 160));
+}
+
+const dataPrompt = `${BRAND}
+
+LIVE MARKET DATA (real, pulled minutes ago — these numbers are VERIFIED. Use them directly and attribute each to its platform, e.g. "on Polymarket" / "according to Kalshi". Do NOT invent numbers beyond these and what you verify via web search):
+${brief?.text || ""}
+
+Write ONE complete blog post for The Edge, today (${today}), BUILT AROUND this live data. Original, current, data-grounded analysis is the entire point: it is what a generic explainer can never offer and what AI search engines actually cite.
+
+Pick the SINGLE most interesting thing in the data above (the biggest 24h-volume mover, a surprising price, a notable head-to-head in volume, or a market the news is clearly reacting to) and write a sharp, genuinely useful post about it:
+- Lead with a direct, quotable takeaway in the first 2-3 sentences (so AI engines can cite it), naming the real number.
+- Build the post on the REAL figures from the data (the question, the implied %, the 24h volume) and attribute each to its platform.
+- Use web search to explain WHY the market is priced this way and what is driving it right now, citing real sources inline as markdown links.
+- End on what a reader should actually take away: what the market is really saying and what to watch next. Treat prediction markets and sports as equal.
+
+${DEDUP}
+
+Requirements:
+- 700 to 1300 words. Question-led H2 headings. Exactly one sharp pull-quote as a "> " blockquote.
+- Brand voice. No em dashes. No fabricated data. Weave in responsible-gambling framing where natural.
+- Before you finalize, self-review against every hard rule and compliance point above and fix any violation.
+
+${OUTPUT_SPEC}`;
+
+// Data-driven post when the signal is live; evergreen explainer only as a fallback.
+const prompt = brief?.text ? dataPrompt : genericPrompt;
 
 const body = {
   model: MODEL,
