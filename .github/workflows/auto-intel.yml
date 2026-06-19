@@ -18,13 +18,20 @@ name: Auto intel feed (@joinlockr)
 #
 # PAUSE auto-post (run review-first instead): add repo VARIABLE INTEL_AUTOPOST = 0
 # — posts then queue to Discord for a human. Set it back to 1 (or delete it) to
-# resume hands-off posting. CADENCE: one run/day, 2 posts; bump INTEL_COUNT or add
-# cron times as it proves out. Disable entirely in the repo Actions tab.
+# resume hands-off posting. Disable entirely in the repo Actions tab.
+#
+# CADENCE: 3 posts/day, spread across morning / midday / evening, ONE post per slot,
+# each slot weighted to a different LANE so the day's posts stay varied and never
+# repeat the same hot story. Times are UTC (GitHub cron is UTC, and drifts ~1h vs ET
+# across daylight saving — fine for a feed). To change volume: add/remove a cron line
+# below (and its case in "Pick the angle"), or bump repo VARIABLE INTEL_COUNT.
 
 on:
   schedule:
-    # ~10:17am ET. Off-minute on purpose (on-the-hour jobs are the most delayed).
-    - cron: "17 14 * * *"
+    # Off-the-minute on purpose (on-the-hour jobs are the most delayed by GitHub).
+    - cron: "7 13 * * *" # ~9:07am ET — markets / industry / records lane
+    - cron: "13 17 * * *" # ~1:13pm ET — big-win / longshot / payout lane
+    - cron: "19 23 * * *" # ~7:19pm ET — World Cup / sports / heart-vs-market lane
   workflow_dispatch: {}
 
 concurrency:
@@ -39,11 +46,27 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Pick the angle for this slot
+        # Map the cron that fired this run to a content lane, so the 3 daily posts
+        # favor different angles. Manual runs (workflow_dispatch) get no focus and
+        # fall back to the script's default full-lane rotation.
+        env:
+          SCHED: ${{ github.event.schedule }}
+        run: |
+          case "$SCHED" in
+            "7 13 "*)  FOCUS="market or volume records, platform milestones, industry/regulatory news, head-to-head venue races" ;;
+            "13 17 "*) FOCUS="big wins, longshots that hit, wild bets placed, record payouts" ;;
+            "19 23 "*) FOCUS="World Cup tentpole, heart-vs-market, a sports result that moved a market, odds shifts, wild stats" ;;
+            *)         FOCUS="" ;;
+          esac
+          echo "INTEL_FOCUS=$FOCUS" >> "$GITHUB_ENV"
+          echo "Slot angle: ${FOCUS:-(default rotation)}"
       - name: Generate + ship intel posts
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           DISCORD_WEBHOOK_CONTENT: ${{ secrets.DISCORD_WEBHOOK_CONTENT }}
-          INTEL_COUNT: "2"
+          INTEL_COUNT: ${{ vars.INTEL_COUNT || '1' }}
+          INTEL_FOCUS: ${{ env.INTEL_FOCUS }}
           INTEL_AUTOPOST: ${{ vars.INTEL_AUTOPOST }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}

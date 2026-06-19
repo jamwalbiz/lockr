@@ -43,6 +43,9 @@ const WEBHOOK = process.env.DISCORD_WEBHOOK_CONTENT || process.env.DISCORD_WEBHO
 const MODEL = process.env.INTEL_MODEL || "claude-sonnet-4-6";
 const BASE = (process.env.SITE_BASE || "https://joinlockr.com").replace(/\/$/, "");
 const COUNT = Math.max(1, Math.min(3, Number(process.env.INTEL_COUNT) || 2));
+// Optional per-run angle (set by the cron per time-slot) so multiple posts/day
+// favor different lanes and don't all surface the same hot story.
+const FOCUS = (process.env.INTEL_FOCUS || "").trim().slice(0, 240);
 // Instagram auto-post is ON by default; set INTEL_AUTOPOST=0 to force drafts-only.
 const AUTOPOST = process.env.INTEL_AUTOPOST !== "0";
 const HAS_IG = Boolean(process.env.IG_USER_ID && process.env.IG_ACCESS_TOKEN);
@@ -127,6 +130,9 @@ async function callClaude(brief) {
     brief && brief.text
       ? `LIVE SIGNAL (real data pulled seconds ago, straight from the platforms — VERIFIED, the highest 24h volume = the most viral markets right now). Use these numbers directly and cite the platform; you do NOT need to re-verify a number that appears here:\n\n${brief.text}\n\n---\n\n`
       : "";
+  const focus = FOCUS
+    ? `THIS RUN'S FOCUS: lead with these angles so the day's posts (this account posts a few times a day) stay varied across slots — ${FOCUS}. Still only use REAL, verified stories; if a focus angle has nothing real today, pick the best real story regardless of lane.\n\n`
+    : "";
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
@@ -138,7 +144,7 @@ async function callClaude(brief) {
       model: MODEL,
       max_tokens: 3500,
       tools: [{ type: "web_search_20250305", name: "web_search", max_uses: 8 }],
-      messages: [{ role: "user", content: signal + PROMPT }],
+      messages: [{ role: "user", content: signal + focus + PROMPT }],
     }),
   });
   if (!res.ok) {
