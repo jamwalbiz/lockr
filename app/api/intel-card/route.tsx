@@ -1,7 +1,11 @@
 import { ImageResponse } from "next/og";
+import sharp from "sharp";
 
 // Branded "intel" news-card generator for the @joinlockr feed. Renders a viral,
-// screenshot-able NEWS card as a 1080x1350 (IG portrait) PNG from query params.
+// screenshot-able NEWS card as a 1080x1350 (IG portrait, exactly 4:5) image from
+// query params, served as JPEG. (Instagram's content-publishing API accepts JPEG
+// ONLY; next/og emits PNG, so we transcode with sharp — which needs the Node
+// runtime, not edge. ?fmt=png returns the raw PNG for any other consumer.)
 // The news is the hero; Lockr is a subtle corner handle, not a banner (reads like
 // a news page, not an ad — the CTA lives in the caption, not on the image).
 //
@@ -10,7 +14,7 @@ import { ImageResponse } from "next/og";
 // @joinlockr handle, and a "via {source}" news byline. ?type= sets the small tag
 // (BIG WIN, MARKET NEWS, INDUSTRY, SPORTS, ODDS, WORLD CUP, HEART VS MARKET).
 // No secrets. Public data only. Generated + posted by scripts/generate-intel.mjs.
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 const ACCENT = "#00ff85";
 const INK = "#f5f4f1";
@@ -23,9 +27,11 @@ let _fonts: { name: string; data: ArrayBuffer; weight: 600 | 800; style: "normal
 async function loadFonts(reqUrl: string) {
   if (_fonts !== undefined) return _fonts;
   try {
+    const fetchFont = (p: string) =>
+      fetch(new URL(p, reqUrl), { signal: AbortSignal.timeout(4000) }).then((r) => r.arrayBuffer());
     const [b8, b6] = await Promise.all([
-      fetch(new URL("/fonts/archivo-800.ttf", reqUrl)).then((r) => r.arrayBuffer()),
-      fetch(new URL("/fonts/archivo-600.ttf", reqUrl)).then((r) => r.arrayBuffer()),
+      fetchFont("/fonts/archivo-800.ttf"),
+      fetchFont("/fonts/archivo-600.ttf"),
     ]);
     _fonts = [
       { name: "Archivo", data: b8, weight: 800, style: "normal" },
@@ -66,7 +72,7 @@ export async function GET(req: Request) {
   const fonts = await loadFonts(req.url);
   const family = fonts ? "Archivo" : "sans-serif";
 
-  return new ImageResponse(
+  const image = new ImageResponse(
     (
       <div
         style={{
@@ -230,4 +236,26 @@ export async function GET(req: Request) {
     ),
     { width: 1080, height: 1350, fonts: fonts || undefined },
   );
+
+  // next/og emits PNG; Instagram's publish API accepts JPEG only. Transcode with
+  // sharp (4:4:4 keeps the green-on-dark text/edges crisp). If anything goes wrong,
+  // fall back to the raw PNG so previews still render. ?fmt=png skips the transcode.
+  const pngBytes = new Uint8Array(await image.arrayBuffer());
+  if (sp.get("fmt") === "png") {
+    return new Response(pngBytes, {
+      headers: { "content-type": "image/png", "cache-control": "public, max-age=300, s-maxage=300" },
+    });
+  }
+  try {
+    const jpg = await sharp(pngBytes).jpeg({ quality: 90, chromaSubsampling: "4:4:4" }).toBuffer();
+    return new Response(new Uint8Array(jpg), {
+      headers: {
+        "content-type": "image/jpeg",
+        "cache-control": "public, max-age=300, s-maxage=300",
+      },
+    });
+  } catch (err) {
+    console.error("intel-card: JPEG transcode failed, serving PNG", err);
+    return new Response(pngBytes, { headers: { "content-type": "image/png" } });
+  }
 }

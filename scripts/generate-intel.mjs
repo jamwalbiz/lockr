@@ -1,11 +1,11 @@
 // Auto-feed generator for @joinlockr (Lockr's betting / prediction-market news page).
 //
-// Each run: Claude (with live web search) finds the day's most surprising, real,
-// "somebody's wrong" angles from public data (Kalshi/Polymarket odds, sportsbook
-// line moves, public-betting splits, big results), writes 1-3 on-brand news cards
-// + captions as strict JSON, renders each as a branded image via /api/intel-card,
-// and drops a ready-to-post DRAFT into a Discord content-queue channel for JT to
-// approve + post. Optionally auto-posts to Instagram (off by default).
+// Each run: Claude (with live web search, grounded on a live Polymarket/Kalshi
+// volume signal) finds the day's most share-worthy real prediction-market /
+// betting stories, writes 1-3 on-brand news cards + captions as strict JSON,
+// renders each as a branded image via /api/intel-card, and SHIPS it. When IG
+// creds are set (the default), it auto-posts straight to Instagram; a Discord
+// webhook, when present, becomes the audit log / review queue of what shipped.
 //
 // Run by .github/workflows/auto-intel.yml (GitHub Actions cron). Also locally:
 //   ANTHROPIC_API_KEY=sk-... DISCORD_WEBHOOK_CONTENT=https://discord.com/api/webhooks/... \
@@ -13,18 +13,23 @@
 //
 // ENV:
 //   ANTHROPIC_API_KEY        (required) Anthropic key.
-//   DISCORD_WEBHOOK_CONTENT  (required) webhook for the #content-queue channel
-//                            (falls back to DISCORD_WEBHOOK_URL).
+//   IG_USER_ID, IG_ACCESS_TOKEN  IG Graph API creds. When BOTH are set, posts
+//                            auto-publish straight to Instagram (the default).
+//   DISCORD_WEBHOOK_CONTENT  webhook for the #content-queue channel (falls back to
+//                            DISCORD_WEBHOOK_URL). Optional once IG creds are set —
+//                            it then logs what auto-posted. You need IG creds and/or
+//                            this webhook (at least one destination).
+//   INTEL_AUTOPOST           (optional) "0" = force drafts-only (skip IG) even with
+//                            creds set; anything else / unset = auto-post on.
 //   SITE_BASE                (optional) default https://joinlockr.com — where the
 //                            public /api/intel-card image is served from.
 //   INTEL_MODEL              (optional) default claude-sonnet-4-6.
-//   INTEL_COUNT              (optional) how many posts to draft, default 2 (max 3).
-//   INTEL_AUTOPOST           (optional) "1" = also auto-post to Instagram.
-//   IG_USER_ID, IG_ACCESS_TOKEN (only if INTEL_AUTOPOST=1) IG Graph API creds.
+//   INTEL_COUNT              (optional) how many posts, default 2 (max 3).
 //
-// SAFETY: default mode only drafts to Discord (human approves + posts). A built-in
-// compliance brief + a banned-phrase filter keep it honest (no fabricated numbers,
-// no guarantees, no income claims, 21+/responsible-gambling).
+// SAFETY: a built-in compliance brief + a banned-phrase filter keep it honest (no
+// fabricated numbers, guarantees, or income claims; 21+/responsible-gambling). Set
+// INTEL_AUTOPOST=0 to run review-first (drafts to Discord, a human posts) until the
+// feed is proven, then flip it back on for fully hands-off Instagram posting.
 
 import { buildSourceBrief } from "./intel-sources.mjs";
 
@@ -34,16 +39,25 @@ if (!API_KEY) {
   process.exit(1);
 }
 const WEBHOOK = process.env.DISCORD_WEBHOOK_CONTENT || process.env.DISCORD_WEBHOOK_URL;
-if (!WEBHOOK) {
-  console.error("Missing DISCORD_WEBHOOK_CONTENT (or DISCORD_WEBHOOK_URL)");
-  process.exit(1);
-}
 
 const MODEL = process.env.INTEL_MODEL || "claude-sonnet-4-6";
 const BASE = (process.env.SITE_BASE || "https://joinlockr.com").replace(/\/$/, "");
 const COUNT = Math.max(1, Math.min(3, Number(process.env.INTEL_COUNT) || 2));
-const AUTOPOST = process.env.INTEL_AUTOPOST === "1";
+// Instagram auto-post is ON by default; set INTEL_AUTOPOST=0 to force drafts-only.
+const AUTOPOST = process.env.INTEL_AUTOPOST !== "0";
+const HAS_IG = Boolean(process.env.IG_USER_ID && process.env.IG_ACCESS_TOKEN);
+const IG_LIVE = AUTOPOST && HAS_IG; // actually publishing to Instagram this run
 const today = new Date().toISOString().slice(0, 10);
+
+// Need at least one destination: auto-post to Instagram, and/or a Discord queue.
+// (Discord is optional once IG auto-post is live; it becomes the audit log.)
+if (!WEBHOOK && !IG_LIVE) {
+  console.error(
+    "No destination configured. Set IG_USER_ID + IG_ACCESS_TOKEN to auto-post to " +
+      "Instagram, and/or DISCORD_WEBHOOK_CONTENT for the review/log queue.",
+  );
+  process.exit(1);
+}
 
 // Phrases that must never reach a caption/card. Defensive net on top of the brief.
 const BANNED = /\b(guaranteed|guarantee|risk[-\s]?free|can'?t lose|sure thing|lock of the (day|week|night)|easy money|free money|you will (win|profit)|get rich)\b/i;
@@ -211,13 +225,22 @@ function cardUrl(p) {
 async function postDraft(p, url, ig) {
   const tone = 0x00ff85;
   const sources = Array.isArray(p.sources) ? p.sources.filter(Boolean) : [];
-  const igLine = ig
-    ? ig.posted
-      ? "\n\n:white_check_mark: Auto-posted to Instagram."
-      : `\n\n:warning: IG auto-post skipped: ${ig.reason}`
-    : "";
+  const posted = Boolean(ig && ig.posted);
+  const failed = Boolean(ig && !ig.posted);
+  const tag = (p.type || p.kicker || "").toString();
+  const igLine = posted
+    ? "\n\n:white_check_mark: Auto-posted to Instagram."
+    : failed
+      ? `\n\n:warning: IG auto-post FAILED — post this one manually: ${ig.reason}`
+      : "";
+  const heading = posted
+    ? `:rocket:  Auto-posted to @joinlockr  ·  ${tag}`
+    : failed
+      ? `:warning:  @joinlockr post needs you  ·  ${tag}`
+      : `:newspaper:  New @joinlockr draft  ·  ${tag}`;
   const desc =
-    "**Caption** (copy this):\n```\n" +
+    `**Caption** (${posted ? "what went out" : "copy this"}):\n` +
+    "```\n" +
     `${p.caption}\n\n${p.hashtags}` +
     "\n```" +
     (sources.length ? `\nSources: ${sources.join("  ")}` : "") +
@@ -228,7 +251,7 @@ async function postDraft(p, url, ig) {
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
       username: "Lockr Intel",
-      content: `:newspaper:  New @joinlockr draft  ·  ${(p.type || p.kicker || "").toString()}`,
+      content: heading,
       embeds: [{ color: tone, title: p.headline, description: desc, image: { url } }],
     }),
     signal: AbortSignal.timeout(10000),
@@ -240,30 +263,111 @@ async function postDraft(p, url, ig) {
   return true;
 }
 
+// Instagram content-publishing (Instagram Login path). The token is an Instagram
+// user token, so it authenticates against graph.instagram.com (NOT graph.facebook.com).
+// Version is pinned + overridable: if Meta retires it and calls 404, set the
+// IG_API_VERSION repo secret to the current version (no code change needed).
+const IG_HOST = "https://graph.instagram.com";
+const IG_VER = process.env.IG_API_VERSION || "v23.0";
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const igFetch = (u, init) => fetch(u, { ...init, signal: AbortSignal.timeout(30000) });
+
+// Flatten a Graph API error into one readable line (code / subcode / fbtrace_id).
+function igErr(stage, status, body) {
+  const e = body && body.error ? body.error : null;
+  const parts = [`${stage} HTTP ${status}`];
+  if (e) {
+    if (e.code != null) parts.push(`code ${e.code}`);
+    if (e.error_subcode != null) parts.push(`subcode ${e.error_subcode}`);
+    if (e.message) parts.push(e.message);
+    if (e.fbtrace_id) parts.push(`fbtrace ${e.fbtrace_id}`);
+  } else {
+    parts.push(JSON.stringify(body).slice(0, 200));
+  }
+  return parts.join(" | ");
+}
+
+// IG caption limit is 2,200 chars and max 30 hashtags. Clamp defensively so a long
+// caption can never 4xx the /media call.
+function buildIgCaption(caption, hashtags) {
+  const tags = String(hashtags || "")
+    .split(/\s+/)
+    .filter((tag) => tag.startsWith("#"))
+    .slice(0, 30)
+    .join(" ");
+  let full = `${caption}\n\n${tags}`.trim();
+  if (full.length > 2200) full = `${full.slice(0, 2197).trimEnd()}...`;
+  return full;
+}
+
+// Meta fetches image_url server-side, so it must publicly return real image/jpeg.
+// Verify (and warm the function) before asking Meta to fetch it.
+async function precheckImage(url) {
+  try {
+    const r = await igFetch(url, { method: "GET" });
+    if (!r.ok) return { ok: false, reason: `card URL returned ${r.status}` };
+    const ct = r.headers.get("content-type") || "";
+    if (!ct.includes("image/jpeg")) return { ok: false, reason: `card URL is "${ct || "unknown"}", need image/jpeg` };
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, reason: `card URL fetch failed: ${String(err).slice(0, 120)}` };
+  }
+}
+
 async function igPost(url, caption, hashtags) {
   const uid = process.env.IG_USER_ID;
   const tok = process.env.IG_ACCESS_TOKEN;
   if (!uid || !tok) return { posted: false, reason: "IG_USER_ID / IG_ACCESS_TOKEN not set" };
-  const v = "v21.0";
-  const fullCaption = `${caption}\n\n${hashtags}`;
+
+  // 0) make sure Meta will be able to fetch a real JPEG from the card URL.
+  const pre = await precheckImage(url);
+  if (!pre.ok) return { posted: false, reason: pre.reason };
+
+  const igCaption = buildIgCaption(caption, hashtags);
   try {
-    const create = await fetch(`https://graph.facebook.com/${v}/${uid}/media`, {
+    // 1) create the media container.
+    const create = await igFetch(`${IG_HOST}/${IG_VER}/${uid}/media`, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ image_url: url, caption: fullCaption, access_token: tok }),
+      body: JSON.stringify({ image_url: url, caption: igCaption, access_token: tok }),
     });
-    const cj = await create.json();
-    if (!create.ok || !cj.id) return { posted: false, reason: JSON.stringify(cj).slice(0, 180) };
-    await new Promise((r) => setTimeout(r, 5000));
-    const pub = await fetch(`https://graph.facebook.com/${v}/${uid}/media_publish`, {
+    const cj = await create.json().catch(() => ({}));
+    if (!create.ok || !cj.id) return { posted: false, reason: igErr("create", create.status, cj) };
+    const containerId = cj.id;
+
+    // 2) poll the container until FINISHED (a blind sleep is the #1 cause of the
+    //    "media not ready" 9007 error). Images finish in seconds; cap ~60s.
+    let ready = false;
+    for (let i = 0; i < 12; i++) {
+      await sleep(5000);
+      const st = await igFetch(
+        `${IG_HOST}/${IG_VER}/${containerId}?fields=status_code,status&access_token=${encodeURIComponent(tok)}`,
+        { method: "GET" },
+      );
+      const sj = await st.json().catch(() => ({}));
+      if (sj.status_code === "FINISHED") {
+        ready = true;
+        break;
+      }
+      if (sj.status_code === "ERROR" || sj.status_code === "EXPIRED") {
+        return { posted: false, reason: `container ${sj.status_code}: ${sj.status || ""}`.trim() };
+      }
+      // IN_PROGRESS / transient -> keep polling
+    }
+    if (!ready) return { posted: false, reason: "container not FINISHED after ~60s" };
+
+    // 3) publish exactly once. Never re-create/re-publish in one run (avoids any
+    //    chance of a retry storm multiplying live posts against the 100/24h cap).
+    const pub = await igFetch(`${IG_HOST}/${IG_VER}/${uid}/media_publish`, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ creation_id: cj.id, access_token: tok }),
+      body: JSON.stringify({ creation_id: containerId, access_token: tok }),
     });
-    const pj = await pub.json();
-    return pub.ok && pj.id ? { posted: true, id: pj.id } : { posted: false, reason: JSON.stringify(pj).slice(0, 180) };
+    const pj = await pub.json().catch(() => ({}));
+    if (pub.ok && pj.id) return { posted: true, id: pj.id };
+    return { posted: false, reason: igErr("publish", pub.status, pj) };
   } catch (err) {
-    return { posted: false, reason: String(err).slice(0, 180) };
+    return { posted: false, reason: `IG request failed: ${String(err).slice(0, 160)}` };
   }
 }
 
@@ -284,7 +388,9 @@ if (!parsed || !Array.isArray(parsed.posts) || parsed.posts.length === 0) {
   process.exit(1);
 }
 
-let drafted = 0;
+let shipped = 0;
+let igPosted = 0;
+let igFailed = false;
 for (const p of parsed.posts.slice(0, COUNT)) {
   if (!p || !p.headline) continue;
   const blob = `${p.headline} ${p.sub} ${p.caption}`;
@@ -293,12 +399,32 @@ for (const p of parsed.posts.slice(0, COUNT)) {
     continue;
   }
   const url = cardUrl(p);
-  const ig = AUTOPOST ? await igPost(url, p.caption, p.hashtags) : null;
-  if (await postDraft(p, url, ig)) drafted++;
+  const ig = IG_LIVE ? await igPost(url, p.caption, p.hashtags) : null;
+  if (ig && ig.posted) igPosted++;
+  if (ig && !ig.posted) {
+    console.error("IG auto-post FAILED:", ig.reason);
+    igFailed = true;
+  }
+  // Discord (when configured) is the review queue / audit log of what shipped —
+  // and the recovery copy for any post that failed to auto-publish.
+  const logged = WEBHOOK ? await postDraft(p, url, ig) : false;
+  // Shipped if it auto-posted to IG OR was queued to Discord for a human.
+  if ((ig && ig.posted) || logged) shipped++;
 }
 
-if (drafted === 0) {
-  console.error("Nothing drafted.");
+if (shipped === 0) {
+  console.error("Nothing shipped (IG post and Discord queue both failed).");
   process.exit(1);
 }
-console.log(`Drafted ${drafted} @joinlockr post(s) to Discord${AUTOPOST ? " (IG auto-post attempted)" : ""}.`);
+const mode = IG_LIVE
+  ? `auto-posted ${igPosted}/${shipped} to Instagram${WEBHOOK ? " + logged to Discord" : ""}`
+  : "drafted to Discord for review";
+console.log(`Shipped ${shipped} @joinlockr post(s): ${mode}.`);
+
+// If auto-post is on and any post failed to publish, exit non-zero so the GitHub
+// Actions run goes RED and emails JT. Otherwise a broken token / image would let
+// @joinlockr silently stop posting. The drafts still reached Discord for recovery.
+if (IG_LIVE && igFailed) {
+  console.error("One or more Instagram auto-posts failed (see above) — flagging the run.");
+  process.exit(1);
+}

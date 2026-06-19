@@ -1,21 +1,25 @@
 name: Auto intel feed (@joinlockr)
 
-# Each run, Claude finds the day's most surprising real prediction-market / betting
-# data points, writes on-brand news cards + captions, renders them via
-# /api/intel-card, and drops ready-to-post DRAFTS into a Discord content-queue
-# channel for JT to approve + post. Runs on GitHub's servers (no machine needed).
+# Each run, Claude (grounded on a live Polymarket/Kalshi volume signal) finds the
+# day's most share-worthy real prediction-market / betting stories, writes on-brand
+# news cards + captions, renders them via /api/intel-card, and SHIPS them. Runs on
+# GitHub's servers (no machine needed).
 #
-# SETUP (repo Settings -> Secrets and variables -> Actions -> New repository secret):
-#   ANTHROPIC_API_KEY        (already set for the blog)
-#   DISCORD_WEBHOOK_CONTENT  = a webhook for a private #content-queue Discord channel
-#                              (Edit Channel -> Integrations -> Webhooks -> New -> Copy URL)
-# OPTIONAL — full hands-off auto-post to Instagram (leave off until the format is proven):
-#   add repo VARIABLE  INTEL_AUTOPOST = 1
-#   add secrets  IG_USER_ID  and  IG_ACCESS_TOKEN  (IG Graph API: an IG Business/Creator
-#   account linked to a Facebook Page, with a long-lived access token).
+# SETUP (repo Settings -> Secrets and variables -> Actions):
+#   ANTHROPIC_API_KEY        (secret, already set for the blog)
+# To auto-post straight to Instagram (the default once these exist) add secrets:
+#   IG_USER_ID  and  IG_ACCESS_TOKEN   (Instagram Login path on graph.instagram.com:
+#   an IG Business/Creator account + a 60-day long-lived token, kept alive by the
+#   refresh-ig-token.yml workflow — see DISTRIBUTION.md for the exact walkthrough).
+# OPTIONAL review/audit queue (a Discord webhook; also the manual-post fallback):
+#   DISCORD_WEBHOOK_CONTENT  = a private #content-queue webhook (Edit Channel ->
+#                              Integrations -> Webhooks -> New -> Copy URL).
+# You need IG creds and/or the Discord webhook (at least one destination).
 #
-# CADENCE: one run/day drafting 2 posts. Add more times to the cron, or bump
-# INTEL_COUNT, as the feed proves out. PAUSE: disable in the repo Actions tab.
+# PAUSE auto-post (run review-first instead): add repo VARIABLE INTEL_AUTOPOST = 0
+# — posts then queue to Discord for a human. Set it back to 1 (or delete it) to
+# resume hands-off posting. CADENCE: one run/day, 2 posts; bump INTEL_COUNT or add
+# cron times as it proves out. Disable entirely in the repo Actions tab.
 
 on:
   schedule:
@@ -35,7 +39,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Generate + draft intel posts
+      - name: Generate + ship intel posts
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           DISCORD_WEBHOOK_CONTENT: ${{ secrets.DISCORD_WEBHOOK_CONTENT }}
@@ -43,4 +47,5 @@ jobs:
           INTEL_AUTOPOST: ${{ vars.INTEL_AUTOPOST }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_API_VERSION: ${{ vars.IG_API_VERSION }}
         run: node scripts/generate-intel.mjs

@@ -1,0 +1,62 @@
+name: Refresh IG token (@joinlockr)
+
+# The Instagram long-lived token (Instagram Login path, graph.instagram.com) lasts
+# 60 days. This refreshes it WEEKLY — far inside the window — so a single failed run
+# can never let it lapse. A token that goes 60 days without a refresh dies
+# PERMANENTLY and needs a full manual re-auth (redo the dashboard "Generate token"
+# step). See DISTRIBUTION.md.
+#
+# REQUIRES two repo secrets:
+#   IG_ACCESS_TOKEN  the current token (this workflow rewrites it in place)
+#   GH_PAT           a fine-grained Personal Access Token scoped to THIS repo with
+#                    "Secrets: read and write", used only to write the new token back.
+#
+# If anything fails, the run goes RED and GitHub emails you — do NOT ignore a red run
+# here; it is the early warning before the token would otherwise die.
+#
+# TWO CLOCKS to remember: this auto-handles IG_ACCESS_TOKEN, but GH_PAT itself has a
+# max 1-year expiry — set a calendar reminder to rotate GH_PAT before it lapses, or
+# this refresh job stops and (~60 days later) the IG token dies.
+
+on:
+  schedule:
+    - cron: "23 8 * * 1" # Mondays ~03:23 ET
+  workflow_dispatch: {}
+
+concurrency:
+  group: refresh-ig-token
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Refresh and re-store the IG token
+        env:
+          IG_API_VERSION: ${{ vars.IG_API_VERSION || 'v23.0' }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          CUR: ${{ secrets.IG_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CUR:-}" ]; then echo "IG_ACCESS_TOKEN secret is not set."; exit 1; fi
+          if [ -z "${GH_TOKEN:-}" ]; then echo "GH_PAT secret is not set (needed to write the refreshed token)."; exit 1; fi
+
+          # 1) Ask Instagram for a fresh 60-day token (token must be 24h-old and live).
+          resp=$(curl -sS --max-time 30 "https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${CUR}")
+          new=$(printf '%s' "$resp" | jq -r '.access_token // empty')
+          if [ -z "$new" ]; then
+            echo "Refresh failed: $(printf '%s' "$resp" | jq -r '.error.message // "no access_token in response"')"
+            exit 1
+          fi
+
+          # 2) Validate the NEW token before overwriting the working one.
+          me=$(curl -sS --max-time 30 "https://graph.instagram.com/${IG_API_VERSION}/me?fields=user_id,username&access_token=${new}")
+          uid=$(printf '%s' "$me" | jq -r '.user_id // empty')
+          if [ -z "$uid" ]; then
+            echo "New token failed validation — NOT overwriting. $(printf '%s' "$me" | jq -r '.error.message // ""')"
+            exit 1
+          fi
+
+          # 3) Write it back (gh uses GH_TOKEN=GH_PAT). Value via stdin, never argv.
+          printf '%s' "$new" | gh secret set IG_ACCESS_TOKEN --repo "$GITHUB_REPOSITORY"
+          echo "Refreshed @${uid} IG token OK (good for ~60 more days)."
