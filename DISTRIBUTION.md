@@ -57,12 +57,13 @@ forced public.)
 
 ### 2. Create a Meta app + add Instagram
 Go to **developers.facebook.com/apps** and log in (your personal Facebook login is
-fine — it just owns the app). **Create app** → use case **Other** → type **Business**
-→ name it `Lockr Auto-Poster` → Create. On the dashboard, under **Add products** find
-**Instagram** → **Set up**. In the left nav open **Instagram → API setup with
-Instagram login** (the *Instagram* login one, **not** the Facebook login one).
-Leave the app in **Development mode** — for posting to an account you own, that's all
-you need: **no App Review, no Business Verification** ever.
+fine — it just owns the app). **Create app**, name it `Lockr Auto-Poster`. On the
+**Use cases** step, select **"Manage messaging & content on Instagram"** (the tile
+with the Instagram camera icon — *"Publish posts… with the Instagram API"*). Do **not**
+pick "Other" (Meta is retiring it). Finish creating the app. Then in the left nav open
+**Instagram → API setup with Instagram login** (the *Instagram* login one, **not** the
+Facebook login one). Leave the app in **Development mode** — for posting to an account
+you own, that's all you need: **no App Review, no Business Verification** ever.
 
 ### 3. Connect @joinlockr and generate the token (the easy button)
 Still on **API setup with Instagram login**:
