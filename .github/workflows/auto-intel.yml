@@ -1,0 +1,46 @@
+name: Auto intel feed (@joinlockr)
+
+# Each run, Claude finds the day's most surprising real prediction-market / betting
+# data points, writes on-brand news cards + captions, renders them via
+# /api/intel-card, and drops ready-to-post DRAFTS into a Discord content-queue
+# channel for JT to approve + post. Runs on GitHub's servers (no machine needed).
+#
+# SETUP (repo Settings -> Secrets and variables -> Actions -> New repository secret):
+#   ANTHROPIC_API_KEY        (already set for the blog)
+#   DISCORD_WEBHOOK_CONTENT  = a webhook for a private #content-queue Discord channel
+#                              (Edit Channel -> Integrations -> Webhooks -> New -> Copy URL)
+# OPTIONAL — full hands-off auto-post to Instagram (leave off until the format is proven):
+#   add repo VARIABLE  INTEL_AUTOPOST = 1
+#   add secrets  IG_USER_ID  and  IG_ACCESS_TOKEN  (IG Graph API: an IG Business/Creator
+#   account linked to a Facebook Page, with a long-lived access token).
+#
+# CADENCE: one run/day drafting 2 posts. Add more times to the cron, or bump
+# INTEL_COUNT, as the feed proves out. PAUSE: disable in the repo Actions tab.
+
+on:
+  schedule:
+    # ~10:17am ET. Off-minute on purpose (on-the-hour jobs are the most delayed).
+    - cron: "17 14 * * *"
+  workflow_dispatch: {}
+
+concurrency:
+  group: auto-intel
+  cancel-in-progress: false
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Generate + draft intel posts
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DISCORD_WEBHOOK_CONTENT: ${{ secrets.DISCORD_WEBHOOK_CONTENT }}
+          INTEL_COUNT: "2"
+          INTEL_AUTOPOST: ${{ vars.INTEL_AUTOPOST }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+        run: node scripts/generate-intel.mjs
