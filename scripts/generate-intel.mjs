@@ -26,6 +26,8 @@
 // compliance brief + a banned-phrase filter keep it honest (no fabricated numbers,
 // no guarantees, no income claims, 21+/responsible-gambling).
 
+import { buildSourceBrief } from "./intel-sources.mjs";
+
 const API_KEY = process.env.ANTHROPIC_API_KEY;
 if (!API_KEY) {
   console.error("Missing ANTHROPIC_API_KEY");
@@ -50,7 +52,9 @@ const PROMPT = `You write @joinlockr: a fast, premium NEWS feed for the sports-b
 
 Today is ${today}. The FIFA World Cup 2026 is live (US/Canada/Mexico) — favor a great World Cup angle when there is one.
 
-USE WEB SEARCH to find today's most share-worthy, REAL stories. ROTATE the lanes below so the feed is varied (do NOT make most posts "market odds" posts):
+A LIVE SIGNAL block of real current data (Polymarket + Kalshi 24h volume + odds, recent news headlines) may appear ABOVE this prompt. Treat it as your PRIMARY read on what is hot right now: the highest 24h volume markets are literally the most "viral" markets at this moment, and those numbers are already verified, so you may use them directly and cite the platform as the source without re-searching. Then USE WEB SEARCH to (a) add color to and verify the signal, (b) find BIG WIN / longshot / record-payout stories the signal cannot contain, and (c) confirm any number not already in the signal. If no signal block appears, rely on web search alone.
+
+ROTATE the lanes below so the feed is varied (do NOT make most posts "market odds" posts):
 - BIG WIN / record payout: someone just won $X (a single account, a record cashout). The giant number is the hero.
 - LONGSHOT THAT HIT: a small stake turned into a huge payout. The gap IS the visual (stat = the payout, statLabel describes the stake).
 - WILD BET PLACED: someone put $X on one match or market. The stake size is the hero; spectacle framing, no outcome promise.
@@ -104,7 +108,11 @@ Output ONLY a JSON object (no prose, no markdown fences) in EXACTLY this shape:
   ]
 }`;
 
-async function callClaude() {
+async function callClaude(brief) {
+  const signal =
+    brief && brief.text
+      ? `LIVE SIGNAL (real data pulled seconds ago, straight from the platforms — VERIFIED, the highest 24h volume = the most viral markets right now). Use these numbers directly and cite the platform; you do NOT need to re-verify a number that appears here:\n\n${brief.text}\n\n---\n\n`
+      : "";
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
@@ -116,7 +124,7 @@ async function callClaude() {
       model: MODEL,
       max_tokens: 3500,
       tools: [{ type: "web_search_20250305", name: "web_search", max_uses: 8 }],
-      messages: [{ role: "user", content: PROMPT }],
+      messages: [{ role: "user", content: signal + PROMPT }],
     }),
   });
   if (!res.ok) {
@@ -146,6 +154,42 @@ function extractJson(text) {
   }
 }
 
+// Background library: content category -> available /public image paths. All are
+// AI-generated / owned abstract scenes (NO real people, teams, or logos) so the
+// feed is legal to run unattended. The generator auto-picks one per post by the
+// story's type/keywords; add files here as the library grows (drop them in
+// /public/intel-bg/<category>/ and list the path).
+const BG_LIBRARY = {
+  markets: ["/intel-bg/markets/01.png"],
+  sports: ["/intel-bg/sports/01.jpg"],
+  worldcup: ["/intel-bg/worldcup/01.jpg"],
+  money: ["/intel-bg/money/01.jpg"],
+};
+
+// Map a post to a background category from its type tag + a few keyword hints.
+function bgCategory(p) {
+  const tag = (p.type || p.kicker || "").toUpperCase();
+  const hay = `${p.type} ${p.headline} ${p.sub}`.toLowerCase();
+  if (/world\s?cup|fifa|\bgroup stage\b|knockout/.test(hay) || tag.includes("WORLD")) return "worldcup";
+  if (tag.includes("HEART")) return "worldcup"; // heart-vs-market = bet on your country
+  if (/payout|cashout|cashed out|parlay|jackpot|won \$|\bwin(s|ner)?\b/.test(hay) || tag.includes("WIN")) return "money";
+  if (tag.includes("SPORT") || tag.includes("ODDS") || /\bnba\b|\bnfl\b|\bmlb\b|\bufc\b|soccer|match|game\b/.test(hay)) return "sports";
+  // everything else (markets, industry, wild stats, head-to-head, default) -> the
+  // abstract candlestick/markets scene, which is also the safe fallback.
+  return "markets";
+}
+
+// Pick a background path for a post. Rotation is deterministic per-headline so the
+// feed varies but a given story always renders the same. Falls back to markets.
+function pickBg(p) {
+  const cat = bgCategory(p);
+  const list = (BG_LIBRARY[cat] && BG_LIBRARY[cat].length ? BG_LIBRARY[cat] : BG_LIBRARY.markets) || [];
+  if (!list.length) return "";
+  let h = 0;
+  for (const ch of String(p.headline || "")) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return list[h % list.length];
+}
+
 function cardUrl(p) {
   const qs = new URLSearchParams();
   const set = (k, v) => {
@@ -160,6 +204,7 @@ function cardUrl(p) {
   set("stat2Label", p.stat2Label);
   set("sub", p.sub);
   set("watermark", p.source);
+  set("bg", pickBg(p));
   return `${BASE}/api/intel-card?${qs.toString()}`;
 }
 
@@ -222,7 +267,17 @@ async function igPost(url, caption, hashtags) {
   }
 }
 
-const text = await callClaude();
+// Pull live movers first (best-effort; never blocks generation), then generate.
+let brief = null;
+try {
+  brief = await buildSourceBrief();
+  const counts = `${brief.poly.length} Polymarket / ${brief.kalshi.length} Kalshi / ${brief.news.length} news`;
+  console.log(brief.text ? `Live signal: ${counts}.` : "Live signal empty; falling back to web search.");
+} catch (err) {
+  console.warn("Live signal failed; falling back to web search:", String(err).slice(0, 160));
+}
+
+const text = await callClaude(brief);
 const parsed = extractJson(text);
 if (!parsed || !Array.isArray(parsed.posts) || parsed.posts.length === 0) {
   console.error("No valid posts JSON returned. Got:\n", text.slice(0, 600));
