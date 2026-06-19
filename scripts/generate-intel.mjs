@@ -50,12 +50,20 @@ const PROMPT = `You write @joinlockr: a fast, premium NEWS feed for the sports-b
 
 Today is ${today}. The FIFA World Cup 2026 is live (US/Canada/Mexico) — favor a great World Cup angle when there is one.
 
-USE WEB SEARCH to find today's most share-worthy, REAL stories across these lanes (vary them across the ${COUNT} posts; do not make every post a "market odds" post):
-- BIG WIN / wild bet: a bettor or trader just turned $X into $Y, a massive parlay cashed, a record payout. Frame the UPSIDE and the story, never an income promise.
-- MARKET NEWS: a Polymarket/Kalshi volume record, a market spiking or just launched, prediction markets beating the polls.
-- INDUSTRY: a platform launch / funding / partnership / legal-or-regulatory move (Kalshi, Polymarket, PrizePicks, Betr, sportsbooks).
-- SPORTS / ODDS: a result that moved the market, a country surging in World Cup title odds, an upset's market impact.
-- HEART VS MARKET: the gap between what fans/the public back and what the market prices (great for "bet on your country").
+USE WEB SEARCH to find today's most share-worthy, REAL stories. ROTATE the lanes below so the feed is varied (do NOT make most posts "market odds" posts):
+- BIG WIN / record payout: someone just won $X (a single account, a record cashout). The giant number is the hero.
+- LONGSHOT THAT HIT: a small stake turned into a huge payout. The gap IS the visual (stat = the payout, statLabel describes the stake).
+- WILD BET PLACED: someone put $X on one match or market. The stake size is the hero; spectacle framing, no outcome promise.
+- MARKET / VOLUME RECORD: a Polymarket/Kalshi volume record or all-time-high single day. One jaw-drop number.
+- PLATFORM MILESTONE: a big round number a platform just crossed (total volume, users).
+- HEAD-TO-HEAD: a category race (e.g. Kalshi vs Polymarket volumes) -> use the stat2 fields.
+- INDUSTRY / REGULATORY: a launch, funding, partnership, legal win, or new-market-live, framed as a tailwind ("here's what you can get in on now").
+- SPORTS / ODDS SHIFT: a result that moved a market, a World Cup title-odds shift, an upset's market impact.
+- WILD MEASURABLE STAT: one shocking sports/culture number that doubles as prop context (brand-safe, evergreen).
+- HEART VS MARKET: fans/public % vs market % (great for "bet on your country") -> use the stat2 fields.
+- WORLD CUP TENTPOLE: event volume, a favorite's implied odds, or a final countdown.
+
+Lean on a GIANT hero number. Use full magnitude for shock ($50,000,000,000 can hit harder than $50B on a milestone). Show raw odds in full when the length is the point. Contrast pairs (e.g. a $427K stake to a $4.7M payout) are the highest-performing layout.
 
 Pick the ${COUNT} best, most varied stories. Frame everything POSITIVELY and excitingly to make people want to participate, but stay honest and non-predatory: celebrate wins, records, and drama; do not glorify someone's ruin or imply the reader is guaranteed anything.
 
@@ -76,10 +84,9 @@ Output ONLY a JSON object (no prose, no markdown fences) in EXACTLY this shape:
       "source": "Polymarket | Kalshi | ESPN | etc (where the story is from)",
       "stat": "a REAL supporting number if the story has one, e.g. $2.3M or 71% or $500M, else empty string",
       "statLabel": "short label/context for the stat, e.g. on a single Kalshi contract, else empty string",
-      "stat2": "second REAL number only for HEART VS MARKET, else empty string",
-      "stat2Label": "label for stat2, e.g. fans back them, else empty string",
+      "stat2": "second REAL number for HEART VS MARKET or HEAD-TO-HEAD, else empty string",
+      "stat2Label": "label for stat2, e.g. fans back them / Polymarket, else empty string",
       "sub": "one plain-English context sentence",
-      "tone": "blue for prediction-market (Kalshi/Polymarket) stories, green otherwise",
       "caption": "the 2-4 line IG caption (CTA goes here, not on the card)",
       "hashtags": "#tag1 #tag2 ...",
       "sources": ["https://real-source-url"]
@@ -142,13 +149,12 @@ function cardUrl(p) {
   set("stat2", p.stat2);
   set("stat2Label", p.stat2Label);
   set("sub", p.sub);
-  set("tone", p.tone === "blue" ? "blue" : "green");
   set("watermark", p.source);
   return `${BASE}/api/intel-card?${qs.toString()}`;
 }
 
 async function postDraft(p, url, ig) {
-  const tone = p.tone === "blue" ? 0x4a9eff : 0x00ff85;
+  const tone = 0x00ff85;
   const sources = Array.isArray(p.sources) ? p.sources.filter(Boolean) : [];
   const igLine = ig
     ? ig.posted
