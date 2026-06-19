@@ -104,7 +104,8 @@ VIRAL COPY (write the way the top sports/markets/betting news pages actually wri
    (3) ENGAGEMENT BAIT: a question that makes people comment / tag a friend ("Would you have tailed this?" / "Tailing or fading?" / "Who's cashing this one?" / "Tag someone who needs to see this.").
    (4) SOFT CTA: "We tail the edges across sports + markets. Link in bio." or "Plays drop daily on Lockr."
   Casual, confident, a little irreverent. 0 to 2 tasteful emoji max. No corporate voice, no hype-spam, no income promises.
-- hashtags = 6 to 10 (broad + niche; World Cup tags like #WeAre26 when relevant), placed last. For World Cup posts, name the countries in the caption.
+- hashtags = 3 to 5 NICHE, specific tags only (Instagram caps hashtags at 5 as of Dec 2025; broad spammy tags now hurt more than help). Pick the ones most relevant to THIS story (e.g. #worldcup #predictionmarkets #sportsbetting #kalshi #polymarket #nfl), World Cup tags like #WeAre26 when relevant, on the last line. For World Cup posts, name the countries in the caption.
+- Instagram now indexes the CAPTION text for search, so weave the natural keywords a fan would actually search (the sport, league, platform, team, bet type) into the caption itself, not only the hashtags.
 
 Output ONLY a JSON object (no prose, no markdown fences) in EXACTLY this shape:
 {
@@ -293,13 +294,13 @@ function igErr(stage, status, body) {
   return parts.join(" | ");
 }
 
-// IG caption limit is 2,200 chars and max 30 hashtags. Clamp defensively so a long
-// caption can never 4xx the /media call.
+// IG caption limit is 2,200 chars; Instagram caps hashtags at 5 (Dec 2025). Clamp
+// defensively so a long caption / extra tags can never 4xx or get truncated.
 function buildIgCaption(caption, hashtags) {
   const tags = String(hashtags || "")
     .split(/\s+/)
     .filter((tag) => tag.startsWith("#"))
-    .slice(0, 30)
+    .slice(0, 5)
     .join(" ");
   let full = `${caption}\n\n${tags}`.trim();
   if (full.length > 2200) full = `${full.slice(0, 2197).trimEnd()}...`;
