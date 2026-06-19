@@ -50,6 +50,11 @@ export async function GET(req: Request) {
   const date = (sp.get("date") || "").slice(0, 24);
   // ONE accent only (no second color); the watermark is locked to the source word.
   const watermark = (source || type).toUpperCase().slice(0, 16);
+  // Optional background image: ?bgUrl= (absolute) or ?bg= (a /public/intel-bg path).
+  // Rendered full-bleed UNDER everything, with a heavy scrim so the number still pops.
+  const bgUrl = (sp.get("bgUrl") || "").slice(0, 400);
+  const bgPath = (sp.get("bg") || "").slice(0, 120);
+  const bgSrc = bgUrl || (bgPath ? new URL(bgPath, req.url).toString() : "");
   const hasCompare = Boolean(stat && stat2);
   const hasStat = Boolean(stat);
   // Headline scales by length; a bit smaller when it shares the card with a number.
@@ -76,6 +81,29 @@ export async function GET(req: Request) {
           backgroundImage: `radial-gradient(circle at 70% 44%, rgba(0,255,133,0.16), rgba(0,0,0,0) 52%), repeating-linear-gradient(0deg, rgba(245,244,241,0.04) 0px, rgba(245,244,241,0.04) 1px, rgba(0,0,0,0) 1px, rgba(0,0,0,0) 62px), repeating-linear-gradient(90deg, rgba(245,244,241,0.04) 0px, rgba(245,244,241,0.04) 1px, rgba(0,0,0,0) 1px, rgba(0,0,0,0) 62px), linear-gradient(150deg, #16161b 0%, #0a0a0c 60%)`,
         }}
       >
+        {/* optional full-bleed background scene (AI/owned art, never a real person) */}
+        {bgSrc ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={bgSrc}
+            alt=""
+            style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        ) : null}
+        {/* mandatory scrim + green brand wash so the headline + number stay legible */}
+        {bgSrc ? (
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundImage:
+                "linear-gradient(to top, rgba(0,0,0,0.94) 0%, rgba(0,0,0,0.58) 40%, rgba(0,0,0,0) 64%), linear-gradient(rgba(0,0,0,0.34), rgba(0,0,0,0.34)), linear-gradient(rgba(0,255,133,0.13), rgba(0,255,133,0.13))",
+            }}
+          />
+        ) : null}
         {/* faded source watermark, bottom-right */}
         <div
           style={{
