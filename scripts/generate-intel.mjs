@@ -46,41 +46,41 @@ const today = new Date().toISOString().slice(0, 10);
 // Phrases that must never reach a caption/card. Defensive net on top of the brief.
 const BANNED = /\b(guaranteed|guarantee|risk[-\s]?free|can'?t lose|sure thing|lock of the (day|week|night)|easy money|free money|you will (win|profit)|get rich)\b/i;
 
-const PROMPT = `You write the @joinlockr Instagram/TikTok news feed for Lockr (joinlockr.com), a daily sports-betting + prediction-market picks membership where members "tail" founder JT's plays across sports and prediction markets (Kalshi, Polymarket) treated as equal.
+const PROMPT = `You write @joinlockr: a fast, premium NEWS feed for the sports-betting + prediction-market world. Lockr (joinlockr.com) is a daily picks membership, but @joinlockr is NOT a sales page and NOT an opinionated analyst. Lockr is the CURATOR / intermediary that sits on top and surfaces the exciting stuff so people want to get in (and do it through Lockr). Think a viral sports/markets NEWS page (the energy of @overtime or a fintech news page), positive and share-worthy. The news is the hero; Lockr is a subtle byline.
 
-Run @joinlockr like a sharp, fast NEWS / DATA page (think a betting-and-prediction-market version of a markets-tracker page), NOT a sales page. Every post is a "receipt": take ONE real, public, current data point and turn it into one screenshot-able card with a punchy plain-English headline. The data IS the content. Never a promise, always a result.
+Today is ${today}. The FIFA World Cup 2026 is live (US/Canada/Mexico) — favor a great World Cup angle when there is one.
 
-Today is ${today}. The FIFA World Cup 2026 is live (US/Canada/Mexico) — strongly favor a World Cup angle when there's a genuinely interesting one.
+USE WEB SEARCH to find today's most share-worthy, REAL stories across these lanes (vary them across the ${COUNT} posts; do not make every post a "market odds" post):
+- BIG WIN / wild bet: a bettor or trader just turned $X into $Y, a massive parlay cashed, a record payout. Frame the UPSIDE and the story, never an income promise.
+- MARKET NEWS: a Polymarket/Kalshi volume record, a market spiking or just launched, prediction markets beating the polls.
+- INDUSTRY: a platform launch / funding / partnership / legal-or-regulatory move (Kalshi, Polymarket, PrizePicks, Betr, sportsbooks).
+- SPORTS / ODDS: a result that moved the market, a country surging in World Cup title odds, an upset's market impact.
+- HEART VS MARKET: the gap between what fans/the public back and what the market prices (great for "bet on your country").
 
-USE WEB SEARCH to ground EVERY number in a real, current source. Find the day's most surprising, real "somebody's wrong" / "sharp vs public" / "heart vs market" angles from: Polymarket & Kalshi implied-probability odds and big movers, sportsbook line moves, public-betting % splits, notable results / bad beats, celebrity or viral bets, and prediction-market vs poll/expert gaps.
+Pick the ${COUNT} best, most varied stories. Frame everything POSITIVELY and excitingly to make people want to participate, but stay honest and non-predatory: celebrate wins, records, and drama; do not glorify someone's ruin or imply the reader is guaranteed anything.
 
-Pick the ${COUNT} best angles. For each, choose a FORMAT:
-- "receipt": one striking market number + a headline (single stat).
-- "vs": two numbers compared — the public/heart vs the market (e.g., "57% of bettors back Portugal, the market gives them 12%"). Great for World Cup "bet on your country".
-- "shift": an odds move before -> after a result (single stat = the new number, sub explains the move).
-- "fade": bets% vs money% revealing reverse line movement.
+For each, set a content "type" tag and (when there is a real number) a supporting stat.
 
 HARD RULES (non-negotiable):
-- NO em dashes. NO "guaranteed" / "risk-free" / income or "you will win" claims. Never call Lockr a "picks service", "capper", "handicapper", or "tout". Plain English, confident, anti-hype.
-- DO NOT fabricate any number, odds, price, %, or volume. Every stat MUST come from a source you actually found via web search, and you MUST list that source URL. If you cannot verify a number, do not use it — pick a different angle.
-- Education and entertainment only, not advice. Keep it directional, never a promise of profit.
-- Headline = 5 to 11 words, the hook. "sub" = one plain-English "so what" sentence. caption = 2 to 4 short lines (hook, the so-what, then a soft CTA "Full breakdown + today's plays in bio." or "We tail the edges. joinlockr.com."). hashtags = 6 to 10 relevant tags (mix broad + niche; include "FIFA World Cup" tags like #WeAre26 when relevant). For World Cup posts, include the country names in the caption.
+- NO em dashes. NO "guaranteed" / "risk-free" / income or "you will win" claims. Never call Lockr a "picks service", "capper", "handicapper", or "tout". Plain English, confident, exciting, not hype-spam.
+- DO NOT fabricate any number, name, odds, price, %, payout, or volume. Every stat AND the core fact of every story MUST come from a real source you found via web search, listed in "sources". If you cannot verify it, pick a different story. No invented "a trader won $2M" stories.
+- Education and entertainment only, not advice. Keep responsible-gambling sensibility (no predatory framing). The CTA lives in the caption, never on the card.
+- headline = 5 to 12 words, the exciting news. sub = one plain-English context sentence. caption = 2 to 4 short lines (exciting hook, the context, then a soft CTA like "We tail the edges across sports + markets. Link in bio." or "Plays drop daily on Lockr."). hashtags = 6 to 10 relevant tags (mix broad + niche; include World Cup tags like #WeAre26 when relevant). For World Cup posts, name the countries in the caption.
 
 Output ONLY a JSON object (no prose, no markdown fences) in EXACTLY this shape:
 {
   "posts": [
     {
-      "format": "receipt|vs|shift|fade",
-      "kicker": "2-3 word card label, e.g. MARKET READ, HEART VS MARKET, ODDS SHIFT, FADE THE PUBLIC",
-      "headline": "the 5-11 word hook",
-      "source": "Polymarket | Kalshi | Sportsbooks | etc",
-      "stat": "the primary REAL number, e.g. 71% or +6c or -130",
-      "statLabel": "short label, e.g. market says",
-      "stat2": "optional second REAL number for vs/fade, else empty string",
-      "stat2Label": "optional label, e.g. public says, else empty string",
-      "sub": "one plain-English so-what sentence",
-      "tone": "blue for prediction-market (Kalshi/Polymarket) posts, green otherwise",
-      "caption": "the 2-4 line IG caption",
+      "type": "BIG WIN | MARKET NEWS | INDUSTRY | SPORTS | ODDS | WORLD CUP | HEART VS MARKET",
+      "headline": "the 5-12 word exciting news",
+      "source": "Polymarket | Kalshi | ESPN | etc (where the story is from)",
+      "stat": "a REAL supporting number if the story has one, e.g. $2.3M or 71% or $500M, else empty string",
+      "statLabel": "short label/context for the stat, e.g. on a single Kalshi contract, else empty string",
+      "stat2": "second REAL number only for HEART VS MARKET, else empty string",
+      "stat2Label": "label for stat2, e.g. fans back them, else empty string",
+      "sub": "one plain-English context sentence",
+      "tone": "blue for prediction-market (Kalshi/Polymarket) stories, green otherwise",
+      "caption": "the 2-4 line IG caption (CTA goes here, not on the card)",
       "hashtags": "#tag1 #tag2 ...",
       "sources": ["https://real-source-url"]
     }
@@ -134,7 +134,7 @@ function cardUrl(p) {
   const set = (k, v) => {
     if (v != null && String(v).trim()) qs.set(k, String(v));
   };
-  set("kicker", p.kicker);
+  set("type", p.type || p.kicker);
   set("headline", p.headline);
   set("source", p.source);
   set("stat", p.stat);
@@ -167,7 +167,7 @@ async function postDraft(p, url, ig) {
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
       username: "Lockr Intel",
-      content: `:newspaper:  New @joinlockr draft  ·  ${(p.kicker || "").toString()}`,
+      content: `:newspaper:  New @joinlockr draft  ·  ${(p.type || p.kicker || "").toString()}`,
       embeds: [{ color: tone, title: p.headline, description: desc, image: { url } }],
     }),
     signal: AbortSignal.timeout(10000),
