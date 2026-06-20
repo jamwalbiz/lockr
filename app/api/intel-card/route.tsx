@@ -16,10 +16,10 @@ import sharp from "sharp";
 // No secrets. Public data only. Generated + posted by scripts/generate-intel.mjs.
 export const runtime = "nodejs";
 
+// Two colors only — off-white text + Lockr green. No gray anywhere (low contrast
+// over a photo = unreadable). Hierarchy comes from size/weight, not color.
 const ACCENT = "#00ff85";
 const INK = "#f5f4f1";
-const MUTE = "#8b8b85";
-const DIM = "#5c5c58";
 
 // Embedded Archivo (the site display font), cached per isolate. Falls back to the
 // system sans if the fetch ever fails, so the card always renders.
@@ -67,7 +67,14 @@ export async function GET(req: Request) {
   const hlMax = hasStat ? 92 : 112;
   const hlFont = headline.length > 92 ? hlMax - 34 : headline.length > 58 ? hlMax - 20 : hlMax;
   // The number is the hero: the single largest element on the card.
-  const statFont = stat.length <= 3 ? 320 : stat.length <= 4 ? 286 : stat.length <= 5 ? 250 : stat.length <= 6 ? 212 : stat.length <= 8 ? 172 : 140;
+  const statFont =
+    stat.length <= 3 ? 300 : stat.length <= 4 ? 272 : stat.length <= 5 ? 244 : stat.length <= 6 ? 212 : stat.length <= 7 ? 184 : stat.length <= 8 ? 160 : stat.length <= 10 ? 132 : stat.length <= 12 ? 110 : stat.length <= 14 ? 94 : 82;
+  // Contrast pairs (stat vs stat2) stack VERTICALLY, each sized to fit the card
+  // width on its own line, so long currency values can never clip off the edge.
+  const cmpFont = (s: string) => {
+    const n = (s || "").length;
+    return n <= 4 ? 196 : n <= 6 ? 168 : n <= 8 ? 142 : n <= 10 ? 118 : n <= 12 ? 100 : 86;
+  };
 
   const fonts = await loadFonts(req.url);
   const family = fonts ? "Archivo" : "sans-serif";
@@ -112,22 +119,25 @@ export async function GET(req: Request) {
             }}
           />
         ) : null}
-        {/* faded source watermark, bottom-right */}
-        <div
-          style={{
-            position: "absolute",
-            right: -12,
-            bottom: -34,
-            display: "flex",
-            fontSize: 240,
-            fontWeight: 800,
-            color: ACCENT,
-            opacity: 0.04,
-            letterSpacing: -8,
-          }}
-        >
-          {watermark}
-        </div>
+        {/* faded source watermark — only on plain (no-bg) cards. With a photo it
+            just adds noise behind the text, so we drop it. */}
+        {!bgSrc ? (
+          <div
+            style={{
+              position: "absolute",
+              right: -12,
+              bottom: -34,
+              display: "flex",
+              fontSize: 240,
+              fontWeight: 800,
+              color: ACCENT,
+              opacity: 0.05,
+              letterSpacing: -8,
+            }}
+          >
+            {watermark}
+          </div>
+        ) : null}
         {/* hairline inset frame */}
         <div
           style={{
@@ -145,7 +155,7 @@ export async function GET(req: Request) {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 13 }}>
             <div style={{ width: 17, height: 17, borderRadius: 5, background: ACCENT }} />
-            <div style={{ display: "flex", fontSize: 27, fontWeight: 600, color: MUTE, letterSpacing: 0.3 }}>
+            <div style={{ display: "flex", fontSize: 27, fontWeight: 600, color: INK, letterSpacing: 0.3 }}>
               @joinlockr
             </div>
           </div>
@@ -183,23 +193,19 @@ export async function GET(req: Request) {
 
         {/* hero number(s) */}
         {hasCompare ? (
-          <div style={{ display: "flex", alignItems: "flex-end", marginTop: 54, gap: 30 }}>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ display: "flex", fontSize: 21, fontWeight: 600, color: DIM, letterSpacing: 1, textTransform: "uppercase" }}>
-                {stat2Label || "the public"}
-              </div>
-              <div style={{ display: "flex", fontSize: 122, fontWeight: 800, color: MUTE, letterSpacing: -4, lineHeight: 0.92 }}>
-                {stat2}
-              </div>
+          <div style={{ display: "flex", flexDirection: "column", marginTop: 34 }}>
+            <div style={{ display: "flex", fontSize: 22, fontWeight: 600, color: INK, letterSpacing: 1, textTransform: "uppercase", maxWidth: 880 }}>
+              {stat2Label || "the public"}
             </div>
-            <div style={{ display: "flex", fontSize: 32, fontWeight: 600, color: DIM, marginBottom: 20 }}>vs</div>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ display: "flex", fontSize: 21, fontWeight: 600, color: ACCENT, letterSpacing: 1, textTransform: "uppercase" }}>
-                {statLabel || "the market"}
-              </div>
-              <div style={{ display: "flex", fontSize: 122, fontWeight: 800, color: ACCENT, letterSpacing: -4, lineHeight: 0.92 }}>
-                {stat}
-              </div>
+            <div style={{ display: "flex", fontSize: cmpFont(stat2), fontWeight: 800, color: INK, letterSpacing: -4, lineHeight: 0.9 }}>
+              {stat2}
+            </div>
+            <div style={{ display: "flex", fontSize: 30, fontWeight: 700, color: ACCENT, margin: "14px 0 6px" }}>vs</div>
+            <div style={{ display: "flex", fontSize: 22, fontWeight: 600, color: ACCENT, letterSpacing: 1, textTransform: "uppercase", maxWidth: 880 }}>
+              {statLabel || "the market"}
+            </div>
+            <div style={{ display: "flex", fontSize: cmpFont(stat), fontWeight: 800, color: ACCENT, letterSpacing: -4, lineHeight: 0.9 }}>
+              {stat}
             </div>
           </div>
         ) : hasStat ? (
@@ -208,7 +214,7 @@ export async function GET(req: Request) {
               {stat}
             </div>
             {statLabel ? (
-              <div style={{ display: "flex", fontSize: 28, fontWeight: 600, color: MUTE, marginTop: 18, maxWidth: 780, lineHeight: 1.25 }}>
+              <div style={{ display: "flex", fontSize: 28, fontWeight: 600, color: INK, marginTop: 18, maxWidth: 780, lineHeight: 1.25 }}>
                 {statLabel}
               </div>
             ) : null}
@@ -219,7 +225,7 @@ export async function GET(req: Request) {
 
         {/* context / "so what" line */}
         {sub ? (
-          <div style={{ display: "flex", fontSize: 33, fontWeight: 600, color: MUTE, lineHeight: 1.34, marginBottom: 32 }}>
+          <div style={{ display: "flex", fontSize: 33, fontWeight: 600, color: INK, lineHeight: 1.34, marginBottom: 32 }}>
             {sub}
           </div>
         ) : null}
@@ -227,10 +233,10 @@ export async function GET(req: Request) {
         {/* news byline: source attribution (left) + date (right). No CTA on-image. */}
         <div style={{ display: "flex", height: 1, background: "rgba(245,244,241,0.1)", marginBottom: 24 }} />
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <div style={{ display: "flex", fontSize: 25, fontWeight: 600, color: DIM }}>
+          <div style={{ display: "flex", fontSize: 25, fontWeight: 600, color: INK }}>
             {source ? `via ${source}` : "@joinlockr"}
           </div>
-          {date ? <div style={{ display: "flex", fontSize: 25, fontWeight: 600, color: DIM }}>{date}</div> : null}
+          {date ? <div style={{ display: "flex", fontSize: 25, fontWeight: 600, color: INK }}>{date}</div> : null}
         </div>
       </div>
     ),

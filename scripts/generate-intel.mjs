@@ -84,7 +84,7 @@ ROTATE the lanes below so the feed is varied (do NOT make most posts "market odd
 - HEART VS MARKET: fans/public % vs market % (great for "bet on your country") -> use the stat2 fields.
 - WORLD CUP TENTPOLE: event volume, a favorite's implied odds, or a final countdown.
 
-Lean on a GIANT hero number. Use full magnitude for shock ($50,000,000,000 can hit harder than $50B on a milestone). Show raw odds in full when the length is the point. Contrast pairs (e.g. a $427K stake to a $4.7M payout) are the highest-performing layout.
+Lean on a GIANT hero number, but keep the on-card "stat"/"stat2" SHORT so it renders huge and never clips: use the abbreviated form, about 6 characters or fewer ("$4.7M", "$50B", "71%", "$1.2M", "9/1", "$500K"). A big short number hits far harder than a small long one, and long raw values ($4,702,769) get clipped on the card. Put any exact/precise figure in the "caption" or "sub", NOT in the stat field. Contrast pairs (a short before vs a short after, e.g. stat2 "$427K" vs stat "$4.7M") are the highest-performing layout.
 
 Pick the ${COUNT} best, most varied stories. Frame everything POSITIVELY and excitingly to make people want to participate, but stay honest and non-predatory: celebrate wins, records, and drama; do not glorify someone's ruin or imply the reader is guaranteed anything.
 
