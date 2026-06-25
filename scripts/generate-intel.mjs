@@ -84,7 +84,7 @@ ROTATE the lanes below so the feed is varied (do NOT make most posts "market odd
 - HEART VS MARKET: fans/public % vs market % (great for "bet on your country") -> use the stat2 fields.
 - WORLD CUP TENTPOLE: event volume, a favorite's implied odds, or a final countdown.
 
-Lean on a GIANT hero number, but keep the on-card "stat"/"stat2" SHORT so it renders huge and never clips: use the abbreviated form, about 6 characters or fewer ("$4.7M", "$50B", "71%", "$1.2M", "9/1", "$500K"). A big short number hits far harder than a small long one, and long raw values ($4,702,769) get clipped on the card. Put any exact/precise figure in the "caption" or "sub", NOT in the stat field. Contrast pairs (a short before vs a short after, e.g. stat2 "$427K" vs stat "$4.7M") are the highest-performing layout.
+FACTS (the card renders a clean labeled DATA GRID, like a Traded-style deal ticker — NOT one giant number). Give 2 to 4 short labeled facts the grid can show. Each value is abbreviated and about 8 characters or fewer ("$1.2M", "+60000", "8/8", "71%", "$24B"); each label is 1 to 3 words ("STAKE", "PAYOUT", "ODDS", "LEGS", "24H VOLUME", "IMPLIED ODDS"). Good sets: a longshot -> STAKE / PAYOUT / ODDS / LEGS; an odds move -> IMPLIED ODDS / 24H VOLUME (or BEFORE / NOW); a record -> the number + its context. The exact/precise figure (e.g. $4,702,769) goes in the caption, NEVER the grid.
 
 Pick the ${COUNT} best, most varied stories. Frame everything POSITIVELY and excitingly to make people want to participate, but stay honest and non-predatory: celebrate wins, records, and drama; do not glorify someone's ruin or imply the reader is guaranteed anything.
 
@@ -95,7 +95,7 @@ HARD RULES (non-negotiable):
 - DO NOT fabricate any number, name, odds, price, %, payout, or volume. Every stat AND the core fact of every story MUST come from a real source you found via web search, listed in "sources". If you cannot verify it, pick a different story. No invented "a trader won $2M" stories.
 - Education and entertainment only, not advice. Keep responsible-gambling sensibility (no predatory framing). The CTA lives in the caption, never on the card.
 VIRAL COPY (write the way the top sports/markets/betting news pages actually write — Overtime, House of Highlights, B/R Betting, Polymarket, Kalshi — punchy, breaking, "tweetable not polished", built for comments and shares; NOT corporate):
-- HEADLINE (on the card) = 4 to 9 words, sports-desk CHYRON energy. Lead with the single most shocking element (the giant number or the absurdity). Short staccato fragments are great; present tense / "just". You MAY use ALL CAPS or hard fragments for impact. Cadence to match: "ONE TRADER. ONE DAY. $9.24M." / "A $20 bet just hit for $1.2M." / "Nobody saw this coming." / "Spain just took over the World Cup." Make someone stop scrolling in under half a second.
+- HEADLINE (on the card) = a complete, SENTENCE-CASE news sentence, 6 to 12 words, that opens a CURIOSITY GAP (withhold the payoff so people stop and read). Mixed case, NOT all-caps, NOT a stat fragment. Proven shapes: number + open loop ("A $20 ticket just turned into $1.2M. Here's how."); named subject + surprising verb ("Spain just became the World Cup favorite, and the market disagrees."); shock probability + withheld angle ("Kalshi says 92% on Spain. One number says otherwise."); the spicy/debatable real story ("Polymarket paid creators to fake winning bets."); house-always-wins ("The book just limited this bet. Here's what they saw."). Lead with the most debatable or surprising angle when there is one (spicy stories get far more shares). Make someone need the next swipe.
 - Use the type tag "BREAKING" or "JUST IN" when a story is genuinely fresh.
 - sub = one short, plain-English context line (what / where).
 - CAPTION (this is the reach engine, 3 to 4 short lines):
@@ -112,12 +112,16 @@ Output ONLY a JSON object (no prose, no markdown fences) in EXACTLY this shape:
   "posts": [
     {
       "type": "BIG WIN | MARKET NEWS | INDUSTRY | SPORTS | ODDS | WORLD CUP | HEART VS MARKET",
-      "headline": "the 5-12 word exciting news",
-      "source": "Polymarket | Kalshi | ESPN | etc (where the story is from)",
-      "stat": "a REAL supporting number if the story has one, e.g. $2.3M or 71% or $500M, else empty string",
-      "statLabel": "short label/context for the stat, e.g. on a single Kalshi contract, else empty string",
-      "stat2": "second REAL number for HEART VS MARKET or HEAD-TO-HEAD, else empty string",
-      "stat2Label": "label for stat2, e.g. fans back them / Polymarket, else empty string",
+      "headline": "the 6-12 word SENTENCE-CASE curiosity-gap news sentence",
+      "source": "Polymarket | Kalshi | DraftKings | ESPN | etc (where the story is from)",
+      "stat": "fact 1 value, short/abbreviated <=8 chars, e.g. $1.2M or +60000 or 71%, else empty string",
+      "statLabel": "fact 1 label, 1-3 words, e.g. PAYOUT or IMPLIED ODDS, else empty string",
+      "stat2": "fact 2 value (same rules), else empty string",
+      "stat2Label": "fact 2 label, else empty string",
+      "stat3": "fact 3 value (same rules), else empty string",
+      "stat3Label": "fact 3 label, else empty string",
+      "stat4": "fact 4 value (same rules), else empty string",
+      "stat4Label": "fact 4 label, else empty string",
       "sub": "one plain-English context sentence",
       "caption": "the 2-4 line IG caption (CTA goes here, not on the card)",
       "hashtags": "#tag1 #tag2 ...",
@@ -223,9 +227,11 @@ function cardUrl(p) {
   set("statLabel", p.statLabel);
   set("stat2", p.stat2);
   set("stat2Label", p.stat2Label);
+  set("stat3", p.stat3);
+  set("stat3Label", p.stat3Label);
+  set("stat4", p.stat4);
+  set("stat4Label", p.stat4Label);
   set("sub", p.sub);
-  set("watermark", p.source);
-  set("bg", pickBg(p));
   return `${BASE}/api/intel-card?${qs.toString()}`;
 }
 

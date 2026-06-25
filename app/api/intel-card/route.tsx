@@ -1,38 +1,33 @@
 import { ImageResponse } from "next/og";
 import sharp from "sharp";
 
-// Branded "intel" news-card generator for the @joinlockr feed. Renders a viral,
-// screenshot-able NEWS card as a 1080x1350 (IG portrait, exactly 4:5) image from
-// query params, served as JPEG. (Instagram's content-publishing API accepts JPEG
-// ONLY; next/og emits PNG, so we transcode with sharp — which needs the Node
-// runtime, not edge. ?fmt=png returns the raw PNG for any other consumer.)
-// The news is the hero; Lockr is a subtle corner handle, not a banner (reads like
-// a news page, not an ad — the CTA lives in the caption, not on the image).
+// Branded "ticker" news-card generator for the @joinlockr feed. Renders a clean,
+// screenshot-able NEWS card as a 1080x1350 (IG portrait, exactly 4:5) image, served
+// as JPEG. (Instagram's publish API accepts JPEG ONLY; next/og emits PNG, so we
+// transcode with sharp — which needs the Node runtime, not edge. ?fmt=png returns PNG.)
 //
-// House style (one locked template = the real brand moat): dark base, ONE accent
-// (Lockr green), embedded Archivo display font, a giant hero number, a small
-// @joinlockr handle, and a "via {source}" news byline. ?type= sets the small tag
-// (BIG WIN, MARKET NEWS, INDUSTRY, SPORTS, ODDS, WORLD CUP, HEART VS MARKET).
-// No secrets. Public data only. Generated + posted by scripts/generate-intel.mjs.
+// FORMAT (the "data is the image" model — no stock photos, no abstract AI art):
+// a sentence-case curiosity-gap HEADLINE is the hero, a clean labeled DATA GRID is
+// the visual proof, a small source lockup + @joinlockr byline frame it. Everything
+// is generated from data the engine already pulls, so it's fully auto + rights-clean.
+// Params: type, headline, source, sub, date, and up to 4 facts: stat/statLabel,
+// stat2/stat2Label, stat3/stat3Label, stat4/stat4Label.
 export const runtime = "nodejs";
 
-// Two colors only — off-white text + Lockr green. No gray anywhere (low contrast
-// over a photo = unreadable). Hierarchy comes from size/weight, not color.
+// Two colors only — off-white + Lockr green. No gray text.
 const ACCENT = "#00ff85";
-const INK = "#f5f4f1";
+const INK = "#f7f6f3";
+const LABEL = "#cdcdc7"; // light off-white for small labels (high contrast on dark, not low-contrast gray)
+const TILE = "#16161b";
+const BORDER = "rgba(247,246,243,0.09)";
 
-// Embedded Archivo (the site display font), cached per isolate. Falls back to the
-// system sans if the fetch ever fails, so the card always renders.
 let _fonts: { name: string; data: ArrayBuffer; weight: 600 | 800; style: "normal" }[] | null | undefined;
 async function loadFonts(reqUrl: string) {
   if (_fonts !== undefined) return _fonts;
   try {
     const fetchFont = (p: string) =>
       fetch(new URL(p, reqUrl), { signal: AbortSignal.timeout(4000) }).then((r) => r.arrayBuffer());
-    const [b8, b6] = await Promise.all([
-      fetchFont("/fonts/archivo-800.ttf"),
-      fetchFont("/fonts/archivo-600.ttf"),
-    ]);
+    const [b8, b6] = await Promise.all([fetchFont("/fonts/archivo-800.ttf"), fetchFont("/fonts/archivo-600.ttf")]);
     _fonts = [
       { name: "Archivo", data: b8, weight: 800, style: "normal" },
       { name: "Archivo", data: b6, weight: 600, style: "normal" },
@@ -46,35 +41,28 @@ async function loadFonts(reqUrl: string) {
 export async function GET(req: Request) {
   const sp = new URL(req.url).searchParams;
   const type = (sp.get("type") || sp.get("kicker") || "MARKETS").toUpperCase().slice(0, 22);
-  const headline = (sp.get("headline") || "Something just happened.").slice(0, 150);
+  const headline = (sp.get("headline") || "Something just happened.").slice(0, 160);
   const source = (sp.get("source") || "").slice(0, 28);
-  const stat = (sp.get("stat") || "").slice(0, 16);
-  const statLabel = (sp.get("statLabel") || "").slice(0, 46);
-  const stat2 = (sp.get("stat2") || "").slice(0, 16);
-  const stat2Label = (sp.get("stat2Label") || "").slice(0, 30);
   const sub = (sp.get("sub") || "").slice(0, 190);
   const date = (sp.get("date") || "").slice(0, 24);
-  // ONE accent only (no second color); the watermark is locked to the source word.
-  const watermark = (source || type).toUpperCase().slice(0, 16);
-  // Optional background image: ?bgUrl= (absolute) or ?bg= (a /public/intel-bg path).
-  // Rendered full-bleed UNDER everything, with a heavy scrim so the number still pops.
-  const bgUrl = (sp.get("bgUrl") || "").slice(0, 400);
-  const bgPath = (sp.get("bg") || "").slice(0, 120);
-  const bgSrc = bgUrl || (bgPath ? new URL(bgPath, req.url).toString() : "");
-  const hasCompare = Boolean(stat && stat2);
-  const hasStat = Boolean(stat);
-  // Headline scales by length; a bit smaller when it shares the card with a number.
-  const hlMax = hasStat ? 92 : 112;
-  const hlFont = headline.length > 92 ? hlMax - 34 : headline.length > 58 ? hlMax - 20 : hlMax;
-  // The number is the hero: the single largest element on the card.
-  const statFont =
-    stat.length <= 3 ? 300 : stat.length <= 4 ? 272 : stat.length <= 5 ? 244 : stat.length <= 6 ? 212 : stat.length <= 7 ? 184 : stat.length <= 8 ? 160 : stat.length <= 10 ? 132 : stat.length <= 12 ? 110 : stat.length <= 14 ? 94 : 82;
-  // Contrast pairs (stat vs stat2) stack VERTICALLY, each sized to fit the card
-  // width on its own line, so long currency values can never clip off the edge.
-  const cmpFont = (s: string) => {
-    const n = (s || "").length;
-    return n <= 4 ? 196 : n <= 6 ? 168 : n <= 8 ? 142 : n <= 10 ? 118 : n <= 12 ? 100 : 86;
-  };
+
+  // Up to 4 labeled facts → the data grid (the "image"). Drop empties.
+  const facts = [
+    [sp.get("stat"), sp.get("statLabel")],
+    [sp.get("stat2"), sp.get("stat2Label")],
+    [sp.get("stat3"), sp.get("stat3Label")],
+    [sp.get("stat4"), sp.get("stat4Label")],
+  ]
+    .map(([v, l]) => ({ val: (v || "").trim().slice(0, 18), label: (l || "").trim().slice(0, 28) }))
+    .filter((f) => f.val);
+  const rows: { val: string; label: string }[][] = [];
+  for (let i = 0; i < facts.length; i += 2) rows.push(facts.slice(i, i + 2));
+
+  // Headline is the hero; scale by length so it never overflows.
+  const hl = headline.length > 92 ? 56 : headline.length > 64 ? 66 : headline.length > 40 ? 78 : 90;
+  // Per-tile value scales by its own length.
+  const valFont = (s: string) => (s.length <= 4 ? 62 : s.length <= 6 ? 54 : s.length <= 8 ? 46 : s.length <= 11 ? 38 : 32);
+  const chip = source.replace(/[^A-Za-z0-9]/g, "").slice(0, 2).toUpperCase() || "LK";
 
   const fonts = await loadFonts(req.url);
   const family = fonts ? "Archivo" : "sans-serif";
@@ -83,183 +71,92 @@ export async function GET(req: Request) {
     (
       <div
         style={{
-          position: "relative",
           width: "100%",
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          padding: 76,
+          padding: 72,
           fontFamily: family,
+          color: INK,
           backgroundColor: "#0a0a0c",
-          backgroundImage: `radial-gradient(circle at 70% 44%, rgba(0,255,133,0.16), rgba(0,0,0,0) 52%), repeating-linear-gradient(0deg, rgba(245,244,241,0.04) 0px, rgba(245,244,241,0.04) 1px, rgba(0,0,0,0) 1px, rgba(0,0,0,0) 62px), repeating-linear-gradient(90deg, rgba(245,244,241,0.04) 0px, rgba(245,244,241,0.04) 1px, rgba(0,0,0,0) 1px, rgba(0,0,0,0) 62px), linear-gradient(150deg, #16161b 0%, #0a0a0c 60%)`,
+          backgroundImage:
+            "radial-gradient(circle at 82% 8%, rgba(0,255,133,0.13), rgba(0,0,0,0) 46%), linear-gradient(160deg, #111116 0%, #0a0a0c 58%)",
         }}
       >
-        {/* optional full-bleed background image: AI scene, licensed/owned art, or an
-            event/sports photo (founder's call). Don't put a player's face on a card
-            that directly SELLS the sub (endorsement line); editorial news use is fine. */}
-        {bgSrc ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={bgSrc}
-            alt=""
-            style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover" }}
-          />
-        ) : null}
-        {/* mandatory scrim + green brand wash so the headline + number stay legible */}
-        {bgSrc ? (
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundImage:
-                "linear-gradient(to top, rgba(0,0,0,0.94) 0%, rgba(0,0,0,0.58) 40%, rgba(0,0,0,0) 64%), linear-gradient(rgba(0,0,0,0.34), rgba(0,0,0,0.34)), linear-gradient(rgba(0,255,133,0.13), rgba(0,255,133,0.13))",
-            }}
-          />
-        ) : null}
-        {/* faded source watermark — only on plain (no-bg) cards. With a photo it
-            just adds noise behind the text, so we drop it. */}
-        {!bgSrc ? (
-          <div
-            style={{
-              position: "absolute",
-              right: -12,
-              bottom: -34,
-              display: "flex",
-              fontSize: 240,
-              fontWeight: 800,
-              color: ACCENT,
-              opacity: 0.05,
-              letterSpacing: -8,
-            }}
-          >
-            {watermark}
+        {/* top row: category pill (left) + handle (right) */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, border: `1px solid ${ACCENT}`, borderRadius: 999, padding: "9px 20px" }}>
+            <div style={{ width: 11, height: 11, borderRadius: 6, background: ACCENT }} />
+            <div style={{ display: "flex", fontSize: 21, fontWeight: 600, color: ACCENT, letterSpacing: 1.5 }}>{type}</div>
           </div>
-        ) : null}
-        {/* hairline inset frame */}
-        <div
-          style={{
-            position: "absolute",
-            top: 26,
-            left: 26,
-            right: 26,
-            bottom: 26,
-            borderRadius: 26,
-            border: "1px solid rgba(245,244,241,0.08)",
-          }}
-        />
-
-        {/* top row: subtle handle (left) + content-type tag (right) */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 13 }}>
-            <div style={{ width: 17, height: 17, borderRadius: 5, background: ACCENT }} />
-            <div style={{ display: "flex", fontSize: 27, fontWeight: 600, color: INK, letterSpacing: 0.3 }}>
-              @joinlockr
-            </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              border: `1px solid ${ACCENT}`,
-              borderRadius: 999,
-              padding: "8px 18px",
-            }}
-          >
-            <div style={{ width: 10, height: 10, borderRadius: 5, background: ACCENT }} />
-            <div style={{ display: "flex", fontSize: 20, fontWeight: 600, color: ACCENT, letterSpacing: 1.5 }}>
-              {type}
-            </div>
-          </div>
+          <div style={{ display: "flex", fontSize: 24, fontWeight: 600, color: LABEL }}>@joinlockr</div>
         </div>
 
-        {/* headline */}
-        <div
-          style={{
-            display: "flex",
-            marginTop: 60,
-            fontSize: hlFont,
-            fontWeight: 800,
-            color: INK,
-            letterSpacing: -2.5,
-            lineHeight: 1.0,
-          }}
-        >
+        {/* source lockup (the recognizable anchor) */}
+        {source ? (
+          <div style={{ display: "flex", alignItems: "center", gap: 15, marginTop: 56 }}>
+            <div style={{ width: 60, height: 60, borderRadius: 15, background: "#1f1f26", border: `1px solid ${BORDER}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, fontWeight: 800, color: ACCENT }}>{chip}</div>
+            <div style={{ display: "flex", fontSize: 27, fontWeight: 600, color: LABEL }}>{source}</div>
+          </div>
+        ) : null}
+
+        {/* headline — the hero */}
+        <div style={{ display: "flex", fontSize: hl, fontWeight: 800, color: INK, letterSpacing: -2, lineHeight: 1.04, marginTop: source ? 24 : 56, maxWidth: 940 }}>
           {headline}
         </div>
 
-        {/* hero number(s) */}
-        {hasCompare ? (
-          <div style={{ display: "flex", flexDirection: "column", marginTop: 34 }}>
-            <div style={{ display: "flex", fontSize: 22, fontWeight: 600, color: INK, letterSpacing: 1, textTransform: "uppercase", maxWidth: 880 }}>
-              {stat2Label || "the public"}
-            </div>
-            <div style={{ display: "flex", fontSize: cmpFont(stat2), fontWeight: 800, color: INK, letterSpacing: -4, lineHeight: 0.9 }}>
-              {stat2}
-            </div>
-            <div style={{ display: "flex", fontSize: 30, fontWeight: 700, color: ACCENT, margin: "14px 0 6px" }}>vs</div>
-            <div style={{ display: "flex", fontSize: 22, fontWeight: 600, color: ACCENT, letterSpacing: 1, textTransform: "uppercase", maxWidth: 880 }}>
-              {statLabel || "the market"}
-            </div>
-            <div style={{ display: "flex", fontSize: cmpFont(stat), fontWeight: 800, color: ACCENT, letterSpacing: -4, lineHeight: 0.9 }}>
-              {stat}
-            </div>
-          </div>
-        ) : hasStat ? (
-          <div style={{ display: "flex", flexDirection: "column", marginTop: 40 }}>
-            <div style={{ display: "flex", fontSize: statFont, fontWeight: 800, color: ACCENT, letterSpacing: -8, lineHeight: 0.86 }}>
-              {stat}
-            </div>
-            {statLabel ? (
-              <div style={{ display: "flex", fontSize: 28, fontWeight: 600, color: INK, marginTop: 18, maxWidth: 780, lineHeight: 1.25 }}>
-                {statLabel}
-              </div>
-            ) : null}
+        {/* sub / standfirst */}
+        {sub ? (
+          <div style={{ display: "flex", fontSize: 29, fontWeight: 600, color: LABEL, lineHeight: 1.32, marginTop: 22, maxWidth: 900 }}>
+            {sub}
           </div>
         ) : null}
 
         <div style={{ flex: 1, display: "flex" }} />
 
-        {/* context / "so what" line */}
-        {sub ? (
-          <div style={{ display: "flex", fontSize: 33, fontWeight: 600, color: INK, lineHeight: 1.34, marginBottom: 32 }}>
-            {sub}
+        {/* the data grid — the "image" */}
+        {facts.length ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {rows.map((row, ri) => (
+              <div key={ri} style={{ display: "flex", gap: 16 }}>
+                {row.map((f, ci) => (
+                  <div key={ci} style={{ display: "flex", flexDirection: "column", flex: 1, background: TILE, border: `1px solid ${BORDER}`, borderRadius: 18, padding: "24px 28px" }}>
+                    {f.label ? (
+                      <div style={{ display: "flex", fontSize: 19, fontWeight: 600, color: LABEL, letterSpacing: 1, textTransform: "uppercase" }}>{f.label}</div>
+                    ) : null}
+                    <div style={{ display: "flex", fontSize: valFont(f.val), fontWeight: 800, color: ACCENT, letterSpacing: -1, marginTop: f.label ? 8 : 0 }}>{f.val}</div>
+                  </div>
+                ))}
+              </div>
+            ))}
           </div>
         ) : null}
 
-        {/* news byline: source attribution (left) + date (right). No CTA on-image. */}
-        <div style={{ display: "flex", height: 1, background: "rgba(245,244,241,0.1)", marginBottom: 24 }} />
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <div style={{ display: "flex", fontSize: 25, fontWeight: 600, color: INK }}>
-            {source ? `via ${source}` : "@joinlockr"}
+        {/* footer byline */}
+        <div style={{ display: "flex", height: 1, background: "rgba(247,246,243,0.1)", marginTop: 34, marginBottom: 22 }} />
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 11 }}>
+            <div style={{ width: 14, height: 14, borderRadius: 4, background: ACCENT }} />
+            <div style={{ display: "flex", fontSize: 23, fontWeight: 600, color: LABEL }}>@joinlockr</div>
           </div>
-          {date ? <div style={{ display: "flex", fontSize: 25, fontWeight: 600, color: INK }}>{date}</div> : null}
+          <div style={{ display: "flex", fontSize: 22, fontWeight: 600, color: LABEL }}>
+            {source ? `via ${source}` : "lockr"}
+            {date ? ` · ${date}` : ""}
+          </div>
         </div>
       </div>
     ),
     { width: 1080, height: 1350, fonts: fonts || undefined },
   );
 
-  // next/og emits PNG; Instagram's publish API accepts JPEG only. Transcode with
-  // sharp (4:4:4 keeps the green-on-dark text/edges crisp). If anything goes wrong,
-  // fall back to the raw PNG so previews still render. ?fmt=png skips the transcode.
+  // next/og emits PNG; Instagram's publish API accepts JPEG only. Transcode with sharp.
   const pngBytes = new Uint8Array(await image.arrayBuffer());
   if (sp.get("fmt") === "png") {
-    return new Response(pngBytes, {
-      headers: { "content-type": "image/png", "cache-control": "public, max-age=300, s-maxage=300" },
-    });
+    return new Response(pngBytes, { headers: { "content-type": "image/png", "cache-control": "public, max-age=300, s-maxage=300" } });
   }
   try {
     const jpg = await sharp(pngBytes).jpeg({ quality: 90, chromaSubsampling: "4:4:4" }).toBuffer();
-    return new Response(new Uint8Array(jpg), {
-      headers: {
-        "content-type": "image/jpeg",
-        "cache-control": "public, max-age=300, s-maxage=300",
-      },
-    });
+    return new Response(new Uint8Array(jpg), { headers: { "content-type": "image/jpeg", "cache-control": "public, max-age=300, s-maxage=300" } });
   } catch (err) {
     console.error("intel-card: JPEG transcode failed, serving PNG", err);
     return new Response(pngBytes, { headers: { "content-type": "image/png" } });
