@@ -16,8 +16,12 @@ const KEY = "reel-board.json";
 
 type ReelItem = { id: string; url: string; note: string; addedAt: string };
 
+// The store is reachable either via a static read-write token OR via Vercel's
+// OIDC connection (which sets BLOB_STORE_ID and injects VERCEL_OIDC_TOKEN at
+// runtime; the @vercel/blob SDK uses those automatically when no static token
+// is present). Accept either so an OIDC-only connection isn't wrongly blocked.
 function hasStore() {
-  return Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+  return Boolean(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID);
 }
 
 async function readItems(): Promise<ReelItem[]> {
