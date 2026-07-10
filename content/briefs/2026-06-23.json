@@ -1,0 +1,22 @@
+{
+  "date": "2026-06-23",
+  "for": "JT",
+  "note": "Format demo. Arnav's first real drop replaces this file. Each day = one file in content/briefs/, named YYYY-MM-DD.json.",
+  "items": [
+    {
+      "label": "EXAMPLE — this is what a daily brief looks like",
+      "reelUrl": "",
+      "whyItWorks": "Shows the anatomy: every reel you get comes with why it works, the hook to open with, the beats to hit, and how to shoot it. Real ones will have the reel link at the top.",
+      "hook": "Everyone's betting on their country this week. The market says most of you are wrong.",
+      "script": [
+        "Open on the hook, face to camera, no intro.",
+        "Beat 2: name the game and the number (pull up the Kalshi/Polymarket line on your phone).",
+        "Beat 3: the twist — what the market sees that fans don't.",
+        "Close: 'the full read is on Lockr' — don't oversell, one line."
+      ],
+      "shotNotes": "Phone at eye level, outdoors or clean background, first 2 seconds must land the hook. 20-35s total. Captions on.",
+      "caption": "Suggested IG caption goes here, ready to paste.",
+      "gameNotes": "When the reel ties to a game, live odds context goes here (e.g. 'Kalshi has Spain 92% — fans have them at 71% in polls')."
+    }
+  ]
+}
